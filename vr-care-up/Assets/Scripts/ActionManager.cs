@@ -1470,8 +1470,8 @@ public class ActionManager : MonoBehaviour
         if (!CheckScenarioCompleted() && occured)
             ActionManager.CorrectAction();
 
-        // ActionManager.BuildRequirements();
-        // ActionManager.UpdateRequirements();
+        ActionManager.BuildRequirements();
+        ActionManager.UpdateRequirements();
         return occured;
     }
 
@@ -1514,7 +1514,7 @@ public class ActionManager : MonoBehaviour
         if (!CheckScenarioCompleted() && occured)
             ActionManager.CorrectAction();
 
-        // UpdateRequirements();
+        UpdateRequirements();
         return occured;
     }
 
@@ -1531,7 +1531,7 @@ public class ActionManager : MonoBehaviour
         {
             ActionManager.CorrectAction();
         }
-        // UpdateRequirements();
+        UpdateRequirements();
     }
 
     public class StepData
@@ -1941,8 +1941,8 @@ public class ActionManager : MonoBehaviour
         // RobotManager.RobotCorrectAction();
         ActionManager.PlayAddPointSound();
 
-        // ActionManager.BuildRequirements();
-        // ActionManager.UpdateRequirements(1.5f);
+        ActionManager.BuildRequirements();
+        ActionManager.UpdateRequirements(1.5f);
         // GameObject.FindObjectOfType<ActionManager>().randomQuiz.NextRandomQuiz();
 #if (UNITY_EDITOR || DEVELOPMENT_BUILD)
 
@@ -1952,190 +1952,168 @@ public class ActionManager : MonoBehaviour
 #endif
     }
 
-//     public static void BuildRequirements()
-//     {
-//         if (!practiceMode)
-//             return;
-//         GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
-//         ActionManager am = GameObject.FindObjectOfType<ActionManager>();
-//         gameUI.TalkBubble.SetActive(false);
-//         gameUI.PersonToTalk = null;
-//         foreach (Action a in am.IncompletedActions)
-//         {
-//             string[] ObjectNames = new string[0];
-//             a.ObjectNames(out ObjectNames);
+    public static void BuildRequirements()
+    {
+        if (!practiceMode)
+            return;
+        GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
+        ActionManager am = GameObject.FindObjectOfType<ActionManager>();
+        // gameUI.TalkBubble.SetActive(false);
+        // gameUI.PersonToTalk = null;
+        foreach (Action a in am.IncompletedActions)
+        {
+            string[] ObjectNames = new string[0];
+            a.ObjectNames(out ObjectNames);
 
-//             if (a.ignorePosition)
-//                 print("DDDDD");
+            if (a.ignorePosition)
+                print("DDDDD");
 
-//             switch (a.Type)
-//             {
-//                 case ActionType.PersonTalk:
-//                     foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
-//                     {
-//                         if (po.hasTopic(a._topic))
-//                         {
-//                             a.placeRequirement = ActionManager.FindNearest(new string[] { po.name });
-//                         }
-//                     }
-//                     break;
-//                 case ActionType.ObjectCombine:
-//                     a.leftHandRequirement = ObjectNames[0];
-//                     a.rightHandRequirement = ObjectNames[1];
-//                     if (a.placeRequirement == "")
-//                         a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0], ObjectNames[1] });
-//                     break;
-//                 case ActionType.ObjectUseOn:
-//                     a.leftHandRequirement = ObjectNames[0];
-//                     if (a.placeRequirement == "")
-//                         a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
-//                     break;
-//                 case ActionType.ObjectExamine:
-//                     a.leftHandRequirement = ObjectNames[0];
-//                     if (a.placeRequirement == "")
-//                         a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
-//                     break;
-//                 case ActionType.PickUp:
-//                     a.leftHandRequirement = ObjectNames[0];
-//                     if (a.placeRequirement == "")
-//                         a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
-//                     break;
-//                 case ActionType.ObjectDrop:
-//                     a.leftHandRequirement = ObjectNames[0];
-//                     if (a.placeRequirement == "")
-//                         a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
-//                     break;
-//                 case ActionType.ObjectUse:
-//                     a.leftHandRequirement = ObjectNames[0];
-//                     if (a.placeRequirement == "")
-//                         a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
-//                     break;
-//             }
-//             if (a.ignorePosition)
-//                 a.placeRequirement = "";
-//         }
+            switch (a.Type)
+            {
+                case ActionType.PersonTalk:
+                    // foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
+                    // {
+                    //     if (po.hasTopic(a._topic))
+                    //     {
+                    //         a.placeRequirement = ActionManager.FindNearest(new string[] { po.name });
+                    //     }
+                    // }
+                    break;
+                case ActionType.ObjectCombine:
+                    a.leftHandRequirement = ObjectNames[0];
+                    a.rightHandRequirement = ObjectNames[1];
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0], ObjectNames[1] });
+                    break;
+                case ActionType.ObjectUseOn:
+                    a.leftHandRequirement = ObjectNames[0];
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    break;
+                case ActionType.ObjectExamine:
+                    a.leftHandRequirement = ObjectNames[0];
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    break;
+                case ActionType.PickUp:
+                    a.leftHandRequirement = ObjectNames[0];
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    break;
+                case ActionType.ObjectDrop:
+                    a.leftHandRequirement = ObjectNames[0];
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    break;
+                case ActionType.ObjectUse:
+                    a.leftHandRequirement = ObjectNames[0];
+                    if (a.placeRequirement == "")
+                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    break;
+            }
+            if (a.ignorePosition)
+                a.placeRequirement = "";
+        }
 
 // #if (UNITY_EDITOR || DEVELOPMENT_BUILD)
 //         if (GameObject.FindObjectOfType<ActionsPanel>() != null)
 //             GameObject.FindObjectOfType<ActionsPanel>().UpdatePanel();
 // #endif
 
-//     }
+    }
 
 
 
-    // public static List<GameObject> FindAnchers(string[] objectNames)
-    // {
-    //     List<GameObject> anchors = new List<GameObject>();
-    //     WorkField workField = GameObject.FindObjectOfType<WorkField>();
-    //     CatheterPack catheterPack = GameObject.FindObjectOfType<CatheterPack>();
+    public static List<GameObject> FindAnchers(string[] objectNames)
+    {
+        return null;
+        List<GameObject> anchors = new List<GameObject>();
+        foreach (string o in objectNames)
+        {
+            bool found = false;
+            foreach (ExtraObjectOptions e in GameObject.FindObjectsOfType<ExtraObjectOptions>())
+            {
+                if (e.HasNeeded(o) != "")
+                {
+                    anchors.Add(e.gameObject);
+                    found = true;
+                    break;
+                }
+            }
 
-    //     foreach (string o in objectNames)
-    //     {
-    //         bool found = false;
-    //         foreach (ExtraObjectOptions e in GameObject.FindObjectsOfType<ExtraObjectOptions>())
-    //         {
-    //             if (e.HasNeeded(o) != "")
-    //             {
-    //                 anchors.Add(e.gameObject);
-    //                 found = true;
-    //                 break;
-    //             }
-    //         }
+            if (found)
+                continue;
 
-    //         if (found)
-    //             continue;
+            foreach (ShowHideObjects sh in GameObject.FindObjectsOfType<ShowHideObjects>())
+            {
+                if (sh.HasNeeded(o))
+                {
+                    anchors.Add(sh.gameObject);
+                    found = true;
+                    break;
+                }
+            }
+            if (found)
+                continue;
 
-    //         if (workField != null)
-    //         {
-    //             foreach (GameObject workFieldObject in workField.objects)
-    //             {
-    //                 if (workFieldObject != null)
-    //                 {
-    //                     if (workFieldObject.name == o)
-    //                     {
-    //                         anchors.Add(workField.gameObject);
-    //                         found = true;
-    //                         break;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //         if (found)
-    //             continue;
+           
+            if (found)
+                continue;
+            if (GameObject.Find(o) != null)
+            {
+                anchors.Add(GameObject.Find(o));
+            }
+        }
+        return anchors;
+    }
 
-    //         if (catheterPack != null)
-    //         {
-    //             foreach (GameObject catObject in catheterPack.objects)
-    //             {
-    //                 if (catObject != null)
-    //                 {
-    //                     if (catObject.name == o)
-    //                     {
-    //                         anchors.Add(workField.gameObject);
-    //                         found = true;
-    //                         break;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //         if (found)
-    //             continue;
-    //         if (GameObject.Find(o) != null)
-    //         {
-    //             anchors.Add(GameObject.Find(o));
-    //         }
-    //     }
-    //     return anchors;
-    // }
+    public static WalkToGroupVR NearestWalkToGroup(GameObject obj)
+    {
+        WalkToGroupVR nearest = GameObject.FindObjectOfType<WalkToGroupVR>();
+        // if (obj.GetComponent<ExtraObjectOptions>() != null)
+        // {
+        //     if (obj.GetComponent<ExtraObjectOptions>().nearestWalkToGroup != null)
+        //         return obj.GetComponent<ExtraObjectOptions>().nearestWalkToGroup;
+        // }
+        float nearestDist = Vector3.Distance(nearest.transform.position, obj.transform.position);
+        foreach (WalkToGroupVR w in GameObject.FindObjectsOfType<WalkToGroupVR>())
+        {
+            float dist = Vector3.Distance(w.transform.position, obj.transform.position);
+            if (dist < nearestDist)
+            {
+                nearestDist = dist;
+                nearest = w;
+            }
+        }
+        return nearest;
+    }
 
-    // public static WalkToGroup NearestWalkToGroup(GameObject obj)
-    // {
-    //     WalkToGroup nearest = GameObject.FindObjectOfType<WalkToGroup>();
-    //     if (obj.GetComponent<ExtraObjectOptions>() != null)
-    //     {
-    //         if (obj.GetComponent<ExtraObjectOptions>().nearestWalkToGroup != null)
-    //             return obj.GetComponent<ExtraObjectOptions>().nearestWalkToGroup;
-    //     }
-    //     float nearestDist = Vector3.Distance(nearest.transform.position, obj.transform.position);
-    //     foreach (WalkToGroup w in GameObject.FindObjectsOfType<WalkToGroup>())
-    //     {
-    //         float dist = Vector3.Distance(w.transform.position, obj.transform.position);
-    //         if (dist < nearestDist)
-    //         {
-    //             nearestDist = dist;
-    //             nearest = w;
-    //         }
-    //     }
-    //     return nearest;
-    // }
+    public static string FindNearest(string[] objectNames)
+    {
+        List<WalkToGroupVR> nearestGroups = new List<WalkToGroupVR>();
+        List<GameObject> anchors = ActionManager.FindAnchers(objectNames);
+        if (anchors != null)
+        {
+            foreach (GameObject a in anchors)
+            {
+                nearestGroups.Add(ActionManager.NearestWalkToGroup(a));
+            }
+        }
 
-    // public static string FindNearest(string[] objectNames)
-    // {
-    //     List<WalkToGroup> nearestGroups = new List<WalkToGroup>();
-    //     List<GameObject> anchors = ActionManager.FindAnchers(objectNames);
-    //     if (anchors != null)
-    //     {
-    //         foreach (GameObject a in anchors)
-    //         {
-    //             nearestGroups.Add(ActionManager.NearestWalkToGroup(a));
-    //         }
-    //     }
+        if (nearestGroups.Count > 0)
+        {
+            WalkToGroupVR ng = nearestGroups[0];
+            foreach (WalkToGroupVR w in nearestGroups)
+            {
+                if (ng != w)
+                    return "";
+            }
 
-    //     if (nearestGroups.Count > 0)
-    //     {
-    //         WalkToGroup ng = nearestGroups[0];
-    //         foreach (WalkToGroup w in nearestGroups)
-    //         {
-    //             if (ng != w)
-    //                 return "";
-    //         }
+            return ng.name;
+        }
 
-    //         return ng.name;
-    //     }
-
-    //     return "";
-    // }
+        return "";
+    }
 
     public void UpdatePoints(int value)
     {

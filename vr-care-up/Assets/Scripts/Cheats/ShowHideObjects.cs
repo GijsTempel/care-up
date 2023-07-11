@@ -43,6 +43,17 @@ public class ShowHideObjects : MonoBehaviour
         }
     }
 
+    public bool HasNeeded(string str)
+    {
+       
+        foreach(GameObject o in hidenObjects)
+        {
+            if (o.name == str)
+                return true;
+        }
+        return false;
+    }
+
     public void _toggle(string _name)
     {
         foreach (GameObject o in hidenObjects)
