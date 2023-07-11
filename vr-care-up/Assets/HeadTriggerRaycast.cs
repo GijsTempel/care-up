@@ -6,7 +6,7 @@ public class HeadTriggerRaycast : MonoBehaviour
 {
     private float lookAtTimer = 0f;
     int lookAtObjectId;
-    const float MAX_RAY_TRIGGER_TIME = 1.5f;
+    const float MAX_RAY_TRIGGER_TIME = 1.0f;
     void Start()
     {
         
