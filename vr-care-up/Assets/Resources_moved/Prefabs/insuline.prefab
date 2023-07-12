@@ -53,6 +53,51 @@ MonoBehaviour:
   LeftActionManagerObject: InsulinPen
   RightActionManagerObject: InsulinOpenedNeedlePackage
   checkBeforeAct: 0
+--- !u!1 &806980273
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 806980274}
+  - component: {fileID: 806980275}
+  m_Layer: 0
+  m_Name: hl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &806980274
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806980273}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3782183951739515762}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &806980275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806980273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2977c027b82398438daca38f5e60571, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hl_type: 2
 --- !u!1 &1060461049
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,6 +707,7 @@ GameObject:
   - component: {fileID: 3782183951739515774}
   - component: {fileID: 3782183951739515769}
   - component: {fileID: 3782183951739515763}
+  - component: {fileID: 1695242542}
   m_Layer: 3
   m_Name: insuline
   m_TagString: Untagged
@@ -685,6 +731,7 @@ Transform:
   - {fileID: 2000497620150699375}
   - {fileID: 7318990138176939077}
   - {fileID: 3782183951900775891}
+  - {fileID: 806980274}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -764,6 +811,23 @@ MonoBehaviour:
   - {fileID: 3782183951900936687}
   - {fileID: 3782183951900936685}
   - {fileID: 3782183951900936683}
+--- !u!114 &1695242542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782183951739515768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0642338543dc4d78ea7cdc97ff928048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectPrefabNames:
+  - insuline
+  - InsulinPenWithCap
+  description: insulinepen
+  nameArticle: de
 --- !u!1 &3782183951810340460
 GameObject:
   m_ObjectHideFlags: 0

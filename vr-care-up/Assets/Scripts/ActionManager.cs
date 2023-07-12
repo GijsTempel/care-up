@@ -255,7 +255,8 @@ public class ActionManager : MonoBehaviour
                 {
                     if (o.GetComponent<ObjectDataHolder>() != null)
                     {
-                        if (oName == o.GetComponent<ObjectDataHolder>().objectSceneName)
+
+                        if (o.GetComponent<ObjectDataHolder>().objectPrefabNames.Contains(oName))
                             return o.GetComponent<ObjectDataHolder>();
                     }
                 }
@@ -265,7 +266,7 @@ public class ActionManager : MonoBehaviour
         {
             foreach(ObjectDataHolder o in GameObject.FindObjectsOfType<ObjectDataHolder>())
             {
-                if (oName == o.objectSceneName)
+                if (o.GetComponent<ObjectDataHolder>().objectPrefabNames.Contains(oName))
                     return o;
             }
         }
@@ -294,24 +295,24 @@ public class ActionManager : MonoBehaviour
             return;
         }
 
-        GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
+        GameUIVR gameUIVR = GameObject.FindObjectOfType<GameUIVR>();
         List<StepData> stepsList = new List<StepData>();
         HandsInventory inventory = GameObject.FindObjectOfType<HandsInventory>();
 
         int i = 0;
         bool foundComplitedAction = false;
-        gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
-        gameUI.dropLeftBlink = false;
-        gameUI.dropRightBlink = false;
-        // gameUI.reqPlaces.Clear();
+        gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.None;
+        gameUIVR.dropLeftBlink = false;
+        gameUIVR.dropRightBlink = false;
+        // gameUIVR.reqPlaces.Clear();
         bool leftIncorrect = true;
         bool rightIncorrect = true;
         bool noObjectActions = true;
         bool anyCorrectPlace = false;
         List<string> placesReqList = new List<string>();
         string uncomplitedSecondPlace = "";
-        gameUI.recordsButtonBlink = false;
-        gameUI.prescriptionButtonBlink = false;
+        gameUIVR.recordsButtonBlink = false;
+        gameUIVR.prescriptionButtonBlink = false;
 
         foreach (Action a in actManager.IncompletedActions)
         {
@@ -346,7 +347,7 @@ public class ActionManager : MonoBehaviour
                     // {
                     //     if (po.hasTopic(a._topic))
                     //     {
-                    //         gameUI.PlaceTalkBubble(po.gameObject);
+                    //         gameUIVR.PlaceTalkBubble(po.gameObject);
                     //     }
                     // }
 
@@ -376,7 +377,7 @@ public class ActionManager : MonoBehaviour
                     // {
                     //     if (po.hasTopic(a._topic))
                     //     {
-                    //         gameUI.PlaceTalkBubble(po.gameObject);
+                    //         gameUIVR.PlaceTalkBubble(po.gameObject);
                     //     }
                     // }
                     // if (personClicked)
@@ -390,7 +391,7 @@ public class ActionManager : MonoBehaviour
             {
                 objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentButtonText()}' knop.", i));
                 actManager.NotTriggeredAction();
-                gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
+                gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.NoTargetRight;
                 foundComplitedAction = true;
             }
 
@@ -410,15 +411,15 @@ public class ActionManager : MonoBehaviour
 
                 if (a.leftHandRequirement == "PatientRecords")
                 {
-                    gameUI.recordsButtonBlink = true;
+                    gameUIVR.recordsButtonBlink = true;
                 }
                 else if (a.leftHandRequirement == "PrescriptionForm")
                 {
-                    gameUI.prescriptionButtonBlink = true;
+                    gameUIVR.prescriptionButtonBlink = true;
                 }
                 else if (a.leftHandRequirement == "PaperAndPen")
                 {
-                    gameUI.paperAndPenButtonblink = true;
+                    gameUIVR.paperAndPenButtonblink = true;
                 }
             }
             else
@@ -525,7 +526,7 @@ public class ActionManager : MonoBehaviour
                                 currentLeftObject = System.Char.ToLowerInvariant(leftObjectDataHolder.description[0]) + 
                                     leftObjectDataHolder.description.Substring(1);
 
-                            if (leftObjectDataHolder.objectSceneName == hand)
+                            if (leftObjectDataHolder.objectPrefabNames.Contains(hand))
                             {
                                 leftIncorrect = false;
                                 completed = true;
@@ -540,7 +541,7 @@ public class ActionManager : MonoBehaviour
                                 currentRightObject = System.Char.ToLowerInvariant(rightObjectDataHolder.description[0]) + 
                                     rightObjectDataHolder.description.Substring(1);
 
-                            if (rightObjectDataHolder.objectSceneName == hand)
+                            if (rightObjectDataHolder.objectPrefabNames.Contains(hand))
                             {
                                 rightIncorrect = false;
                                 completed = true;
@@ -580,134 +581,143 @@ public class ActionManager : MonoBehaviour
                             if (!foundComplitedAction)
                             {
                                 foundComplitedAction = true;
-                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.Combine;
+                                gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.Combine;
                             }
                         }
 
                         else if (leftR != null)
                         {
-                            if (actManager.CompareUseOnInfo(inventory.LeftHandObject().objectSceneName, ""))
+                            foreach (string lObjPrefabName in inventory.LeftHandObject().objectPrefabNames)
                             {
-                                keyWords = actManager.CurrentButtonText(inventory.LeftHandObject().objectSceneName);
 
-                                objectsData.Add(new StepData(false, $"- Klik op de '{keyWords}' knop.", i));
-                                if (!foundComplitedAction)
+                                if (actManager.CompareUseOnInfo(lObjPrefabName, ""))
                                 {
-                                    foundComplitedAction = true;
-                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetLeft;
-                                }
-                            }
-                            else if (a.Type == ActionType.ObjectDrop && a.leftHandRequirement == inventory.LeftHandObject().objectSceneName)
-                            {
-                                if (!foundComplitedAction)
-                                {
-                                    foundComplitedAction = true;
-                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
-                                }
-                                if (secondPlaceData != null)
-                                {
-                                    if (secondPlaceData.completed)
+                                    keyWords = actManager.CurrentButtonText(lObjPrefabName);
+
+                                    objectsData.Add(new StepData(false, $"- Klik op de '{keyWords}' knop.", i));
+                                    if (!foundComplitedAction)
                                     {
-                                        gameUI.dropLeftBlink = true;
+                                        foundComplitedAction = true;
+                                        gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.NoTargetLeft;
+                                    }
+                                }
+                                else if (a.Type == ActionType.ObjectDrop && a.leftHandRequirement == lObjPrefabName)
+                                {
+                                    if (!foundComplitedAction)
+                                    {
+                                        foundComplitedAction = true;
+                                        gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.None;
+                                    }
+                                    if (secondPlaceData != null)
+                                    {
+                                        if (secondPlaceData.completed)
+                                        {
+                                            gameUIVR.dropLeftBlink = true;
 
+                                            objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
+                                        }
+                                    }
+                                    else
+                                    {
+                                        gameUIVR.dropLeftBlink = true;
                                         objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
                                     }
                                 }
-                                else
+                                else if (a.Type == ActionType.ObjectExamine && lObjPrefabName == a.leftHandRequirement)
                                 {
-                                    gameUI.dropLeftBlink = true;
-                                    objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
+                                    objectsData.Add(new StepData(false, $"- Klik op de 'Controleren' knop.", i));
+                                    if (!foundComplitedAction)
+                                    {
+                                        foundComplitedAction = true;
+                                        gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.ZoomLeft;
+                                    }
                                 }
-                            }
-                            else if (a.Type == ActionType.ObjectExamine && inventory.LeftHandObject().objectSceneName == a.leftHandRequirement)
-                            {
-                                objectsData.Add(new StepData(false, $"- Klik op de 'Controleren' knop.", i));
-                                if (!foundComplitedAction)
-                                {
-                                    foundComplitedAction = true;
-                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.ZoomLeft;
-                                }
-                            }
 
-                            else if (!string.IsNullOrEmpty(actManager.CurrentDecombineButtonText(inventory.LeftHandObject().objectSceneName)))
-                            {
-                                keyWords = actManager.CurrentDecombineButtonText(inventory.LeftHandObject().objectSceneName);
-                                objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentDecombineButtonText(inventory.LeftHandObject().objectSceneName)}' knop.", i));
-                                if (!foundComplitedAction)
+                                else if (!string.IsNullOrEmpty(actManager.CurrentDecombineButtonText(lObjPrefabName)))
                                 {
-                                    foundComplitedAction = true;
-                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineLeft;
+                                    keyWords = actManager.CurrentDecombineButtonText(lObjPrefabName);
+                                    objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentDecombineButtonText(lObjPrefabName)}' knop.", i));
+                                    if (!foundComplitedAction)
+                                    {
+                                        foundComplitedAction = true;
+                                        gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.DecombineLeft;
+                                    }
                                 }
+                                else if (!foundComplitedAction)
+                                    gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.None;
+
                             }
-                            else if (!foundComplitedAction)
-                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
                         }
 
                         else if (rightR != null)
                         {
-                            if (actManager.CompareUseOnInfo(inventory.RightHandObject().objectSceneName, ""))
+                            foreach (string rObjPrefabName in inventory.LeftHandObject().objectPrefabNames)
                             {
-                                keyWords = actManager.CurrentButtonText(inventory.RightHandObject().objectSceneName);
+                                if (actManager.CompareUseOnInfo(rObjPrefabName, ""))
+                                {
+                                    keyWords = actManager.CurrentButtonText(rObjPrefabName);
 
-                                objectsData.Add(new StepData(false, $"- Klik op de '{keyWords}' knop.", i));
-                                if (!foundComplitedAction)
-                                {
-                                    foundComplitedAction = true;
-                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
-                                }
-                            }
-                            else if (a.Type == ActionType.ObjectDrop)
-                            {
-                                if (!foundComplitedAction)
-                                {
-                                    foundComplitedAction = true;
-                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
-                                }
-                                if (secondPlaceData != null)
-                                {
-                                    if (secondPlaceData.completed)
+                                    objectsData.Add(new StepData(false, $"- Klik op de '{keyWords}' knop.", i));
+                                    if (!foundComplitedAction)
                                     {
-                                        gameUI.dropRightBlink = true;
+                                        foundComplitedAction = true;
+                                        gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.NoTargetRight;
+                                    }
+                                }
+                                else if (a.Type == ActionType.ObjectDrop)
+                                {
+                                    if (!foundComplitedAction)
+                                    {
+                                        foundComplitedAction = true;
+                                        gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.None;
+                                    }
+                                    if (secondPlaceData != null)
+                                    {
+                                        if (secondPlaceData.completed)
+                                        {
+                                            gameUIVR.dropRightBlink = true;
+                                            objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
+                                        }
+                                    }
+                                    else
+                                    {
+                                        gameUIVR.dropRightBlink = true;
                                         objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
+                                    }    
+                                }
+                                else if (a.Type == ActionType.ObjectExamine && rObjPrefabName == a.leftHandRequirement)
+                                {
+                                    objectsData.Add(new StepData(false, $"- Klik op de 'Controleren' knop.", i));
+                                    if (!foundComplitedAction)
+                                    {
+                                        foundComplitedAction = true;
+                                        gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.ZoomRight;
+                                    }
+                                }
+                                else if (a.Type == ActionType.PersonTalk)
+                                {
+                                    if (!foundComplitedAction)
+                                    {
+                                        gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.None;
+                                    }
+                                }
+                                else if (!string.IsNullOrEmpty(actManager.CurrentDecombineButtonText(rObjPrefabName)))
+                                {
+                                    keyWords = actManager.CurrentDecombineButtonText(rObjPrefabName);
+                                    objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentDecombineButtonText(rObjPrefabName)}' knop.", i));
+                                    if (!foundComplitedAction)
+                                    {
+                                        foundComplitedAction = true;
+                                        gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.DecombineRight;
                                     }
                                 }
                                 else
-                                {
-                                    gameUI.dropRightBlink = true;
-                                    objectsData.Add(new StepData(false, $"- Leg {article} {handValue} neer.", i));
-                                }    
-                            }
-                            else if (a.Type == ActionType.ObjectExamine && inventory.RightHandObject().objectSceneName == a.leftHandRequirement)
-                            {
-                                objectsData.Add(new StepData(false, $"- Klik op de 'Controleren' knop.", i));
-                                if (!foundComplitedAction)
-                                {
-                                    foundComplitedAction = true;
-                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.ZoomRight;
+                                    gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.None;
                                 }
                             }
-                            else if (a.Type == ActionType.PersonTalk)
-                            {
-                                if (!foundComplitedAction)
-                                {
-                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
-                                }
-                            }
-                            else if (!string.IsNullOrEmpty(actManager.CurrentDecombineButtonText(inventory.RightHandObject().objectSceneName)))
-                            {
-                                keyWords = actManager.CurrentDecombineButtonText(inventory.RightHandObject().objectSceneName);
-                                objectsData.Add(new StepData(false, $"- Klik op de '{actManager.CurrentDecombineButtonText(inventory.RightHandObject().objectSceneName)}' knop.", i));
-                                if (!foundComplitedAction)
-                                {
-                                    foundComplitedAction = true;
-                                    gameUI.buttonToBlink = GameUI.ItemControlButtonType.DecombineRight;
-                                }
-                            }
-                            else
-                                gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
-                        }
+                        
                         else if (!foundComplitedAction)
-                            gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
+                            gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.None;
 
 
                         if (!completed)
@@ -748,7 +758,7 @@ public class ActionManager : MonoBehaviour
             if (objectsData.Count > 0)
                 noObjectActions = false;
 
-            gameUI.moveButtonToBlink = GameUI.MoveControlButtonType.None;
+            gameUIVR.moveButtonToBlink = GameUIVR.MoveControlButtonType.None;
 
             if (uncomplitedSecondPlace != "")
             {
@@ -760,7 +770,7 @@ public class ActionManager : MonoBehaviour
             foreach (string s in placesReqList)
             {
                 sss += s + " | ";
-                gameUI.reqPlaces.Add(s);
+                gameUIVR.reqPlaces.Add(s);
             }
 
             if ((!anyCorrectPlace || uncomplitedSecondPlace != "") && !playerScript.Away() && placesReqList.Count > 0)
@@ -770,22 +780,22 @@ public class ActionManager : MonoBehaviour
 
                 foreach (string s in placesReqList)
                 {
-                    // WalkToGroupButton b = gameUI.FindMovementButton(s, playerScript.currentWalkPosition);
+                    // WalkToGroupButton b = gameUIVR.FindMovementButton(s, playerScript.currentWalkPosition);
                     // if (b != null)
                     // {
-                    //     gameUI.moveButtonToBlink = b.moveControlButtonType;
+                    //     gameUIVR.moveButtonToBlink = b.moveControlButtonType;
                     //     break;
                     // }
 
-                    //int dir = gameUI.FindDirection(s, playerScript.currentWalkPosition, 0);
+                    //int dir = gameUIVR.FindDirection(s, playerScript.currentWalkPosition, 0);
                     //if (dir == -1)
                     //{
-                    //    gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.MoveLeft;
+                    //    gameUIVR.moveButtonToBlink = GameUIVR.ItemControlButtonType.MoveLeft;
                     //    break;
                     //}
                     //else if (dir == 1)
                     //{
-                    //    gameUI.moveButtonToBlink = GameUI.ItemControlButtonType.MoveRight;
+                    //    gameUIVR.moveButtonToBlink = GameUIVR.ItemControlButtonType.MoveRight;
                     //    break;
                     //}
                 }
@@ -794,24 +804,24 @@ public class ActionManager : MonoBehaviour
             i++;
         }
 
-        if (gameUI.moveButtonToBlink != GameUI.MoveControlButtonType.None)
+        if (gameUIVR.moveButtonToBlink != GameUIVR.MoveControlButtonType.None)
         {
-            gameUI.buttonToBlink = GameUI.ItemControlButtonType.None;
-            gameUI.dropRightBlink = false;
-            gameUI.dropLeftBlink = false;
+            gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.None;
+            gameUIVR.dropRightBlink = false;
+            gameUIVR.dropLeftBlink = false;
         }
 
         personClicked = false;
 
-        gameUI.UpdateHintPanel(stepsList, showDelay);
+        gameUIVR.UpdateHintPanel(stepsList, showDelay);
 
         if (leftIncorrect && !inventory.LeftHandEmpty() && !noObjectActions)
-            gameUI.dropLeftBlink = true;
+            gameUIVR.dropLeftBlink = true;
         if (rightIncorrect && !inventory.RightHandEmpty() && !noObjectActions)
-            gameUI.dropRightBlink = true;
-        gameUI.UpdateHintPanel(stepsList);
+            gameUIVR.dropRightBlink = true;
+        gameUIVR.UpdateHintPanel(stepsList);
 
-        gameUI.UpdateButtonsBlink();
+        gameUIVR.UpdateButtonsBlink();
     }
 
     /// <summary>
@@ -827,7 +837,7 @@ public class ActionManager : MonoBehaviour
             bool Ua = false;
 
 #if UNITY_EDITOR
-            // if (GameObject.FindObjectOfType<GameUI>() != null)
+            // if (GameObject.FindObjectOfType<GameUIVR>() != null)
             //     Ua = GameObject.FindObjectOfType<ObjectsIDsController>().Ua;
 #endif
 
@@ -1553,14 +1563,14 @@ public class ActionManager : MonoBehaviour
 
     public void NotTriggeredAction(GeneralAction generalAction = null)
     {
-        // GameUI gameUI = FindObjectOfType<GameUI>();
+        // GameUIVR gameUIVR = FindObjectOfType<GameUIVR>();
         // string buttonText = "";
         // if (generalAction != null)
         //     buttonText = generalAction.ButtonText;
-        // gameUI.ShowNoTargetButton(buttonText);
+        // gameUIVR.ShowNoTargetButton(buttonText);
 
         // if (practiceMode)
-        //     gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
+        //     gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.NoTargetRight;
     }
 
     /// <summary>
@@ -1606,7 +1616,7 @@ public class ActionManager : MonoBehaviour
                     action.matched = true;
                     if (action.UITimeout > 0f)
                     {
-                        // GameObject.FindObjectOfType<GameUI>().UITimeout(action.UITimeout);
+                        // GameObject.FindObjectOfType<GameUIVR>().UITimeout(action.UITimeout);
                     }
                     int index = actionList.IndexOf(action);
 
@@ -1673,7 +1683,7 @@ public class ActionManager : MonoBehaviour
         if (matched)
         {
             //currentStepHintUsed = false;
-            // GameObject.FindObjectOfType<GameUI>().ButtonBlink(false);
+            // GameObject.FindObjectOfType<GameUIVR>().ButtonBlink(false);
         }
         // else if (manager != null && !manager.practiceMode) // test mode error, check for blocks
         // {
@@ -1712,7 +1722,7 @@ public class ActionManager : MonoBehaviour
         //             message = "Je kunt deze stap nog niet doen, het kan zijn dat je een stap vergeten bent.";
         //         }
 
-        //         GameObject.FindObjectOfType<GameUI>().ShowBlockMessage(title, message);
+        //         GameObject.FindObjectOfType<GameUIVR>().ShowBlockMessage(title, message);
         //     }
         // }
 
@@ -1740,7 +1750,7 @@ public class ActionManager : MonoBehaviour
                     // RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
 
                     // if (type != ActionType.SequenceStep)
-                    //     GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("Verkeerde handeling!", IncompletedActions[0].shortDescr);
+                    //     GameObject.FindObjectOfType<GameUIVR>().ShowBlockMessage("Verkeerde handeling!", IncompletedActions[0].shortDescr);
                 }
             }
 
@@ -1861,7 +1871,7 @@ public class ActionManager : MonoBehaviour
     private void SceneCompletedRoutine()
     {
         Narrator.PlaySound("LevelComplete", 0.1f);
-        // GameObject.FindObjectOfType<GameUI>().ShowDonePanel(true);
+        // GameObject.FindObjectOfType<GameUIVR>().ShowDonePanel(true);
     }
 
     /// <summary>
@@ -1957,10 +1967,10 @@ public class ActionManager : MonoBehaviour
     {
         if (!practiceMode)
             return;
-        GameUI gameUI = GameObject.FindObjectOfType<GameUI>();
+        GameUIVR gameUIVR = GameObject.FindObjectOfType<GameUIVR>();
         ActionManager am = GameObject.FindObjectOfType<ActionManager>();
-        // gameUI.TalkBubble.SetActive(false);
-        // gameUI.PersonToTalk = null;
+        // gameUIVR.TalkBubble.SetActive(false);
+        // gameUIVR.PersonToTalk = null;
         foreach (Action a in am.IncompletedActions)
         {
             string[] ObjectNames = new string[0];

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectDataHolder : MonoBehaviour
 {
-    public string objectSceneName;
+    public List<string> objectPrefabNames;
     public string description;
     public string nameArticle;
 

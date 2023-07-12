@@ -80,6 +80,7 @@ MonoBehaviour:
   triggerHand: 3
   triggerHandAction: 0
   requiredHandPose: 0
+  isRayTrigger: 0
 --- !u!65 &540199894
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -142,6 +143,7 @@ MonoBehaviour:
   triggerHand: 2
   triggerHandAction: 0
   requiredHandPose: 0
+  isRayTrigger: 0
 --- !u!65 &545705560
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -202,13 +204,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b86b1118ea4582e930aa4cef899841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionNumberLimit: -1
+  actionNumberLimit: 1
   triggerName: wash
   pickable: {fileID: 0}
   mirrorAnimation: 0
   actionType: 1
   LeftActionManagerObject: HandCleaner
   RightActionManagerObject: 
+  checkBeforeAct: 0
 --- !u!1 &1000013512722100
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,6 +224,7 @@ GameObject:
   - component: {fileID: 33482285600373186}
   - component: {fileID: 23000011647182554}
   - component: {fileID: 65161353448980618}
+  - component: {fileID: 1215535100}
   m_Layer: 0
   m_Name: HandCleaner
   m_TagString: Untagged
@@ -307,3 +311,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.093424894, y: 0.053011093, z: 0.2646493}
   m_Center: {x: 0.00035585286, y: 2.3027268e-16, z: 0.05253596}
+--- !u!114 &1215535100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013512722100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0642338543dc4d78ea7cdc97ff928048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectSceneName: 
+  description: 
+  nameArticle: 

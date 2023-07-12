@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class ActionHandler : MonoBehaviour
 {
-    ActionManager actionManager;
+    private ActionManager actionManager;
+    private GameUIVR gameUIVR;
+  
     public bool TryExecuteAction(ActionManager.ActionType actionType, string leftHandObjectName, string rightHandObjectName)
     {
         Debug.Log("@_tryAction:" + actionType.ToString() + " L " + leftHandObjectName + " R " + rightHandObjectName);
         if (actionManager == null)
             actionManager = GameObject.FindObjectOfType<ActionManager>();
+        if (gameUIVR == null)
+            gameUIVR = GameObject.FindObjectOfType<GameUIVR>();
         if (actionManager == null)
             return false;
         bool result = false;
@@ -38,6 +42,9 @@ public class ActionHandler : MonoBehaviour
                 Debug.LogWarning(actionType + " is not supported yet in ActionHandler. TODO");
                 break;
         }
+        if (gameUIVR != null)
+            gameUIVR.UpdateHelpHighlight();
+
         return result;
     }
 

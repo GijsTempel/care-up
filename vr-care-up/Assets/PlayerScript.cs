@@ -15,6 +15,7 @@ public class PlayerScript : MonoBehaviour
 
     private HandPresence leftHandPresence;
     private HandPresence rightHandPresence;
+    private GameUIVR gameUIVR;
 
     public HandPresence GetHandWithThisObject(GameObject obj)
     {
