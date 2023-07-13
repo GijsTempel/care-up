@@ -130,27 +130,27 @@ public class GameUIVR : MonoBehaviour
 
         if (!handsInventory.RightHandEmpty())
             RemoveHighlight(prefix, handsInventory.RightHandObject().name);
-        bool autoObjectSelected = false;
+        // bool autoObjectSelected = false;
         //bool AlloweAutoAction = AllowAutoPlay();
 
 
-        string AutoMoveTo = "";
+        // string AutoMoveTo = "";
         foreach (Action a in actionManager.IncompletedActions)
         {
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
 
-            if (false)//PlayerPrefsManager.simulatePlayerActions && ps.away)
-            {
-                if (a.placeRequirement != "")
-                {
-                    if (AutoMoveTo == "")
-                        AutoMoveTo = a.placeRequirement;
-                    else if (a.Type == ActionManager.ActionType.PersonTalk)
-                        AutoMoveTo = a.placeRequirement;
+            // if (PlayerPrefsManager.simulatePlayerActions && ps.away)
+            // {
+            //     if (a.placeRequirement != "")
+            //     {
+            //         if (AutoMoveTo == "")
+            //             AutoMoveTo = a.placeRequirement;
+            //         else if (a.Type == ActionManager.ActionType.PersonTalk)
+            //             AutoMoveTo = a.placeRequirement;
 
-                }
-            }
+            //     }
+            // }
             //if (AutoMoveTo != "")
             //    AlloweAutoAction = false;
 
@@ -280,10 +280,6 @@ public class GameUIVR : MonoBehaviour
                     //    }
                 }
             }
-        
-        
-        
-        
         }
         //if (PlayerPrefsManager.simulatePlayerActions && ps.away)
         //    if (AutoMoveTo != "")
@@ -293,18 +289,24 @@ public class GameUIVR : MonoBehaviour
         //    }
 
         ////clear highlights
+        string ssa = "@_--:";
         for (int i = 0; i < activeHighlighted.Count; i++)
         {
             if (!newHLObjects.Contains(activeHighlighted[i]))
             {
+                ssa += activeHighlighted[i];
                 RemoveHighlight(prefix, activeHighlighted[i]);
             }
         }
         activeHighlighted.Clear();
+        string sss = "@_++newHL:";
         foreach (string s in newHLObjects)
         {
+            sss += s;
             activeHighlighted.Add(s);
         }
+        Debug.Log(ssa);
+        Debug.Log(sss);
     }
 
 

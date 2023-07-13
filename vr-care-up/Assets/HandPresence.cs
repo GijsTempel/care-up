@@ -23,6 +23,7 @@ public class HandPresence : MonoBehaviour
     private const float ACTION_TRESHOULD_DOWN = 0.8f;
     private string handName = "Hand";
     PickableObject objectInHand;
+    private GameUIVR gameUIVR;
 
 
     public HandPoseControl GetHandPoseControl()
@@ -48,6 +49,7 @@ public class HandPresence : MonoBehaviour
     void Start()
     {
         TryInitialize();
+        gameUIVR = GameObject.FindObjectOfType<GameUIVR>();
     }
 
     void TryInitialize()
@@ -179,6 +181,8 @@ public class HandPresence : MonoBehaviour
                 if (grabHandPose != null && spawnHandModel != null)
                     grabHandPose.SetupPose(spawnHandModel.GetComponent<HandPoseData>());
             }
+            if (gameUIVR != null)
+                gameUIVR.UpdateHelpHighlight();
             return true;
         }
         return false;
@@ -201,6 +205,8 @@ public class HandPresence : MonoBehaviour
         objectInHand.Drop();
 
         objectInHand = null;
+        if (gameUIVR != null)
+            gameUIVR.UpdateHelpHighlight();
     }
 
 
