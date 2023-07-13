@@ -9,7 +9,6 @@ public class ActionHandler : MonoBehaviour
   
     public bool TryExecuteAction(ActionManager.ActionType actionType, string leftHandObjectName, string rightHandObjectName)
     {
-        Debug.Log("@_tryAction:" + actionType.ToString() + " L " + leftHandObjectName + " R " + rightHandObjectName);
         if (actionManager == null)
             actionManager = GameObject.FindObjectOfType<ActionManager>();
         if (gameUIVR == null)

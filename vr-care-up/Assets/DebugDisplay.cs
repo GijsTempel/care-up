@@ -39,6 +39,9 @@ public class DebugDisplay : MonoBehaviour
                 debugLogs.Add(debugKey, debugValue);
 
         }
+        if (type == LogType.Error){
+            debugLogs.Add("!!Error", logString);
+        }
         string displayText = "";
         foreach (KeyValuePair<string, string> log in debugLogs) {
             if (log.Value == "")

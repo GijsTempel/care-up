@@ -291,24 +291,18 @@ public class GameUIVR : MonoBehaviour
         //    }
 
         ////clear highlights
-        string ssa = "@_--:";
         for (int i = 0; i < activeHighlighted.Count; i++)
         {
             if (!newHLObjects.Contains(activeHighlighted[i]))
             {
-                ssa += activeHighlighted[i];
                 RemoveHighlight(prefix, activeHighlighted[i]);
             }
         }
         activeHighlighted.Clear();
-        string sss = "@_++newHL:";
         foreach (string s in newHLObjects)
         {
-            sss += s;
             activeHighlighted.Add(s);
         }
-        Debug.Log(ssa);
-        Debug.Log(sss);
     }
 
 

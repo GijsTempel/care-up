@@ -27,7 +27,6 @@ public class PickableObject : MonoBehaviour
     public bool PickUp(Transform handTransform, float transuitionDuration = 0.2f)
     {
         FallowTransform(handTransform, transuitionDuration);
-        Debug.Log("@ ## " + name + ":" + Random.Range(0, 9999).ToString());
         if (gameObject.GetComponent<Rigidbody>() != null)
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
         return true;

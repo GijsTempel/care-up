@@ -34,8 +34,6 @@ public class ActionTrigger : MonoBehaviour
 
     public void ReceveTriggerAction(bool isLeftHand, TriggerHandAction tAction)
     {
-        Debug.Log("@ReceveTriggerAction:" + name);
-
         TriggerHand currentTriggerHand = TriggerHand.Right;
         if (isLeftHand)
             currentTriggerHand = TriggerHand.Left;
@@ -90,7 +88,6 @@ public class ActionTrigger : MonoBehaviour
             return;
         if (CheckTriggerConfirmation())
         {
-            Debug.Log("@AttemptTrigger:" + name);
             EmitTrigger();
         }
     }

@@ -104,7 +104,6 @@ public class PlayerScript : MonoBehaviour
     }
     public bool TriggerAction(string triggerName, GameObject cinematicTarget = null, bool mirrorAnimation = false)
     {
-        Debug.Log("@$$$" + name + "TriggerAction:" + triggerName + Random.Range(0, 9999).ToString());
         if (leftHandPoseControl == null || rightHandPoseControl == null)
             return false;
         if (IsInCopyAnimationState())

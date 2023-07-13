@@ -106,7 +106,6 @@ public class HandPresence : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("@ % " + name + ":" + collision.name);
         PickableObject pickableObject = collision.GetComponent<PickableObject>();
         if (pickableObject != null && !(pickablesInArea.Contains(pickableObject)))
         {
@@ -156,6 +155,8 @@ public class HandPresence : MonoBehaviour
             GrabHandPose grabHandPose = objectInHand.GetComponent<GrabHandPose>();
             if (grabHandPose != null && spawnHandModel != null)
                 grabHandPose.SetupPose(spawnHandModel.GetComponent<HandPoseData>());
+            if (gameUIVR != null)
+                gameUIVR.UpdateHelpHighlight();
             return true;
         }
         return false;
@@ -181,7 +182,7 @@ public class HandPresence : MonoBehaviour
                 if (grabHandPose != null && spawnHandModel != null)
                     grabHandPose.SetupPose(spawnHandModel.GetComponent<HandPoseData>());
             }
-            if (gameUIVR != null)
+            if (!toForce && gameUIVR != null)
                 gameUIVR.UpdateHelpHighlight();
             return true;
         }
@@ -272,8 +273,6 @@ public class HandPresence : MonoBehaviour
 
                 triggerSavedValue = triggerValue;
             }
-            Debug.Log("@HandPose_" + name + ":" + currentHandPose.ToString());
-
             if (spawnController != null)
             {
                 spawnController.SetActive(showController);
