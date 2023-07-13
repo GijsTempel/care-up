@@ -86,7 +86,8 @@ public class GameUIVR : MonoBehaviour
         if (hlObject != null)
         {
             if (hlObject.GetComponent<HighlightObject>())
-                hlObject.GetComponent<HighlightObject>().Destroy();
+                GameObject.Destroy(hlObject.gameObject);
+            // hlObject.GetComponent<HighlightObject>().Destroy();
         }
     }
 
