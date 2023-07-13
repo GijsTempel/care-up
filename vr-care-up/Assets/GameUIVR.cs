@@ -82,10 +82,11 @@ public class GameUIVR : MonoBehaviour
     {
         string hl_name = prefix + "_" + _name;
 
-        if (GameObject.Find(hl_name) != null)
+        GameObject hlObject = GameObject.Find(hl_name);
+        if (hlObject != null)
         {
-            if (GameObject.Find(hl_name).GetComponent<HighlightObject>())
-                GameObject.Find(hl_name).GetComponent<HighlightObject>().Destroy();
+            if (hlObject.GetComponent<HighlightObject>())
+                hlObject.GetComponent<HighlightObject>().Destroy();
         }
     }
 
