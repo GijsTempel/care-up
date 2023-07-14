@@ -80,7 +80,6 @@ public class ActionCollider : MonoBehaviour
     public bool CheckConformity(ActionTrigger.TriggerHand currentTriggerHand = ActionTrigger.TriggerHand.None,
             ActionTrigger.TriggerHandAction currentTriggerHandAction = ActionTrigger.TriggerHandAction.None)
     {
-        Debug.Log("@)))) isRayTrigger:" + isRayTriggered);
         if (isRayTrigger)
         {
             return isRayTriggered;

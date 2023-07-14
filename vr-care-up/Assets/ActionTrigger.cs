@@ -43,9 +43,12 @@ public class ActionTrigger : MonoBehaviour
 
     private bool CheckTriggerConfirmation(TriggerHand currentTriggerHand = TriggerHand.None, TriggerHandAction currentTriggerHandAction = TriggerHandAction.None)
     {
+        if (actionNumberLimit == 0)
+            return false;
         bool isActionConfirmed = true;
         foreach(ActionCollider c in actionColliders)
         {
+            Debug.Log(name);
             if (!c.CheckConformity(currentTriggerHand, currentTriggerHandAction))
             {
                 isActionConfirmed = false;
@@ -56,11 +59,15 @@ public class ActionTrigger : MonoBehaviour
         {
             if (checkBeforeAct)
             {
+                Debug.Log("@ActionCheck:" + transform.parent.name + "/" + name);
                 if (actionHandler.CheckAction(actionType, LeftActionManagerObject, RightActionManagerObject))
                     isActionConfirmed = actionHandler.TryExecuteAction(actionType, LeftActionManagerObject, RightActionManagerObject);
             }
             else
+            {
+                Debug.Log("@TryExecuteAction:" + transform.parent.name + "/" + name);
                 isActionConfirmed = actionHandler.TryExecuteAction(actionType, LeftActionManagerObject, RightActionManagerObject);
+            }
         }
         return isActionConfirmed;
     }

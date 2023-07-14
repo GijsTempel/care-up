@@ -13,6 +13,12 @@ public class PlayerScript : MonoBehaviour
     private Transform mainCameraTransform;
     public Animation fadeAnimation;
 
+    public GameObject LongRangeLeftRay;
+    public GameObject LongRangeRightRay;
+
+    public GameObject ShortRangeLeftRay;
+    public GameObject ShortRangeRightRay;
+
     private HandPresence leftHandPresence;
     private HandPresence rightHandPresence;
     private GameUIVR gameUIVR;
@@ -102,6 +108,17 @@ public class PlayerScript : MonoBehaviour
         Destroy(objInHand);
 
     }
+
+    public void EnableRaycastControllers(bool toEnable)
+    {
+        Debug.Log("@EnableRaycast:" + toEnable.ToString() + " " + Random.Range(0, 9999).ToString());
+        LongRangeLeftRay.SetActive(toEnable);
+        LongRangeRightRay.SetActive(toEnable);
+        ShortRangeLeftRay.SetActive(toEnable);
+        ShortRangeRightRay.SetActive(toEnable);
+    }
+
+
     public bool TriggerAction(string triggerName, GameObject cinematicTarget = null, bool mirrorAnimation = false)
     {
         if (leftHandPoseControl == null || rightHandPoseControl == null)
@@ -133,11 +150,11 @@ public class PlayerScript : MonoBehaviour
         }
         leftHandPoseControl.SetupCopyAnimationData(mirrorAnimation);
         rightHandPoseControl.SetupCopyAnimationData(mirrorAnimation);
-
+        // EnableRaycastControllers(false);
         ObjectsInHandsFallowAnimation();
-
         animHandsAnimator = animHandsTransform.animator;
         animHandsAnimator.SetTrigger(triggerName);
+        gameUIVR.UpdateHelpHighlight();
         return true;
     }
 
@@ -178,7 +195,6 @@ public class PlayerScript : MonoBehaviour
                 rightHandPoseControl.handPoseMode == HandPoseControl.HandPoseMode.CopyAnimOut)
                 return true;
         }
-
         return false;
     }
 
@@ -210,7 +226,10 @@ public class PlayerScript : MonoBehaviour
         else
             rightHandPoseControl.ExitCopyAnimationState();     
         animHandsTransform.fallowVRCamera = true;
+        gameUIVR.UpdateHelpHighlight();
+        // EnableRaycastControllers(true);
     }
+
     public void AddHandPoseControl(HandPoseControl control, bool isLeftHand)
     {
         if (!isLeftHand)
@@ -227,6 +246,7 @@ public class PlayerScript : MonoBehaviour
     
     private void Update()
     {
+        EnableRaycastControllers(!IsInCopyAnimationState());
     }
 
     public void UpdateWalkToGroup(string WTGName)

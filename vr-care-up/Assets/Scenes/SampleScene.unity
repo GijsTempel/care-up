@@ -436,6 +436,7 @@ GameObject:
   - component: {fileID: 105050822}
   - component: {fileID: 105050824}
   - component: {fileID: 105050825}
+  - component: {fileID: 105050826}
   m_Layer: 3
   m_Name: Tablet
   m_TagString: Untagged
@@ -518,6 +519,23 @@ MonoBehaviour:
   poseTransitionDuration: 0.2
   righHandPose: {fileID: 778417113016128134}
   leftHandPose: {fileID: 2159374145460391125}
+--- !u!114 &105050826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105050820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0642338543dc4d78ea7cdc97ff928048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectPrefabNames:
+  - PatientRecords
+  - PrescriptionForm
+  description: teblet
+  nameArticle: 
 --- !u!1 &162307313
 GameObject:
   m_ObjectHideFlags: 0
@@ -2263,7 +2281,7 @@ GameObject:
   - component: {fileID: 419625068}
   - component: {fileID: 419625069}
   m_Layer: 0
-  m_Name: ActionTrigger
+  m_Name: WFActionTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8760,6 +8778,10 @@ MonoBehaviour:
   animHandsTransform: {fileID: 782628378}
   currentWTGName: 
   fadeAnimation: {fileID: 536528100}
+  LongRangeLeftRay: {fileID: 1044876157}
+  LongRangeRightRay: {fileID: 1486533950}
+  ShortRangeLeftRay: {fileID: 1335461270}
+  ShortRangeRightRay: {fileID: 2131004141}
 --- !u!114 &1286003842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12701,8 +12723,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb34f1ccbd581bf7b165fcaa90446d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  display: {fileID: 0}
-  marker: '@'
+  display: {fileID: 1168014181}
+  marker: 
 --- !u!114 &1686293937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16725,7 +16747,7 @@ GameObject:
   - component: {fileID: 33000011896919032}
   - component: {fileID: 33000011896919033}
   m_Layer: 0
-  m_Name: WorkField_aaa
+  m_Name: WorkField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19472,10 +19494,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: InsulinNeedlePackage_prot
       objectReference: {fileID: 0}
-    - target: {fileID: 1848709177815846, guid: eedf033ee7e35f4fa9fffc2ac4fd7b56, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4784595800337344, guid: eedf033ee7e35f4fa9fffc2ac4fd7b56, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -20448,6 +20466,10 @@ PrefabInstance:
     - target: {fileID: 3782183951739515768, guid: 5eb03201ae4c8ab4f85773ad41464789, type: 3}
       propertyPath: m_Name
       value: insuline
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782183951739515768, guid: 5eb03201ae4c8ab4f85773ad41464789, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5eb03201ae4c8ab4f85773ad41464789, type: 3}

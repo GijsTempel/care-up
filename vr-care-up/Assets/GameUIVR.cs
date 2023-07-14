@@ -52,6 +52,7 @@ public class GameUIVR : MonoBehaviour
     public bool dropLeftBlink = false;
     public bool dropRightBlink = false;
     public List<string> reqPlaces = new List<string>();
+    private PlayerScript player;
     private HandsInventory handsInventory;
     public void UpdateButtonsBlink()
     {
@@ -69,6 +70,7 @@ public class GameUIVR : MonoBehaviour
     {
         handsInventory = GameObject.FindObjectOfType<HandsInventory>();
         actionManager = GameObject.FindObjectOfType<ActionManager>();
+        player = GameObject.FindObjectOfType<PlayerScript>();
     }
 
     // Update is called once per frame
@@ -115,6 +117,7 @@ public class GameUIVR : MonoBehaviour
 
     public void UpdateHelpHighlight()
     {
+
         //PointToObject = null;
         bool practiceMode = true;
 
@@ -137,62 +140,13 @@ public class GameUIVR : MonoBehaviour
 
 
         // string AutoMoveTo = "";
+
         foreach (Action a in actionManager.IncompletedActions)
         {
             string[] ObjectNames = new string[0];
-            a.ObjectNames(out ObjectNames);
+            if (!player.IsInCopyAnimationState())
+                a.ObjectNames(out ObjectNames);
 
-            // if (PlayerPrefsManager.simulatePlayerActions && ps.away)
-            // {
-            //     if (a.placeRequirement != "")
-            //     {
-            //         if (AutoMoveTo == "")
-            //             AutoMoveTo = a.placeRequirement;
-            //         else if (a.Type == ActionManager.ActionType.PersonTalk)
-            //             AutoMoveTo = a.placeRequirement;
-
-            //     }
-            // }
-            //if (AutoMoveTo != "")
-            //    AlloweAutoAction = false;
-
-            // if (a.Type == ActionManager.ActionType.PersonTalk)
-            //     AlloweAutoAction = AllowAutoPlay(false);
-            //if (AlloweAutoAction && !autoObjectSelected)
-            //{
-            //    if (ObjectNames.Length == 1)
-            //    {
-            //        if (a.Type == ActionManager.ActionType.PersonTalk)
-            //        {
-            //            foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
-            //            {
-            //                if (po.hasTopic(a._topic))
-            //                {
-            //                    AutoActionObject = po.gameObject.GetComponentInChildren<PersonObjectPart>().gameObject;
-            //                    autoObjectSelected = true;
-            //                    Invoke("AutoPlay", 4f);
-            //                }
-            //            }
-            //        }
-            //        else if (GameObject.Find(ObjectNames[0]) != null)
-            //        {
-            //            AutoActionObject = GameObject.Find(ObjectNames[0]);
-            //            autoObjectSelected = true;
-            //            Invoke("AutoPlay", 1f);
-            //        }
-
-            //    }
-            //    else
-            //    {
-            //        if (ObjectNames[1] == "" && GameObject.Find(ObjectNames[0]) != null)
-            //        {
-            //            AutoActionObject = GameObject.Find(ObjectNames[0]);
-            //            autoObjectSelected = true;
-            //            Invoke("AutoPlay", 1f);
-            //        }
-
-            //    }
-            //}
             foreach (string objectToUse in ObjectNames)
             {
                 GameObject currentObjectToUse = null;
@@ -202,22 +156,7 @@ public class GameUIVR : MonoBehaviour
 
                 if (currentObjectToUse != null)
                 {
-                    //    //if (AlloweAutoAction && !autoObjectSelected && a.Type != ActionManager.ActionType.PersonTalk)
-                    //    //{
-                    //    //    if (!handsInventory.IsInHand(GameObject.Find(objectToUse)))
-                    //    //    {
-                    //    //        AutoActionObject = GameObject.Find(objectToUse);
-                    //    //        autoObjectSelected = true;
-                    //    //        Invoke("AutoPlay", 4f);
-                    //    //    }
-                    //    //}
-                        HighlightObject.type hl_type = HighlightObject.type.NoChange;
-                    //    //if (GameObject.Find(objectToUse).GetComponent<WorkField>() != null)
-                    //    //{
-                    //    //    hl_type = HighlightObject.type.Hand;
-                    //    //}
-                    //    if (handsInventory.IsInHand(GameObject.Find(objectToUse)))
-                    //        continue;
+                    HighlightObject.type hl_type = HighlightObject.type.NoChange;
                     HighlightObject h = AddHighlight(currentObjectToUse.transform, prefix, hl_type, 2f + Random.Range(0f, 0.5f));
                     if (h != null)
                     {
@@ -283,13 +222,7 @@ public class GameUIVR : MonoBehaviour
                 }
             }
         }
-        //if (PlayerPrefsManager.simulatePlayerActions && ps.away)
-        //    if (AutoMoveTo != "")
-        //    {
-        //        autoPlayMoveWTGName = AutoMoveTo;
-        //        Invoke("AutoPlayMove", 5f);
-        //    }
-
+     
         ////clear highlights
         for (int i = 0; i < activeHighlighted.Count; i++)
         {

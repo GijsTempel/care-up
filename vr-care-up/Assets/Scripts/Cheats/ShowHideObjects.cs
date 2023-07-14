@@ -4,6 +4,7 @@ using UnityEngine;
 public class ShowHideObjects : MonoBehaviour
 {
     public List<GameObject> hidenObjects;
+    private GameUIVR gameUIVR;
 
     public void _show(string _name, bool toShow, bool meshRenderer = false)
     {
@@ -41,11 +42,19 @@ public class ShowHideObjects : MonoBehaviour
                 }
             }
         }
+        if (gameUIVR != null)
+        {
+            gameUIVR.UpdateHelpHighlight();
+        }
+    }
+
+    private void Start()
+    {
+        gameUIVR = GameObject.FindObjectOfType<GameUIVR>();
     }
 
     public bool HasNeeded(string str)
     {
-       
         foreach(GameObject o in hidenObjects)
         {
             if (o.name == str)
