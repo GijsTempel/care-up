@@ -8,6 +8,8 @@ public class GameUIVR : MonoBehaviour
     private ActionManager actionManager;
     public List<string> activeHighlighted = new List<string>();
 
+    public UnityEngine.UI.Text hintsText;
+
     public enum ItemControlButtonType
     {
         None,
