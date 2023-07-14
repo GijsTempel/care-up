@@ -7,6 +7,7 @@ public class GameUIVR : MonoBehaviour
 {
     private ActionManager actionManager;
     public List<string> activeHighlighted = new List<string>();
+    float helpUpdateTimeout = -99;
 
     public UnityEngine.UI.Text hintsText;
 
@@ -78,12 +79,19 @@ public class GameUIVR : MonoBehaviour
         handsInventory = GameObject.FindObjectOfType<HandsInventory>();
         actionManager = GameObject.FindObjectOfType<ActionManager>();
         player = GameObject.FindObjectOfType<PlayerScript>();
+        UpdateHelpWitDelay(1f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (helpUpdateTimeout > 0)
+            helpUpdateTimeout -= Time.deltaTime;
+        if (helpUpdateTimeout < 0 && helpUpdateTimeout > -1f)
+        {
+            helpUpdateTimeout = -99;
+            UpdateHelpHighlight();
+        }
     }
 
 
@@ -122,9 +130,13 @@ public class GameUIVR : MonoBehaviour
         return hl_obj.GetComponent<HighlightObject>();
     }
 
+    public void UpdateHelpWitDelay(float delayValue = 0.5f)
+    {
+        helpUpdateTimeout = delayValue;
+    }
+
     public void UpdateHelpHighlight()
     {
-
         //PointToObject = null;
         bool practiceMode = true;
 

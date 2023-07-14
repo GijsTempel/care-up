@@ -20,10 +20,12 @@ public class HandPoseControl : MonoBehaviour
     private Quaternion finalRootBoneRotation;
     private bool mirroredAnimation = false;
     private HandPoseData savedH2;
+    private GameUIVR gameUIVR;
 
     private float handDataRoutineTime = float.PositiveInfinity;
     private void Start()
     {
+        gameUIVR = GameObject.FindObjectOfType<GameUIVR>();
         player = GameObject.FindObjectOfType<PlayerScript>();
         handPose = GetComponent<HandPoseData>();
     }
@@ -185,6 +187,9 @@ public class HandPoseControl : MonoBehaviour
         if (handDataRoutineTime > poseTransitionDuration &&
             (handPoseMode == HandPoseMode.TransitIn || handPoseMode == HandPoseMode.TransitOut || handPoseMode == HandPoseMode.CopyAnimOut))
         {
+            if (gameObject.GetComponent<HandPoseData>().handType == HandPoseData.HandModelType.Left && handPoseMode == HandPoseMode.CopyAnimOut)
+                gameUIVR.UpdateHelpWitDelay(1f);
+
             handPoseMode = HandPoseMode.Default;
             savedH2 = null;
         }

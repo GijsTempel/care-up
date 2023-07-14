@@ -130,7 +130,7 @@ public class HighlightObject : MonoBehaviour
 
     public void Destroy()
     {
-        GameObject.DestroyImmediate(gameObject);
+        GameObject.Destroy(gameObject);
     }
 
     // Update is called once per frame

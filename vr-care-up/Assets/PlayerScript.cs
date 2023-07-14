@@ -227,7 +227,6 @@ public class PlayerScript : MonoBehaviour
         else
             rightHandPoseControl.ExitCopyAnimationState();     
         animHandsTransform.fallowVRCamera = true;
-        gameUIVR.UpdateHelpHighlight();
         // EnableRaycastControllers(true);
     }
 

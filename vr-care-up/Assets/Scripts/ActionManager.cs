@@ -279,7 +279,6 @@ public class ActionManager : MonoBehaviour
 //----------------------------------------------------------------------------------------------------------------
     public static void UpdateRequirements(float showDelay = 0f)
     {
-        return;
         Debug.Log("UpdateRequirements(float showDelay = 0f)");
         ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
         if (playerScript == null)
@@ -451,8 +450,8 @@ public class ActionManager : MonoBehaviour
                             {
                                 if (prefObj.description != "")
                                 {
-                                    handValue = obj.description;
-                                    article = obj.nameArticle;
+                                    handValue = prefObj.description;
+                                    article = prefObj.nameArticle;
                                     found = true;
                                     foundDescr = true;
                                 }
@@ -830,7 +829,7 @@ public class ActionManager : MonoBehaviour
             gameUIVR.dropLeftBlink = true;
         if (rightIncorrect && !inventory.RightHandEmpty() && !noObjectActions)
             gameUIVR.dropRightBlink = true;
-        gameUIVR.UpdateHintPanel(stepsList);
+        //gameUIVR.UpdateHintPanel(stepsList);
 
         gameUIVR.UpdateButtonsBlink();
     }
@@ -1986,7 +1985,6 @@ public class ActionManager : MonoBehaviour
 
     public static void BuildRequirements()
     {
-        return;
         if (!practiceMode)
             return;
         GameUIVR gameUIVR = GameObject.FindObjectOfType<GameUIVR>();
