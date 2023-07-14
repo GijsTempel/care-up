@@ -519,10 +519,10 @@ public class ActionManager : MonoBehaviour
                         // }
 
                         bool completed = false;
+                        ObjectDataHolder leftObjectDataHolder = inventory.LeftHandObjectData();
 
-                        if (!inventory.LeftHandEmpty())
+                        if (leftObjectDataHolder != null)
                         {
-                            ObjectDataHolder leftObjectDataHolder = inventory.LeftHandObject();
                             if (leftObjectDataHolder != null && !string.IsNullOrEmpty(leftObjectDataHolder.description))
                                 currentLeftObject = System.Char.ToLowerInvariant(leftObjectDataHolder.description[0]) + 
                                     leftObjectDataHolder.description.Substring(1);
@@ -535,9 +535,10 @@ public class ActionManager : MonoBehaviour
                             }
                         }
 
-                        if (!inventory.RightHandEmpty())
+                        ObjectDataHolder rightObjectDataHolder = inventory.RightHandObjectData();
+
+                        if (rightObjectDataHolder != null)
                         {
-                            ObjectDataHolder rightObjectDataHolder = inventory.LeftHandObject();
                             if (rightObjectDataHolder != null && !string.IsNullOrEmpty(rightObjectDataHolder.description))
                                 currentRightObject = System.Char.ToLowerInvariant(rightObjectDataHolder.description[0]) + 
                                     rightObjectDataHolder.description.Substring(1);
@@ -588,7 +589,12 @@ public class ActionManager : MonoBehaviour
 
                         else if (leftR != null)
                         {
-                            foreach (string lObjPrefabName in inventory.LeftHandObject().objectPrefabNames)
+
+                            List<string> oPrefabNames = new List<string>();
+                            ObjectDataHolder leftData = inventory.LeftHandObjectData();
+                            if (leftData != null)
+                                oPrefabNames = leftData.objectPrefabNames;
+                            foreach (string lObjPrefabName in oPrefabNames)
                             {
 
                                 if (actManager.CompareUseOnInfo(lObjPrefabName, ""))
@@ -652,7 +658,11 @@ public class ActionManager : MonoBehaviour
 
                         else if (rightR != null)
                         {
-                            foreach (string rObjPrefabName in inventory.LeftHandObject().objectPrefabNames)
+                            List<string> oPrefabNames = new List<string>();
+                            ObjectDataHolder leftData = inventory.LeftHandObjectData();
+                            if (leftData != null)
+                                oPrefabNames = leftData.objectPrefabNames;
+                            foreach (string rObjPrefabName in oPrefabNames)
                             {
                                 if (actManager.CompareUseOnInfo(rObjPrefabName, ""))
                                 {

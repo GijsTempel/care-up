@@ -111,7 +111,6 @@ public class PlayerScript : MonoBehaviour
 
     public void EnableRaycastControllers(bool toEnable)
     {
-        Debug.Log("@EnableRaycast:" + toEnable.ToString() + " " + Random.Range(0, 9999).ToString());
         LongRangeLeftRay.SetActive(toEnable);
         LongRangeRightRay.SetActive(toEnable);
         ShortRangeLeftRay.SetActive(toEnable);
@@ -154,6 +153,8 @@ public class PlayerScript : MonoBehaviour
         ObjectsInHandsFallowAnimation();
         animHandsAnimator = animHandsTransform.animator;
         animHandsAnimator.SetTrigger(triggerName);
+        if (gameUIVR == null)
+            gameUIVR = GameObject.FindObjectOfType<GameUIVR>();
         gameUIVR.UpdateHelpHighlight();
         return true;
     }

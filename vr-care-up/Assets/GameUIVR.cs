@@ -130,16 +130,15 @@ public class GameUIVR : MonoBehaviour
 
         string prefix = "helpHL";
 
-        if (!handsInventory.LeftHandEmpty())
-            RemoveHighlight(prefix, handsInventory.LeftHandObject().name);
+        if (handsInventory == null)
+            handsInventory = GameObject.FindObjectOfType<HandsInventory>();
 
-        if (!handsInventory.RightHandEmpty())
-            RemoveHighlight(prefix, handsInventory.RightHandObject().name);
-        // bool autoObjectSelected = false;
-        //bool AlloweAutoAction = AllowAutoPlay();
-
-
-        // string AutoMoveTo = "";
+        ObjectDataHolder leftHandObjectData = handsInventory.LeftHandObjectData();
+        if (leftHandObjectData != null)
+            RemoveHighlight(prefix, leftHandObjectData.name);
+        ObjectDataHolder rightHandObjectData = handsInventory.RightHandObjectData();
+        if (rightHandObjectData != null)
+            RemoveHighlight(prefix, rightHandObjectData.name);
 
         foreach (Action a in actionManager.IncompletedActions)
         {

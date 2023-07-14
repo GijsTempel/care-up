@@ -26,22 +26,25 @@ public class HandsInventory : MonoBehaviour
 
 
 
-    public ObjectDataHolder LeftHandObject()
+    public ObjectDataHolder LeftHandObjectData()
     {
         return GetHandObjectDataHolder(true);
     }
 
-    public ObjectDataHolder RightHandObject()
+    public ObjectDataHolder RightHandObjectData()
     {
         return GetHandObjectDataHolder(false);
     }
 
     private ObjectDataHolder GetHandObjectDataHolder(bool isLeft = true)
     {
-        if (player != null && player.GetObjectInHand(isLeft) != null)
+        if (player != null)
         {
-            if (player.GetObjectInHand(isLeft).GetComponent<ObjectDataHolder>() != null)
+            GameObject objInHand = player.GetObjectInHand(isLeft);
+            if (objInHand != null && objInHand.GetComponent<ObjectDataHolder>() != null)
+            {
                 return player.GetObjectInHand(isLeft).GetComponent<ObjectDataHolder>();
+            }
         }
         return null;
     }
