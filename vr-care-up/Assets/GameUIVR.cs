@@ -62,7 +62,12 @@ public class GameUIVR : MonoBehaviour
 
     public void UpdateHintPanel(List<ActionManager.StepData> subTasks, float UpdateHintDelay = 0f)
     {
-        //+++++++++++++++++++++++++++++++++++++++++
+        string t = "";
+        foreach (ActionManager.StepData task in subTasks)
+        {
+            t += task.requirement + "\n";
+        }
+        hintsText.text = t;
     }
 
     // Start is called before the first frame update
