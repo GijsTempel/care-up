@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class HeadTriggerRaycast : MonoBehaviour
 {
-    private float lookAtTimer = 0f;
-    private int lookAtObjectId;
-    const float MAX_RAY_TRIGGER_TIME = 1.0f;
-
     public float coneAngle = 15f;
+    public RaycastProgressBar progressBar;
     private List<ActionCollider> actionColliders = new List<ActionCollider>();
+
+    private ActionManager actionManager = null;
 
     public void RegisterActionCollider(ActionCollider col)
     {
@@ -19,9 +18,13 @@ public class HeadTriggerRaycast : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        actionManager = FindObjectOfType<ActionManager>();
+    }
+
     void Update()
     {
-        //CheckForCollisions();
         UpdateConeRayCast();
     }
 
@@ -37,71 +40,45 @@ public class HeadTriggerRaycast : MonoBehaviour
         {
             // skip this object if it's inactive
             // or if it's not supporting RayTrigger
-            if (ac == null || !ac.gameObject.activeInHierarchy || !ac.isRayTrigger) continue; 
+            if (ac == null || !ac.gameObject.activeInHierarchy || !ac.isRayTrigger) continue;
+
+            // also if target object is not the correct object in the next examine step, skip it
+            if (actionManager == null || !actionManager.CompareExamineAction(ac.ActionTriggerObjectNames[0]))
+            {
+                continue;
+            }
 
             // find the angle between where player is looking and the vector towards the object
-            Quaternion objectAngle = Quaternion.LookRotation(ac.transform.position - transform.position);
+            Quaternion objectAngle = Quaternion.LookRotation(ac.transform.position - (transform.position - transform.forward));
             float angleBetween = Quaternion.Angle(transform.rotation, objectAngle);
+            float directionalAngle = Quaternion.Angle(transform.rotation, ac.transform.rotation);
 
-            if (angleBetween <= coneAngle)
+            if (angleBetween <= coneAngle && (180-directionalAngle) < ac.rayTriggerAngle)
             {
                 collisionOccured = true;
-                int objectId = ac.GetInstanceID(); 
-                if (objectId == lookAtObjectId)
+                ActionCollider targetObj = ac;
+                if (targetObj == progressBar.target)
                 {
-                    lookAtTimer += Time.deltaTime;
-                    if (lookAtTimer > MAX_RAY_TRIGGER_TIME)
+                    progressBar.currentProgress += Time.deltaTime;
+                    if (progressBar.currentProgress > progressBar.MaxRayTriggerTime)
                     {
                         ac.RayTriggerAction();
-                        lookAtTimer = 0f;
+                        progressBar.currentProgress = 0f;
                     }
                 }
                 else
                 {
-                    lookAtTimer = 0f;
+                    progressBar.currentProgress = 0f;
                 }
-                lookAtObjectId = objectId;
+                progressBar.target = targetObj;
                 break; // ensure we're handling only one object at a time to prevent flickering
             }
         }
 
         if (!collisionOccured)
         {
-            lookAtObjectId = -1;
-            lookAtTimer = 0f;
-        }
-    }
-
-    void CheckForCollisions()
-    {
-        string ditObjName = "";
-        int layerMask = 1 << 6;
-        Ray ray = new Ray(transform.position, transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, 0.4f, layerMask))
-        {
-            ditObjName = hit.collider.name;
-            int objectId = hit.collider.GetInstanceID();
-            if (objectId == lookAtObjectId && hit.collider.GetComponent<ActionCollider>() != null &&
-                hit.collider.GetComponent<ActionCollider>().isRayTrigger)
-            {   
-
-                lookAtTimer += Time.deltaTime;
-                if (lookAtTimer > MAX_RAY_TRIGGER_TIME)
-                {
-                    hit.collider.GetComponent<ActionCollider>().RayTriggerAction();
-                    lookAtTimer = 0f;
-                }
-
-            }
-            else
-            {
-                lookAtTimer = 0f;
-            }
-            lookAtObjectId = objectId;
-        }
-        else
-        {
-            lookAtTimer = 0f;
+            progressBar.target = null;
+            progressBar.currentProgress = 0f;
         }
     }
 }

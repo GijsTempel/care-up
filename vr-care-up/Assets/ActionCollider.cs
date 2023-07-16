@@ -14,8 +14,23 @@ public class ActionCollider : MonoBehaviour
     private ActionTrigger actionTrigger;
     public bool isRayTrigger = false;
     bool isRayTriggered = false;
+    [Range(0f, 10f)]
+    public float rayTriggerTime = 1f;
+    [Range(0f, 180f)]
+    public float rayTriggerAngle = 180f;
 
     private static HeadTriggerRaycast headTriggerRaycast = null;
+
+    public string[] ActionTriggerObjectNames
+    {
+        get
+        {
+            string[] names = new string[2];
+            names[0] = actionTrigger.LeftActionManagerObject;
+            names[1] = actionTrigger.RightActionManagerObject;
+            return names;
+        }
+    }
 
     void AddHandToArea(GameObject hand)
     {
