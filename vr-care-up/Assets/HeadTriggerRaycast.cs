@@ -5,21 +5,20 @@ using UnityEngine;
 public class HeadTriggerRaycast : MonoBehaviour
 {
     private float lookAtTimer = 0f;
-    int lookAtObjectId;
+    private int lookAtObjectId;
     const float MAX_RAY_TRIGGER_TIME = 1.0f;
 
     public float coneAngle = 15f;
-    private ActionCollider[] actionColliders;
+    private List<ActionCollider> actionColliders = new List<ActionCollider>();
 
-    public UnityEngine.UI.Text debugText;
-
-    void Start()
+    public void RegisterActionCollider(ActionCollider col)
     {
-        // possible pitfall: are new ActionColliders being created in the middle of the scene?
-        actionColliders = FindObjectsOfType<ActionCollider>();
+        if (!actionColliders.Contains(col))
+        {
+            actionColliders.Add(col);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         //CheckForCollisions();
@@ -28,34 +27,25 @@ public class HeadTriggerRaycast : MonoBehaviour
 
     /// <summary>
     /// Checks whether objects of type ActionCollider are within a certain look angle of the VR headset.
-    /// Use DebugDrawCone() to visually see the cone angle.
     /// Supports collision only with a single object at a time.
     /// In case of multiple objects, priority takes the object that is met earlier in the list `actionColliders`.
     /// </summary>
     void UpdateConeRayCast()
     {
-        string debug = "";                   // debug, to remove
-        string closest = "";                 // debug, to remove
-        float angleClosest = Mathf.Infinity; // debug, to remove
-
         bool collisionOccured = false;
         foreach (ActionCollider ac in actionColliders)
         {
-            if (!ac.isRayTrigger) continue; // skip this object if it's not supporting RayTrigger
+            // skip this object if it's inactive
+            // or if it's not supporting RayTrigger
+            if (ac == null || !ac.gameObject.activeInHierarchy || !ac.isRayTrigger) continue; 
 
+            // find the angle between where player is looking and the vector towards the object
             Quaternion objectAngle = Quaternion.LookRotation(ac.transform.position - transform.position);
             float angleBetween = Quaternion.Angle(transform.rotation, objectAngle);
-
-            if (angleBetween < angleClosest)
-            {
-                closest = ac.name;
-                angleClosest = angleBetween;
-            }
 
             if (angleBetween <= coneAngle)
             {
                 collisionOccured = true;
-                debug += "Current Object: " + ac.name + "\n"; // debug, to remove
                 int objectId = ac.GetInstanceID(); 
                 if (objectId == lookAtObjectId)
                 {
@@ -79,26 +69,6 @@ public class HeadTriggerRaycast : MonoBehaviour
         {
             lookAtObjectId = -1;
             lookAtTimer = 0f;
-        }
-
-        // debug, to remove (everything below)
-        debug += "Closest: \"" + closest + "\" with angle " + Mathf.RoundToInt(angleClosest) + "\n";
-        debug += "Timer: " + lookAtTimer + "\n";
-        debugText.text = debug;
-        //Debug.DrawLine(transform.position, closestPos, Color.green);
-        //DebugDrawCone();
-    }
-
-    void DebugDrawCone(float distance = 3f)
-    {
-        const int RayAmount = 8;
-
-        Vector3 mid = transform.position + transform.forward * distance;
-        float radius = distance * Mathf.Tan(Mathf.PI * coneAngle / 180f);
-        for (int i = 0; i < RayAmount; i++)
-        {
-            Vector3 end = mid + radius * (transform.up * Mathf.Sin(i * Mathf.PI / 4f) + transform.right * Mathf.Cos(i * Mathf.PI / 4f));
-            Debug.DrawLine(transform.position, end);
         }
     }
 

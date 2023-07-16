@@ -14,6 +14,9 @@ public class ActionCollider : MonoBehaviour
     private ActionTrigger actionTrigger;
     public bool isRayTrigger = false;
     bool isRayTriggered = false;
+
+    private static HeadTriggerRaycast headTriggerRaycast = null;
+
     void AddHandToArea(GameObject hand)
     {
         if (!handsInArea.Contains(hand))
@@ -115,12 +118,14 @@ public class ActionCollider : MonoBehaviour
     {
         player = GameObject.FindObjectOfType<PlayerScript>();
         actionTrigger = transform.parent.GetComponent<ActionTrigger>();
+
+        if (headTriggerRaycast == null)
+        {
+            headTriggerRaycast = GameObject.FindAnyObjectByType<HeadTriggerRaycast>();
+        }
+        headTriggerRaycast.RegisterActionCollider(this);
     }
 
-    void Update()
-    {
-        
-    }
     private void CleanUpHandsInArea()
     {
         if (actionTrigger.pickable != null)
@@ -229,5 +234,4 @@ public class ActionCollider : MonoBehaviour
         actionTrigger.AttemptTrigger();
         isRayTriggered = false;
     }
-
 }
