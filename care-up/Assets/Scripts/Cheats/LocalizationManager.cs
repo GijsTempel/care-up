@@ -4,9 +4,12 @@ using UnityEngine;
 
 namespace CareUp.Localize
 {
+
     public static class LocalizationManager
     {
         static string dictListFile = "dicts";
+        static string defaultDictFolder = "Dictionaries";
+
         static List<string> dicts = new List<string>();
 
         //public static LocalizationManager instance;
@@ -20,10 +23,12 @@ namespace CareUp.Localize
 
         public static void LoadLocalizedText(string fileName)
         {
+
             gameLogic = GameObject.Find("GameLogic");
             if (localizedText == null)
                 localizedText = new Dictionary<string, string>();
-            TextAsset _data = (TextAsset)Resources.Load("Dictionaries/" + fileName);
+
+            TextAsset _data = (TextAsset)Resources.Load(GetCurrentDictPaht() + fileName);
             string jsonString = _data.text;
             JSONNode data = JSON.Parse(jsonString);
             foreach (string key in data.Keys)
@@ -33,12 +38,44 @@ namespace CareUp.Localize
             }
             isReady = true;
         }
+        public static void ClearDicts()
+        {
+            localizedText.Clear();
+            isReady = false;
+        }
+
+        private static string GetCurrentDictPaht()
+        {
+            string dictFolder = defaultDictFolder + "/Dutch/";
+            PlayerPrefsManager playerPrefsManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
+            if (playerPrefsManager != null)
+            {
+                switch (PlayerPrefsManager.Lang)
+                {
+                    case 0:
+                        {
+                            dictFolder = defaultDictFolder + "/Dutch/";
+                            break;
+                        }
+                    case 1:
+                        {
+                            dictFolder = defaultDictFolder + "/English/";
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
+            }
+            return dictFolder;
+        }
 
         public static void LoadAllDictionaries()
         {
             if (dicts.Count == 0)
             {
-                TextAsset dictListData = (TextAsset)Resources.Load("Dictionaries/" + dictListFile);
+                TextAsset dictListData = (TextAsset)Resources.Load(GetCurrentDictPaht() + dictListFile);
                 foreach(string dictName in dictListData.text.Split('\n'))
                 {   
                     if (!string.IsNullOrEmpty(dictName))
@@ -57,12 +94,15 @@ namespace CareUp.Localize
 
         public static string GetValueIfKey(string key)
         {
+            // return "**************";
+
             if (!loadedDicts)
                 LoadAllDictionaries();
             if (key == null)
                 return "";
             if (key.Length == 0)
                 return "";
+
             string result = key;
             bool debugMode = false;
             if (gameLogic != null)

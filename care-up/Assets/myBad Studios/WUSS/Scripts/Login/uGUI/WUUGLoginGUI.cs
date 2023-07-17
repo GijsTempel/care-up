@@ -3,11 +3,14 @@ using System;
 using UnityEngine.UI;
 using BuildTimestampDisplay;
 using UnityEngine.EventSystems;
+using CareUp.Localize;
 
 namespace MBS
 {
     public class WUUGLoginGUI : WUUGLoginLocalisation
     {
+        public Button dutchLangButton;
+        public Button englishLangButton;
         double startTime;
         public Button passVisibilityToggle;
         public GameObject LoginGUIBackButton;
@@ -354,6 +357,22 @@ namespace MBS
 
             ErrorText.GetComponent<Text>();
             ErrorLoginText.GetComponent<Text>();
+
+            UpdateLangButtons();
+        }
+
+        private void UpdateLangButtons()
+        {
+            englishLangButton.interactable = PlayerPrefsManager.Lang != 1;
+            dutchLangButton.interactable = PlayerPrefsManager.Lang != 0;
+        }
+
+        public void LanguageChange(int langID)
+        {
+            PlayerPrefsManager.Lang = langID;
+            LocalizationManager.ClearDicts();
+            LocalizationManager.LoadAllDictionaries();
+            UpdateLangButtons();
         }
 
         //Debug options changed
@@ -447,8 +466,11 @@ namespace MBS
 
             // fuck this
             //if "Remember me" was selected during the last login, try to log in automatically...
+#if !UNITY_EDITOR
+
             if (attempt_auto_login && !WULogin.logged_in)
                 WULogin.AttemptAutoLogin();
+#endif
 
             //if (loginPasswordVisibility != null)
             //{
