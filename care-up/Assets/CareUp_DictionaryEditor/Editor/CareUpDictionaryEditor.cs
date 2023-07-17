@@ -147,15 +147,16 @@ namespace CareUp.Localize
         
         List<TextAsset> GetAllXMLFiles()
         {
+            string projectResPath = "Assets/Resources/";
             List<TextAsset> textAssets = new List<TextAsset>();
             string[] xmlDataDirectories = new string[] 
             {
-                "Assets/Resources/Xml/Actions"
-                // "Assets/Resources/Xml/RandomEvent"
+                "Xml/Actions",
+                "Xml/RandomEvent"
                 }; 
             foreach(string xmlDirPath in xmlDataDirectories)
             {
-                var info = new DirectoryInfo(xmlDirPath);
+                var info = new DirectoryInfo(projectResPath + xmlDirPath);
                 FileInfo[] fileInfo = info.GetFiles();
                 
                 foreach (FileInfo file in fileInfo)
@@ -163,7 +164,7 @@ namespace CareUp.Localize
                     if (file.Extension == ".xml")
                     {
                         // actionFiles.Add(file.Name.Split('.')[0]);
-                        TextAsset textAsset = Resources.Load("Xml/Actions/" + 
+                        TextAsset textAsset = Resources.Load(xmlDirPath + 
                             file.Name.Split('.')[0], typeof(TextAsset))  as TextAsset;
                         textAssets.Add(textAsset);
                     }
@@ -539,5 +540,36 @@ namespace CareUp.Localize
             }
             setOfDictionaries.Add(currentDict);
         }
+    }
+}
+
+
+
+
+
+
+public class TextComponentDictHelper : EditorWindow
+
+{
+    string dictFileName;
+    [MenuItem("Tools/CareUp Localization/TextComp Helper")]
+    static void ShowWindow()
+    {
+        var window = GetWindow<TextComponentDictHelper>();
+        window.titleContent = new GUIContent("Text To Dict Tool");
+        window.Show();
+    }
+
+    void OrganizeDictFromTextComponents()
+    {
+    }
+    
+
+    void OnGUI()
+    {
+        dictFileName = EditorGUILayout.TextField(dictFileName);
+        if (GUILayout.Button("aaa"))
+            OrganizeDictFromTextComponents();
+
     }
 }

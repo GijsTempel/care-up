@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CareUp.Localize;
 using UnityEngine.UI;
-
+using UnityEditor;
 
 public class UILocalization : MonoBehaviour
 {
@@ -17,4 +17,5 @@ public class UILocalization : MonoBehaviour
             text.text = "&&&&&&&&&&";
         }
     }
+   
 }
