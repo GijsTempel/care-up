@@ -152,7 +152,10 @@ namespace CareUp.Localize
             string[] xmlDataDirectories = new string[] 
             {
                 "Xml/Actions",
-                "Xml/RandomEvent"
+                "Xml/RandomEvent",
+                "Xml/AnimationSequences",
+                "Xml/PersonDialogues",
+                "Xml/Quiz"
                 }; 
             foreach(string xmlDirPath in xmlDataDirectories)
             {
@@ -164,8 +167,8 @@ namespace CareUp.Localize
                     if (file.Extension == ".xml")
                     {
                         // actionFiles.Add(file.Name.Split('.')[0]);
-                        TextAsset textAsset = Resources.Load(xmlDirPath + 
-                            file.Name.Split('.')[0], typeof(TextAsset))  as TextAsset;
+                        string resPath = xmlDirPath + "/" + file.Name.Split('.')[0];
+                        TextAsset textAsset = Resources.Load(resPath, typeof(TextAsset))  as TextAsset;
                         textAssets.Add(textAsset);
                     }
                 }
@@ -312,8 +315,11 @@ namespace CareUp.Localize
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Cancel Edit"))
                     ExitTextEdit();
+                var defaultColor = GUI.backgroundColor;
+                GUI.backgroundColor = Color.green;
                 if (GUILayout.Button("Confirm Edit"))
                     ExitTextEdit(true);
+                GUI.backgroundColor = defaultColor;
                 EditorGUILayout.EndHorizontal();
 
                 if (editInSet >= 0)
