@@ -253,7 +253,7 @@ public class PlayerScript : MonoBehaviour
     {
         currentWTGName = WTGName;
         if (gameUIVR != null)
-            gameUIVR.UpdateHelpHighlight();
+            gameUIVR.UpdateHelpWitDelay(1f);
         ActionManager.UpdateRequirements();
     }
 

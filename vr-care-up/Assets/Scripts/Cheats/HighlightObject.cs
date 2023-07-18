@@ -21,6 +21,7 @@ public class HighlightObject : MonoBehaviour
     float startDelay = 0;
     WalkToGroupVR currentWalkToGroup;
     PlayerScript player;
+    PickableObject targetPickable;
 
     protected void Start()
     {
@@ -62,6 +63,9 @@ public class HighlightObject : MonoBehaviour
 
     public void setType(HighlightObject.type _type)
     {
+        if (target.GetComponent<PickableObject>() != null)
+            targetPickable = target.GetComponent<PickableObject>();
+
         currentType = _type;
         foreach (GameObject b in BallElements)
             b.SetActive(currentType == HighlightObject.type.Ball);
@@ -136,6 +140,12 @@ public class HighlightObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (targetPickable != null)
+        {
+            if (player.GetHandWithThisObject(targetPickable.gameObject) != null)
+                GameObject.Destroy(gameObject);
+        }
+
         if (startDelay > 0)
             startDelay -= Time.deltaTime;
         else if (!content.activeSelf)

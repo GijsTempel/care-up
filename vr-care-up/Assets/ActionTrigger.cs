@@ -59,13 +59,11 @@ public class ActionTrigger : MonoBehaviour
         {
             if (checkBeforeAct)
             {
-                Debug.Log("@ActionCheck:" + transform.parent.name + "/" + name);
                 if (actionHandler.CheckAction(actionType, LeftActionManagerObject, RightActionManagerObject))
                     isActionConfirmed = actionHandler.TryExecuteAction(actionType, LeftActionManagerObject, RightActionManagerObject);
             }
             else
             {
-                Debug.Log("@TryExecuteAction:" + transform.parent.name + "/" + name);
                 isActionConfirmed = actionHandler.TryExecuteAction(actionType, LeftActionManagerObject, RightActionManagerObject);
             }
         }

@@ -279,7 +279,7 @@ public class ActionManager : MonoBehaviour
 //----------------------------------------------------------------------------------------------------------------
     public static void UpdateRequirements(float showDelay = 0f)
     {
-        Debug.Log("UpdateRequirements(float showDelay = 0f)");
+        Debug.Log("@UpdateRequirements:(float showDelay = 0f)");
         ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
         if (playerScript == null)
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
@@ -1422,7 +1422,6 @@ public class ActionManager : MonoBehaviour
     /// <param name="useObject">Name of the used object.</param>
     public bool OnUseAction(string useObject)
     {
-        Debug.Log("@USe:" + useObject);
         string[] info = { useObject };
         bool occured = Check(info, ActionType.ObjectUse);
         UpdatePoints(occured ? 1 : -1);
@@ -1784,14 +1783,7 @@ public class ActionManager : MonoBehaviour
 
             if (!notWtongAction)
             {
-                string mmm = "@ Wrong:" + type.ToString();
-                if (info.Length > 1)
-                {
-                    mmm += " L " + info[0] + " R " + info[1];
-                }
-                Debug.Log(mmm);
                 ActionManager.WrongAction(type != ActionType.SequenceStep);
-
             }
 
             penalized = true;
