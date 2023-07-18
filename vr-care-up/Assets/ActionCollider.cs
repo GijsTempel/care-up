@@ -32,6 +32,11 @@ public class ActionCollider : MonoBehaviour
         }
     }
 
+    public PickableObject GetPickable()
+    {
+        return actionTrigger.pickable;
+    }
+
     void AddHandToArea(GameObject hand)
     {
         if (!handsInArea.Contains(hand))

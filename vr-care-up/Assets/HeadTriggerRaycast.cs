@@ -5,6 +5,7 @@ using UnityEngine;
 public class HeadTriggerRaycast : MonoBehaviour
 {
     public float coneAngle = 15f;
+    PlayerScript player;
     public RaycastProgressBar progressBar;
     private List<ActionCollider> actionColliders = new List<ActionCollider>();
 
@@ -21,6 +22,7 @@ public class HeadTriggerRaycast : MonoBehaviour
     private void Start()
     {
         actionManager = FindObjectOfType<ActionManager>();
+        player = GameObject.FindObjectOfType<PlayerScript> ();
     }
 
     void Update()
@@ -39,15 +41,16 @@ public class HeadTriggerRaycast : MonoBehaviour
         foreach (ActionCollider ac in actionColliders)
         {
             // skip this object if it's inactive
-            // or if it's not supporting RayTrigger
             if (ac == null || !ac.gameObject.activeInHierarchy) continue;
-
+            PickableObject acPickable = ac.GetPickable();
+            if (acPickable == null)
+                continue;
+            if (player.GetHandWithThisObject(acPickable.gameObject) == null)
+                continue;
             // also if target object is not the correct object in the next examine step, skip it
             if (actionManager == null || !actionManager.CompareExamineAction(ac.ActionTriggerObjectNames[0]))
-            {
                 continue;
-            }
-
+            
             // find the angle between where player is looking and the vector towards the object
             Quaternion objectAngle = Quaternion.LookRotation(ac.transform.position - (transform.position - transform.forward));
             float angleBetween = Quaternion.Angle(transform.rotation, objectAngle);
