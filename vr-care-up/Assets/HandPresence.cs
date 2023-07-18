@@ -156,7 +156,7 @@ public class HandPresence : MonoBehaviour
             if (grabHandPose != null && spawnHandModel != null)
                 grabHandPose.SetupPose(spawnHandModel.GetComponent<HandPoseData>());
             if (gameUIVR != null)
-                gameUIVR.UpdateHelpHighlight();
+                gameUIVR.UpdateHelpWitDelay(0.1f);
             return true;
         }
         return false;
@@ -183,7 +183,7 @@ public class HandPresence : MonoBehaviour
                     grabHandPose.SetupPose(spawnHandModel.GetComponent<HandPoseData>());
             }
             if (!toForce && gameUIVR != null)
-                gameUIVR.UpdateHelpHighlight();
+                gameUIVR.UpdateHelpWitDelay(0.1f);
             return true;
         }
         return false;
@@ -207,7 +207,7 @@ public class HandPresence : MonoBehaviour
 
         objectInHand = null;
         if (gameUIVR != null)
-            gameUIVR.UpdateHelpHighlight();
+            gameUIVR.UpdateHelpWitDelay(0.1f);
     }
 
 

@@ -134,11 +134,13 @@ public class ActionCollider : MonoBehaviour
         player = GameObject.FindObjectOfType<PlayerScript>();
         actionTrigger = transform.parent.GetComponent<ActionTrigger>();
 
-        if (headTriggerRaycast == null)
+        if (isRayTrigger)
         {
-            headTriggerRaycast = GameObject.FindAnyObjectByType<HeadTriggerRaycast>();
+            if (headTriggerRaycast == null)
+                headTriggerRaycast = GameObject.FindAnyObjectByType<HeadTriggerRaycast>();
+            if (headTriggerRaycast != null)
+                headTriggerRaycast.RegisterActionCollider(this);
         }
-        headTriggerRaycast.RegisterActionCollider(this);
     }
 
     private void CleanUpHandsInArea()

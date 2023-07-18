@@ -18,6 +18,7 @@ public class WalkToGroupVR : MonoBehaviour
     {
         if (player != null)
             player.UpdateWalkToGroup(walkToGroupName);
+            
         DebugScreenControl debugScreenControl = GameObject.FindObjectOfType<DebugScreenControl>();
         if (debugScreenControl != null)
         {

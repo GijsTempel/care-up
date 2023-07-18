@@ -1967,7 +1967,7 @@ public class ActionManager : MonoBehaviour
 
     public static void WrongAction(bool headAnimation = true)
     {
-        // RobotManager.RobotWrongAction();
+        RobotManager.RobotWrongAction();
         Narrator.PlaySound("WrongAction");
 
         if (headAnimation)
@@ -1986,7 +1986,7 @@ public class ActionManager : MonoBehaviour
     public static void CorrectAction()
     {
         GameObject.FindObjectOfType<ActionManager>().actionsCount++;
-        // RobotManager.RobotCorrectAction();
+        RobotManager.RobotCorrectAction();
         ActionManager.PlayAddPointSound();
 
         ActionManager.BuildRequirements();

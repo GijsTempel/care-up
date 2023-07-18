@@ -252,6 +252,9 @@ public class PlayerScript : MonoBehaviour
     public void UpdateWalkToGroup(string WTGName)
     {
         currentWTGName = WTGName;
+        if (gameUIVR != null)
+            gameUIVR.UpdateHelpHighlight();
+        ActionManager.UpdateRequirements();
     }
 
 }

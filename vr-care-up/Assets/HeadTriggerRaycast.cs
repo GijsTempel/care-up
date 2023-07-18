@@ -40,7 +40,7 @@ public class HeadTriggerRaycast : MonoBehaviour
         {
             // skip this object if it's inactive
             // or if it's not supporting RayTrigger
-            if (ac == null || !ac.gameObject.activeInHierarchy || !ac.isRayTrigger) continue;
+            if (ac == null || !ac.gameObject.activeInHierarchy) continue;
 
             // also if target object is not the correct object in the next examine step, skip it
             if (actionManager == null || !actionManager.CompareExamineAction(ac.ActionTriggerObjectNames[0]))
