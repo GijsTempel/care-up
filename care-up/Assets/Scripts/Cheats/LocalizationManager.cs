@@ -140,7 +140,7 @@ namespace CareUp.Localize
                     }
                 }
             }
-            return null;
+            return "";
         }
 
         public static bool GetIsReady()

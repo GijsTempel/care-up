@@ -22,8 +22,10 @@ namespace CareUp.Localize
 
     class DictionaryEditor : EditorWindow
     {
+        int toolMode = 0;
         string dutchDict = "Dictionaries/Dutch/";
         string englishDict = "Dictionaries/English/";
+        string localizationDebugInfo = "";
 
         int languageSelected = 0;
         bool someKeysRepeat = false;
@@ -265,244 +267,276 @@ namespace CareUp.Localize
             horizontalLine.normal.background = EditorGUIUtility.whiteTexture;
             horizontalLine.margin = new RectOffset(0, 0, 4, 4);
             horizontalLine.fixedHeight = 1;
-
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("Reload All Dictionary Data"))
-                ReloadDictionaries();
-            if (GUILayout.Button("Dutch Lang", GUILayout.Width(120)))
-            {
-                languageSelected = 0;
-                ReloadDictionaries();
-            }
-            if (GUILayout.Button("English Lang", GUILayout.Width(120)))
-            {
-                languageSelected = 1;
-                ReloadDictionaries();
-            }
-            
+            if (GUILayout.Button("Dictionary editor mode"))
+                toolMode = 0;
+            if (GUILayout.Button("Text component organizer mode"))
+                toolMode = 1;
             EditorGUILayout.EndHorizontal();
-            EditorGUILayout.LabelField("[ " + dictNames.Count.ToString() + " ] dictionaries found");
-            if (showFilesForKey != "" && showFilesForSet != -1)
+            
+            if (toolMode == 1)
             {
-                if (!keyUsageDict.ContainsKey(showFilesForKey))
+                if (GUILayout.Button("Update scene localization statistics"))
+                    localizationDebugInfo = GetSceneLocalizaionDebugInfo();
+                EditorGUILayout.LabelField(localizationDebugInfo);
+            }
+            else if (toolMode == 0)
+            {
+                EditorGUILayout.BeginHorizontal();
+                if (GUILayout.Button("Reload All Dictionary Data"))
+                    ReloadDictionaries();
+                if (GUILayout.Button("Dutch Lang", GUILayout.Width(120)))
                 {
-                    showFilesForKey = "";
-                    showFilesForSet = -1;
+                    languageSelected = 0;
+                    ReloadDictionaries();
                 }
-
-                if (GUILayout.Button("<--- Go Back"))
+                if (GUILayout.Button("English Lang", GUILayout.Width(120)))
                 {
-                    showFilesForKey = "";
-                    showFilesForSet = -1;
+                    languageSelected = 1;
+                    ReloadDictionaries();
+                }
+            
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.LabelField("[ " + dictNames.Count.ToString() + " ] dictionaries found");
+                if (showFilesForKey != "" && showFilesForSet != -1)
+                {
+                    if (!keyUsageDict.ContainsKey(showFilesForKey))
+                    {
+                        showFilesForKey = "";
+                        showFilesForSet = -1;
+                    }
+
+                    if (GUILayout.Button("<--- Go Back"))
+                    {
+                        showFilesForKey = "";
+                        showFilesForSet = -1;
+                    }
+                    else
+                    {
+                        GUILayout.Box(GUIContent.none, horizontalLine);
+                        EditorGUILayout.LabelField("The key [ " + showFilesForKey + " ] was found in:");
+                        GUILayout.Box(GUIContent.none, horizontalLine);
+                        foreach (string _file in keyUsageDict[showFilesForKey])
+                        {
+                            if (GUILayout.Button(_file))
+                            {
+                                Debug.Log(_file);
+                                OpenFileContinedKey(_file, showFilesForKey);
+                            }
+                        }
+                    }
+                }
+                else if (editInSet != -1)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    if (GUILayout.Button("Cancel Edit"))
+                        ExitTextEdit();
+                    var defaultColor = GUI.backgroundColor;
+                    GUI.backgroundColor = Color.green;
+                    if (GUILayout.Button("Confirm Edit"))
+                        ExitTextEdit(true);
+                    GUI.backgroundColor = defaultColor;
+                    EditorGUILayout.EndHorizontal();
+
+                    if (editInSet >= 0)
+                        EditorGUILayout.LabelField("Editing key and value in dictionary [ " + dictNames[editInSet] + " ]", greenStyle);
+
+                    if (GUILayout.Button("Search by text in all Action Files"))
+                    {
+                        CheckValueInActionFiles(editValue);
+                    }
+                    if (filesWithValueInstance.Count > 0)
+                    {
+                        EditorGUILayout.LabelField("This text found in [ " + filesWithValueInstance.Count.ToString() + " ] files", greenStyle);
+                        if (GUILayout.Button("Replace instances of text in all Action Files"))
+                        {
+                            CheckValueInActionFiles(editValue, editKey);
+                        }
+                    }
+
+
+                    editKey = EditorGUILayout.TextField("Key: ", editKey);
+                    TextEditorScroll = EditorGUILayout.BeginScrollView(TextEditorScroll);
+                    editValue = EditorGUILayout.TextArea(editValue, GUILayout.Height(position.height - 30));
+                    EditorGUILayout.EndScrollView();
                 }
                 else
                 {
-                    GUILayout.Box(GUIContent.none, horizontalLine);
-                    EditorGUILayout.LabelField("The key [ " + showFilesForKey + " ] was found in:");
-                    GUILayout.Box(GUIContent.none, horizontalLine);
-                    foreach(string _file in keyUsageDict[showFilesForKey])
+                    List<string> UIWords = new List<string>();
+                    if (setOfDictionaries.Count > 0 && dictNames.Count > 0)
                     {
-                        if (GUILayout.Button(_file))
+                        EditorGUILayout.BeginHorizontal();
+                        searchText = EditorGUILayout.TextField(searchText);
+
+                        if (GUILayout.Button(new GUIContent("C", "Clear"), GUILayout.Width(22)))
                         {
-                            Debug.Log(_file);
-                            OpenFileContinedKey(_file, showFilesForKey);
+                            GUI.FocusControl(null);
+                            searchText = "";
                         }
-                    }
-                }
-            }
-            else if (editInSet != -1)
-            {
-                EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button("Cancel Edit"))
-                    ExitTextEdit();
-                var defaultColor = GUI.backgroundColor;
-                GUI.backgroundColor = Color.green;
-                if (GUILayout.Button("Confirm Edit"))
-                    ExitTextEdit(true);
-                GUI.backgroundColor = defaultColor;
-                EditorGUILayout.EndHorizontal();
+                        EditorGUILayout.EndHorizontal();
 
-                if (editInSet >= 0)
-                    EditorGUILayout.LabelField("Editing key and value in dictionary [ " + dictNames[editInSet] + " ]", greenStyle);
+                        List<string> dictsRollDownList = new List<string>();
+                        dictsRollDownList.Add("__Show All__");
+                        foreach (string d in dictNames)
+                            dictsRollDownList.Add(d);
+                        selectedSet = EditorGUILayout.Popup(selectedSet + 1, dictsRollDownList.ToArray()) - 1;
 
-                if (GUILayout.Button("Search by text in all Action Files"))
-                {
-                    CheckValueInActionFiles(editValue);
-                }
-                if (filesWithValueInstance.Count > 0)
-                {
-                    EditorGUILayout.LabelField("This text found in [ " + filesWithValueInstance.Count.ToString() + " ] files", greenStyle);
-                    if (GUILayout.Button("Replace instances of text in all Action Files"))
-                    {
-                        CheckValueInActionFiles(editValue, editKey);
-                    }
-                }
-
-                
-                editKey = EditorGUILayout.TextField("Key: ", editKey);
-                TextEditorScroll = EditorGUILayout.BeginScrollView(TextEditorScroll);
-                editValue = EditorGUILayout.TextArea(editValue, GUILayout.Height(position.height - 30));
-                EditorGUILayout.EndScrollView();
-            }
-            else
-            {
-                List<string> UIWords = new List<string>();
-                if (setOfDictionaries.Count > 0 && dictNames.Count > 0)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    searchText = EditorGUILayout.TextField(searchText);
-
-                    if (GUILayout.Button(new GUIContent("C", "Clear"), GUILayout.Width(22)))
-                    {
-                        GUI.FocusControl(null);
-                        searchText = "";
-                    }
-                    EditorGUILayout.EndHorizontal();
-
-                    List<string> dictsRollDownList = new List<string>();
-                    dictsRollDownList.Add("__Show All__");
-                    foreach(string d in dictNames)
-                        dictsRollDownList.Add(d);
-                    selectedSet = EditorGUILayout.Popup(selectedSet + 1, dictsRollDownList.ToArray()) - 1;
-
-                    string saveButtonText = "Save all changes";
-                    if (selectedSet != -1)
-                        saveButtonText = "Save [ " + dictNames[selectedSet] + " ]";
-                    var defaultColor = GUI.backgroundColor;
-                    GUI.backgroundColor = Color.green;
-                    if (GUILayout.Button(saveButtonText))
-                        SaveChanges();
-                    GUI.backgroundColor = defaultColor;
-                    GUILayout.Box(GUIContent.none, horizontalLine);
-
-                    scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
-                    int startFrom = 0;
-                    int endOn = dictNames.Count;
-                    if (selectedSet >= 0 && selectedSet < setOfDictionaries.Count)
-                    {
-                        startFrom = selectedSet;
-                        endOn = selectedSet + 1;
-                    }
-                    for(int i = startFrom; i < endOn; i++)
-                    {
-                        EditorGUILayout.LabelField("[" + setOfDictionaries[i].Count.ToString() + "] " +
-                            "Dictionary: [ " + dictNames[i] + " ]", greenStyle);
-                        string arrowChar = "▶";
-                        if (dictUnfold[i])
-                            arrowChar = "▼";
-                        if (GUILayout.Button(arrowChar, GUILayout.Width(22)))
-                        {
-                            dictUnfold[i] = !dictUnfold[i];
-                        }
+                        string saveButtonText = "Save all changes";
+                        if (selectedSet != -1)
+                            saveButtonText = "Save [ " + dictNames[selectedSet] + " ]";
+                        var defaultColor = GUI.backgroundColor;
+                        GUI.backgroundColor = Color.green;
+                        if (GUILayout.Button(saveButtonText))
+                            SaveChanges();
+                        GUI.backgroundColor = defaultColor;
                         GUILayout.Box(GUIContent.none, horizontalLine);
-                        if (dictUnfold[i])
+
+                        scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
+                        int startFrom = 0;
+                        int endOn = dictNames.Count;
+                        if (selectedSet >= 0 && selectedSet < setOfDictionaries.Count)
                         {
-                            if (GUILayout.Button("__Add Component__"))
+                            startFrom = selectedSet;
+                            endOn = selectedSet + 1;
+                        }
+                        for (int i = startFrom; i < endOn; i++)
+                        {
+                            EditorGUILayout.LabelField("[" + setOfDictionaries[i].Count.ToString() + "] " +
+                                "Dictionary: [ " + dictNames[i] + " ]", greenStyle);
+                            string arrowChar = "▶";
+                            if (dictUnfold[i])
+                                arrowChar = "▼";
+                            if (GUILayout.Button(arrowChar, GUILayout.Width(22)))
                             {
-                                editValue = "";
-                                editKey = "";
-                                editInSet = i;
-                                editControlKey = editKey;
-                                GUI.FocusControl(null);
+                                dictUnfold[i] = !dictUnfold[i];
                             }
-                            foreach(string key in setOfDictionaries[i].Keys)
+                            GUILayout.Box(GUIContent.none, horizontalLine);
+                            if (dictUnfold[i])
                             {
-                                if (searchText != "")
+                                if (GUILayout.Button("__Add Component__"))
                                 {
-                                    if (searchText[0] == '@')
-                                    {
-                                        if (!key.ToLower().Contains(searchText.ToLower().Substring(1)))
-                                            continue;
-                                    }
-                                    else
-                                    {
-                                        if(!setOfDictionaries[i][key].ToLower().Contains(searchText.ToLower()))
-                                            continue;
-                                    }
-                                }
-                                EditorGUILayout.BeginHorizontal();
-                                int usageNum = 0;
-                                if (keyUsageDict.ContainsKey(key))
-                                {
-                                    usageNum = keyUsageDict[key].Count;
-                                    string tootTip = "";
-                                    foreach(string s in keyUsageDict[key])
-                                        tootTip += s + "\n";
-                                    GUIContent usageText = new GUIContent(usageNum.ToString(), tootTip);
-
-                                    if (GUILayout.Button(usageText, GUILayout.Width(30)))
-                                    {
-                                        showFilesForSet = i;
-                                        showFilesForKey = key;
-                                        // EditorGUILayout.LabelField(usageText, greenStyle, GUILayout.Width(30));
-                                    }
-                                }
-                                else
-                                    EditorGUILayout.LabelField("  ", GUILayout.Width(30));
-
-                                string _line = "[ " + key + " ] ";
-                                if (CheckForKeyCopies(key, i))
-                                {
-                                    someKeysRepeat = true;
-                                    EditorGUILayout.LabelField(_line, warningStyle);
-                                }
-                                else
-                                    EditorGUILayout.LabelField(_line);
-                                UIWords.Add("");
-
-                                EditorGUI.BeginChangeCheck();
-                                UIWords[UIWords.Count - 1] = EditorGUILayout.TextField(setOfDictionaries[i][key]);
-                                if (EditorGUI.EndChangeCheck())
-                                {
-                                    wordsToChange.Add(new WordToChangeData(i,key,UIWords[UIWords.Count - 1]));
-                                }
-                                if (GUILayout.Button(new GUIContent("C", "Copy key"), GUILayout.Width(22)))
-                                {
-                                    CopyToClipboard(key);
-                                }
-                                if (GUILayout.Button(new GUIContent("[C]", "Copy key in brackets"), GUILayout.Width(28)))
-                                {
-                                    CopyToClipboard(key, true);
-                                }
-                                if (GUILayout.Button(new GUIContent("E", "Edit"), GUILayout.Width(22)))
-                                {
-                                    filesWithValueInstance.Clear();
-                                    editValue = setOfDictionaries[i][key];
-                                    editKey = key;
+                                    editValue = "";
+                                    editKey = "";
                                     editInSet = i;
                                     editControlKey = editKey;
                                     GUI.FocusControl(null);
                                 }
-                                if (GUILayout.Button(new GUIContent("-", "Delete Key and Value"), GUILayout.Width(22)))
+                                foreach (string key in setOfDictionaries[i].Keys)
                                 {
-                                    removeFromSet = i;
-                                    keyToRemove = key;
+                                    if (searchText != "")
+                                    {
+                                        if (searchText[0] == '@')
+                                        {
+                                            if (!key.ToLower().Contains(searchText.ToLower().Substring(1)))
+                                                continue;
+                                        }
+                                        else
+                                        {
+                                            if (!setOfDictionaries[i][key].ToLower().Contains(searchText.ToLower()))
+                                                continue;
+                                        }
+                                    }
+                                    EditorGUILayout.BeginHorizontal();
+                                    int usageNum = 0;
+                                    if (keyUsageDict.ContainsKey(key))
+                                    {
+                                        usageNum = keyUsageDict[key].Count;
+                                        string tootTip = "";
+                                        foreach (string s in keyUsageDict[key])
+                                            tootTip += s + "\n";
+                                        GUIContent usageText = new GUIContent(usageNum.ToString(), tootTip);
+
+                                        if (GUILayout.Button(usageText, GUILayout.Width(30)))
+                                        {
+                                            showFilesForSet = i;
+                                            showFilesForKey = key;
+                                            // EditorGUILayout.LabelField(usageText, greenStyle, GUILayout.Width(30));
+                                        }
+                                    }
+                                    else
+                                        EditorGUILayout.LabelField("  ", GUILayout.Width(30));
+
+                                    string _line = "[ " + key + " ] ";
+                                    if (CheckForKeyCopies(key, i))
+                                    {
+                                        someKeysRepeat = true;
+                                        EditorGUILayout.LabelField(_line, warningStyle);
+                                    }
+                                    else
+                                        EditorGUILayout.LabelField(_line);
+                                    UIWords.Add("");
+
+                                    EditorGUI.BeginChangeCheck();
+                                    UIWords[UIWords.Count - 1] = EditorGUILayout.TextField(setOfDictionaries[i][key]);
+                                    if (EditorGUI.EndChangeCheck())
+                                    {
+                                        wordsToChange.Add(new WordToChangeData(i, key, UIWords[UIWords.Count - 1]));
+                                    }
+                                    if (GUILayout.Button(new GUIContent("C", "Copy key"), GUILayout.Width(22)))
+                                    {
+                                        CopyToClipboard(key);
+                                    }
+                                    if (GUILayout.Button(new GUIContent("[C]", "Copy key in brackets"), GUILayout.Width(28)))
+                                    {
+                                        CopyToClipboard(key, true);
+                                    }
+                                    if (GUILayout.Button(new GUIContent("E", "Edit"), GUILayout.Width(22)))
+                                    {
+                                        filesWithValueInstance.Clear();
+                                        editValue = setOfDictionaries[i][key];
+                                        editKey = key;
+                                        editInSet = i;
+                                        editControlKey = editKey;
+                                        GUI.FocusControl(null);
+                                    }
+                                    if (GUILayout.Button(new GUIContent("-", "Delete Key and Value"), GUILayout.Width(22)))
+                                    {
+                                        removeFromSet = i;
+                                        keyToRemove = key;
+                                    }
+                                    EditorGUILayout.EndHorizontal();
                                 }
-                                EditorGUILayout.EndHorizontal();
                             }
+
                         }
-                    
-                    }
-                    EditorGUILayout.EndScrollView();
-                    GUILayout.Box(GUIContent.none, horizontalLine);
-                    if (someKeysRepeat)
-                        EditorGUILayout.LabelField("Warning: Some Keys repeat in multiple dictionaries!", warningStyle);
-                    if (wordsToChange.Count > 0)
-                    {
-                        foreach(WordToChangeData _data in wordsToChange)
+                        EditorGUILayout.EndScrollView();
+                        GUILayout.Box(GUIContent.none, horizontalLine);
+                        if (someKeysRepeat)
+                            EditorGUILayout.LabelField("Warning: Some Keys repeat in multiple dictionaries!", warningStyle);
+                        if (wordsToChange.Count > 0)
                         {
-                            setOfDictionaries[_data.dictID][_data.key] = _data.newWord;
+                            foreach (WordToChangeData _data in wordsToChange)
+                            {
+                                setOfDictionaries[_data.dictID][_data.key] = _data.newWord;
+                            }
+                            wordsToChange.Clear();
                         }
-                        wordsToChange.Clear();
-                    }
-                    if (removeFromSet != -1 && keyToRemove != "")
-                    {
-                        setOfDictionaries[removeFromSet].Remove(keyToRemove);
-                        removeFromSet = -1;
-                        keyToRemove = "";
+                        if (removeFromSet != -1 && keyToRemove != "")
+                        {
+                            setOfDictionaries[removeFromSet].Remove(keyToRemove);
+                            removeFromSet = -1;
+                            keyToRemove = "";
+                        }
                     }
                 }
             }
+        }
+
+        string GetSceneLocalizaionDebugInfo()
+        {
+            string _info = "";
+            int uiKeysCount = 0;
+            int uiLocalizationComponentsCount = 0;
+            foreach(UILocalization uil in GameObject.FindObjectsOfType<UILocalization>())
+            {
+                uiLocalizationComponentsCount++;
+                if (uil.key != "")
+                    uiKeysCount++;
+
+            }
+            _info += "Localization Components found: [" + uiLocalizationComponentsCount.ToString() + "]";
+            _info += "keys found: [" + uiKeysCount.ToString() + "]";
+            return _info;
         }
 
         void ReloadDictionaries()
