@@ -266,11 +266,19 @@ namespace CareUp.Localize
 
         string GenerateUniqueKey(string prefix, List<string> keys, string value)
         {
-            string newKey = prefix + value.Split(' ')[0].Substring(0, 5);
+
+            string newKey = "";
+            string[] valueWords = value.ToLower().Split(' ');
+            
+            if (valueWords[0].Length > 6)
+                newKey = prefix + valueWords[0].Substring(0, 5);
+            else
+                newKey = prefix + valueWords[0];
+
             string keyToCheck = newKey;
             while(keys.Contains(keyToCheck))
             {
-                keyToCheck = newKey + string.Format("{4}", Random.Range(0, 9999));
+                keyToCheck = newKey + Random.Range(0, 999).ToString("D3");
             }
 
             return keyToCheck;
@@ -290,9 +298,11 @@ namespace CareUp.Localize
             int keysAssigned = 0;
             foreach(UILocalization uil in GameObject.FindObjectsOfType<UILocalization>())
             {
-                if (uil.key != "")
+                if (true)//uil.key == "")
                 {
                     string currentText = uil.GetText();
+                    if (currentText == "") 
+                        continue;
                     string keyFound = GetKeyIfTextInDict(currentDict, currentText);
                     string currentKey = keyFound;
                     if (keyFound != "")
@@ -300,8 +310,8 @@ namespace CareUp.Localize
                     }
                     else
                     {
-                        currentKey = GenerateUniqueKey("UI_", currentDict.Keys.ToList(), currentText);
-                        currentDict.Add(currentKey, currentText);
+                        currentKey = GenerateUniqueKey("ui_", currentDict.Keys.ToList(), currentText);
+                        currentDict.Add(currentKey, "[TEST]" + currentText);
                         keysAssigned++;
                     }
                     uil.key = currentKey;
