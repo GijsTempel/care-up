@@ -298,7 +298,7 @@ namespace CareUp.Localize
             Dictionary<string, string> currentDict = setOfDictionaries[0];
             int elementsFound = 0;
             int keysAssigned = 0;
-            foreach(UILocalization uil in GameObject.FindObjectsOfType<UILocalization>())
+            foreach(UILocalization uil in GameObject.FindObjectsOfType<UILocalization>(true))
             {
                 if (true)//uil.key == "")
                 {
@@ -480,7 +480,7 @@ namespace CareUp.Localize
                         string saveButtonText = "Save all changes";
                         if (selectedSet != -1)
                         {
-                            selectedName = dictsRollDownList[selectedSet];
+                            selectedName = dictsRollDownList[selectedSet + 1];
                             saveButtonText = "Save [ " + dictNames[selectedSet] + " ]";
                         }
                         GUI.backgroundColor = Color.green;
@@ -656,7 +656,7 @@ namespace CareUp.Localize
             CheckInActionFiles();
             if (dictNames.Contains(selectedName))
             {
-                selectedSet = dictNames.IndexOf(selectedName) + 1;
+                selectedSet = dictNames.IndexOf(selectedName);
             }
 
         }
