@@ -865,7 +865,7 @@ namespace CareUp.ActionEditor
             stringBuilder.Append("{\n");
             foreach(string key in setOfDictionaries[_dictID].Keys)
             {
-                stringBuilder.Append("  \"" + key + "\": \"" + setOfDictionaries[_dictID][key].Replace("\n", "<br>\n") + "\",\n");
+                stringBuilder.Append("  \"" + key + "\": \"" + setOfDictionaries[_dictID][key].Replace("\n", "<br>") + "\",\n");
             }
             stringBuilder.Append("}");
 

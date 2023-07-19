@@ -85,9 +85,18 @@ namespace CareUp.Localize
 
                 var stringBuilder = new StringBuilder();
                 stringBuilder.Append("{\n");
+                int keysCount = setOfDictionaries[i].Keys.Count;
+                int j = 0;
                 foreach(string key in setOfDictionaries[i].Keys)
                 {
-                    stringBuilder.Append("  \"" + key + "\": \"" + setOfDictionaries[i][key].Replace("\n", "<br>\n") + "\",\n");
+                    string comma = ",";
+                    if (j == (keysCount - 1))
+                        comma = "";
+
+                    stringBuilder.Append("  \"" + key + "\": \"" + 
+                        setOfDictionaries[i][key].Replace("\n", "<br>").Replace("\r", "").Replace("\"", "\'") + 
+                        "\"" + comma + "\n");
+                    j++;
                 }
                 stringBuilder.Append("}");
 
