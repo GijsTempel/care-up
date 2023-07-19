@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using SimpleJSON;
 using System.IO;
 using System.Text;
+using System.Linq;
 
 namespace CareUp.Localize
 {
@@ -26,7 +27,7 @@ namespace CareUp.Localize
         string dutchDict = "Dictionaries/Dutch/";
         string englishDict = "Dictionaries/English/";
         string localizationDebugInfo = "";
-
+        string uiOrganizeDictFileName = "";
         int languageSelected = 0;
         bool someKeysRepeat = false;
         Vector2 scrollPos = new Vector2();
@@ -253,6 +254,67 @@ namespace CareUp.Localize
             AssetDatabase.OpenAsset(fileObject, _line);
         }
 
+        string GetKeyIfTextInDict(Dictionary<string, string> _dict, string value)
+        {
+            foreach(string key in _dict.Keys)
+            {
+                if (value == _dict[key])
+                    return key;
+            }
+            return "";
+        }
+
+        string GenerateUniqueKey(string prefix, List<string> keys, string value)
+        {
+            string newKey = prefix + value.Split(' ')[0].Substring(0, 5);
+            string keyToCheck = newKey;
+            while(keys.Contains(keyToCheck))
+            {
+                keyToCheck = newKey + string.Format("{4}", Random.Range(0, 9999));
+            }
+
+            return keyToCheck;
+        }
+
+        string ProcessUITextDataToDict(string dictName)
+        {
+            if (dictName == "")
+                return "No JSON file name added!";
+            List<UILocalization> elements = new List<UILocalization>();
+            List<string> textData = new List<string>();
+            setOfDictionaries = new List<Dictionary<string, string>>();
+            dictNames = new List<string>();
+            Dictionary<string, string> currentDict = new Dictionary<string, string>();
+            
+            int elementsFound = 0;
+            int keysAssigned = 0;
+            foreach(UILocalization uil in GameObject.FindObjectsOfType<UILocalization>())
+            {
+                if (uil.key != "")
+                {
+                    string currentText = uil.GetText();
+                    string keyFound = GetKeyIfTextInDict(currentDict, currentText);
+                    string currentKey = keyFound;
+                    if (keyFound != "")
+                    {
+                    }
+                    else
+                    {
+                        currentKey = GenerateUniqueKey("UI_", currentDict.Keys.ToList(), currentText);
+                        currentDict.Add(currentKey, currentText);
+                        keysAssigned++;
+                    }
+                    uil.key = currentKey;
+                }
+                elementsFound++;
+            }
+            string logText = "UI Elements Found: " + elementsFound.ToString() + " Keys Assigned: " + keysAssigned.ToString();
+            setOfDictionaries.Add(currentDict);
+            dictNames.Add(dictName);
+            SaveChanges(0);
+            return logText;
+        }
+
         void OnGUI()
         {
             someKeysRepeat = false;
@@ -273,12 +335,16 @@ namespace CareUp.Localize
             if (GUILayout.Button("Text component organizer mode"))
                 toolMode = 1;
             EditorGUILayout.EndHorizontal();
-            
+            //Tool to collect text data from UI elements and create new dictionary
             if (toolMode == 1)
             {
                 if (GUILayout.Button("Update scene localization statistics"))
                     localizationDebugInfo = GetSceneLocalizaionDebugInfo();
                 EditorGUILayout.LabelField(localizationDebugInfo);
+                
+                uiOrganizeDictFileName = EditorGUILayout.TextField(uiOrganizeDictFileName);
+                if (GUILayout.Button("Collect, process and store text from UI"))
+                    localizationDebugInfo = ProcessUITextDataToDict(uiOrganizeDictFileName);
             }
             else if (toolMode == 0)
             {

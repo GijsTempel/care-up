@@ -28,7 +28,7 @@ public class UILocalization : MonoBehaviour
         }
     }
 
-    void SetText(string value)
+    public void SetText(string value)
     {
         if (text != null)
             text.text = value;
@@ -36,7 +36,7 @@ public class UILocalization : MonoBehaviour
             tPro.text = value;
     }
    
-    string GetText()
+    public string GetText()
     {
         text = GetComponent<Text>();
         tPro = GetComponent<TextMeshProUGUI>();
