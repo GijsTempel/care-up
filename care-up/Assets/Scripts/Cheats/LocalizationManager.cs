@@ -43,6 +43,8 @@ namespace CareUp.Localize
             localizedText.Clear();
         }
 
+
+
         private static string GetCurrentDictPaht()
         {
             string dictFolder = defaultDictFolder + "/Dutch/";

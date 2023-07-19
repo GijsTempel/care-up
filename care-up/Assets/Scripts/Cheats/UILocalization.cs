@@ -20,7 +20,10 @@ public class UILocalization : MonoBehaviour
         SetText("$$$$$$$$$$$$$$$$");
         UpdateText();
     }
-
+    void OnEnable()
+    {
+        UpdateText();
+    }
     public void UpdateText()
     {
         if (key != "")

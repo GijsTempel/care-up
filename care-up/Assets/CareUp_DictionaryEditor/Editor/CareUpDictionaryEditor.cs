@@ -24,6 +24,7 @@ namespace CareUp.Localize
     class DictionaryEditor : EditorWindow
     {
         int toolMode = 0;
+        string selectedName = "";
         string dutchDict = "Dictionaries/Dutch/";
         string englishDict = "Dictionaries/English/";
         string localizationDebugInfo = "";
@@ -373,16 +374,24 @@ namespace CareUp.Localize
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Reload All Dictionary Data"))
                     ReloadDictionaries();
+                if (languageSelected == 0)
+                    GUI.backgroundColor = Color.green;
                 if (GUILayout.Button("Dutch Lang", GUILayout.Width(120)))
                 {
                     languageSelected = 0;
                     ReloadDictionaries();
                 }
+
+                GUI.backgroundColor = defaultColor;
+
+                if (languageSelected == 1)
+                    GUI.backgroundColor = Color.green;
                 if (GUILayout.Button("English Lang", GUILayout.Width(120)))
                 {
                     languageSelected = 1;
                     ReloadDictionaries();
                 }
+                GUI.backgroundColor = defaultColor;
             
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.LabelField("[ " + dictNames.Count.ToString() + " ] dictionaries found");
@@ -470,7 +479,10 @@ namespace CareUp.Localize
 
                         string saveButtonText = "Save all changes";
                         if (selectedSet != -1)
+                        {
+                            selectedName = dictsRollDownList[selectedSet];
                             saveButtonText = "Save [ " + dictNames[selectedSet] + " ]";
+                        }
                         GUI.backgroundColor = Color.green;
                         if (GUILayout.Button(saveButtonText))
                             SaveChanges();
@@ -511,16 +523,9 @@ namespace CareUp.Localize
                                 {
                                     if (searchText != "")
                                     {
-                                        if (searchText[0] == '@')
-                                        {
-                                            if (!key.ToLower().Contains(searchText.ToLower().Substring(1)))
-                                                continue;
-                                        }
-                                        else
-                                        {
-                                            if (!setOfDictionaries[i][key].ToLower().Contains(searchText.ToLower()))
-                                                continue;
-                                        }
+                                        if (!key.ToLower().Contains(searchText.ToLower().Substring(1)) && 
+                                            !setOfDictionaries[i][key].ToLower().Contains(searchText.ToLower()))
+                                            continue;
                                     }
                                     EditorGUILayout.BeginHorizontal();
                                     int usageNum = 0;
@@ -649,6 +654,10 @@ namespace CareUp.Localize
                 }
             }
             CheckInActionFiles();
+            if (dictNames.Contains(selectedName))
+            {
+                selectedSet = dictNames.IndexOf(selectedName) + 1;
+            }
 
         }
 
