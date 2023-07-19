@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace CareUp.Localize
 {
-
     public static class LocalizationManager
     {
         static string dictListFile = "dicts";
@@ -16,7 +15,7 @@ namespace CareUp.Localize
         private static bool loadedDicts = false;
         private static GameObject gameLogic;
         private static Dictionary<string, string> localizedText;
-        private static bool isReady = false;
+        // private static bool isReady = false;
         //private string missingTextString = "Text not found";
 
         // Use this for initialization
@@ -27,21 +26,21 @@ namespace CareUp.Localize
             gameLogic = GameObject.Find("GameLogic");
             if (localizedText == null)
                 localizedText = new Dictionary<string, string>();
-
             TextAsset _data = (TextAsset)Resources.Load(GetCurrentDictPaht() + fileName);
-            string jsonString = _data.text;
-            JSONNode data = JSON.Parse(jsonString);
-            foreach (string key in data.Keys)
+            if (_data != null)
             {
-                if (!localizedText.ContainsKey(key))
-                    localizedText.Add(key, data[key].ToString().Replace("<br>", "\n").Replace("\"",""));
+                string jsonString = _data.text;
+                JSONNode data = JSON.Parse(jsonString);
+                foreach (string key in data.Keys)
+                {
+                    if (!localizedText.ContainsKey(key))
+                        localizedText.Add(key, data[key].ToString().Replace("<br>", "\n").Replace("\"",""));
+                }
             }
-            isReady = true;
         }
         public static void ClearDicts()
         {
             localizedText.Clear();
-            isReady = false;
         }
 
         private static string GetCurrentDictPaht()
@@ -141,11 +140,6 @@ namespace CareUp.Localize
                 }
             }
             return "";
-        }
-
-        public static bool GetIsReady()
-        {
-            return isReady;
         }
     }
 }

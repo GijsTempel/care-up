@@ -18,6 +18,11 @@ public class UILocalization : MonoBehaviour
         text = GetComponent<Text>();
         tPro = GetComponent<TextMeshProUGUI>();
         SetText("$$$$$$$$$$$$$$$$");
+        UpdateText();
+    }
+
+    public void UpdateText()
+    {
         if (key != "")
         {
             string newText = LocalizationManager.GetLocalizedValue(key);

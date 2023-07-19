@@ -375,6 +375,14 @@ namespace MBS
             UpdateLangButtons();
         }
 
+        private void UpdateTextComponents()
+        {
+            foreach(UILocalization uil in GameObject.FindObjectsOfType<UILocalization>())
+            {
+                uil.UpdateText();
+            }
+        }
+
         //Debug options changed
         public void PlusCoins()
         {

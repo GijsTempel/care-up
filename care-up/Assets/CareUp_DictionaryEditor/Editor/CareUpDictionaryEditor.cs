@@ -292,8 +292,9 @@ namespace CareUp.Localize
             List<string> textData = new List<string>();
             setOfDictionaries = new List<Dictionary<string, string>>();
             dictNames = new List<string>();
-            Dictionary<string, string> currentDict = new Dictionary<string, string>();
-            
+            dictNames.Add(dictName);
+            LoadDictionary(dictNames[0].Replace("\r", ""));
+            Dictionary<string, string> currentDict = setOfDictionaries[0];
             int elementsFound = 0;
             int keysAssigned = 0;
             foreach(UILocalization uil in GameObject.FindObjectsOfType<UILocalization>())
@@ -311,7 +312,7 @@ namespace CareUp.Localize
                     else
                     {
                         currentKey = GenerateUniqueKey("ui_", currentDict.Keys.ToList(), currentText);
-                        currentDict.Add(currentKey, "[TEST]" + currentText);
+                        currentDict.Add(currentKey, currentText);
                         keysAssigned++;
                     }
                     uil.key = currentKey;
@@ -319,14 +320,17 @@ namespace CareUp.Localize
                 elementsFound++;
             }
             string logText = "UI Elements Found: " + elementsFound.ToString() + " Keys Assigned: " + keysAssigned.ToString();
-            setOfDictionaries.Add(currentDict);
-            dictNames.Add(dictName);
+            if (setOfDictionaries.Count > 0)
+                setOfDictionaries[0] = currentDict;
+            else
+                setOfDictionaries.Add(currentDict);
             SaveChanges(0);
             return logText;
         }
 
         void OnGUI()
         {
+            var defaultColor = GUI.backgroundColor;
             someKeysRepeat = false;
             GUIStyle warningStyle  = new GUIStyle();
             warningStyle.normal.textColor = Color.red;
@@ -340,10 +344,18 @@ namespace CareUp.Localize
             horizontalLine.margin = new RectOffset(0, 0, 4, 4);
             horizontalLine.fixedHeight = 1;
             EditorGUILayout.BeginHorizontal();
+
+            if (toolMode == 0)
+                GUI.backgroundColor = Color.green;
             if (GUILayout.Button("Dictionary editor mode"))
                 toolMode = 0;
+            GUI.backgroundColor = defaultColor;
+            if (toolMode == 1)
+                GUI.backgroundColor = Color.green;
             if (GUILayout.Button("Text component organizer mode"))
                 toolMode = 1;
+            GUI.backgroundColor = defaultColor;
+            
             EditorGUILayout.EndHorizontal();
             //Tool to collect text data from UI elements and create new dictionary
             if (toolMode == 1)
@@ -407,7 +419,6 @@ namespace CareUp.Localize
                     EditorGUILayout.BeginHorizontal();
                     if (GUILayout.Button("Cancel Edit"))
                         ExitTextEdit();
-                    var defaultColor = GUI.backgroundColor;
                     GUI.backgroundColor = Color.green;
                     if (GUILayout.Button("Confirm Edit"))
                         ExitTextEdit(true);
@@ -460,7 +471,6 @@ namespace CareUp.Localize
                         string saveButtonText = "Save all changes";
                         if (selectedSet != -1)
                             saveButtonText = "Save [ " + dictNames[selectedSet] + " ]";
-                        var defaultColor = GUI.backgroundColor;
                         GUI.backgroundColor = Color.green;
                         if (GUILayout.Button(saveButtonText))
                             SaveChanges();
@@ -614,6 +624,7 @@ namespace CareUp.Localize
             _info += "keys found: [" + uiKeysCount.ToString() + "]";
             return _info;
         }
+
 
         void ReloadDictionaries()
         {
