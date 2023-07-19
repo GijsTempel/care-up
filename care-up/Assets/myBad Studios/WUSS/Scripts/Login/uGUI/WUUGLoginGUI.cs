@@ -373,6 +373,7 @@ namespace MBS
             LocalizationManager.ClearDicts();
             LocalizationManager.LoadAllDictionaries();
             UpdateLangButtons();
+            UpdateTextComponents();
         }
 
         private void UpdateTextComponents()
