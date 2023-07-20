@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using SimpleJSON;
 using System.IO;
 using System.Text;
-using System.Linq;
 
 namespace CareUp.Localize
 {
@@ -175,6 +174,7 @@ namespace CareUp.Localize
         static List<TextAsset> GetAllXMLFiles()
         {
             string projectResPath = "Assets/Resources/";
+
             List<TextAsset> textAssets = new List<TextAsset>();
             string[] xmlDataDirectories = new string[] 
             {
@@ -186,6 +186,8 @@ namespace CareUp.Localize
                 }; 
             foreach(string xmlDirPath in xmlDataDirectories)
             {
+                if (!Directory.Exists(projectResPath + xmlDirPath))
+                    continue;
                 var info = new DirectoryInfo(projectResPath + xmlDirPath);
                 FileInfo[] fileInfo = info.GetFiles();
                 
