@@ -171,6 +171,24 @@ namespace CareUp.Localize
             return false;
         }
         
+        static List<string> ListFilesInDir(string dirPath, string ext)
+        {
+            Debug.Log(Application.dataPath + "/Resources/" + GetCurrentDictPath());
+            // if (Directory.Exists(Application.dataPath))
+            // {
+            //     string worldsFolder = Application.persistentDataPath;
+
+            //     DirectoryInfo d = new DirectoryInfo(worldsFolder);
+            //     foreach (var file in d.GetFiles("*.sav"))
+            //     {
+            //         Debug.Log(file);
+            //     }
+            // }
+
+            return null;
+        }
+
+
         static List<TextAsset> GetAllXMLFiles()
         {
             string projectResPath = "Assets/Resources/";
@@ -609,6 +627,7 @@ namespace CareUp.Localize
             setOfDictionaries = new List<Dictionary<string, string>>();
             GUI.FocusControl(null);
             AssetDatabase.Refresh();
+            ListFilesInDir("dir", "json");
             TextAsset dictListData = (TextAsset)Resources.Load(GetCurrentDictPath() + dictListFile);
             foreach(string dictName in dictListData.text.Split('\n'))
             {   
@@ -628,6 +647,7 @@ namespace CareUp.Localize
 
         public static void LoadDictionary(string fileName)
         {
+            
             Dictionary<string, string> currentDict = new Dictionary<string, string>();
             TextAsset _data = (TextAsset)Resources.Load(GetCurrentDictPath() + fileName);
             if (_data != null)
