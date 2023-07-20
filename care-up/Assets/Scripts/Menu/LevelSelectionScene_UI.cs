@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Linq;
 using MBS;
 using CareUpAvatar;
+using CareUp.Localize;
 
 
 public class SceneInfo
@@ -449,8 +450,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             sceneUnit.url = sceneInfo.url;
 
             // setting scene title
-            sceneUnit.transform.Find("Title").GetComponent<Text>().text
-                = sceneUnit.displayName = sceneInfo.displayName;
+            sceneUnit.displayName = sceneInfo.displayName;
 
             ppManager.currentSceneVisualName = sceneUnit.displayName;
             // setting id next to manager visual name
@@ -473,7 +473,7 @@ public class LevelSelectionScene_UI : MonoBehaviour
             }
             sceneUnit.validated = sceneInfo.validated;
             sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
-                sceneUnit.validated ? "Geaccrediteerd" : "";
+                sceneUnit.validated ? LocalizationManager.GetValueIfKey("[Geaccrediteerd]") : "";
 
             sceneUnit.totalPoints = sceneInfo.totalPoints;
             sceneUnit.xPoints = sceneInfo.xPoints;

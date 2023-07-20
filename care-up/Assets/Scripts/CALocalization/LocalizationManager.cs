@@ -95,8 +95,6 @@ namespace CareUp.Localize
 
         public static string GetValueIfKey(string key)
         {
-            // return "**************";
-
             if (!loadedDicts)
                 LoadAllDictionaries();
             if (key == null)
@@ -104,7 +102,7 @@ namespace CareUp.Localize
             if (key.Length == 0)
                 return "";
 
-            string result = key;
+            string result = "*****";
             bool debugMode = false;
             if (gameLogic != null)
             {

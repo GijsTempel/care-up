@@ -197,7 +197,7 @@ namespace CareUp.Localize
                     {
                         // actionFiles.Add(file.Name.Split('.')[0]);
                         string resPath = xmlDirPath + "/" + file.Name.Split('.')[0];
-                        TextAsset textAsset = Resources.Load(resPath, typeof(TextAsset))  as TextAsset;
+                        TextAsset textAsset = Resources.Load(resPath, typeof(TextAsset)) as TextAsset;
                         textAssets.Add(textAsset);
                     }
                 }
