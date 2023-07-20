@@ -170,24 +170,6 @@ namespace CareUp.Localize
             }
             return false;
         }
-        
-        static List<string> ListFilesInDir(string dirPath, string ext)
-        {
-            Debug.Log(Application.dataPath + "/Resources/" + GetCurrentDictPath());
-            // if (Directory.Exists(Application.dataPath))
-            // {
-            //     string worldsFolder = Application.persistentDataPath;
-
-            //     DirectoryInfo d = new DirectoryInfo(worldsFolder);
-            //     foreach (var file in d.GetFiles("*.sav"))
-            //     {
-            //         Debug.Log(file);
-            //     }
-            // }
-
-            return null;
-        }
-
 
         static List<TextAsset> GetAllXMLFiles()
         {
@@ -627,15 +609,15 @@ namespace CareUp.Localize
             setOfDictionaries = new List<Dictionary<string, string>>();
             GUI.FocusControl(null);
             AssetDatabase.Refresh();
-            ListFilesInDir("dir", "json");
-            TextAsset dictListData = (TextAsset)Resources.Load(GetCurrentDictPath() + dictListFile);
-            foreach(string dictName in dictListData.text.Split('\n'))
+
+            List<string> dictListData = LocalizationManager.ListCurrentJsonFiles(GetCurrentDictPath());
+            foreach(string dictName in dictListData)
             {   
                 if (!string.IsNullOrEmpty(dictName))
                 {
-                    dictNames.Add(dictName.Replace("\r", ""));
+                    dictNames.Add(dictName);
                     dictUnfold.Add(true);
-                    LoadDictionary(dictName.Replace("\r", ""));
+                    LoadDictionary(dictName);
                 }
             }
             CheckInActionFiles();

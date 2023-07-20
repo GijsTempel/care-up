@@ -18,7 +18,7 @@ public class UILocalization : MonoBehaviour
         text = GetComponent<Text>();
         tPro = GetComponent<TextMeshProUGUI>();
         SetText("$$$$$$$$$$$$$$$$");
-        // UpdateText();
+        UpdateText();
     }
     void OnEnable()
     {
