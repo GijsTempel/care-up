@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using SimpleJSON;
 using UnityEngine;
-using System.IO;
 
 namespace CareUp.Localize
 {
@@ -75,27 +74,12 @@ namespace CareUp.Localize
         }
 
 
-        public static List<string> ListCurrentJsonFiles(string dictPath)
-        {
-            List<string> fileList = new List<string>();
-            string fullDictDirPath = Application.dataPath + "/Resources/" + dictPath;
-            if (Directory.Exists(fullDictDirPath))
-            {
-                DirectoryInfo d = new DirectoryInfo(fullDictDirPath);
-                foreach (var file in d.GetFiles("*.json"))
-                    fileList.Add(file.Name.Split(".")[0]);
-                
-                return fileList;
-            }
-            return null;
-        }
-
         public static void LoadAllDictionaries()
         {
             if (dicts.Count == 0)
             {
-                List<string> dictNames = ListCurrentJsonFiles(GetCurrentDictPaht());
-                foreach (string dictName in dictNames)
+                TextAsset dictListData = (TextAsset)Resources.Load(GetCurrentDictPaht() + dictListFile);
+                foreach (string dictName in dictListData.text.Split('\n'))
                 {   
                     if (!string.IsNullOrEmpty(dictName))
                     {

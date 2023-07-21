@@ -597,6 +597,28 @@ namespace CareUp.Localize
             return setOfDictionaries[index];
         }
 
+        public static List<string> ListCurrentJsonFiles(string dictPath)
+        {
+            List<string> fileList = new List<string>();
+            string fullDictDirPath = Application.dataPath + "/Resources/" + dictPath;
+            if (Directory.Exists(fullDictDirPath))
+            {
+                DirectoryInfo d = new DirectoryInfo(fullDictDirPath);
+                foreach (var file in d.GetFiles("*.json"))
+                    fileList.Add(file.Name.Split(".")[0]);
+
+                string actionFilePath = "Assets/Resources/" + GetCurrentDictPath() + "dicts.txt";
+                var stringBuilder = new StringBuilder();
+                foreach (string fName in fileList)
+                    stringBuilder.Append(fName + "\n");
+
+                using (StreamWriter swriter = new StreamWriter(actionFilePath))
+                    swriter.Write(stringBuilder.ToString());
+                return fileList;
+            }
+            return null;
+        }
+
         static void ReloadDictionaries()
         {
             dictUnfold.Clear();
@@ -610,7 +632,7 @@ namespace CareUp.Localize
             GUI.FocusControl(null);
             AssetDatabase.Refresh();
 
-            List<string> dictListData = LocalizationManager.ListCurrentJsonFiles(GetCurrentDictPath());
+            List<string> dictListData = ListCurrentJsonFiles(GetCurrentDictPath());
             foreach(string dictName in dictListData)
             {   
                 if (!string.IsNullOrEmpty(dictName))
