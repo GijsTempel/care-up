@@ -83,6 +83,47 @@ namespace CareUp.Localize
             setOfDictionaries = new List<Dictionary<string, string>>();
             dictNames = new List<string>();
         }
+
+
+        public static string FindInDictByKey(string _key, out int dictID, bool toRemoveBrackets = true)
+        {
+            dictID = -1;
+            
+            if (_key.Length < 3)
+                return _key;
+            if (_key[0] != '[' || _key[_key.Length - 1] != ']')
+                return _key;
+            string key = _key;
+            if (toRemoveBrackets)
+            {
+                key = key.Substring(1, key.Length - 2);
+            }
+            if (dictNames.Count != 0)
+            {
+                for(int i = 0; i < dictNames.Count; i++)
+                {
+                    if (setOfDictionaries[i].ContainsKey(key))
+                    {
+                        dictID = i;
+                        return(setOfDictionaries[i][key]);
+                    }
+                }
+            }
+            return _key;
+        } 
+
+        public static void UpdateDictionaryValue(int dictToEdit, string key, string newValue)
+        {
+            if (dictToEdit != -1)
+            {
+                if (setOfDictionaries[dictToEdit].ContainsKey(key))
+                {
+                    setOfDictionaries[dictToEdit][key] = newValue;
+                }
+            }
+        }
+
+
         public static void SaveChanges(int _dictID = -1)
         {
             int startSaveFrom = 0;
@@ -575,6 +616,8 @@ namespace CareUp.Localize
 
         public static string GetDictName(int index)
         {
+            if (dictNames == null || index > (dictNames.Count - 1))
+                return index.ToString();
             return dictNames[index];
         }
 
@@ -619,7 +662,7 @@ namespace CareUp.Localize
             return null;
         }
 
-        static void ReloadDictionaries()
+        public static void ReloadDictionaries()
         {
             dictUnfold.Clear();
             filesWithValueInstance.Clear();
