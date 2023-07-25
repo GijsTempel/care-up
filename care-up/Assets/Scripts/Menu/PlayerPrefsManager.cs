@@ -458,6 +458,8 @@ public class PlayerPrefsManager : MonoBehaviour
 
     void Awake()
     {
+        SmartLook.Init("22f3cf28278dbff71183ef8e0fa90c90048b850d");
+
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         if (!Application.isEditor)
         {
@@ -478,8 +480,6 @@ public class PlayerPrefsManager : MonoBehaviour
         // uncomment this, fill with correct info and start game
         // p.s. dont forget to comment this again and not push instead :)
         //PlayerPrefsManager.__dev__customCertificate("playerFullName", "sceneName", "06202019");
-
-        SmartLook.Init("22f3cf28278dbff71183ef8e0fa90c90048b850d");
 
 #if UNITY_WEBGL || UNITY_EDITOR
         HandleLoginToken();
