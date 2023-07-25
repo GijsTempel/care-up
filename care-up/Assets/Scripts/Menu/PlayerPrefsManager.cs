@@ -14,7 +14,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Linq;
-using SmartLookUnity;
 using CareUp.Localize;
 using System.Runtime.InteropServices;
 
@@ -458,7 +457,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
     void Awake()
     {
-        SmartLook.Init("22f3cf28278dbff71183ef8e0fa90c90048b850d");
+        SmartlookUnity.SetupOptionsBuilder builder = 
+            new SmartlookUnity.SetupOptionsBuilder("22f3cf28278dbff71183ef8e0fa90c90048b850d");
+        SmartlookUnity.Smartlook.SetupAndStartRecording(builder.Build());
 
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         if (!Application.isEditor)
