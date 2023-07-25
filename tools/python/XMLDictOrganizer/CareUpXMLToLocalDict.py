@@ -1,27 +1,29 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import random
 import os
 import json
 from lxml import etree as ET
+import io
 
 work_dict_name = "test"
 res_path = "../../../care-up/Assets/Resources/"
 dict_root_path =  res_path + "Dictionaries/Dutch/"
 dict_names = []
-setOfDictionaries = []
-
+set_of_dictionaries = []
+xml_directories = ["Xml/Actions/"]
 
 def load_dict(dict_path):
     with open(dict_path, 'r') as file:
         j_data = json.load(file)
-    print(j_data)
     return j_data
 
 
 def save_dict(dict_index):
-    json_object = json.dumps(setOfDictionaries[dict_index], indent = 4) 
-    file = open(dict_names[dict_index] + ".json", "w")
-    file.write(json_object)
+    json_object = json.dumps(set_of_dictionaries[dict_index], indent = 4, ensure_ascii=False).encode('utf8')
+    file = io.open("test_folder/" + dict_names[dict_index] + ".json", mode="w", encoding="utf-8")
+    # file = open("test_folder/" + dict_names[dict_index] + ".json", "w")
+    file.write(json_object.decode())
     file.close()
 
 
@@ -32,65 +34,134 @@ def is_it_key(key):
     return False
  
 
+def strip_key(key):
+    return key[1:-1]
+
+
 def get_value_if_key(key):
     if is_it_key(key):
-        return get_localization_value(key)
+        return get_localization_value(strip_key(key))
     return key
 
 
 def get_localization_value(key):
-    for i in range(len(setOfDictionaries)):
-        if (key in setOfDictionaries[i]):
-            return setOfDictionaries[i][key]
+    for i in range(len(set_of_dictionaries)):
+        if (key in set_of_dictionaries[i]):
+            return set_of_dictionaries[i][key]
     return ""
     
 
 def find_dict_and_key_by_value(value):
-    for i in range(len(setOfDictionaries)):
-        for k in setOfDictionaries[i]:
-            if setOfDictionaries[i][k] == value:
+    for i in range(len(set_of_dictionaries)):
+        for k in set_of_dictionaries[i]:
+            if set_of_dictionaries[i][k] == value:
                 return dict_names[i], k
+    return "", ""
+
+
+def key_exist(key):
+    for d in set_of_dictionaries:
+        if key in d:
+            return True
+    return False
+
+
+def clean_text(value):
+    new_text = value.replace("##br##", "<br>").replace("\r", "").replace("\"","“")
+    return new_text
+
+
+def list_xml_files_in_dir(_dir):
+    result = []
+    for file_path in os.listdir(_dir):
+        if (file_path.split('.')[-1] == "xml"):
+            result.append(_dir + file_path)
+    return result
+
+def generate_new_key(value):
+    value = value.lower()
+    key_base = value
+    if (len(value) > 10):
+        key_base = value[0:10].replace(" ", "_")
+    final_key = key_base
+    while key_exist(final_key):
+        final_key = key_base + str(random.randint(3, 9)) 
+    return final_key
 
 for file_path in os.listdir(dict_root_path):
-    spl = file_path.split('.')
-    if (len(spl) == 2 and spl[1] == "json"):
-        # print(file_path)
-        dict_names.append(spl[0])
-        print("\n" + spl[0])
-        setOfDictionaries.append(load_dict(dict_root_path + file_path))
+    if (file_path.split('.')[-1] == "json"):
+        dict_names.append(file_path.split('.')[0])
+        set_of_dictionaries.append(load_dict(dict_root_path + file_path))
 
-save_dict(1)
-
+if not(work_dict_name in dict_names):
+    dict_names.append(work_dict_name)
+    work_dict = {}
+    set_of_dictionaries.append(work_dict)
 
 needed_attr = ["description", "fullDescription", "messageTitle", "messageContent", "isInProducts"]
 node_names = ["action", "scene"]
 
-tree = ET.parse('Actions_WoundCare.xml')
-root = tree.getroot()
+xml_files = []
+for d in xml_directories:
+    xml_files += list_xml_files_in_dir(res_path + d)
 
-for n in node_names:
-    for node in tree.iter(node_names):
-        for k in node.attrib:
-            if k in needed_attr:
-                pass
-                node.attrib[k] = str(100)
 
-ET.indent(tree, '  ')
+for xml_file in xml_files:
+    print(xml_file)
+    ff = open(xml_file, 'r', encoding='utf-8')
+    data = ff.read()
+    ff.close()
+    new_data = ""
+    b_trigger = False
+    for i in range(len(data)):
+        if (data[i] == "\""):
+            b_trigger = not b_trigger
+        if data[i] == "\n" and b_trigger:
+            new_data += "##br##"
+        else:
+            new_data += data[i]
+        
+    
+    tree = ET.ElementTree(ET.fromstring(bytes(new_data, encoding='utf-8')))
+    # tree = ET.parse(data)
+    root = tree.getroot()
 
-# xml_str = ET.tostring(tree, encoding='unicode', pretty_print=True).replace("\t", "  ")
-# new_text = ""
-# buffer_text = ""
-# for i in range(len(xml_str)):
-#     c = xml_str[i]
-#     buffer_text += c
-#     if c == ' ':
-#         new_text += buffer_text
-#         buffer_text = "" 
-#     if c == "=":
-#         buffer_text = "\n      " + buffer_text
+    for n in node_names:
+        for node in tree.iter(node_names):
+            for k in node.attrib:
+                if k in needed_attr:
+                    if (node.attrib[k] == ""):
+                        continue
+                    if not(is_it_key(node.attrib[k])):
+                        _value = clean_text(node.attrib[k])
+                        found_in_dict, found_key = find_dict_and_key_by_value(_value)
+                        if type(found_key) == str and found_key != "":
+                            node.attrib[k] = "[" + found_key + "]"
+                        else:
+                            new_key = generate_new_key(_value)
+                            set_of_dictionaries[len(set_of_dictionaries) - 1][new_key] = _value
+                            node.attrib[k] = "[" + new_key + "]"
+                        # print(node.attrib[k] + " | " + strip_key(node.attrib[k]))
 
-# new_text += buffer_text
-# file = open("output.xml", "w")
-# file.write(new_text)
-# file.close()
+    ET.indent(tree, '  ')
+
+    xml_str = ET.tostring(tree, encoding='unicode', pretty_print=True).replace("\t", "  ")
+    new_text = ""
+    buffer_text = ""
+    for i in range(len(xml_str)):
+        c = xml_str[i]
+        buffer_text += c
+        if c == ' ':
+            new_text += buffer_text
+            buffer_text = "" 
+        if c == "=":
+            buffer_text = "\n      " + buffer_text
+
+    new_text += buffer_text
+    xml_file_name = xml_file.split("/")[-1]
+    file = open("test_folder/_" + xml_file_name, "w")
+    file.write(new_text)
+    file.close()
+
+save_dict(len(set_of_dictionaries) - 1)
 
