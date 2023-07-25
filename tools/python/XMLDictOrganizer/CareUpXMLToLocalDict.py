@@ -25,6 +25,32 @@ def save_dict(dict_index):
     file.close()
 
 
+def is_it_key(key):
+    if (len(key) >= 3):
+        if key[0] == "[" and key[-1] == "]":
+            return True
+    return False
+ 
+
+def get_value_if_key(key):
+    if is_it_key(key):
+        return get_localization_value(key)
+    return key
+
+
+def get_localization_value(key):
+    for i in range(len(setOfDictionaries)):
+        if (key in setOfDictionaries[i]):
+            return setOfDictionaries[i][key]
+    return ""
+    
+
+def find_dict_and_key_by_value(value):
+    for i in range(len(setOfDictionaries)):
+        for k in setOfDictionaries[i]:
+            if setOfDictionaries[i][k] == value:
+                return dict_names[i], k
+
 for file_path in os.listdir(dict_root_path):
     spl = file_path.split('.')
     if (len(spl) == 2 and spl[1] == "json"):
