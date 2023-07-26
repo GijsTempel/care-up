@@ -143,7 +143,7 @@ for xml_file in xml_files:
                             node.attrib[k] = "[" + found_key + "]"
                         else:
                             new_key = generate_new_key(_value)
-                            set_of_dictionaries[len(set_of_dictionaries) - 1][new_key] = "**TEST**" + _value
+                            set_of_dictionaries[len(set_of_dictionaries) - 1][new_key] = _value
                             node.attrib[k] = "[" + new_key + "]"
 
     ET.indent(tree, '  ')
