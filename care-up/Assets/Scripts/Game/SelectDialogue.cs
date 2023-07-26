@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
-
+using CareUp.Localize;
 /// <summary>
 /// Instance of dialogue with up to 4 options.
 /// </summary>
@@ -92,7 +92,8 @@ public class SelectDialogue : MonoBehaviour
         }
         if (prevStepInfo != null)
         {
-            prevStepInfoElements.transform.Find("Buttons/b0/Text").GetComponent<Text>().text = prevStepInfo.text;
+            prevStepInfoElements.transform.Find("Buttons/b0/Text").GetComponent<Text>().text = 
+                LocalizationManager.GetValueIfKey(prevStepInfo.text);
             prevStepInfoButton.gameObject.SetActive(true);
         }
         else
@@ -137,7 +138,8 @@ public class SelectDialogue : MonoBehaviour
                         cheatSimbol = "@";
                 }
 #endif
-                sqButtons[i].transform.Find("Text").GetComponent<Text>().text = cheatSimbol + options[i].text;
+                sqButtons[i].transform.Find("Text").GetComponent<Text>().text = cheatSimbol + 
+                    LocalizationManager.GetValueIfKey(options[i].text);
                 if (gameUI.AllowAutoPlay(false))
                     if (options[i].attribute != "" && options[i].attribute != "CM_Leave")
                     {

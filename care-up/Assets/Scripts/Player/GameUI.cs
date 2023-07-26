@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using CareUp.Actions;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using CareUp.Localize;
 
 public class GameUI : MonoBehaviour
 {
@@ -1571,7 +1572,7 @@ public class GameUI : MonoBehaviour
             currentHintPanel.name = "HintPanel";
             hintText = currentHintPanel.transform.Find("Text").gameObject.GetComponent<Text>();
             hintText.text = (actionManager.CurrentActionType == ActionManager.ActionType.SequenceStep) ?
-                "Wat ga je doen?" : actionManager.CurrentDescription[i];
+                LocalizationManager.GetValueIfKey("[wat ga je426]") : actionManager.CurrentDescription[i];
 
             for (int y = 0; y < subTasks.Count; y++)
             {

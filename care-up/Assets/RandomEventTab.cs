@@ -306,7 +306,7 @@ public class RandomEventTab : MonoBehaviour
     public void Init(List<string> eventFileNames)
     {
         List<string> _names = new List<string>();
-        _names.Add("RandomEvent");
+        // _names.Add("RandomEvent");
         for (int i = 0; i < eventFileNames.Count; i++)
         {
             if (eventFileNames[i] != "")
