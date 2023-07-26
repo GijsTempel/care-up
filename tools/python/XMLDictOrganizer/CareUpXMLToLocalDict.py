@@ -6,7 +6,7 @@ import json
 from lxml import etree as ET
 import io
 
-work_dict_name = "test"
+work_dict_name = "action_dict"
 res_path = "../../../care-up/Assets/Resources/"
 dict_root_path =  res_path + "Dictionaries/Dutch/"
 dict_names = []
@@ -79,10 +79,15 @@ def list_xml_files_in_dir(_dir):
     return result
 
 def generate_new_key(value):
-    value = value.lower().replace("<br>", "")
+    value = value.lower().replace("<br>", "").replace(".", "").replace(",", "").replace("-", "").replace(";", "")
+    for i in range(5):
+        value = value.replace("  ", " ")
+    value = value.strip()
     key_base = value
-    if (len(value) > 10):
-        key_base = value[0:10].replace(" ", "_")
+    split_value = value.split(" ")
+    if len(split_value) > 3:
+        key_base = split_value[0] + " " + split_value[1] + " " + split_value[2]
+
     final_key = key_base
     while key_exist(final_key):
         final_key = key_base + str(random.randint(3, 999)) 
@@ -140,7 +145,6 @@ for xml_file in xml_files:
                             new_key = generate_new_key(_value)
                             set_of_dictionaries[len(set_of_dictionaries) - 1][new_key] = _value
                             node.attrib[k] = "[" + new_key + "]"
-                        # print(node.attrib[k] + " | " + strip_key(node.attrib[k]))
 
     ET.indent(tree, '  ')
 
@@ -158,7 +162,7 @@ for xml_file in xml_files:
 
     new_text += buffer_text
     xml_file_name = xml_file.split("/")[-1]
-    file = open("test_folder/_" + xml_file_name, "w")
+    file = open("test_folder/" + xml_file_name, "w")
     file.write(new_text)
     file.close()
 
