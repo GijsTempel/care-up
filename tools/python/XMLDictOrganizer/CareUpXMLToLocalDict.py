@@ -6,13 +6,13 @@ import json
 from lxml import etree as ET
 import io
 
-dump_folder = "RandomEvent/"
-work_dict_name = "random_event_dict"
+dump_folder = "Scenes/"
+work_dict_name = "scenes_dict"
 res_path = "../../../care-up/Assets/Resources/"
 dict_root_path =  res_path + "Dictionaries/Dutch/"
 dict_names = []
 set_of_dictionaries = []
-xml_directories = ["Xml/RandomEvent0/"]
+xml_directories = ["Xml/Scenes0/"]
 
 def load_dict(dict_path):
     with open(dict_path, 'r') as file:
@@ -103,7 +103,7 @@ if not(work_dict_name in dict_names):
     work_dict = {}
     set_of_dictionaries.append(work_dict)
 
-needed_attr = ["description", "fullDescription", "messageTitle", "descr", "messageContent", "isInProducts", "text", "title"]
+needed_attr = ["name", "description", "fullDescription", "messageTitle", "descr", "messageContent", "text", "title"]
 node_names = ["action", "scene", "option", "info", "answer", "question"]
 
 xml_files = []
