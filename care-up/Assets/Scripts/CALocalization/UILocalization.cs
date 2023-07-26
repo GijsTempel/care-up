@@ -31,7 +31,7 @@ public class UILocalization : MonoBehaviour
             string newText = LocalizationManager.GetLocalizedValue(key);
             if (newText != "")
             {
-                SetText(newText);
+                SetText("><><" + newText);
             }
         }
     }
