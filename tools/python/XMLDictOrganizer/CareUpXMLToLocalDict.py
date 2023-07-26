@@ -6,12 +6,13 @@ import json
 from lxml import etree as ET
 import io
 
-work_dict_name = "action_dict"
+dump_folder = "AnimationSequences/"
+work_dict_name = "sequence_dict"
 res_path = "../../../care-up/Assets/Resources/"
 dict_root_path =  res_path + "Dictionaries/Dutch/"
 dict_names = []
 set_of_dictionaries = []
-xml_directories = ["Xml/Actions0/"]
+xml_directories = ["Xml/AnimationSequences0/"]
 
 def load_dict(dict_path):
     with open(dict_path, 'r') as file:
@@ -21,8 +22,7 @@ def load_dict(dict_path):
 
 def save_dict(dict_index):
     json_object = json.dumps(set_of_dictionaries[dict_index], indent = 4, ensure_ascii=False).encode('utf8')
-    file = io.open("test_folder/" + dict_names[dict_index] + ".json", mode="w", encoding="utf-8")
-    # file = open("test_folder/" + dict_names[dict_index] + ".json", "w")
+    file = io.open(dump_folder + dict_names[dict_index] + ".json", mode="w", encoding="utf-8")
     file.write(json_object.decode())
     file.close()
 
@@ -103,8 +103,8 @@ if not(work_dict_name in dict_names):
     work_dict = {}
     set_of_dictionaries.append(work_dict)
 
-needed_attr = ["description", "fullDescription", "messageTitle", "messageContent", "isInProducts"]
-node_names = ["action", "scene"]
+needed_attr = ["description", "fullDescription", "messageTitle", "messageContent", "isInProducts", "text"]
+node_names = ["action", "scene", "option"]
 
 xml_files = []
 for d in xml_directories:
@@ -162,7 +162,7 @@ for xml_file in xml_files:
 
     new_text += buffer_text
     xml_file_name = xml_file.split("/")[-1]
-    file = open("test_folder/" + xml_file_name, "w")
+    file = open(dump_folder + xml_file_name, "w")
     file.write(new_text)
     file.close()
 
