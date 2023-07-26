@@ -333,14 +333,14 @@ namespace CareUp.Localize
 
         public static string GenerateUniqueKey(string prefix, List<string> keys, string value)
         {
-
             string newKey = "";
-            string[] valueWords = value.ToLower().Split(' ');
+            value = value.Trim().ToLower();
+            string[] valueWords = value.Split(' ');
             
-            if (valueWords[0].Length > 6)
-                newKey = prefix + valueWords[0].Substring(0, 5);
+            if (valueWords.Length > 3)
+                newKey = prefix + valueWords[0] + " " + valueWords[1] + " " + valueWords[2];
             else
-                newKey = prefix + valueWords[0];
+                newKey = prefix + value;
 
             string keyToCheck = newKey;
             while(keys.Contains(keyToCheck))

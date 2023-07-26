@@ -104,7 +104,7 @@ namespace CareUp.Localize
             if (key.Length == 0)
                 return "";
 
-            string result = "*****";
+            string result = "**!!" + key;
             bool debugMode = false;
             if (gameLogic != null)
             {
