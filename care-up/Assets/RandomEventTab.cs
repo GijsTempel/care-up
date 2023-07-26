@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Xml;
+using CareUp.Localize;
 
 public class RandomEventTab : MonoBehaviour
 {
@@ -225,7 +226,7 @@ public class RandomEventTab : MonoBehaviour
 
     public void CorrectAnswer(int value)
     {
-        wrongAnswerPanelTitle.text = "Heel goed!";
+        wrongAnswerPanelTitle.text = LocalizationManager.GetValueIfKey("[heel goed!]");
         wrongAnswerPanelText.text = randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex].answers[shuffledIndexes[value]].descr;
         ActionManager.CorrectAction();
         SwitchScreen(2);
@@ -255,7 +256,7 @@ public class RandomEventTab : MonoBehaviour
                 Debug.LogWarning("No EndScoreManager found. Start from 1st scene.");
             }
         }
-        wrongAnswerPanelTitle.text = "Helaas, dit antwoord is niet goed";
+        wrongAnswerPanelTitle.text = LocalizationManager.GetValueIfKey("[helaas dit antwoord323]");
         wrongAnswerPanelText.text = randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex].answers[shuffledIndexes[value]].descr;
         ActionManager.WrongAction(false);
         madeWrongAnswer = true;

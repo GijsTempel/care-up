@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
 using UnityEngine.UI;
-
+using CareUp.Localize;
 public class QuizTab : MonoBehaviour
 {
     GameUI gameUI;
@@ -182,7 +182,8 @@ public class QuizTab : MonoBehaviour
                         cheatSimbol = "@";
                 }
 #endif
-            buttons[i].transform.GetChild(0).GetComponent<Text>().text = cheatSimbol + current.answers[randomIndexList[i]].text;
+            buttons[i].transform.GetChild(0).GetComponent<Text>().text = cheatSimbol + 
+                LocalizationManager.GetValueIfKey(current.answers[randomIndexList[i]].text);
             if (gameUI.AllowAutoPlay(false))
             if (current.answers[randomIndexList[i]].isCorrect)
             {
@@ -262,7 +263,8 @@ public class QuizTab : MonoBehaviour
             current = questionList[currentStep][currentQuestionID];
         }
 
-        quastionTitle.text = current.text;
+
+        quastionTitle.text = LocalizationManager.GetValueIfKey(current.text);
         OrganizeButtons();
 
         if (random)
@@ -308,9 +310,9 @@ public class QuizTab : MonoBehaviour
 
         ActionManager.CorrectAction();
 
-        answeredTitleText.text = "Heel goed!";
+        answeredTitleText.text = LocalizationManager.GetValueIfKey("[heel goed!]");
         w_descriptionPanel.SetActive(description != "");
-        descriptionText.text = description;
+        descriptionText.text = LocalizationManager.GetValueIfKey(description);
 
         if (random == false)
         {
@@ -363,8 +365,8 @@ public class QuizTab : MonoBehaviour
             GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
         }
 
-        answeredTitleText.text = "Helaas, dit antwoord is niet goed";
-        descriptionText.text = description;
+        answeredTitleText.text = LocalizationManager.GetValueIfKey("[helaas dit antwoord323]");
+        descriptionText.text = LocalizationManager.GetValueIfKey(description);
         w_descriptionPanel.SetActive(description != "");
         continueBtn = false;
         continueButton.gameObject.SetActive(false);
