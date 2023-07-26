@@ -11,7 +11,7 @@ res_path = "../../../care-up/Assets/Resources/"
 dict_root_path =  res_path + "Dictionaries/Dutch/"
 dict_names = []
 set_of_dictionaries = []
-xml_directories = ["Xml/Actions/"]
+xml_directories = ["Xml/Actions0/"]
 
 def load_dict(dict_path):
     with open(dict_path, 'r') as file:
@@ -143,13 +143,13 @@ for xml_file in xml_files:
                             node.attrib[k] = "[" + found_key + "]"
                         else:
                             new_key = generate_new_key(_value)
-                            set_of_dictionaries[len(set_of_dictionaries) - 1][new_key] = _value
+                            set_of_dictionaries[len(set_of_dictionaries) - 1][new_key] = "**TEST**" + _value
                             node.attrib[k] = "[" + new_key + "]"
 
     ET.indent(tree, '  ')
 
     xml_str = ET.tostring(tree, encoding='unicode', pretty_print=True).replace("\t", "  ")
-    new_text = ""
+    new_text = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n"
     buffer_text = ""
     for i in range(len(xml_str)):
         c = xml_str[i]
