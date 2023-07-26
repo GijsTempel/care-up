@@ -117,7 +117,7 @@ namespace CareUp.Localize
                 string value = GetLocalizedValue(key.Substring(1, key.Length - 2));
                 if (value != null)
                 {
-                    result = value;
+                    result = "^^^" + value;
                     if (Application.isEditor && debugMode)
                     {
                         result = key + value;
