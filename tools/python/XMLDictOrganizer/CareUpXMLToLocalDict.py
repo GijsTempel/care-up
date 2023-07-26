@@ -67,7 +67,7 @@ def key_exist(key):
 
 
 def clean_text(value):
-    new_text = value.replace("##br##", "<br>").replace("\r", "").replace("\"","“")
+    new_text = value.replace("!!!NEWLINE!!!", "<br>").replace("\r", "").replace("\"","“")
     return new_text
 
 
@@ -79,13 +79,13 @@ def list_xml_files_in_dir(_dir):
     return result
 
 def generate_new_key(value):
-    value = value.lower()
+    value = value.lower().replace("<br>", "")
     key_base = value
     if (len(value) > 10):
         key_base = value[0:10].replace(" ", "_")
     final_key = key_base
     while key_exist(final_key):
-        final_key = key_base + str(random.randint(3, 9)) 
+        final_key = key_base + str(random.randint(3, 999)) 
     return final_key
 
 for file_path in os.listdir(dict_root_path):
@@ -117,11 +117,10 @@ for xml_file in xml_files:
         if (data[i] == "\""):
             b_trigger = not b_trigger
         if data[i] == "\n" and b_trigger:
-            new_data += "##br##"
+            pass
+            new_data += "!!!NEWLINE!!!"
         else:
             new_data += data[i]
-        
-    
     tree = ET.ElementTree(ET.fromstring(bytes(new_data, encoding='utf-8')))
     # tree = ET.parse(data)
     root = tree.getroot()
