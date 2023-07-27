@@ -216,7 +216,7 @@ public virtual void Talk(string topic = "", string audio = "")
         }
 
         // for leave option
-        optionsList.Add(new SelectDialogue.DialogueOption(LocalizationManager.GetValueIfKey("[Verlaten]"), 
+        optionsList.Add(new SelectDialogue.DialogueOption(("[Verlaten]"), 
             DialoqueTalk, "CM_Leave", ""));
     }
 
