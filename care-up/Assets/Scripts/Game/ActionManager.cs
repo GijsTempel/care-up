@@ -243,6 +243,16 @@ public class ActionManager : MonoBehaviour
         General
     };
 
+    static string MergeArticleWithName(string art, string descr)
+    {
+        string _newDescr = art + " " + LocalizationManager.GetValueIfKey(descr);
+        if (descr != "" && descr[0] == '[')
+            _newDescr = LocalizationManager.GetValueIfKey(
+                LocalizationManager.MergeKeys("", art, descr));
+
+        return _newDescr;
+    }
+
     // Will be refactored, someday
     public static void UpdateRequirements(float showDelay = 0f)
     {
@@ -424,6 +434,7 @@ public class ActionManager : MonoBehaviour
                                 if (GameObject.Find(hand).GetComponent<InteractableObject>().description != "")
                                 {
                                     handValue = GameObject.Find(hand).GetComponent<InteractableObject>().description;
+
                                     article = GameObject.Find(hand).GetComponent<InteractableObject>().nameArticle;
                                     found = true;
                                     foundDescr = true;
@@ -513,8 +524,9 @@ public class ActionManager : MonoBehaviour
 
                         if (!inventory.LeftHandEmpty())
                         {
-                            if (!string.IsNullOrEmpty(inventory.leftHandObject.description))
-                                currentLeftObject = System.Char.ToLowerInvariant(inventory.leftHandObject.description[0]) + inventory.leftHandObject.description.Substring(1);
+                            string localizeDescr = LocalizationManager.GetValueIfKey(inventory.leftHandObject.description);
+                            if (!string.IsNullOrEmpty(localizeDescr))
+                                currentLeftObject = localizeDescr.ToLower();
 
                             if (inventory.leftHandObject.name == hand)
                             {
@@ -526,8 +538,10 @@ public class ActionManager : MonoBehaviour
 
                         if (!inventory.RightHandEmpty())
                         {
-                            if (!string.IsNullOrEmpty(inventory.rightHandObject.description))
-                                currentRightObject = System.Char.ToLowerInvariant(inventory.rightHandObject.description[0]) + inventory.rightHandObject.description.Substring(1);
+                            string localizeDescr = LocalizationManager.GetValueIfKey(inventory.rightHandObject.description);
+
+                            if (!string.IsNullOrEmpty(localizeDescr))
+                                currentRightObject = localizeDescr.ToLower();
 
                             if (inventory.rightHandObject.name == hand)
                             {
@@ -550,7 +564,7 @@ public class ActionManager : MonoBehaviour
                         {
                             if (handValue != "")
                             {
-                                handValue = System.Char.ToLowerInvariant(handValue[0]) + handValue.Substring(1);
+                                handValue = handValue.ToLower();
                             }
                         }
                         string keyWords = null;
@@ -600,21 +614,18 @@ public class ActionManager : MonoBehaviour
                                     if (secondPlaceData.completed)
                                     {
                                         gameUI.DropLeftBlink = true;
-
+                                        string __newDescr = MergeArticleWithName(article, handValue);
                                         objectsData.Add(new StepData(false, 
-                                            LocalizationManager.GetValueIfKey("[-Leg]") + 
-                                            LocalizationManager.GetValueIfKey(article) + " " + 
-                                            LocalizationManager.GetValueIfKey(handValue) + 
+                                            LocalizationManager.GetValueIfKey("[-Leg]") + __newDescr + 
                                             LocalizationManager.GetValueIfKey("[neer.]"), i));
                                     }
                                 }
                                 else
                                 {
                                     gameUI.DropLeftBlink = true;
+                                    string __newDescr = MergeArticleWithName(article, handValue);
                                     objectsData.Add(new StepData(false, 
-                                        LocalizationManager.GetValueIfKey("[-Leg]") + 
-                                        LocalizationManager.GetValueIfKey(article) + " " + 
-                                        LocalizationManager.GetValueIfKey(handValue) + 
+                                        LocalizationManager.GetValueIfKey("[-Leg]") + __newDescr + 
                                         LocalizationManager.GetValueIfKey("[neer.]"), i));
                                 }
                             }
@@ -674,20 +685,21 @@ public class ActionManager : MonoBehaviour
                                     if (secondPlaceData.completed)
                                     {
                                         gameUI.DropRightBlink = true;
+
+                                        string __newDescr = MergeArticleWithName(article, handValue);
+                                        
                                         objectsData.Add(new StepData(false, 
-                                            LocalizationManager.GetValueIfKey("[-Leg]") + 
-                                            LocalizationManager.GetValueIfKey(article) + " " + 
-                                            LocalizationManager.GetValueIfKey(handValue) + 
+                                            LocalizationManager.GetValueIfKey("[-Leg]") + __newDescr + 
                                             LocalizationManager.GetValueIfKey("[neer.]"), i));
                                     }
                                 }
                                 else
                                 {
                                     gameUI.DropRightBlink = true;
+                                    string __newDescr = MergeArticleWithName(article, handValue);
+
                                     objectsData.Add(new StepData(false, 
-                                        LocalizationManager.GetValueIfKey("[-Leg]") + 
-                                        LocalizationManager.GetValueIfKey(article) + " " + 
-                                        LocalizationManager.GetValueIfKey(handValue) + 
+                                        LocalizationManager.GetValueIfKey("[-Leg]") + __newDescr + 
                                         LocalizationManager.GetValueIfKey("[neer.]"), i));
                                 }    
                             }
@@ -737,11 +749,9 @@ public class ActionManager : MonoBehaviour
                         {
                             keyWords = "[-Klik op]";
                         }
-
+                        string newDescr = MergeArticleWithName(article, handValue);
                         objectsData.Add(new StepData(completed, 
-                            LocalizationManager.GetValueIfKey(keyWords) + 
-                            LocalizationManager.GetValueIfKey(article) + " " +
-                            LocalizationManager.GetValueIfKey(handValue) + ".", i));
+                            LocalizationManager.GetValueIfKey(keyWords) + newDescr + ".", i));
                     }
                 }
             }

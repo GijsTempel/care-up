@@ -95,6 +95,17 @@ namespace CareUp.Localize
             loadedDicts = true;
         }
 
+        public static string MergeKeys(string prefix, string key1, string key2)
+        {
+            string key1Clean = key1.Replace("[", "").Replace("]", "") + "_";
+            if (key1 == "")
+                key1Clean = "";
+            string key2Clean = key1.Replace("[", "").Replace("]", "");
+            string result = "[" + prefix + key1Clean + key2Clean + "]";
+
+            return result;
+
+        }
         public static string GetValueIfKey(string key)
         {
             if (!loadedDicts)
