@@ -22,6 +22,7 @@ namespace CareUp.Localize
 
     class DictionaryEditor : EditorWindow
     {
+        static bool toCheckInActionFiles = false;
         static string selectedName = "";
         static string dutchDict = "Dictionaries/Dutch/";
         static string englishDict = "Dictionaries/English/";
@@ -82,6 +83,7 @@ namespace CareUp.Localize
         {
             setOfDictionaries = new List<Dictionary<string, string>>();
             dictNames = new List<string>();
+            keyUsageDict = new Dictionary<string, List<string>>();
         }
 
 
@@ -368,6 +370,8 @@ namespace CareUp.Localize
             horizontalLine.fixedHeight = 1;
             
             EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Check in XML: ", GUILayout.Width(90));
+            toCheckInActionFiles = EditorGUILayout.Toggle(toCheckInActionFiles, GUILayout.Width(30));
             if (GUILayout.Button("Reload All Dictionary Data"))
                 ReloadDictionaries();
             if (languageSelected == 0)
@@ -664,14 +668,13 @@ namespace CareUp.Localize
 
         public static void ReloadDictionaries()
         {
+            ClearDicts();
             dictUnfold.Clear();
             filesWithValueInstance.Clear();
             showFilesForKey = "";
             showFilesForSet = -1;
-            dictNames.Clear();
             selectedSet = -1;
             editInSet = -1;
-            setOfDictionaries = new List<Dictionary<string, string>>();
             GUI.FocusControl(null);
             AssetDatabase.Refresh();
 
@@ -685,7 +688,8 @@ namespace CareUp.Localize
                     LoadDictionary(dictName);
                 }
             }
-            CheckInActionFiles();
+            if (toCheckInActionFiles)
+                CheckInActionFiles();
             if (dictNames.Contains(selectedName))
             {
                 selectedSet = dictNames.IndexOf(selectedName);

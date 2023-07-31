@@ -97,7 +97,7 @@ namespace CareUp.Localize
 
         public static string MergeKeys(string prefix, string key1, string key2)
         {
-            string key1Clean = key1.Replace("[", "").Replace("]", "") + "_";
+            string key1Clean = key1.Replace("[", "").Replace("]", "") + " ";
             if (key1 == "")
                 key1Clean = "";
             string key2Clean = key2.Replace("[", "").Replace("]", "");
