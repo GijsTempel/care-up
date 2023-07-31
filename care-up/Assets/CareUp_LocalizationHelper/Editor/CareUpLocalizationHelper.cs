@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEditor;
 using CareUp.Localize;
 using System.Linq;
+using UnityEngine.SceneManagement;
+
 
 
 public class CareUpLocalizationHelper : EditorWindow
@@ -32,15 +34,20 @@ public class CareUpLocalizationHelper : EditorWindow
 
         EditorGUILayout.EndHorizontal();
         if (GUILayout.Button("Collect, process and store text from UI"))
-            localizationDebugInfo = ProcessUITextDataToDict(uiOrganizeDictFileName);
+        {
 
+            localizationDebugInfo = ProcessUITextDataToDict(uiOrganizeDictFileName);
+ 
+        }
         
         GUI.backgroundColor = Color.red;
         if (GUILayout.Button("Force clear UILocalization keys"))
             localizationDebugInfo = ClearKeys();
         GUI.backgroundColor = defaultColor;
         if (GUILayout.Button("Collect, process and store text from Interactable objects"))
+        { 
             localizationDebugInfo = ProcessInteractableTextDataToDict(uiOrganizeDictFileName);
+        }
     }
 
     string ClearKeys()
@@ -110,6 +117,7 @@ public class CareUpLocalizationHelper : EditorWindow
                 }
 
                 uil.description = "[" + currentKey + "]";
+                PrefabUtility.RecordPrefabInstancePropertyModifications(uil);
 
             }
         }
