@@ -33,11 +33,14 @@ public class CareUpLocalizationHelper : EditorWindow
         EditorGUILayout.EndHorizontal();
         if (GUILayout.Button("Collect, process and store text from UI"))
             localizationDebugInfo = ProcessUITextDataToDict(uiOrganizeDictFileName);
+
+        
         GUI.backgroundColor = Color.red;
         if (GUILayout.Button("Force clear UILocalization keys"))
             localizationDebugInfo = ClearKeys();
         GUI.backgroundColor = defaultColor;
-
+        if (GUILayout.Button("Collect, process and store text from Interactable objects"))
+            localizationDebugInfo = ProcessInteractableTextDataToDict(uiOrganizeDictFileName);
     }
 
     string ClearKeys()
@@ -52,6 +55,72 @@ public class CareUpLocalizationHelper : EditorWindow
         logText = "Keys cleared:" + keysCount.ToString();
         return logText;
     }
+
+
+    string ProcessInteractableTextDataToDict(string dictName)
+    {
+        if (dictName == "")
+            return "No JSON file name added!";
+        List<InteractableObject> elements = new List<InteractableObject>();
+        List<string> textData = new List<string>();
+
+        DictionaryEditor.ClearDicts();
+        DictionaryEditor.SetLocalizationIndex(0);
+        DictionaryEditor.AddDictName(dictName);
+        DictionaryEditor.LoadDictionary(DictionaryEditor.GetDictName(0).Replace("\r", ""));
+        
+        Dictionary<string, string> currentDict = DictionaryEditor.GetDict(0);
+        int elementsFound = 0;
+        int keysAssigned = 0;
+        int emptyTextObjects = 0;
+        foreach(InteractableObject uil in GameObject.FindObjectsOfType<InteractableObject>(true))
+        {
+            elementsFound++;
+            bool toProcessElement = false;
+            if (!toForceUpdateKeys)
+            {
+                if (uil.description != "" && uil.description[0] != '[' && !(currentDict.ContainsKey(uil.description)))
+                    toProcessElement = true;
+            }
+            else
+                toProcessElement = true;
+            
+            if (toProcessElement)
+            {
+
+                string currentText = uil.description.Replace("\"", "“").Replace("\r", "");
+                if (currentText == "") 
+                {
+                    emptyTextObjects++;
+                    continue;
+                }
+                string keyFound = DictionaryEditor.GetKeyIfTextInDict(currentDict, currentText);
+                string currentKey = keyFound;
+                if (keyFound == "")
+                {
+                    currentKey = DictionaryEditor.GenerateUniqueKey("i_", currentDict.Keys.ToList(), currentText);
+                    currentDict.Add(currentKey, currentText);
+                    keysAssigned++;
+                }
+                if ( uil.nameArticle != "")
+                {
+
+                    string artKey = LocalizationManager.MergeKeys("", uil.nameArticle, currentKey).Replace("[", "").Replace("]", "");
+                    currentDict[artKey] = uil.nameArticle + " " + uil.description;
+                }
+
+                uil.description = "[" + currentKey + "]";
+
+            }
+        }
+        string logText = "UI Elements Found: [" + elementsFound.ToString() + "] Keys Assigned: [" + keysAssigned.ToString() + "]";
+        logText += " Empty texts: [" + emptyTextObjects.ToString() + "]";
+        DictionaryEditor.SetDictionary(currentDict, 0);
+        DictionaryEditor.SaveChanges(0);
+        DictionaryEditor.SetSelectedDictName(dictName);
+        return logText;
+    }
+
 
     string ProcessUITextDataToDict(string dictName)
     {
