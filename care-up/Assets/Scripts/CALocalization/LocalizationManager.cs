@@ -100,7 +100,7 @@ namespace CareUp.Localize
             string key1Clean = key1.Replace("[", "").Replace("]", "") + "_";
             if (key1 == "")
                 key1Clean = "";
-            string key2Clean = key1.Replace("[", "").Replace("]", "");
+            string key2Clean = key2.Replace("[", "").Replace("]", "");
             string result = "[" + prefix + key1Clean + key2Clean + "]";
 
             return result;
