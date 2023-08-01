@@ -48,7 +48,10 @@ public class HeadTriggerRaycast : MonoBehaviour
             if (player.GetHandWithThisObject(acPickable.gameObject) == null)
                 continue;
             // also if target object is not the correct object in the next examine step, skip it
-            if (actionManager == null || !actionManager.CompareExamineAction(ac.ActionTriggerObjectNames[0]))
+            // TODO: sequence steps are also viable options now
+            if (actionManager == null || 
+                !(actionManager.CompareExamineAction(ac.ActionTriggerObjectNames[0]) || actionManager.IsNextActionSequenceStep())
+                )
                 continue;
             
             // find the angle between where player is looking and the vector towards the object
