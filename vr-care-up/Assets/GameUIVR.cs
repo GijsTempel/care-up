@@ -266,4 +266,10 @@ public class GameUIVR : MonoBehaviour
         }
         return null;
     }
+
+    public void _Test_TriggerAnimationSequence()
+    {
+        AnimationSequence sequence = new AnimationSequence("AnimSeq_InsulinInjection_vent");
+        sequence.NextStep();
+    }
 }
