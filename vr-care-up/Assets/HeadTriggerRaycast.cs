@@ -27,40 +27,38 @@ public class HeadTriggerRaycast : MonoBehaviour
 
     void Update()
     {
-        UpdateConeRayCast();
+        UpdateRayCast();
     }
 
-    /// <summary>
-    /// Checks whether objects of type ActionCollider are within a certain look angle of the VR headset.
-    /// Supports collision only with a single object at a time.
-    /// In case of multiple objects, priority takes the object that is met earlier in the list `actionColliders`.
-    /// </summary>
-    void UpdateConeRayCast()
+    void UpdateRayCast()
     {
         bool collisionOccured = false;
         foreach (ActionCollider ac in actionColliders)
         {
             // skip this object if it's inactive
-            if (ac == null || !ac.gameObject.activeInHierarchy) continue;
+            if (ac == null || !ac.gameObject.activeInHierarchy) 
+                continue;
             PickableObject acPickable = ac.GetPickable();
             if (acPickable == null)
                 continue;
             if (player.GetHandWithThisObject(acPickable.gameObject) == null)
                 continue;
-            // also if target object is not the correct object in the next examine step, skip it
-            // TODO: sequence steps are also viable options now
+
+            
             if (actionManager == null || 
                 !(actionManager.CompareExamineAction(ac.ActionTriggerObjectNames[0]) || actionManager.IsNextActionSequenceStep())
                 )
                 continue;
-            
-            // find the angle between where player is looking and the vector towards the object
-            Quaternion objectAngle = Quaternion.LookRotation(ac.transform.position - (transform.position - transform.forward));
-            float angleBetween = Quaternion.Angle(transform.rotation, objectAngle);
-            float directionalAngle = Quaternion.Angle(transform.rotation, ac.transform.rotation);
-
-            if (angleBetween <= coneAngle && (180-directionalAngle) < ac.rayTriggerAngle)
+            int layerMask = 0b01001000;
+            Vector3 rayDirection = (ac.transform.position - transform.position).normalized;
+            if (Vector3.Dot(transform.forward, rayDirection) < 0.9f)
+                break;
+            Ray ray = new Ray(transform.position, rayDirection);
+            if (Physics.Raycast(ray, out RaycastHit hit, 0.5f, layerMask))
             {
+                if (hit.collider.gameObject != ac.gameObject)
+                    break;
+                
                 collisionOccured = true;
                 ActionCollider targetObj = ac;
                 if (targetObj == progressBar.target)
