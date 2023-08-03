@@ -904,7 +904,7 @@ public class GameUI : MonoBehaviour
     }
 
     void OnGUI()
-    {/*
+    {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
         GUIStyle style = new GUIStyle();
         style.normal.textColor = new Color(1f, 0f, 0f);
@@ -920,7 +920,7 @@ public class GameUI : MonoBehaviour
 
         //debugSS = PlayerAnimationManager.animTimeout.ToString();
         GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
-#endif*/
+#endif
    }
     
     public void DropFromHand(bool leftHand = true)

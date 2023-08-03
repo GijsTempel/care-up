@@ -770,6 +770,7 @@ namespace MBS
             //unless you require a serial first...
             if (WULogin.RequireSerialForLogin)
             {
+
                 if (WULogin.HasSerial)
                 {
                     DisplayScreen(panels.post_login_menu_screen);

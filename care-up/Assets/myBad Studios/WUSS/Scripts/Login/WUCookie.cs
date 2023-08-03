@@ -9,12 +9,14 @@ namespace MBS
 {
     static public class WUCookie
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
         [DllImport("__Internal")]
         private static extern void setWebGLCookie(string cname, string cvalue, string cdomain, string cpath, string cexpire);
         [DllImport("__Internal")]
         private static extern string getWebGLCookie(string cname);
         [DllImport("__Internal")]
         private static extern string findWebGLCookieName(string cname);
+#endif
 
         public const string cookie_key = "wordpress_logged_in";
 
@@ -97,6 +99,7 @@ namespace MBS
             }
         }
 
+#if UNITY_WEBGL && !UNITY_EDITOR
         class WebGLAuthCookies
         {
             public string auth_cookies_name;
@@ -151,5 +154,6 @@ namespace MBS
             if (store)
                 StoreCookie();
         }
+#endif
     }
 }

@@ -44,6 +44,7 @@ public class CustomAccountClass : MonoBehaviour {
     void DoCreateDemoGame(CML response)
     {
 #if WUSKU
+
         if ( WULogin.RequireSerialForLogin && !WULogin.HasSerial )
             return;
 #endif
