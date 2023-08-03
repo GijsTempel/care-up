@@ -1085,6 +1085,18 @@ public class ActionManager : MonoBehaviour
         return result;
     }
 
+    public bool IsNextActionSequenceStep()
+    {
+        bool result = false;
+
+        foreach (Action a in UnlockedIncompletedActions)
+        {
+            result |= a.Type == ActionType.SequenceStep;
+        }
+
+        return result;
+    }
+
     // private Controls controls;
 
     private IEnumerator ChangeFPS26()
