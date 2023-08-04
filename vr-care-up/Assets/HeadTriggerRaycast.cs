@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class HeadTriggerRaycast : MonoBehaviour
@@ -49,16 +52,18 @@ public class HeadTriggerRaycast : MonoBehaviour
                 !(actionManager.CompareExamineAction(ac.ActionTriggerObjectNames[0]) || actionManager.IsNextActionSequenceStep())
                 )
                 continue;
-            int layerMask = 0b01001000;
+            int layerMask = 0b01001001;
             Vector3 rayDirection = (ac.transform.position - transform.position).normalized;
             if (Vector3.Dot(transform.forward, rayDirection) < 0.9f)
-                break;
+                continue;
             Ray ray = new Ray(transform.position, rayDirection);
             if (Physics.Raycast(ray, out RaycastHit hit, 0.5f, layerMask))
             {
                 if (hit.collider.gameObject != ac.gameObject)
-                    break;
-                
+                    continue;
+                float objDirDot = Vector3.Dot(-hit.normal, rayDirection);
+                if (objDirDot < 0.85f)
+                    continue;
                 collisionOccured = true;
                 ActionCollider targetObj = ac;
                 if (targetObj == progressBar.target)
