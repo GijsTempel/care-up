@@ -295,10 +295,9 @@ public class AnimationSequence
             {
                 Object.Destroy(dialogueObject.gameObject);
             }
-
+            Transform head = GameObject.Find("HeadTriggerRaycast").transform;
             dialogueObject = Object.Instantiate(Resources.Load<GameObject>("SelectionDialogue"),
-                GameObject.Find("HeadTriggerRaycast").transform.position + new Vector3(0f, 0f, .5f),
-                GameObject.Find("HeadTriggerRaycast").transform.rotation) as GameObject;
+                head.position + head.forward, head.rotation) as GameObject;
             dialogueObject.name = "SelectionDialogue";
 
             SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();

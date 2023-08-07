@@ -48,7 +48,7 @@ public class ActionTrigger : MonoBehaviour
         bool isActionConfirmed = true;
         foreach(ActionCollider c in actionColliders)
         {
-            Debug.Log(name);
+            //Debug.Log(name);
             if (!c.CheckConformity(currentTriggerHand, currentTriggerHandAction))
             {
                 isActionConfirmed = false;

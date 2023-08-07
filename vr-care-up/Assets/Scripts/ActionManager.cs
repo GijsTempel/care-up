@@ -282,7 +282,7 @@ public class ActionManager : MonoBehaviour
 //----------------------------------------------------------------------------------------------------------------
     public static void UpdateRequirements(float showDelay = 0f)
     {
-        Debug.Log("@UpdateRequirements:(float showDelay = 0f)");
+        //Debug.Log("@UpdateRequirements:(float showDelay = 0f)");
         ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
         if (playerScript == null)
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
@@ -1071,18 +1071,13 @@ public class ActionManager : MonoBehaviour
         return action;
     }
 
-    public bool CompareExamineAction(string name, bool skipBlocks = false)
+    public bool IsNextActionExamineAction()
     {
         bool result = false;
 
         foreach (Action a in UnlockedIncompletedActions)
         {
-            if (a.Type == ActionType.ObjectExamine)
-            {
-                string[] names;
-                ((ExamineAction)a).ObjectNames(out names);
-                result |= names[0] == name;
-            }
+            result |= a.Type == ActionType.ObjectExamine;
         }
 
         return result;
