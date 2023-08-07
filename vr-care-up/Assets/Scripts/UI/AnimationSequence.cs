@@ -284,11 +284,13 @@ public class AnimationSequence
     {
         //GameObject.FindObjectOfType<GameUI>().ShowIpad(true);     
 
-        GameObject dialogueObject = GameObject.FindObjectOfType<SelectDialogue>() != null ? 
-            GameObject.FindObjectOfType<SelectDialogue>().gameObject : null;
+        GameObject dialogueObject = GameObject.FindObjectOfType<SelectDialogue>(true) != null ? 
+            GameObject.FindObjectOfType<SelectDialogue>(true).gameObject : null;
 
         if (currentStep < steps.Count)
         {
+            // destroying and instantiating a new one is probably not the best way to do it
+            // but this was the way for years, might refactor later
             if (dialogueObject != null)
             {
                 Object.Destroy(dialogueObject.gameObject);

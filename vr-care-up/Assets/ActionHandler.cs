@@ -35,7 +35,14 @@ public class ActionHandler : MonoBehaviour
                 result = actionManager.OnUseOnAction(leftHandObjectName, rightHandObjectName);
                 break;
             case ActionManager.ActionType.SequenceStep:
-                result = actionManager.OnSequenceStepAction(leftHandObjectName);
+                if (result = actionManager.OnSequenceStepAction(leftHandObjectName))
+                { // ^intentionally assign action, not compare
+                    SelectDialogue dialogue = GameObject.FindObjectOfType<SelectDialogue>();
+                    if (dialogue != null)
+                    {
+                        dialogue.gameObject.SetActive(false);
+                    }
+                }
                 break;
             default:
                 Debug.LogWarning(actionType + " is not supported yet in ActionHandler. TODO");

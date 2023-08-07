@@ -99,6 +99,9 @@ public class ActionManager : MonoBehaviour
     private List<Action> unlockedIncompletedActions;
     private List<string> unlockedBlocks = new List<string>();
 
+    //sequence section
+    static AnimationSequence currentSequence = null;
+
     public string Message { get; set; } = null;
     public string MessageTitle { get; set; } = null;
     public bool ShowTheory { get; set; } = false;
@@ -2197,5 +2200,28 @@ public class ActionManager : MonoBehaviour
     public void ActivatePenalty()
     {
         penalized = true;
+    }
+
+    public static void TriggerAnimationSequence(string name)
+    {
+        currentSequence = new AnimationSequence(name);
+        // decided against adding NextStep() inside AnimationSequence c-tor
+        // this way we have more flexibility when does the first dialogue selector pops up
+        currentSequence.NextStep(); 
+    }
+    
+    public static void AnimationSequence_TriggerNextStep()
+    {
+        if (currentSequence != null)
+        {
+            if (!currentSequence.Completed)
+            {
+                currentSequence.NextStep();
+            }
+            else
+            {
+                Debug.LogWarning("Trying to trigger next step of Completed AnimationSequence");
+            }
+        }
     }
 }
