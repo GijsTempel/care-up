@@ -21,6 +21,10 @@ public class ActionTrigger : MonoBehaviour
     [Tooltip("Check if action is correct, before executing")]
     public bool checkBeforeAct = false;
     List<ActionCollider> actionColliders = new List<ActionCollider>();
+
+
+    [Header("Trigger Animation Sequence")]
+    public string animationSequenceToTrigger;
     // Start is called before the first frame update
     void Start()
     {
@@ -82,7 +86,14 @@ public class ActionTrigger : MonoBehaviour
             target = transform.Find("CinematicTarget").gameObject;
         bool actionAccepted = player.TriggerAction(triggerName, target, mirrorAnimation);
         if (actionAccepted && actionNumberLimit > 0)
+        {
+            if (animationSequenceToTrigger != "")
+            {
+                ActionManager.TriggerAnimationSequence(animationSequenceToTrigger);
+            }
+
             actionNumberLimit--;
+        }
     }
 
     public void AttemptTrigger()
