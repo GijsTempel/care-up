@@ -53,12 +53,12 @@ public class HeadTriggerRaycast : MonoBehaviour
 
         //UI pointer ray
         const int pointerLayerMask = 0b100000000;
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit phit, 20f, pointerLayerMask))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit phit, rayCastDistance, pointerLayerMask))
         {
             SelectDialogue selectDialogue = phit.collider.GetComponent<SelectDialogue>();
             if (selectDialogue != null)
             {
-                selectDialogue.UpdatePointCursorPosition(phit.point);
+                selectDialogue.PointerRayHit(phit.point);
             }
         }
 
@@ -117,7 +117,7 @@ public class HeadTriggerRaycast : MonoBehaviour
                 // and fot the <SequenceStep> we don't need to check if it's in hands
                 // or to check whether it's facing camera, because UI always spawns facing camera
                 // or whether raycast hits, because object is in unique layer that drawn on top of everything
-                collisionOccured = true;
+                // collisionOccured = true;
             }
 
             if (collisionOccured)

@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
+using Unity.XR.CoreUtils;
 
 /// <summary>
 /// Instance of dialogue with up to 4 options.
 /// </summary>
 public class SelectDialogue : MonoBehaviour
 {
-    public GameObject testObject;
+    public Transform testObject;
+    public Image progressImage;
+
     /*public bool tutorial_lock = false;
     public bool cheated = false;*/
     int correctAnswerID = -1;
@@ -18,6 +21,13 @@ public class SelectDialogue : MonoBehaviour
     //public GameObject prevStepInfoElements;
     //public Button prevStepInfoButton;
     DialogueOption prevStepInfo = null;
+    float progressCounter = -1f;
+    const float MAX_PROGRESS_COUNTER = 2f;
+    float fadeOutTimer;
+    const float FADEOUT_MAX = 0.1f;
+
+    GameObject progressTarget;
+    GameObject newProgressTarget;
 
     public class DialogueOption
     {
@@ -49,10 +59,71 @@ public class SelectDialogue : MonoBehaviour
         return new Vector2(localPos.x / _scale, localPos.y / _scale);
     }
 
-    public void UpdatePointCursorPosition(Vector3 pos)
+    public void PointerRayHit(Vector3 hitPos)
     {
-        Vector2 canvasPos = WorldToCanvasPos(pos);
-        pointCursor.anchoredPosition = canvasPos;
+        Vector2 canvasHitPos = WorldToCanvasPos(hitPos);
+        fadeOutTimer = FADEOUT_MAX;
+        pointCursor.anchoredPosition = canvasHitPos;
+        GameObject sqButtonInPos = GetSqButtonInPosition(hitPos);
+        if (sqButtonInPos != null)
+        {
+            Debug.Log("@ point at:" + sqButtonInPos.name);
+            progressImage.gameObject.SetActive(true);
+            pointCursor.GetComponent<Image>().color = Color.green;
+            newProgressTarget = sqButtonInPos;
+        }
+        else
+        {
+            progressImage.gameObject.SetActive(false);
+            Debug.Log("@ point at: " );
+            pointCursor.GetComponent<Image>().color = Color.gray;
+        }
+    }
+
+    void Update()
+    {
+        if (fadeOutTimer > 0)
+            fadeOutTimer -= Time.deltaTime;
+        if (fadeOutTimer < 0)
+        {
+            newProgressTarget = null;
+            fadeOutTimer = 0;
+        }
+        pointCursor.GetComponent<CanvasGroup>().alpha = fadeOutTimer / FADEOUT_MAX;
+        if (progressTarget != newProgressTarget)
+            progressCounter = MAX_PROGRESS_COUNTER;
+        else if (progressTarget != null && progressCounter > -1f)
+            progressCounter -= Time.deltaTime;
+
+        progressTarget = newProgressTarget;
+        if (progressTarget != null)
+        {
+            progressImage.fillAmount = Mathf.Clamp01(progressCounter / MAX_PROGRESS_COUNTER);
+            if (progressCounter < 0 && progressCounter > -1f)
+            {
+                if (progressTarget.GetComponent<ActionTrigger>() != null)
+                {
+                    progressTarget.GetComponent<ActionTrigger>().GetComponentInChildren<ActionCollider>().RayTriggerAction();
+                }
+                progressCounter = -2f;
+                
+            }
+        }
+
+    }
+
+    GameObject GetSqButtonInPosition(Vector3 pos)
+    {
+        for (int i = 0; i < sqButtons.Count; i++)
+        {
+            if (!sqButtons[i].activeSelf)
+                continue;
+
+            Vector3 localPos = sqButtons[i].transform.InverseTransformPoint(pos);
+            if (sqButtons[i].GetComponent<RectTransform>().rect.Contains(localPos))
+                return sqButtons[i];
+        }
+        return null;
     }
 
     public void ShowPrevStepInfo(bool toShow = true)
@@ -81,11 +152,7 @@ public class SelectDialogue : MonoBehaviour
     static DialogueOption optionWithAdditions = null;
     static string questionWithHint = null;
 
-    void Start()
-    {
-        WorldToCanvasPos(new Vector3(1f, 1f, 1f));
 
-    }
 
     public void AddPrevStepInfo(List<DialogueOption> list)
     {

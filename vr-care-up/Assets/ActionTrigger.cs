@@ -91,7 +91,6 @@ public class ActionTrigger : MonoBehaviour
             {
                 ActionManager.TriggerAnimationSequence(animationSequenceToTrigger);
             }
-
             actionNumberLimit--;
         }
     }
