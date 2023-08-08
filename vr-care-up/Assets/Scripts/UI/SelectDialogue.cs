@@ -46,8 +46,8 @@ public class SelectDialogue : MonoBehaviour
     {
         Vector3 localPos = transform.InverseTransformPoint(worldPos);
         float _scale = selectionDialogueElements.GetComponent<RectTransform>().localScale.x;
-        return new Vector2(localPos.x * _scale, localPos.y * _scale);
         Debug.Log("@ _Scale:" + _scale.ToString());
+        return new Vector2(localPos.x / _scale, localPos.y / _scale);
     }
 
     public void UpdatePointCursorPosition(Vector3 pos)
