@@ -55,7 +55,6 @@ public class HeadTriggerRaycast : MonoBehaviour
         const int pointerLayerMask = 0b100000000;
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit phit, 20f, pointerLayerMask))
         {
-            Debug.Log("@ pointer hit: " + phit.collider.name + " " + phit.point.ToSafeString());
             SelectDialogue selectDialogue = phit.collider.GetComponent<SelectDialogue>();
             if (selectDialogue != null)
             {

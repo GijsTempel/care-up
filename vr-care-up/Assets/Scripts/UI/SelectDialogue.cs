@@ -46,7 +46,6 @@ public class SelectDialogue : MonoBehaviour
     {
         Vector3 localPos = transform.InverseTransformPoint(worldPos);
         float _scale = selectionDialogueElements.GetComponent<RectTransform>().localScale.x;
-        Debug.Log("@ _Scale:" + _scale.ToString());
         return new Vector2(localPos.x / _scale, localPos.y / _scale);
     }
 
@@ -54,7 +53,6 @@ public class SelectDialogue : MonoBehaviour
     {
         Vector2 canvasPos = WorldToCanvasPos(pos);
         pointCursor.anchoredPosition = canvasPos;
-        Debug.Log("@ pointer canv pos :" + canvasPos.ToString());
     }
 
     public void ShowPrevStepInfo(bool toShow = true)
