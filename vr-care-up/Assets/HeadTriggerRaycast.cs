@@ -49,6 +49,21 @@ public class HeadTriggerRaycast : MonoBehaviour
 
     void UpdateRayCast()
     {
+        const int layerMask = 0b01001001;
+
+        //UI pointer ray
+        const int pointerLayerMask = 0b100000000;
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit phit, 20f, pointerLayerMask))
+        {
+            Debug.Log("@ pointer hit: " + phit.collider.name + " " + phit.point.ToSafeString());
+            SelectDialogue selectDialogue = phit.collider.GetComponent<SelectDialogue>();
+            if (selectDialogue != null)
+            {
+                selectDialogue.UpdatePointCursorPosition(phit.point);
+            }
+        }
+
+
         if (actionManager == null)
         {
             Debug.LogWarning("UpdateRayCast() failed, actionManager is null");
@@ -85,7 +100,6 @@ public class HeadTriggerRaycast : MonoBehaviour
                 if (acPickable == null || player.GetHandWithThisObject(acPickable.gameObject) == null)
                     continue;
 
-                const int layerMask = 0b01001001;
                 if (Physics.Raycast(transform.position, rayDirection, out RaycastHit hit, rayCastDistance, layerMask))
                 {
                     // blocked by another collider

@@ -8,11 +8,13 @@ using TMPro;
 /// </summary>
 public class SelectDialogue : MonoBehaviour
 {
+    public GameObject testObject;
     /*public bool tutorial_lock = false;
     public bool cheated = false;*/
     int correctAnswerID = -1;
     //GameUI gameUI;
     public GameObject selectionDialogueElements;
+    public RectTransform pointCursor;
     //public GameObject prevStepInfoElements;
     //public Button prevStepInfoButton;
     DialogueOption prevStepInfo = null;
@@ -38,7 +40,22 @@ public class SelectDialogue : MonoBehaviour
             question = questionText;
             additional = additionalOptions;
         }
-    };
+    }
+
+    Vector2 WorldToCanvasPos(Vector3 worldPos)
+    {
+        Vector3 localPos = transform.InverseTransformPoint(worldPos);
+        float _scale = selectionDialogueElements.GetComponent<RectTransform>().localScale.x;
+        return new Vector2(localPos.x * _scale, localPos.y * _scale);
+        Debug.Log("@ _Scale:" + _scale.ToString());
+    }
+
+    public void UpdatePointCursorPosition(Vector3 pos)
+    {
+        Vector2 canvasPos = WorldToCanvasPos(pos);
+        pointCursor.anchoredPosition = canvasPos;
+        Debug.Log("@ pointer canv pos :" + canvasPos.ToString());
+    }
 
     public void ShowPrevStepInfo(bool toShow = true)
     {
@@ -66,21 +83,11 @@ public class SelectDialogue : MonoBehaviour
     static DialogueOption optionWithAdditions = null;
     static string questionWithHint = null;
 
-    /*void Start()
+    void Start()
     {
-        if (PlayerPrefsManager.videoRecordingMode)
-            GetComponent<CanvasGroup>().alpha = 0f;
-        if (cameraMode == null)
-        {
-            cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
-            if (cameraMode == null) Debug.LogError("No camera mode found");
-        }
-        if (controls == null)
-        {
-            controls = GameObject.Find("GameLogic").GetComponent<Controls>();
-            if (controls == null) Debug.LogError("No controls found.");
-        }
-    }*/
+        WorldToCanvasPos(new Vector3(1f, 1f, 1f));
+
+    }
 
     public void AddPrevStepInfo(List<DialogueOption> list)
     {
