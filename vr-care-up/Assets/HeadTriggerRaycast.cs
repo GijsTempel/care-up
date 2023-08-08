@@ -53,13 +53,11 @@ public class HeadTriggerRaycast : MonoBehaviour
 
         //UI pointer ray
         const int pointerLayerMask = 0b100000000;
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit phit, rayCastDistance, pointerLayerMask))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit phit, 5f, pointerLayerMask))
         {
             SelectDialogue selectDialogue = phit.collider.GetComponent<SelectDialogue>();
             if (selectDialogue != null)
-            {
                 selectDialogue.PointerRayHit(phit.point);
-            }
         }
 
 
