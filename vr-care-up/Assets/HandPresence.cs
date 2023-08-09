@@ -189,13 +189,13 @@ public class HandPresence : MonoBehaviour
         return false;
     }
 
-    public void DropObjectFromHand(bool noPoseChange = false)
+    public void DropObjectFromHand(bool noPoseChange = false, bool toForce = false)
     {
         if (objectInHand == null)
             return;
         if (handPoseControl == null)
             return;
-        if (handPoseControl.handPoseMode == HandPoseControl.HandPoseMode.CopyAnimIn)
+        if (!toForce && handPoseControl.handPoseMode == HandPoseControl.HandPoseMode.CopyAnimIn)
             return;
         if (!noPoseChange)
         {

@@ -19,6 +19,7 @@ public class PickableObject : MonoBehaviour
 
     public void Drop()
     {
+        Debug.Log("@ " + name + ": Drop");
         transformToFallow = null;
         if (gameObject.GetComponent<Rigidbody>() != null)
             gameObject.GetComponent<Rigidbody>().isKinematic = isKinematic;
