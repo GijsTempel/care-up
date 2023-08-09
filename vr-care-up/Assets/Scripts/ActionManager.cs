@@ -2202,7 +2202,7 @@ public class ActionManager : MonoBehaviour
         currentSequence = new AnimationSequence(name);
         // decided against adding NextStep() inside AnimationSequence c-tor
         // this way we have more flexibility when does the first dialogue selector pops up
-        currentSequence.NextStep(); 
+        // currentSequence.NextStep(); 
     }
     
     public static void AnimationSequence_TriggerNextStep()
