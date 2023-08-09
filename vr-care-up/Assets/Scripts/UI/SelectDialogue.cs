@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using Unity.XR.CoreUtils;
+using UnityEngine.Rendering;
 
 /// <summary>
 /// Instance of dialogue with up to 4 options.
@@ -25,6 +26,8 @@ public class SelectDialogue : MonoBehaviour
     const float MAX_PROGRESS_COUNTER = 2f;
     float fadeOutTimer;
     const float FADEOUT_MAX = 0.1f;
+
+    float contactTimer;
 
     GameObject progressTarget;
     GameObject newProgressTarget;
@@ -70,6 +73,7 @@ public class SelectDialogue : MonoBehaviour
             progressImage.gameObject.SetActive(true);
             pointCursor.GetComponent<Image>().color = Color.green;
             newProgressTarget = sqButtonInPos;
+            contactTimer = FADEOUT_MAX / 2;
         }
         else
         {
@@ -84,9 +88,12 @@ public class SelectDialogue : MonoBehaviour
             fadeOutTimer -= Time.deltaTime;
         if (fadeOutTimer < 0)
         {
-            newProgressTarget = null;
             fadeOutTimer = 0;
         }
+        if (contactTimer > 0 && (contactTimer - Time.deltaTime <= 0))
+            newProgressTarget = null;
+
+        contactTimer -= Time.deltaTime;
         pointCursor.GetComponent<CanvasGroup>().alpha = fadeOutTimer / FADEOUT_MAX;
         if (progressTarget != newProgressTarget)
             progressCounter = MAX_PROGRESS_COUNTER;
@@ -104,10 +111,8 @@ public class SelectDialogue : MonoBehaviour
                     progressTarget.GetComponent<ActionTrigger>().GetComponentInChildren<ActionCollider>().RayTriggerAction();
                 }
                 progressCounter = -2f;
-                
             }
         }
-
     }
 
     GameObject GetSqButtonInPosition(Vector3 pos)
