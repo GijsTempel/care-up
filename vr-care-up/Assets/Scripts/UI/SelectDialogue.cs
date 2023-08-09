@@ -67,7 +67,6 @@ public class SelectDialogue : MonoBehaviour
         GameObject sqButtonInPos = GetSqButtonInPosition(hitPos);
         if (sqButtonInPos != null)
         {
-            Debug.Log("@ point at:" + sqButtonInPos.name);
             progressImage.gameObject.SetActive(true);
             pointCursor.GetComponent<Image>().color = Color.green;
             newProgressTarget = sqButtonInPos;
@@ -75,7 +74,6 @@ public class SelectDialogue : MonoBehaviour
         else
         {
             progressImage.gameObject.SetActive(false);
-            Debug.Log("@ point at: " );
             pointCursor.GetComponent<Image>().color = Color.gray;
         }
     }

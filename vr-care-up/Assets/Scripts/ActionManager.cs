@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using CareUp.Actions;
 using CareUp.Localize;
 using System.Collections;
+using System.Security.Cryptography;
 
 /// <summary>
 /// GameLogic script. Everything about actions is managed by this script.
@@ -1532,7 +1533,10 @@ public class ActionManager : MonoBehaviour
         Debug.Log("Sequence step: " + stepName + " with result " + occured);
 
         if (!CheckScenarioCompleted() && occured)
+        {
             ActionManager.CorrectAction();
+            playerScript.SetAnimationSpeed(1f);
+        }
         return occured;
     }
 
@@ -2209,6 +2213,8 @@ public class ActionManager : MonoBehaviour
     {
         if (currentSequence != null)
         {
+            Debug.Log("@ __Current Sequence:" + currentSequence.Completed.ToString() + " " +
+                Random.Range(0, 999).ToString());
             if (!currentSequence.Completed)
             {
                 currentSequence.NextStep();

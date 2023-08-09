@@ -79,5 +79,6 @@ public class AnimationSequenceState : StateMachineBehaviour {
         // {
         //     wf.cleaningLocked = false;
         // }
+        
     }	
 }

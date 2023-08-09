@@ -112,11 +112,16 @@ public class PlayerScript : MonoBehaviour
     public void EnableRaycastControllers(bool toEnable)
     {
         LongRangeLeftRay.SetActive(toEnable);
-        LongRangeRightRay.SetActive(toEnable);
+        LongRangeRightRay.SetActive(true);//toEnable);
         ShortRangeLeftRay.SetActive(toEnable);
         ShortRangeRightRay.SetActive(toEnable);
     }
 
+
+    public void SetAnimationSpeed(float speed)
+    {
+        animHandsAnimator.speed = speed;
+    }
 
     public bool TriggerAction(string triggerName, GameObject cinematicTarget = null, bool mirrorAnimation = false)
     {

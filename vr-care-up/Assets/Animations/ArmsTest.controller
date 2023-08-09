@@ -471,6 +471,21 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-5909852963755667223
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 416da83697a580bd1bafcb5bb36c8927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SequenceName: AnimSeq_InsulinInjection_vent
+  TuggleFromCinematic: 1
+  keyFrames: 0f0000002a0100000c020000
 --- !u!114 &-5294710944036998215
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1704,6 +1719,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3e5a5dc9a1da85c9df9ce93399d825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6718364647646639172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3e5a5dc9a1da85c9df9ce93399d825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6866268439623687278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1760,7 +1787,9 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 6718364647646639172}
+  - {fileID: -5909852963755667223}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
