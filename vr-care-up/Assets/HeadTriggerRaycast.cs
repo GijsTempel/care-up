@@ -83,7 +83,6 @@ public class HeadTriggerRaycast : MonoBehaviour
             // skip this object if it doesn't exist or inactive
             if (ac == null || !ac.gameObject.activeInHierarchy) 
                 continue;
-
             Vector3 rayDirection = ac.transform.position - transform.position;
             // check whether direction is within an angle
             if (Vector3.Angle(transform.forward, rayDirection) > coneAngle)
@@ -91,11 +90,13 @@ public class HeadTriggerRaycast : MonoBehaviour
 
             if (actionType == ActionManager.ActionType.ObjectExamine)
             {
+                if (!actionManager.CompareExamineAction(ac.ActionTriggerObjectNames[0]))
+                    continue;
                 // If actionType = examine, filter objects that are only in hands
                 // might be changed later if we'll have objects outside hands to examine
-                PickableObject acPickable = ac.GetPickable();
-                if (acPickable == null || player.GetHandWithThisObject(acPickable.gameObject) == null)
-                    continue;
+                // PickableObject acPickable = ac.GetPickable();
+                // if (acPickable == null || player.GetHandWithThisObject(acPickable.gameObject) == null)
+                //     continue;
 
                 if (Physics.Raycast(transform.position, rayDirection, out RaycastHit hit, rayCastDistance, layerMask))
                 {

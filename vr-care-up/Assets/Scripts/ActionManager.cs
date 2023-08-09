@@ -1084,6 +1084,22 @@ public class ActionManager : MonoBehaviour
         return result;
     }
 
+
+    public bool CompareExamineAction(string name, bool skipBlocks = false)
+    {
+        bool result = false;
+        foreach (Action a in UnlockedIncompletedActions)
+        {
+            if (a.Type == ActionType.ObjectExamine)
+            {
+                string[] names;
+                ((ExamineAction)a).ObjectNames(out names);
+                result |= names[0] == name;
+            }
+        }
+        return result;
+    }
+
     public bool IsNextActionSequenceStep()
     {
         bool result = false;
@@ -2225,4 +2241,5 @@ public class ActionManager : MonoBehaviour
             }
         }
     }
+
 }

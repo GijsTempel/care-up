@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CareUp.Actions;
+using TMPro.Examples;
 
 public class GameUIVR : MonoBehaviour
 {
@@ -66,10 +67,17 @@ public class GameUIVR : MonoBehaviour
     public void UpdateHintPanel(List<ActionManager.StepData> subTasks, float UpdateHintDelay = 0f)
     {
         string t = "";
-        foreach (ActionManager.StepData task in subTasks)
+        for (int i = 0; i < actionManager.CurrentDescription.Count; i++)
         {
-            t += task.requirement + "\n";
+            t += (actionManager.CurrentActionType == ActionManager.ActionType.SequenceStep) ?
+                "Wat ga je doen?" : actionManager.CurrentDescription[i];
+            t += "\n\n";
+
         }
+        // foreach (ActionManager.StepData task in subTasks)
+        // {
+        //     t += task. + "\n";
+        // }
         hintsText.text = t;
     }
 
