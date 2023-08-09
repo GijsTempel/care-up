@@ -9,7 +9,7 @@ using TMPro;
 public class HeadTriggerRaycast : MonoBehaviour
 {
     [Range(0f, 120f)]
-    public float coneAngle = 15f;
+    public float coneAngle = 25f;
     [Range(0f, 2f)]
     public float rayCastDistance = 0.5f;
 
@@ -83,9 +83,12 @@ public class HeadTriggerRaycast : MonoBehaviour
             // skip this object if it doesn't exist or inactive
             if (ac == null || !ac.gameObject.activeInHierarchy) 
                 continue;
-            Vector3 rayDirection = ac.transform.position - transform.position;
+            Vector3 rayDirection = (ac.transform.position - transform.position).normalized;
             // check whether direction is within an angle
-            if (Vector3.Angle(transform.forward, rayDirection) > coneAngle)
+
+            // if (Vector3.Angle(transform.forward, rayDirection) > coneAngle)
+            //     continue;
+            if (Vector3.Dot(transform.forward, rayDirection) < 0.9f)
                 continue;
 
             if (actionType == ActionManager.ActionType.ObjectExamine)
@@ -105,7 +108,10 @@ public class HeadTriggerRaycast : MonoBehaviour
                         continue;
 
                     // check whether the object is facing camera
-                    if (Vector3.Angle(-hit.normal, rayDirection) > ac.rayTriggerAngle)
+                    // if (Vector3.Angle(-hit.normal, rayDirection) > ac.rayTriggerAngle)
+                    //     continue;
+                    float objDirDot = Vector3.Dot(-hit.normal, rayDirection);
+                    if (objDirDot < 0.85f)
                         continue;
 
                     collisionOccured = true;
