@@ -91,8 +91,9 @@ public class HandPoseControl : MonoBehaviour
             finalRootBoneRotation = animHandRootBone.transform.rotation;
             if (mirroredAnimation)
             {
-                finalRootBonePosition = Vector3.Scale(Vector3.Reflect(finalRootBonePosition, animHandsTransform.transform.forward),
-                    new Vector3(-1f, 1f, -1f));
+                finalRootBonePosition = Vector3.Scale(Vector3.Reflect(
+                    finalRootBonePosition - animHandsTransform.transform.position, animHandsTransform.transform.forward),
+                    new Vector3(-1f, 1f, -1f)) + animHandsTransform.transform.position;
                 //finalRootBonePosition.x *= -1;
 
 
