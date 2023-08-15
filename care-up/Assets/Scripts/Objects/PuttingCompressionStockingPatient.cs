@@ -89,8 +89,8 @@ public class PuttingCompressionStockingPatient : PersonObject
                     /*PlayerAnimator.SetTrigger("Player_Dialog_Greeting");
                     PlayerAnimator.SetTrigger("S Player_Dialog_Greeting");*/
                     animator.SetTrigger("PutLegOnSupport");
-                    PlayerAnimator.SetTrigger("StartSq1");
-                    PlayerAnimator.SetTrigger("S StartSq1");
+                    //PlayerAnimator.SetTrigger("StartSq1");
+                    //PlayerAnimator.SetTrigger("S StartSq1");
 
                     break;
 
