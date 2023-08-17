@@ -21,6 +21,9 @@ public class HandPoseControl : MonoBehaviour
     private bool mirroredAnimation = false;
     private HandPoseData savedH2;
     private GameUIVR gameUIVR;
+    public GameObject handWMesh;
+    public GameObject handHoloMesh;
+
 
     private float handDataRoutineTime = float.PositiveInfinity;
     private void Start()
@@ -53,6 +56,8 @@ public class HandPoseControl : MonoBehaviour
         handDataRoutineTime = 0f;
         if (h2 != null)
             SetupPose(h2, newPoseTransitionDuration);
+        handHoloMesh.SetActive(false);
+        handWMesh.SetActive(true);
 
     }
 
@@ -70,6 +75,8 @@ public class HandPoseControl : MonoBehaviour
         {
             startingFingerRotations[i] = handPose.fingerBones[i].localRotation;
         }
+        handHoloMesh.SetActive(true);
+        handWMesh.SetActive(false);
     }
 
     public void UpdateCopyAnimationData()

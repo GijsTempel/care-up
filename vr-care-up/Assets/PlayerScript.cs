@@ -22,6 +22,8 @@ public class PlayerScript : MonoBehaviour
     private HandPresence leftHandPresence;
     private HandPresence rightHandPresence;
     private GameUIVR gameUIVR;
+    public GameObject LeftHandSphere;
+    public GameObject RightHandSphere;
 
     public HandPresence GetHandWithThisObject(GameObject obj)
     {
@@ -175,7 +177,10 @@ public class PlayerScript : MonoBehaviour
             // transform.RotateAround(transform.position, Vector3.up, rotAngle);
         }
         leftHandPoseControl.SetupCopyAnimationData(mirrorAnimation);
+        LeftHandSphere.GetComponent<Animation>().Play();
         rightHandPoseControl.SetupCopyAnimationData(mirrorAnimation);
+        RightHandSphere.GetComponent<Animation>().Play();
+
         // EnableRaycastControllers(false);
         ObjectsInHandsFallowAnimation();
         animHandsAnimator = animHandsTransform.animator;
@@ -254,6 +259,10 @@ public class PlayerScript : MonoBehaviour
         else
             rightHandPoseControl.ExitCopyAnimationState();     
         animHandsTransform.fallowVRCamera = true;
+
+        LeftHandSphere.GetComponent<MeshRenderer>().enabled = false;
+        RightHandSphere.GetComponent<MeshRenderer>().enabled = false;
+
         // EnableRaycastControllers(true);
     }
 
