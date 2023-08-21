@@ -48,9 +48,8 @@ public class WalkToAtFrame : StateMachineBehaviour
         {
             if (targetObject.GetComponent<WalkToGroup>() != null)
             {
-                Debug.Log("___________" + target);
                 PlayerScript ps = GameObject.FindObjectOfType<PlayerScript>();
-                ps.WalkToGroup_(targetObject.GetComponent<WalkToGroup>());
+                ps.ForceWalkToGroup(targetObject.GetComponent<WalkToGroup>());
             }
         }
     }
