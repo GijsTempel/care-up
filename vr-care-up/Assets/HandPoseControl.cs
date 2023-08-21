@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class HandPoseControl : MonoBehaviour
 {
-    public enum HandPoseMode { Default, TransitIn, TransitOut, CopyAnimIn, CopyAnimOut}
+    public enum HandPoseMode { Default, TransitIn, TransitOut, CopyAnimIn, CopyAnimOut, DynamicIn, DynamicOut}
     public Transform objectHolder;
     public HandPoseMode handPoseMode = HandPoseMode.Default;
     public bool copyAnimation = false;
@@ -25,6 +26,10 @@ public class HandPoseControl : MonoBehaviour
     public GameObject handHoloMesh;
 
 
+    float dynamicTransitionDistance = 0.08f;
+    public float dynamicTransitionFactor = 0f;
+
+
     private float handDataRoutineTime = float.PositiveInfinity;
     private void Start()
     {
@@ -33,14 +38,52 @@ public class HandPoseControl : MonoBehaviour
         handPose = GetComponent<HandPoseData>();
     }
 
+    void FindDynamicPoseToAct()
+    {
+        foreach(GrabHandPose g in GameObject.FindObjectsOfType<GrabHandPose>())
+        {
+            HandPoseData h = g.righHandPose;
+            if (handPose.handType == HandPoseData.HandModelType.Left)
+            {
+                h = g.leftHandPose;
+            }
+            if (h != null)
+            {
+                float dist = Vector3.Distance(transform.position, h.transform.position);
+                if (dist < dynamicTransitionDistance)
+                {
+                    StartDynamicTransition(h);
+                }
+                Debug.Log(dist);
+
+            }
+        }
+    }
+
+    void StartDynamicTransition(HandPoseData newHandPoseData)
+    {
+        SetupPose(newHandPoseData, 1f, HandPoseMode.DynamicIn);
+
+    }
+
+    void EndDynamicTransition()
+    {
+
+    }
+
     void Update()
     {
+        if (handPoseMode == HandPoseMode.Default)
+            FindDynamicPoseToAct();
+        
+
         if (copyAnimation)
         {
             copyAnimation = false;
             SetupCopyAnimationData(true);
         }
-        if (handPoseMode != HandPoseMode.Default && handDataRoutineTime < float.PositiveInfinity)
+        if ((handPoseMode != HandPoseMode.Default && handDataRoutineTime < float.PositiveInfinity) || 
+            handPoseMode == HandPoseMode.DynamicIn)
         {
             if (handPoseMode == HandPoseMode.CopyAnimIn)
                 UpdateCopyAnimationData();
@@ -126,7 +169,8 @@ public class HandPoseControl : MonoBehaviour
         return Quaternion.LookRotation(Vector3.Reflect(source * Vector3.forward, normal), Vector3.Reflect(source * Vector3.up, normal));
     }
 
-    public void SetupPose(HandPoseData newHandPoseData, float newPoseTransitionDuration = 0.2f)
+    public void SetupPose(HandPoseData newHandPoseData, float newPoseTransitionDuration = 0.2f, 
+        HandPoseMode nextHPMode = HandPoseMode.TransitIn)
     {
         savedH2 = newHandPoseData;
         poseTransitionDuration = newPoseTransitionDuration;
@@ -134,7 +178,7 @@ public class HandPoseControl : MonoBehaviour
             handPose.animator.enabled = false;
         handDataRoutineTime = 0f;
         
-        handPoseMode = HandPoseMode.TransitIn;
+        handPoseMode = nextHPMode;
     }
 
     public void UnSetPose()
@@ -165,6 +209,10 @@ public class HandPoseControl : MonoBehaviour
     private void SetHandDataRoutine()
     {
         float lerpValue = handDataRoutineTime / poseTransitionDuration;
+        if (handPoseMode == HandPoseMode.DynamicIn)
+        {
+            lerpValue = dynamicTransitionFactor;
+        }
         if (savedH2 != null)
         {
             SetHandDataValues(savedH2);
