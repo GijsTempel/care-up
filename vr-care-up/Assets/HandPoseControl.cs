@@ -26,7 +26,7 @@ public class HandPoseControl : MonoBehaviour
     public GameObject handHoloMesh;
 
 
-    float dynamicTransitionDistance = 0.08f;
+    float dynamicTransitionDistance = 0.09f;
     public float dynamicTransitionFactor = 0f;
 
 
@@ -73,8 +73,8 @@ public class HandPoseControl : MonoBehaviour
 
     void Update()
     {
-        if (handPoseMode == HandPoseMode.Default)
-            FindDynamicPoseToAct();
+        //if (handPoseMode == HandPoseMode.Default)
+        //    FindDynamicPoseToAct();
         
 
         if (copyAnimation)
@@ -179,6 +179,8 @@ public class HandPoseControl : MonoBehaviour
         handDataRoutineTime = 0f;
         
         handPoseMode = nextHPMode;
+        if (nextHPMode == HandPoseMode.DynamicIn)
+            SetHandDataValues(savedH2);
     }
 
     public void UnSetPose()
@@ -191,17 +193,19 @@ public class HandPoseControl : MonoBehaviour
 
     }
 
-    public void SetHandDataValues(HandPoseData h2)
+    public void SetHandDataValues(HandPoseData h2, bool toUpdateStartPose = true)
     {
         finalHandRotation = Quaternion.Inverse(h2.root.localRotation);
         finalHandPosition = (finalHandRotation * -h2.root.localPosition) / h2.root.localScale.x;
 
-        startingFingerRotations = new Quaternion[handPose.fingerBones.Length];
+        if (toUpdateStartPose)
+            startingFingerRotations = new Quaternion[handPose.fingerBones.Length];
         finalFingerRotations = new Quaternion[handPose.fingerBones.Length];
 
         for (int i = 0; i < handPose.fingerBones.Length; i++)
         {
-            startingFingerRotations[i] = handPose.fingerBones[i].localRotation;
+            if (toUpdateStartPose)
+                startingFingerRotations[i] = handPose.fingerBones[i].localRotation;
             finalFingerRotations[i] = h2.fingerBones[i].localRotation;
         }
     }
@@ -209,23 +213,28 @@ public class HandPoseControl : MonoBehaviour
     private void SetHandDataRoutine()
     {
         float lerpValue = handDataRoutineTime / poseTransitionDuration;
+        bool toUpdateStartPose = true;
         if (handPoseMode == HandPoseMode.DynamicIn)
         {
             lerpValue = dynamicTransitionFactor;
+            toUpdateStartPose = false;
         }
         if (savedH2 != null)
         {
-            SetHandDataValues(savedH2);
+            SetHandDataValues(savedH2, toUpdateStartPose);
         }
         
         objectHolder.localPosition = finalHandPosition;
         objectHolder.localRotation = finalHandRotation;
-
+        bool toCopyPoseIn = handPoseMode == HandPoseMode.TransitIn || handPoseMode == HandPoseMode.CopyAnimIn ||
+            handPoseMode == HandPoseMode.DynamicIn;
+        bool toCopyPoseOut = handPoseMode == HandPoseMode.TransitOut || handPoseMode == HandPoseMode.CopyAnimOut ||
+            handPoseMode == HandPoseMode.DynamicOut;
         for (int i = 0; i < finalFingerRotations.Length; i++)
         {
-            if (handPoseMode == HandPoseMode.TransitIn || handPoseMode == HandPoseMode.CopyAnimIn)
+            if (toCopyPoseIn)
                 handPose.fingerBones[i].localRotation = Quaternion.Lerp(startingFingerRotations[i], finalFingerRotations[i], lerpValue);
-            if (handPoseMode == HandPoseMode.TransitOut || handPoseMode == HandPoseMode.CopyAnimOut)
+            if (toCopyPoseOut)
                 handPose.fingerBones[i].localRotation = Quaternion.Lerp(finalFingerRotations[i], startingFingerRotations[i],  lerpValue);
         }
         if (handPoseMode == HandPoseMode.CopyAnimIn)
