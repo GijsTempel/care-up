@@ -2051,8 +2051,7 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1677785034984930182}
-  m_StateMachineBehaviours:
-  - {fileID: -2755373998491950129}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -2408,20 +2407,6 @@ MonoBehaviour:
   - Shoe_Left
   toShow: 0
   meshRenderer: 0
---- !u!114 &-2755373998491950129
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0948e933e74d38f48b95c45786737023, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: WorkFieldPos
-  actionFrame: 0
 --- !u!1101 &-2607440103041773204
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2673,7 +2658,7 @@ MonoBehaviour:
   showFrame: 900
   ObjNames:
   - DoffNDonneCuff_GameReady_Rolled_Cover
-  toShow: 1
+  toShow: 0
   meshRenderer: 0
 --- !u!1102 &-2081112444819441093
 AnimatorState:
@@ -3578,6 +3563,20 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+--- !u!114 &1071234126858576
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0948e933e74d38f48b95c45786737023, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: WorkFieldPos
+  actionFrame: -1
 --- !u!114 &30082760155415444
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6256,6 +6255,7 @@ AnimatorState:
   - {fileID: -8062905303119132441}
   - {fileID: -3751316524187754345}
   - {fileID: 5809783302182253670}
+  - {fileID: 1071234126858576}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
