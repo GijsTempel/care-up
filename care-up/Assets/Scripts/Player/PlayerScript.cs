@@ -462,9 +462,9 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    void Immediate_WalkToGroup(WalkToGroup group)
+    public void Immediate_WalkToGroup(WalkToGroup group, bool force = false)
     {
-        if (robotUIopened)
+        if (robotUIopened && !force)
             return;
         ToggleAway();
         transform.position = group.Position;
@@ -504,6 +504,18 @@ public class PlayerScript : MonoBehaviour
             controls.interactionDistance = group.interactionDistance;
         else
             controls.interactionDistance = defaultInteractionDistance;
+    }
+
+
+    public void ForceWalkToGroup(WalkToGroup group)
+    {
+        GameObject.FindObjectOfType<CameraMode>().ForceResetFromCinematic();
+        WalkToGroup_(group);
+        Immediate_WalkToGroup(group, true);
+        ImmediateWTG = null;
+        GameObject.FindObjectOfType<CameraMode>().ForceResetFromCinematic(true);
+
+
     }
 
     public void WalkToGroup_(WalkToGroup group)

@@ -51,6 +51,9 @@ public class CameraMode : MonoBehaviour
     public float cinematicLerp = 0.0f;
     private Vector3 cinematicPos;
     private Quaternion cinematicRot;
+
+    private Quaternion cinematicLocalRot;
+
     private Vector3 cinematicTargetPos;
     private Quaternion cinematicTargetRot;
     private Transform cinematicControl;
@@ -480,6 +483,31 @@ public class CameraMode : MonoBehaviour
         }
     }
 
+    public void ForceResetFromCinematic(bool toLocal = false)
+    {
+        cinematicControl.transform.localRotation = new Quaternion();
+        if (cinematicRot != null)
+        {
+
+            cinematicControl.Find("Arms").transform.rotation = cinematicRot;
+            if (toLocal)
+            {
+                cinematicControl.Find("Arms").transform.localRotation = cinematicLocalRot;
+                cinematicRot = cinematicControl.Find("Arms").transform.rotation;
+            }
+            cinematicTargetRot = cinematicRot;
+            cinematicLocalRot = cinematicControl.Find("Arms").transform.localRotation;
+        }
+        cinematicControl.transform.localPosition = new Vector3();
+        cinematicPos = cinematicControl.transform.position;
+        cinematicTargetPos = cinematicPos;
+
+
+    }
+
+
+
+
     /// <summary>
     /// Chunck in update for handling cinematic
     /// </summary>
@@ -610,7 +638,7 @@ public class CameraMode : MonoBehaviour
         cinematicControl = playerScript.transform.GetChild(0);
         cinematicControl.transform.position = cinematicTargetPos;
         cinematicControl.transform.localRotation = new Quaternion();
-       cinematicControl.Find("Arms").transform.rotation = cinematicTargetRot;
+        cinematicControl.Find("Arms").transform.rotation = cinematicTargetRot;
     }
         
     public void SetCinematicMode(Transform target)
