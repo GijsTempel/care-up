@@ -28,19 +28,19 @@ public class RobotManager : MonoBehaviour
         instance = this;
         //Game_UI = GameObject.FindObjectOfType<GameUI>().gameObject;
 
-        Transform face = transform.Find("robotArm").Find("main").Find("face");
-        eyeL = face.Find("mEye").Find("eye.L");
-        eyeR = face.Find("mEye").Find("eye.R");
-        eyeLA = face.Find("mAnker").Find("anker.L");
-        eyeRA = face.Find("mAnker").Find("anker.R");
-        mouth = face.Find("mouth");
-        mouthA = face.Find("mouthAnker");
+        // Transform face = transform.Find("robotArm").Find("main").Find("face");
+        // eyeL = face.Find("mEye").Find("eye.L");
+        // eyeR = face.Find("mEye").Find("eye.R");
+        // eyeLA = face.Find("mAnker").Find("anker.L");
+        // eyeRA = face.Find("mAnker").Find("anker.R");
+        // mouth = face.Find("mouth");
+        // mouthA = face.Find("mouthAnker");
 
-        mouthMat = transform.Find("robot_mouth").GetComponent<Renderer>().material;
-        eyeLMat = transform.Find("robot_eye.L").GetComponent<Renderer>().material;
-        eyeRMat = transform.Find("robot_eye.R").GetComponent<Renderer>().material;
+        // mouthMat = transform.Find("robot_mouth").GetComponent<Renderer>().material;
+        // eyeLMat = transform.Find("robot_eye.L").GetComponent<Renderer>().material;
+        // eyeRMat = transform.Find("robot_eye.R").GetComponent<Renderer>().material;
 
-        UI_object = GameObject.Find("PatientInfoTabs/Info");
+        // UI_object = GameObject.Find("PatientInfoTabs/Info");
 
         // UI_trigger = GameObject.Find("RobotUITrigger").gameObject;
         // UI_trigger.SetActive(true);
@@ -81,19 +81,19 @@ public class RobotManager : MonoBehaviour
 
     private void UpdateFaceAnimations()
     {
-        eyeLMat.mainTextureOffset = new Vector2(
-            (eyeL.parent.localPosition.x - eyeL.localPosition.x - eyeLA.parent.localPosition.x - eyeLA.localPosition.x - 0.1772721f) * 2,
-            (eyeLA.parent.localPosition.y - eyeLA.localPosition.y - eyeL.parent.localPosition.y - eyeL.localPosition.y - 0.1221102f) * 2
-            );
+        // eyeLMat.mainTextureOffset = new Vector2(
+        //     (eyeL.parent.localPosition.x - eyeL.localPosition.x - eyeLA.parent.localPosition.x - eyeLA.localPosition.x - 0.1772721f) * 2,
+        //     (eyeLA.parent.localPosition.y - eyeLA.localPosition.y - eyeL.parent.localPosition.y - eyeL.localPosition.y - 0.1221102f) * 2
+        //     );
 
-        eyeRMat.mainTextureOffset = new Vector2(
-            (eyeR.parent.localPosition.x - eyeR.localPosition.x - eyeRA.parent.localPosition.x - eyeRA.localPosition.x + 0.1772721f) * 2,
-            (eyeRA.parent.localPosition.y - eyeRA.localPosition.y - eyeR.parent.localPosition.y - eyeR.localPosition.y - 0.1221102f) * 2
-            );
-        mouthMat.mainTextureOffset = new Vector2(
-            (mouth.localPosition.x - mouthA.localPosition.x) * 2f,
-            (mouth.localPosition.y - mouthA.localPosition.y) * 2f * 1.11900882674f
-            );
+        // eyeRMat.mainTextureOffset = new Vector2(
+        //     (eyeR.parent.localPosition.x - eyeR.localPosition.x - eyeRA.parent.localPosition.x - eyeRA.localPosition.x + 0.1772721f) * 2,
+        //     (eyeRA.parent.localPosition.y - eyeRA.localPosition.y - eyeR.parent.localPosition.y - eyeR.localPosition.y - 0.1221102f) * 2
+        //     );
+        // mouthMat.mainTextureOffset = new Vector2(
+        //     (mouth.localPosition.x - mouthA.localPosition.x) * 2f,
+        //     (mouth.localPosition.y - mouthA.localPosition.y) * 2f * 1.11900882674f
+        //     );
     }
 
     public void ToggleCloseBtn(bool value)
