@@ -28,6 +28,7 @@ public class TableCleaningAction : MonoBehaviour
 
                 GameObject newInstance = Instantiate(cleanColliderPrefab, transform) as GameObject;
                 newInstance.transform.localPosition = newPos;
+                newInstance.GetComponent<CleaningCollider>().cleaningMaster = this;
                 numberOfColliders++;
             }
         }

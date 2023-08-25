@@ -71,12 +71,14 @@ public class RobotManager : MonoBehaviour
 
     public static void RobotCorrectAction()
     {
-        instance.GetComponent<Animator>().SetTrigger("Yes");
+        if (instance != null && instance.GetComponent<Animation>() != null)
+            instance.GetComponent<Animator>().SetTrigger("Yes");
     }
 
     public static void RobotWrongAction()
     {
-        instance.GetComponent<Animator>().SetTrigger("No");
+        if (instance != null && instance.GetComponent<Animation>() != null)
+            instance.GetComponent<Animator>().SetTrigger("No");
     }
 
     private void UpdateFaceAnimations()

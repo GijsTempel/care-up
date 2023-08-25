@@ -7,11 +7,10 @@ public class CleaningCollider : MonoBehaviour
     public GameObject marker;
     public bool isCleaned = false;
 
-    TableCleaningAction cleaningMaster;
+    public TableCleaningAction cleaningMaster;
 
     void Start()
     {
-        cleaningMaster = gameObject.GetComponentInParent<TableCleaningAction>();
     }
 
     void TriggerCleanup()
