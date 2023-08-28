@@ -5,6 +5,7 @@ using UnityEngine;
 public class CleaningCollider : MonoBehaviour
 {
     public GameObject marker;
+    public GameObject particles;
     public bool isCleaned = false;
 
     public TableCleaningAction cleaningMaster;
@@ -20,7 +21,8 @@ public class CleaningCollider : MonoBehaviour
         if (cleaningMaster.IsCleanActionAllowed())
         {
             isCleaned = true;
-            marker.SetActive(true);
+            // marker.SetActive(true);
+            particles.SetActive(true);
             cleaningMaster.CleanActionCount();
         }
     }
