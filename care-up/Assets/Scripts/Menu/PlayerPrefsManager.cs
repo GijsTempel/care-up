@@ -14,7 +14,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Linq;
-using SmartLookUnity;
 using CareUp.Localize;
 using System.Runtime.InteropServices;
 
@@ -458,6 +457,10 @@ public class PlayerPrefsManager : MonoBehaviour
 
     void Awake()
     {
+        SmartlookUnity.SetupOptionsBuilder builder = 
+            new SmartlookUnity.SetupOptionsBuilder("22f3cf28278dbff71183ef8e0fa90c90048b850d");
+        SmartlookUnity.Smartlook.SetupAndStartRecording(builder.Build());
+
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         if (!Application.isEditor)
         {
@@ -478,8 +481,6 @@ public class PlayerPrefsManager : MonoBehaviour
         // uncomment this, fill with correct info and start game
         // p.s. dont forget to comment this again and not push instead :)
         //PlayerPrefsManager.__dev__customCertificate("playerFullName", "sceneName", "06202019");
-
-        SmartLook.Init("22f3cf28278dbff71183ef8e0fa90c90048b850d");
 
 #if UNITY_WEBGL || UNITY_EDITOR
         HandleLoginToken();
