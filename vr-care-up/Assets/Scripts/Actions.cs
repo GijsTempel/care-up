@@ -189,7 +189,7 @@ namespace CareUp.Actions
             if (info == null)
                 return false;
             bool same = false;
-            if (info.Length == 1)
+            if (info.Length == 1 || info[1] == "")
             {
                 if (info[0] == useInput)
                 {
