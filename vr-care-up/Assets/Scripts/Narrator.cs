@@ -55,6 +55,9 @@ public class Narrator : MonoBehaviour
     /// <returns>True if played</returns>
     public static bool PlaySound(string sound, float volume = 1.0f)
     {
+        if (playerSource == null)
+            return false;
+
         playerSource.mute = false;
         if (sound == "WrongAction")
         {

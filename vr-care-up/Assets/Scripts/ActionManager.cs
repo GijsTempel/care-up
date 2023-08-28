@@ -2005,6 +2005,7 @@ public class ActionManager : MonoBehaviour
     }
 
 
+
     public static void CorrectAction()
     {
         GameObject.FindObjectOfType<ActionManager>().actionsCount++;
@@ -2013,6 +2014,8 @@ public class ActionManager : MonoBehaviour
 
         ActionManager.BuildRequirements();
         ActionManager.UpdateRequirements(1.5f);
+        foreach(ActionExpectant a in GameObject.FindObjectsOfType<ActionExpectant>(true))
+            a.UpdateAction();
         // GameObject.FindObjectOfType<ActionManager>().randomQuiz.NextRandomQuiz();
 #if (UNITY_EDITOR || DEVELOPMENT_BUILD)
 
