@@ -59,7 +59,7 @@ public class ActionHandler : MonoBehaviour
         string[] info = { leftHandObjectName, rightHandObjectName };
         if (actionManager == null)
             actionManager = GameObject.FindObjectOfType<ActionManager>();
-        return actionManager.Check(info, actionType, true);
+        return actionManager.OnlyCheck(info, actionType);
     }
     
 }

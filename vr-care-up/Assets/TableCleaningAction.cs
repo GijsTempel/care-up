@@ -59,16 +59,10 @@ public class TableCleaningAction : MonoBehaviour
                 if (actionExpectant.isCurrentAction)
                 {
                     EnableActionComponents(true);
+                    locakedAction = false;
                 }
-
             }
-
         }
-    }
-
-    public bool IsCleanActionAllowed()
-    {
-        return true;
     }
 
     public void CleanActionCount()
@@ -82,6 +76,14 @@ public class TableCleaningAction : MonoBehaviour
 
         float currentCleanRatio = Remap((float)cleaned / (float)numberOfColliders, 0, rationToClean, 0f, 1f);
         progressImage.fillAmount = currentCleanRatio;
+        if (currentCleanRatio >= 1)
+        {
+            if (actionExpectant != null)
+            {
+                if (actionExpectant.TryExecuteAction())
+                    EnableActionComponents(false);
+            }
+        }
     }
 
 

@@ -1630,6 +1630,34 @@ public class ActionManager : MonoBehaviour
         //     gameUIVR.buttonToBlink = GameUIVR.ItemControlButtonType.NoTargetRight;
     }
 
+
+    /// <summary>
+    /// Only checks if action is correct and do nod do anything else
+    /// </summary>
+    /// <param name="info">Info passed from Handling functions.</param>
+    /// <param name="type">Type of the action</param>
+    /// <returns>True if action expected and correct. False otherwise.</returns>
+    public bool OnlyCheck(string[] info, ActionType type)
+    {
+
+        int subcategoryLength = IncompletedActions.Count;
+
+        // make a list from sublist with actions of performed action type only
+        List<Action> subtypelist = UnlockedIncompletedActions.Where(action => action.Type == type).ToList();
+
+        if (IncompletedActions.Count != 0)
+        {
+            foreach (Action action in subtypelist)
+            {
+                if (action.Compare(info) || (action.Type == ActionType.General))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     /// <summary>
     /// Checks if triggered action is correct ( expected to be done in action list ).
     /// Plays WrongAction sound from Narrator if wrong.
@@ -1649,19 +1677,6 @@ public class ActionManager : MonoBehaviour
 
         // make a list from sublist with actions of performed action type only
         List<Action> subtypelist = UnlockedIncompletedActions.Where(action => action.Type == type).ToList();
-
-        // Ugly temporary fix for catheterisation scene
-        if (type == ActionType.ObjectDrop && info.Length > 1)
-        {
-            if (info[0] == "PlasticTrashbucket" && info[1] == "1")
-            {
-                if (unlockedBlocks.Contains("WaterUnpacked") && unlockedBlocks.Contains("LubUnpacked"))
-                {
-                    print("catch");
-                    info[1] = "2";
-                }
-            }
-        }
 
         if (IncompletedActions.Count != 0)
         {

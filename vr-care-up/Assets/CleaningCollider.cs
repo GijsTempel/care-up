@@ -18,13 +18,11 @@ public class CleaningCollider : MonoBehaviour
     {
         if (isCleaned)
             return;
-        if (cleaningMaster.IsCleanActionAllowed())
-        {
-            isCleaned = true;
-            // marker.SetActive(true);
-            particles.SetActive(true);
-            cleaningMaster.CleanActionCount();
-        }
+ 
+        isCleaned = true;
+        // marker.SetActive(true);
+        particles.SetActive(true);
+        cleaningMaster.CleanActionCount();
     }
 
     private void OnTriggerEnter(Collider collision)
