@@ -522,6 +522,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
     void Start()
     {
+        SmartlookUnity.SetupOptionsBuilder builder = new SmartlookUnity.SetupOptionsBuilder("22f3cf28278dbff71183ef8e0fa90c90048b850d");
+        SmartlookUnity.Smartlook.SetupAndStartRecording(builder.Build());
+
         LocalizationManager.LoadAllDictionaries();
         SceneManager.sceneLoaded += OnLoaded;
 
