@@ -14,10 +14,10 @@ public class GrabHandPose : MonoBehaviour
 
     private void Start()
     {
-        // if (righHandPose != null)
-        //     righHandPose.gameObject.SetActive(false);
-        // if (leftHandPose != null)
-        //     leftHandPose.gameObject.SetActive(false);
+        if (righHandPose != null)
+            righHandPose.gameObject.SetActive(false);
+        if (leftHandPose != null)
+            leftHandPose.gameObject.SetActive(false);
     }
 
     public void SetupPose(HandPoseData handPoseData)

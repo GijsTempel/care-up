@@ -42,9 +42,10 @@ public class TableCleaningAction : MonoBehaviour
 
     void EnableActionComponents(bool toEnable)
     {
-        cleanUpUI.SetActive(toEnable);
-        colliderHolder.SetActive(toEnable);
-
+        if (toEnable)
+            GetComponent<Animator>().SetTrigger("Show");
+        else
+            GetComponent<Animator>().SetTrigger("Hide");
     }
 
     void Update()
