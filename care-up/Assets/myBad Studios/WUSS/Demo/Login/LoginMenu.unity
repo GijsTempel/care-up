@@ -844,6 +844,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83743502}
   m_CullTransparentMesh: 0
+--- !u!1 &86865079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 86865081}
+  - component: {fileID: 86865080}
+  m_Layer: 0
+  m_Name: Smartlook Initializer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &86865080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86865079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f8ef78bee04409481341d4213ba58aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ResetSession: 0
+  ResetUser: 0
+--- !u!4 &86865081
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86865079}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &90828475
 GameObject:
   m_ObjectHideFlags: 0
@@ -2897,6 +2943,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!225 &250670105
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5242,6 +5289,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &391230849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5774,6 +5822,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!222 &431011146
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8984,6 +9033,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!222 &602554146
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9126,7 +9176,7 @@ PrefabInstance:
     - target: {fileID: 224843258814635222, guid: 0b991aadbf8286f42b66d02864ebc431,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 22496300
+      value: 22604176
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b991aadbf8286f42b66d02864ebc431, type: 3}
@@ -11470,6 +11520,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!222 &748158593
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13605,6 +13656,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!225 &864305581
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -19088,6 +19140,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!225 &1244161529
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -21031,9 +21084,6 @@ MonoBehaviour:
   LoginPasswordField: {fileID: 454620575}
   loginPasswordVisibilityOn: {fileID: 0}
   loginPasswordVisibilityOff: {fileID: 0}
-  popupLoginPasswordVisibilityOn: {fileID: 1410848785}
-  popupLoginPasswordVisibilityOff: {fileID: 2082174449}
-  loginPasswordVisibility: {fileID: 0}
   RegUsernameField: {fileID: 1859842708}
   RegEmailField: {fileID: 1511844671}
   RegPasswordField: {fileID: 682855215}
@@ -22076,12 +22126,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 1
   m_AspectRatio: 4.5454545
---- !u!1 &1410848785 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7303085977871099402, guid: 52f508e16c1d94a4dade841780d79bca,
-    type: 3}
-  m_PrefabInstance: {fileID: 7303085977133874715}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1413477719
 GameObject:
   m_ObjectHideFlags: 0
@@ -26870,6 +26914,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!225 &1756112984
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -31606,12 +31651,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.00024414062, y: 0.11026001}
   m_SizeDelta: {x: -1.0400009, y: 0.64100075}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &2082174449 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7303085977468668906, guid: 52f508e16c1d94a4dade841780d79bca,
-    type: 3}
-  m_PrefabInstance: {fileID: 7303085977133874715}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2094173332
 GameObject:
   m_ObjectHideFlags: 0
@@ -31715,6 +31754,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2094173337
 MonoBehaviour:
   m_ObjectHideFlags: 0
