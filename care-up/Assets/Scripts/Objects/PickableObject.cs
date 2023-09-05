@@ -517,7 +517,10 @@ public class PickableObject : InteractableObject
             pos = new Vector3();
             rot = new Quaternion();
         }
-        GameObject bundleObject = SpawnObject(name);
+        string ghostPrefabName = name;
+        if (customGhost != null)
+            ghostPrefabName = customGhost.name;
+        GameObject bundleObject = SpawnObject(ghostPrefabName);
 
         GameObject ghost = null;
 

@@ -156,8 +156,11 @@ public class AnimationSequence
                 }
             }
             // shuffle
-            step.options = step.options.OrderBy(x => Random.value).ToList();
-            steps.Add(step);
+            if (step.options.Count > 0)
+            {
+                step.options = step.options.OrderBy(x => Random.value).ToList();
+                steps.Add(step);
+            }
         }
     }
 

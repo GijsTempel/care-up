@@ -542,6 +542,7 @@ namespace MBS
             CMLData data = new CMLData();
             data.Set("username", fields.login_username.text.Trim());
             data.Set("password", fields.login_password.text.Trim());
+            SmartlookUnity.Smartlook.SetUserIdentifier(fields.login_username.text.Trim());
             WULogin.AttemptToLogin(data);
             PlayerPrefs.SetInt("Remember Me", attempt_auto_login ? 1 : 0);
             DisplayScreen(panels.login_menu);
