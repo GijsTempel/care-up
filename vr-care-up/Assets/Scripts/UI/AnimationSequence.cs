@@ -308,7 +308,7 @@ public class AnimationSequence
             {
                 dialogue.AddOptions(additionalSteps);
             }
-            else
+            else 
             {
                 if (steps.ElementAt(currentStep).randomOptions.Count > 0)
                 {
