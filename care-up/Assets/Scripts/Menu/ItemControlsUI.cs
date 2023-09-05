@@ -361,6 +361,8 @@ public class ItemControlsUI : MonoBehaviour
         Close();
     }
 
+
+
     public void Pick()
     {
         if (cameraMode.CurrentMode == CameraMode.Mode.ItemControlsUI)
@@ -379,17 +381,7 @@ public class ItemControlsUI : MonoBehaviour
                         {
                             if (item.prefabInHands != "")
                             {
-                                item.SavePosition();
-                                GameObject replaced = null;
-                                handsInventory.CreateObjectByName(item.prefabInHands, Vector3.zero, callback => replaced = callback);
-                                if (replaced != null)
-                                {
-                                    replaced.GetComponent<PickableObject>().SavePosition(item.SavedPosition, item.SavedRotation, true);
-                                    Destroy(item.gameObject);
-                                    item = replaced.GetComponent<PickableObject>();
-                                    item.transform.position = item.SavedPosition;
-                                    item.transform.rotation = item.SavedRotation;
-                                }
+                                //item = ReplacePrefab(item, item.prefabInHands);
                             }
 
                             if (handsInventory.PickItem(item))

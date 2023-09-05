@@ -796,6 +796,24 @@ public class HandsInventory : MonoBehaviour {
         SetHold(hand == PlayerAnimationManager.Hand.Left);
     }
 
+    public PickableObject ReplacePrefab(PickableObject item, string newPrefabName)
+    {
+        item.SavePosition();
+        GameObject replaced = null;
+        CreateObjectByName(newPrefabName, Vector3.zero, callback => replaced = callback);
+        if (replaced != null)
+        {
+            item.DeleteGhostObject();
+            replaced.GetComponent<PickableObject>().SavePosition(item.SavedPosition, item.SavedRotation, true);
+            Destroy(item.gameObject);
+            item = replaced.GetComponent<PickableObject>();
+            item.transform.position = item.SavedPosition;
+            item.transform.rotation = item.SavedRotation;
+            item.CreateGhostObject();
+        }
+        return item;
+    }
+
     /// <summary>
     /// Hold object now (from animation behaviour) at certain frame.
     /// </summary>
@@ -810,6 +828,9 @@ public class HandsInventory : MonoBehaviour {
             }
 
             leftHold = true;
+            if (leftHandObject.prefabInHands != "")
+                leftHandObject = ReplacePrefab(leftHandObject, leftHandObject.prefabInHands);
+
             leftHandObject.transform.parent = (leftToolHolder == null) ?
                 GameObject.Find("toolHolder.L").transform : leftToolHolder;
             leftHandObject.transform.localPosition = leftHandObject.SavedPosition != null ? leftHandObject.SavedPosition : Vector3.zero;
@@ -824,6 +845,8 @@ public class HandsInventory : MonoBehaviour {
             }
 
             rightHold = true;
+            if (rightHandObject.prefabInHands != "")
+                rightHandObject = ReplacePrefab(rightHandObject, rightHandObject.prefabInHands);
             rightHandObject.transform.parent = (rightToolHolder == null) ?
                 GameObject.Find("toolHolder.R").transform : rightToolHolder;
             rightHandObject.transform.localPosition = Vector3.zero;
