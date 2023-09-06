@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveOvjectToTarget : StateMachineBehaviour
+public class MoveObjectToTarget : StateMachineBehaviour
 {
     public string targetName;
     public string objectName;
@@ -10,6 +10,7 @@ public class MoveOvjectToTarget : StateMachineBehaviour
     public int actionFrame = -1;
     protected float frame;
     protected float prevFrame;
+    public bool isGhostObject = false;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         frame = 0f;
@@ -20,13 +21,29 @@ public class MoveOvjectToTarget : StateMachineBehaviour
     {
         GameObject targetObject = GameObject.Find(targetName);
         GameObject _object = GameObject.Find(objectName);
+        if (isGhostObject)
+        {
+            foreach(PickableObject o in GameObject.FindObjectsOfType<PickableObject>())
+            {
+                if (o.name == objectName && o.mainObject != null)
+                {
+                    _object = o.gameObject;
+                    break;
+                }
+            }
+        }
 
         if (targetObject != null && _object != null)
         {
             _object.transform.position = targetObject.transform.position;
             if (copyRot)
                 _object.transform.rotation = targetObject.transform.rotation;
+            if (isGhostObject)
+            {
+                _object.GetComponent<PickableObject>().mainObject.SavePosition(targetObject.transform.position,
+                    targetObject.transform.rotation, true);
 
+            }
         }
     }
 
