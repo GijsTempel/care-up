@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit.Inputs.Composites;
 
 public class HandPresence : MonoBehaviour
 {
@@ -24,7 +26,7 @@ public class HandPresence : MonoBehaviour
     private string handName = "Hand";
     PickableObject objectInHand;
     private GameUIVR gameUIVR;
-
+    bool allowTriggerDrop = false;
 
     public HandPoseControl GetHandPoseControl()
     {
@@ -85,7 +87,7 @@ public class HandPresence : MonoBehaviour
         }
     }
 
-    private PickableObject FindClosestPickableInArea()
+    private PickableObject FindClosestPickableInArea(bool findMounted = false)
     {
         float dist = float.PositiveInfinity;
         PickableObject closest = null;
@@ -93,6 +95,11 @@ public class HandPresence : MonoBehaviour
         {
             if (p != null)
             {
+                if (!findMounted && p.transform.parent.tag == "MountingPoint")
+                    continue;
+                if (findMounted && p.transform.parent.tag != "MountingPoint")
+                    continue;
+
                 float nextDist = Vector3.Distance(transform.position, p.transform.position);
                 if (nextDist < dist)
                 {
@@ -122,7 +129,7 @@ public class HandPresence : MonoBehaviour
         }
     }
 
-    private bool TryToPickUp()
+    private bool TryToPickUp(bool findMounted = false)
     {
         if (objectInHand != null)
             return false;
@@ -132,16 +139,15 @@ public class HandPresence : MonoBehaviour
             return false;
         if (handPoseControl.handPoseMode != HandPoseControl.HandPoseMode.Default)
             return false;
-        PickableObject closestPickable = FindClosestPickableInArea();
+        PickableObject closestPickable = FindClosestPickableInArea(findMounted);
         if (closestPickable == null)
             return false;
-        if (PickUpObject(closestPickable))
-        {
-            return true;
-        }
-
-        return false;
+        if (findMounted)
+            return PickupMountedObject(closestPickable);
+        else
+            return PickUpObject(closestPickable);
     }
+
 
     public bool PickUpObject()
     {
@@ -162,6 +168,13 @@ public class HandPresence : MonoBehaviour
         return false;
     }
 
+    public bool PickupMountedObject(PickableObject objToPickup)
+    {
+        Transform holder = GameObject.FindWithTag("ItemHolder").transform;
+        objToPickup.transform.SetParent(holder);
+
+        return PickUpObject(objToPickup);
+    }
     public bool PickUpObject(PickableObject objToPickup, bool toForce = false)
     {
         if (spawnHandModel == null)
@@ -243,6 +256,7 @@ public class HandPresence : MonoBehaviour
                 else if (gripValue < ACTION_TRESHOULD_UP && gripSavedValue >= ACTION_TRESHOULD_UP)
                 {
                     DropObjectFromHand();
+                    allowTriggerDrop = false;
                 }
 
                 if (gripValue > ACTION_TRESHOULD_UP)
@@ -267,10 +281,24 @@ public class HandPresence : MonoBehaviour
                 if (triggerValue > ACTION_TRESHOULD_UP && triggerSavedValue <= ACTION_TRESHOULD_UP)
                 {
                     CastAction(ActionTrigger.TriggerHandAction.Pinch);
+                    if (TryToPickUp(true))
+                        allowTriggerDrop = true;
                 }
-                if (triggerValue > ACTION_TRESHOULD_UP && currentHandPose != ActionTrigger.TriggerHandAction.Grip)
-                    currentHandPose = ActionTrigger.TriggerHandAction.Pinch;
+                else if (triggerValue < ACTION_TRESHOULD_UP && triggerSavedValue >= ACTION_TRESHOULD_UP)
+                {
+                    if (allowTriggerDrop)
+                        DropObjectFromHand();
+                    //release
+                    allowTriggerDrop = false;
+                }
 
+
+                if (triggerValue > ACTION_TRESHOULD_UP && currentHandPose != ActionTrigger.TriggerHandAction.Grip)
+                {
+                    currentHandPose = ActionTrigger.TriggerHandAction.Pinch;
+                }
+
+               
                 triggerSavedValue = triggerValue;
             }
             if (spawnController != null)
