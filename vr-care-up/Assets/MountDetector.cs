@@ -10,17 +10,12 @@ public class MountDetector : MonoBehaviour
 {
     public enum upEnum
     {
-        X,
-        mX,
-        Y,
-        mY,
-        Z,
-        mZ
+        X, mX, Y, mY, Z, mZ
     }
     public upEnum upDirection;
     public float dotLimit = 0f;
     List<Transform> mountsDetected = new List<Transform>();
-    List<String> mountNames = new List<string>();
+    public List<String> mountNames = new List<string>();
 
     public Transform FindClosestMount()
     {
@@ -39,28 +34,22 @@ public class MountDetector : MonoBehaviour
                     case upEnum.X:
                         upVector = transform.right;
                         pUpVector = p.transform.right;
-
                         break;
                     case upEnum.mX:
                         upVector = -transform.right;
                         pUpVector = -p.transform.right;
-
                         break;
                     case upEnum.Y:
                         upVector = transform.up;
                         pUpVector = p.transform.up;
-
-                        
                         break;
                     case upEnum.mY:
                         upVector = -transform.up;
                         pUpVector = -p.transform.up;
-
                         break;
                     case upEnum.Z:
                         upVector = transform.forward;
                         pUpVector = p.transform.forward;
-
                         break;
                     case upEnum.mZ:
                         upVector = -transform.forward;
@@ -81,7 +70,6 @@ public class MountDetector : MonoBehaviour
         }
         return closest;
     }
-
 
     private void OnTriggerEnter(Collider collision)
     {

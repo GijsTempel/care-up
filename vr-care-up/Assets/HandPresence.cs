@@ -87,7 +87,7 @@ public class HandPresence : MonoBehaviour
         }
     }
 
-    private PickableObject FindClosestPickableInArea(bool findMounted = false)
+    private PickableObject FindClosestPickableInArea(bool findMounted = false, bool pinchPickup = false)
     {
         float dist = float.PositiveInfinity;
         PickableObject closest = null;
@@ -95,6 +95,8 @@ public class HandPresence : MonoBehaviour
         {
             if (p != null)
             {
+                if (pinchPickup && !p.pickupWithPinch)
+                    continue;
                 if (!findMounted && p.transform.parent.tag == "MountingPoint")
                     continue;
                 if (findMounted && p.transform.parent.tag != "MountingPoint")
@@ -129,7 +131,7 @@ public class HandPresence : MonoBehaviour
         }
     }
 
-    private bool TryToPickUp(bool findMounted = false)
+    private bool TryToPickUp(bool findMounted = false, bool pinchPickup = false)
     {
         if (objectInHand != null)
             return false;
@@ -139,7 +141,7 @@ public class HandPresence : MonoBehaviour
             return false;
         if (handPoseControl.handPoseMode != HandPoseControl.HandPoseMode.Default)
             return false;
-        PickableObject closestPickable = FindClosestPickableInArea(findMounted);
+        PickableObject closestPickable = FindClosestPickableInArea(findMounted, pinchPickup);
         if (closestPickable == null)
             return false;
         if (findMounted)
@@ -246,12 +248,15 @@ public class HandPresence : MonoBehaviour
         }
         else
         {
+            bool pickedUp = false;
             if (targetDevice.TryGetFeatureValue(CommonUsages.grip, out float gripValue))
             {
                 if (gripValue > ACTION_TRESHOULD_UP && gripSavedValue <= ACTION_TRESHOULD_UP)
                 {
                     if (!TryToPickUp())
                         CastAction(ActionTrigger.TriggerHandAction.Grip);
+                    else
+                        pickedUp = true;
                 }
                 else if (gripValue < ACTION_TRESHOULD_UP && gripSavedValue >= ACTION_TRESHOULD_UP)
                 {
@@ -283,12 +288,16 @@ public class HandPresence : MonoBehaviour
                     CastAction(ActionTrigger.TriggerHandAction.Pinch);
                     if (TryToPickUp(true))
                         allowTriggerDrop = true;
+                    else if (!pickedUp)
+                    {
+                        if (TryToPickUp(false, true))
+                            allowTriggerDrop = true;
+                    }
                 }
                 else if (triggerValue < ACTION_TRESHOULD_UP && triggerSavedValue >= ACTION_TRESHOULD_UP)
                 {
                     if (allowTriggerDrop)
                         DropObjectFromHand();
-                    //release
                     allowTriggerDrop = false;
                 }
 

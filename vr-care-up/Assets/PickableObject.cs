@@ -18,6 +18,18 @@ public class PickableObject : MonoBehaviour
     bool isKinematic = false;
     private PlayerScript player;
     private Transform transformToFallow;
+    public bool pickupWithPinch = false;
+
+    private MountDetector GetMountInChildren()
+    {
+        foreach(MountDetector m in gameObject.GetComponentsInChildren<MountDetector>())
+        {
+            if (m.transform.parent == transform)
+                return m;
+        }
+
+        return null;
+    }
 
     public void Drop()
     {
@@ -25,7 +37,8 @@ public class PickableObject : MonoBehaviour
         transformToFallow = null;
         if (gameObject.GetComponent<Rigidbody>() != null)
             gameObject.GetComponent<Rigidbody>().isKinematic = isKinematic;
-        MountDetector mountDetector = gameObject.GetComponentInChildren<MountDetector>();
+
+        MountDetector mountDetector = GetMountInChildren();
         if (mountDetector != null)
         {
             Transform closestMount = mountDetector.FindClosestMount();
