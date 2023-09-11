@@ -58,6 +58,9 @@ public class HeadTriggerRaycast : MonoBehaviour
             SelectDialogue selectDialogue = phit.collider.GetComponent<SelectDialogue>();
             if (selectDialogue != null)
                 selectDialogue.PointerRayHit(phit.point);
+            VRRaycastButton raycastButton = phit.collider.GetComponentInChildren<VRRaycastButton>();
+            if (raycastButton != null)
+                raycastButton.PointerRayHit(phit.point);
         }
 
 

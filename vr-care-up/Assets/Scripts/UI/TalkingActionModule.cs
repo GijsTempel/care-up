@@ -35,6 +35,12 @@ public class TalkingActionModule : MonoBehaviour
         if (notifBubbleInstance == null)
         {
             notifBubbleInstance = GameObject.Instantiate<GameObject>(notifBubblePrefab, notifBubbleAnchor);
+
+            UnityEngine.UI.Button button = notifBubbleInstance.GetComponentInChildren<UnityEngine.UI.Button>();
+            if (button != null)
+            {
+                button.onClick.AddListener(delegate { Debug.Log("delegateButtonClickTest"); this.TriggerChatOptions(); });
+            }
         }
 
         //StartCoroutine(delayedTrigger(5f));
