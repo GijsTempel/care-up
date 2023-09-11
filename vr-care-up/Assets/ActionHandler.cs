@@ -20,6 +20,14 @@ public class ActionHandler : MonoBehaviour
         {
             case ActionManager.ActionType.PersonTalk:
                 result = actionManager.OnTalkAction(leftHandObjectName);
+                
+                // BIG difference between sequence and talk action:
+                // talk action closes selection on ANY option
+                SelectDialogue talkDialogue = GameObject.FindObjectOfType<SelectDialogue>();
+                if (talkDialogue != null)
+                {
+                    talkDialogue.gameObject.SetActive(false);
+                }
                 break;
             case ActionManager.ActionType.ObjectUse:
                 result = actionManager.OnUseAction(leftHandObjectName);
