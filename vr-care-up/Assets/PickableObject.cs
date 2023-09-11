@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -16,6 +18,18 @@ public class PickableObject : MonoBehaviour
     bool isKinematic = false;
     private PlayerScript player;
     private Transform transformToFallow;
+    public bool pickupWithPinch = false;
+
+    private MountDetector GetMountInChildren()
+    {
+        foreach(MountDetector m in gameObject.GetComponentsInChildren<MountDetector>())
+        {
+            if (m.transform.parent == transform)
+                return m;
+        }
+
+        return null;
+    }
 
     public void Drop()
     {
@@ -23,6 +37,14 @@ public class PickableObject : MonoBehaviour
         transformToFallow = null;
         if (gameObject.GetComponent<Rigidbody>() != null)
             gameObject.GetComponent<Rigidbody>().isKinematic = isKinematic;
+
+        MountDetector mountDetector = GetMountInChildren();
+        if (mountDetector != null)
+        {
+            Transform closestMount = mountDetector.FindClosestMount();
+            if (closestMount != null)
+                AttatchToMount(closestMount);
+        }
 }
     
     public bool PickUp(Transform handTransform, float transuitionDuration = 0.2f)
@@ -55,14 +77,29 @@ public class PickableObject : MonoBehaviour
 
         }
         routineTime += Time.deltaTime;
-
     }
 
-   void Awake()
-   {
+    void AttatchToMount(Transform mount)
+    {
+        transform.SetParent(mount);
+        transform.position = mount.position;
+        transform.rotation = mount.rotation;
         if (gameObject.GetComponent<Rigidbody>() != null)
+            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+    void Awake()
+    {
+        if (gameObject.GetComponent<Rigidbody>() != null)
+        {
             isKinematic = gameObject.GetComponent<Rigidbody>().isKinematic;
-   }
+            if (transform.parent != null && transform.parent.tag == "MountingPoint")
+            {
+                gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            }
+        }
+    }
+
     private void Start()
     {
         player = GameObject.FindObjectOfType<PlayerScript>();
