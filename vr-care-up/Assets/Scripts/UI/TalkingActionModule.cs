@@ -18,6 +18,8 @@ public class TalkingActionModule : MonoBehaviour
     public int currentDialogueIndex = 0;
     private List<SelectDialogue.DialogueOption> optionsList;
 
+    public static TalkingActionModule latestCaller = null;
+
     void Start()
     {
         actionManager = GameObject.FindAnyObjectByType<ActionManager>();
@@ -42,10 +44,9 @@ public class TalkingActionModule : MonoBehaviour
                 button.onClick.AddListener(delegate { Debug.Log("delegateButtonClickTest"); this.TriggerChatOptions(); });
             }
         }
-
-        //StartCoroutine(delayedTrigger(5f));
     }
 
+    // for testing in VR, just StartCoroutine(delayedTrigger(5f)); in start
     IEnumerator delayedTrigger(float s)
     {
         yield return new WaitForSeconds(s);
@@ -82,6 +83,8 @@ public class TalkingActionModule : MonoBehaviour
         SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();
         dialogue.AddOptions(optionsList);
         //SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();
+
+        latestCaller = this;
     }
 
     void UpdateNotifBubble()
@@ -125,4 +128,12 @@ public class TalkingActionModule : MonoBehaviour
     }
 
     private void Blank(string s, List<SelectDialogue.DialogueOption> dialogueOption = null, string question = null, string audio = "") { }
+
+    public void CompleteDialogueLoadNext()
+    {
+        if (dialogueXmls.Count > ++currentDialogueIndex)
+        {
+            LoadDialogueOptions(dialogueXmls[currentDialogueIndex]);
+        }
+    }
 }

@@ -19,7 +19,13 @@ public class ActionHandler : MonoBehaviour
         switch (actionType)
         {
             case ActionManager.ActionType.PersonTalk:
-                result = actionManager.OnTalkAction(leftHandObjectName);
+                if (result = actionManager.OnTalkAction(leftHandObjectName))
+                { // ^intentionally assign action, not compare
+                    if (TalkingActionModule.latestCaller != null)
+                    {
+                        TalkingActionModule.latestCaller.CompleteDialogueLoadNext();
+                    }
+                }
                 
                 // BIG difference between sequence and talk action:
                 // talk action closes selection on ANY option
