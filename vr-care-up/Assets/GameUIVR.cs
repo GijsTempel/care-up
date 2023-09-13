@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CareUp.Actions;
@@ -67,10 +67,15 @@ public class GameUIVR : MonoBehaviour
     public void UpdateHintPanel(List<ActionManager.StepData> subTasks, float UpdateHintDelay = 0f)
     {
         string t = "";
-        for (int i = 0; i < actionManager.CurrentDescription.Count; i++)
+        List<string> curentShortDesc = actionManager.CurrentDescription;
+        List<string> curentVRDesc = actionManager.CurrentDescriptionVR;
+
+        for (int i = 0; i < curentShortDesc.Count; i++)
         {
             t += (actionManager.CurrentActionType == ActionManager.ActionType.SequenceStep) ?
                 "Wat ga je doen?" : actionManager.CurrentDescription[i];
+            t += "\n";
+            t += actionManager.CurrentDescriptionVR[i];
             t += "\n\n";
 
         }

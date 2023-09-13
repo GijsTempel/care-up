@@ -37,6 +37,7 @@ namespace CareUp.Actions
         public string blockTitle;
         public string blockMessage;
         public string comment;
+        public string descriptionVR;
         public string commentUA;
         public string leftHandRequirement;
         public string rightHandRequirement;

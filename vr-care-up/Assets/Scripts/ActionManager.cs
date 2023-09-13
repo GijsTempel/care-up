@@ -847,31 +847,33 @@ public class ActionManager : MonoBehaviour
         get
         {
             List<string> actionsDescription = new List<string>();
-            string result = "";
-            bool Ua = false;
-
-#if UNITY_EDITOR
-            // if (GameObject.FindObjectOfType<GameUIVR>() != null)
-            //     Ua = GameObject.FindObjectOfType<ObjectsIDsController>().Ua;
-#endif
 
             if (manager != null && !manager.practiceMode && currentAction != null)
-            {
-                result = currentAction.shortDescr;
-                if (Ua && currentAction.commentUA != "")
-                    result = currentAction.commentUA;
-            }
+                actionsDescription.Add(currentAction.shortDescr);
             else
             {
                 foreach (Action a in IncompletedActions)
-                {
-                    if (!Ua || a.commentUA == "")
-                        actionsDescription.Add(a.shortDescr);
-                    if (Ua)
-                        actionsDescription.Add(a.commentUA);
-                }
+                    actionsDescription.Add(a.shortDescr);
             }
+            
             return actionsDescription;
+        }
+    }
+
+     public List<string> CurrentDescriptionVR
+    {
+        get
+        {
+            List<string> actionsDescriptionVR = new List<string>();
+
+            if (manager != null && !manager.practiceMode && currentAction != null)
+                actionsDescriptionVR.Add(currentAction.descriptionVR);
+            else
+            {
+                foreach (Action a in IncompletedActions)
+                    actionsDescriptionVR.Add(a.descriptionVR);
+            }
+            return actionsDescriptionVR;
         }
     }
 
@@ -1161,6 +1163,11 @@ public class ActionManager : MonoBehaviour
             string type = action.Attributes["type"].Value;
 
             string descr = LocalizationManager.GetValueIfKey(action.Attributes["description"].Value);
+            
+            string descriptionVR = "";
+            if (action.Attributes["descriptionVR"] != null)
+                descriptionVR = LocalizationManager.GetValueIfKey(action.Attributes["descriptionVR"].Value);
+
 
             string comment = "";
             if (action.Attributes["comment"] != null)
@@ -1376,6 +1383,7 @@ public class ActionManager : MonoBehaviour
                     Debug.LogError("No action type found: " + type);
                     break;
             }
+            actionList[actionList.Count - 1].descriptionVR = descriptionVR;
             actionList[actionList.Count - 1].comment = comment;
             actionList[actionList.Count - 1].commentUA = commentUA;
             actionList[actionList.Count - 1].secondPlaceRequirement = secondPlace;
