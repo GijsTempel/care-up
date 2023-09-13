@@ -758,7 +758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterObject: {fileID: 900505252}
   SlaveObject: {fileID: 870465543}
-  AnimName: SitInBedWithBlanket_
+  AnimName: Book_LayToSit
   IsSyncing: 0
 --- !u!4 &294606580 stripped
 Transform:
@@ -1777,6 +1777,54 @@ Transform:
   m_Father: {fileID: 354923633}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 93.08501, z: 0.172}
+--- !u!1 &650828607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 650828608}
+  - component: {fileID: 650828609}
+  m_Layer: 0
+  m_Name: ReadingIdle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &650828608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650828607}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 759232009}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &650828609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650828607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78fefb52d4740034d98a625de948e115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MasterObject: {fileID: 900505252}
+  SlaveObject: {fileID: 870465543}
+  AnimName: Book_reading_idle
+  IsSyncing: 1
 --- !u!1001 &675688680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2109,6 +2157,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 273544567}
+  - {fileID: 650828608}
   m_Father: {fileID: 0}
   m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

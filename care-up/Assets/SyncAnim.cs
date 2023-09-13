@@ -33,7 +33,7 @@ public class SyncAnim : MonoBehaviour
             {
                 float nTime = Mathf.Repeat(MasterObject.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f);
                 SlaveObject.Play(AnimName, -1, nTime);
-                Debug.Log(nTime);
+                //Debug.Log(nTime);
             }
         }
         
