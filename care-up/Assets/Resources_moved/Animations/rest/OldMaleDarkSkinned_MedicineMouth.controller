@@ -46,8 +46,8 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 1.020484
-  m_TransitionOffset: 0
+  m_TransitionDuration: 1.0204834
+  m_TransitionOffset: 0.08149662
   m_ExitTime: 0.03440898
   m_HasExitTime: 0
   m_HasFixedDuration: 1
@@ -82,6 +82,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-5670434554422598923
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea4a1cfb81c48746b0c63b60a8116ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncObject: LayToSit
+  syncAnimationName: 
 --- !u!114 &-5442674961014667579
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -623,7 +637,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 8468136341886148151}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -5670434554422598923}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -632,8 +647,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -9145091289423748966, guid: 88fc57710e105c142a48fa7891238021,
-    type: 3}
+  m_Motion: {fileID: 587675370407618462, guid: 88fc57710e105c142a48fa7891238021, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
