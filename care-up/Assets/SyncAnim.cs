@@ -32,8 +32,8 @@ public class SyncAnim : MonoBehaviour
             if (SlaveObject)
             {
                 float nTime = Mathf.Repeat(MasterObject.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f);
-                SlaveObject.Play(AnimName, -1, nTime);
-                //Debug.Log(nTime);
+                if (MasterObject.GetAnimatorTransitionInfo(0).normalizedTime == 0f)
+                    SlaveObject.Play(AnimName, -1, nTime);
             }
         }
         
