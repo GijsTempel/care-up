@@ -342,8 +342,8 @@ public class LevelButton : MonoBehaviour
                     manager.currentPEcourseID = sceneID;
                     manager.validatedScene = validated;
                     manager.currentSceneXPoints = xPoints;
-                }
 
+                }
 
                 // filling up options
                 for (int i = 0; i < variations.Count; ++i)

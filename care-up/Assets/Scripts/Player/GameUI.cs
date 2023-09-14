@@ -903,6 +903,12 @@ public class GameUI : MonoBehaviour
         donePanel.SetActive(false);
     }
 
+    public void RestartScene()
+    {
+        bl_SceneLoaderUtils.GetLoader.ReloadScene();
+        //bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+    }
+
     void OnGUI()
     {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD

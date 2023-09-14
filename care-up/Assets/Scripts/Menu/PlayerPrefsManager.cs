@@ -97,6 +97,9 @@ public class PlayerPrefsManager : MonoBehaviour
     public string currentSceneXPoints;
     public int currentDifficultyLevel;
     public bool validatedScene;
+    public string currentSceneName;
+    public string currentSceneBundleName;
+
 
     // post processing on camera
     public bool postProcessingEnabled = false;
