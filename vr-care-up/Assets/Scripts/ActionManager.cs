@@ -2012,7 +2012,9 @@ public class ActionManager : MonoBehaviour
 
     public static void WrongAction(bool headAnimation = true)
     {
-        RobotManager.RobotWrongAction();
+        // RobotManager.RobotWrongAction();
+        // if (GameObject.FindObjectOfType<HelpCharacterManager>() != null)
+        GameObject.FindObjectOfType<HelpCharacterManager>().WrongAction();
         Narrator.PlaySound("WrongAction");
 
         if (headAnimation)
@@ -2032,7 +2034,9 @@ public class ActionManager : MonoBehaviour
     public static void CorrectAction()
     {
         GameObject.FindObjectOfType<ActionManager>().actionsCount++;
-        RobotManager.RobotCorrectAction();
+        // RobotManager.RobotCorrectAction();
+        if (GameObject.FindObjectOfType<HelpCharacterManager>() != null)
+            GameObject.FindObjectOfType<HelpCharacterManager>().CorrectAction();
         ActionManager.PlayAddPointSound();
 
         ActionManager.BuildRequirements();
