@@ -1652,7 +1652,8 @@ public class ActionManager : MonoBehaviour
 
         // make a list from sublist with actions of performed action type only
         List<Action> subtypelist = UnlockedIncompletedActions.Where(action => action.Type == type).ToList();
-
+        if (type == ActionType.PersonTalk)
+            info = new string[] {info[0]};
         if (IncompletedActions.Count != 0)
         {
             foreach (Action action in subtypelist)

@@ -18,7 +18,7 @@ public class TalkingActionModule : MonoBehaviour
     public int currentDialogueIndex = 0;
     public string walkToGroupName = "";
     private List<SelectDialogue.DialogueOption> optionsList;
-
+    public ActionExpectant actionExpectant;
     public static TalkingActionModule latestCaller = null;
     private PlayerScript player;
     void Start()
@@ -42,9 +42,7 @@ public class TalkingActionModule : MonoBehaviour
 
             UnityEngine.UI.Button button = notifBubbleInstance.GetComponentInChildren<UnityEngine.UI.Button>();
             if (button != null)
-            {
                 button.onClick.AddListener(delegate { Debug.Log("delegateButtonClickTest"); this.TriggerChatOptions(); });
-            }
         }
     }
 
@@ -95,7 +93,7 @@ public class TalkingActionModule : MonoBehaviour
     {
         if (player.currentWTGName == walkToGroupName)
         //not optimized, checking too often, instead update visibility on action update
-            notifBubbleInstance.SetActive(actionManager != null && actionManager.CompareTopic("Hello"));
+            notifBubbleInstance.SetActive(actionExpectant.isCurrentAction);
         else
             notifBubbleInstance.SetActive(false);
 
