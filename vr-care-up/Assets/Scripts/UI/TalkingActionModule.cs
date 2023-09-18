@@ -16,12 +16,14 @@ public class TalkingActionModule : MonoBehaviour
 
     public List<string> dialogueXmls;
     public int currentDialogueIndex = 0;
+    public string walkToGroupName = "";
     private List<SelectDialogue.DialogueOption> optionsList;
 
     public static TalkingActionModule latestCaller = null;
-
+    private PlayerScript player;
     void Start()
     {
+        player = GameObject.FindObjectOfType<PlayerScript>();
         actionManager = GameObject.FindAnyObjectByType<ActionManager>();
         optionsList = new List<SelectDialogue.DialogueOption>();
 
@@ -55,6 +57,8 @@ public class TalkingActionModule : MonoBehaviour
 
     void Update()
     {
+        if (player == null)
+            player = GameObject.FindObjectOfType<PlayerScript>();
         UpdateNotifBubble();
     }
 
@@ -89,8 +93,11 @@ public class TalkingActionModule : MonoBehaviour
 
     void UpdateNotifBubble()
     {
+        if (player.currentWTGName == walkToGroupName)
         //not optimized, checking too often, instead update visibility on action update
-        notifBubbleInstance.SetActive(actionManager != null && actionManager.CompareTopic("Hello"));
+            notifBubbleInstance.SetActive(actionManager != null && actionManager.CompareTopic("Hello"));
+        else
+            notifBubbleInstance.SetActive(false);
 
         // make notif face the camera always?
     }
