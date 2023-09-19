@@ -42,16 +42,22 @@ public class TalkingActionModule : MonoBehaviour
 
             UnityEngine.UI.Button button = notifBubbleInstance.GetComponentInChildren<UnityEngine.UI.Button>();
             if (button != null)
-                button.onClick.AddListener(delegate { Debug.Log("delegateButtonClickTest"); this.TriggerChatOptions(); });
+                button.onClick.AddListener(delegate { Debug.Log("delegateButtonClickTest"); this.ShowChatOptions(); });
         }
     }
 
-    // for testing in VR, just StartCoroutine(delayedTrigger(5f)); in start
-    IEnumerator delayedTrigger(float s)
+    void ShowChatOptions(bool toShow = true)
     {
-        yield return new WaitForSeconds(s);
-        TriggerChatOptions();
+        if (selectionDialogueInstance != null)
+            selectionDialogueInstance.SetActive(toShow);
     }
+
+    // for testing in VR, just StartCoroutine(delayedTrigger(5f)); in start
+    //IEnumerator delayedTrigger(float s)
+    //{
+    //    yield return new WaitForSeconds(s);
+    //    TriggerChatOptions();
+    //}
 
     void Update()
     {
@@ -63,7 +69,7 @@ public class TalkingActionModule : MonoBehaviour
     /// <summary>
     /// Goes to next step of sequence. Handles creating/changing Dialogue.
     /// </summary>
-    public void TriggerChatOptions()
+    public GameObject CreateChatOptions()
     {
         //GameObject.FindObjectOfType<GameUI>().ShowIpad(true);     
 
@@ -87,7 +93,9 @@ public class TalkingActionModule : MonoBehaviour
         //SelectDialogue dialogue = dialogueObject.GetComponent<SelectDialogue>();
 
         latestCaller = this;
+        return null;
     }
+
 
     void UpdateNotifBubble()
     {
