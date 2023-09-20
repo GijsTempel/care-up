@@ -283,6 +283,7 @@ public class PlayerScript : MonoBehaviour
     private void Update()
     {
         EnableRaycastControllers(!IsInCopyAnimationState());
+        Debug.Log("@ Current WTG: " + currentWTGName);
     }
 
     public void UpdateWalkToGroup(string WTGName)

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
+using System.Security.Permissions;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 public class TalkingActionModule : MonoBehaviour
 {
@@ -20,6 +22,8 @@ public class TalkingActionModule : MonoBehaviour
     public ActionExpectant actionExpectant;
     public static TalkingActionModule latestCaller = null;
     private PlayerScript player;
+    private string currentPlayerWTG = "";
+    private bool toShowDialogue = false;
 
     void Start()
     {
@@ -55,33 +59,37 @@ public class TalkingActionModule : MonoBehaviour
 
     void ShowChatOptions(bool toShow = true)
     {
-        if (selectionDialogueInstance != null)
-            selectionDialogueInstance.SetActive(toShow);
+        toShowDialogue = true;
     }
-
-    // for testing in VR, just StartCoroutine(delayedTrigger(5f)); in start
-    //IEnumerator delayedTrigger(float s)
-    //{
-    //    yield return new WaitForSeconds(s);
-    //    TriggerChatOptions();
-    //}
 
     void Update()
     {
         if (player == null)
             player = GameObject.FindObjectOfType<PlayerScript>();
+
+        if (player.currentWTGName != currentPlayerWTG)
+        {
+            toShowDialogue = false;
+        }
+
         UpdateNotifBubble();
+        currentPlayerWTG = player.currentWTGName;
     }
 
 
     void UpdateNotifBubble()
     {
-        if (player.currentWTGName == walkToGroupName)
-            //not optimized, checking too often, instead update visibility on action update
-            notifBubbleInstance.SetActive(false);// actionExpectant.isCurrentAction);
+        // Debug.Log("@pcWTG == wtgName: " + (player.currentWTGName == walkToGroupName).ToString());
+        if (player.currentWTGName == walkToGroupName && actionExpectant.isCurrentAction)
+        {
+            notifBubbleInstance.SetActive(!toShowDialogue);
+            selectionDialogueInstance.SetActive(toShowDialogue);
+        }
         else
+        {
             notifBubbleInstance.SetActive(false);
-        // make notif face the camera always?
+            selectionDialogueInstance.SetActive(false);
+        }
     }
 
     protected void LoadDialogueOptions(string filename)
