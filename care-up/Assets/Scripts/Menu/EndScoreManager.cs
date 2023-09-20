@@ -476,7 +476,7 @@ public class EndScoreManager : MonoBehaviour
         link += "&percent=" + percent.ToString();
 
         link += "&courseID=" + manager.currentPEcourseID;
-        link += "&moduleID=" + PlayerPrefsManager.GetCourseIDbyModuleID(manager.currentPEcourseID);
+        link += "&moduleID=" + manager.currentPEAccreditationCourseID;
         link += "&datetime=" + DateTime.Now.AddDays(-1).ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
                     .Replace("+", "%2B"); // "+" sign is operator in url, need to replace
 
@@ -534,7 +534,7 @@ public class EndScoreManager : MonoBehaviour
         string _url = "https://www.pe-online.org/pe-services/pe-attendanceelearning/WriteAttendance.asmx/ProcessXML?sXML=";
        
         // someone's BIG for testing only // insuline for testing only
-        _url += PlayerPrefsManager.GenerateAttendanceSXML(manager.bigNumber, manager.currentPEcourseID);
+        _url += PlayerPrefsManager.GenerateAttendanceSXML(manager.bigNumber, manager.currentPEcourseID, manager.currentPEAccreditationCourseID);
 
         // filter scenes that are not "connected"
         if (_url.Contains("<externalmoduleID>X</externalmoduleID>"))

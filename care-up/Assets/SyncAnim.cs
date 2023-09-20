@@ -24,6 +24,8 @@ public class SyncAnim : MonoBehaviour
         }    
     }
 
+
+
     // Update is called once per frame
     void Update()
     {

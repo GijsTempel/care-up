@@ -343,11 +343,13 @@ public class GameUI : MonoBehaviour
 
     public void CloseGameLevelSelection()
     {
+        closeDialog.SetActive(false);
         GameObject.FindObjectOfType<MainMenuAutomationData>().toAutomate = true;
         bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }
     public void CloseGame()
     {
+        closeDialog.SetActive(false);
         GameObject.FindObjectOfType<MainMenuAutomationData>().toAutomate = false;
         bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }
@@ -903,24 +905,31 @@ public class GameUI : MonoBehaviour
         donePanel.SetActive(false);
     }
 
+    public void RestartScene()
+    {
+        closeDialog.SetActive(false);
+        bl_SceneLoaderUtils.GetLoader.ReloadScene();
+        //bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+    }
+
     void OnGUI()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-        GUIStyle style = new GUIStyle();
-        style.normal.textColor = new Color(1f, 0f, 0f);
-        style.fontSize = 30;
-        // ****Show FPS 
-        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
-        if (objectsIDsController != null)
-        {
-            if (objectsIDsController.cheat)
-                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
-        }
-        //****Show FPS end.
+//#if UNITY_EDITOR || DEVELOPMENT_BUILD
+//        GUIStyle style = new GUIStyle();
+//        style.normal.textColor = new Color(1f, 0f, 0f);
+//        style.fontSize = 30;
+//        // ****Show FPS 
+//        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
+//        if (objectsIDsController != null)
+//        {
+//            if (objectsIDsController.cheat)
+//                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
+//        }
+//        //****Show FPS end.
 
-        //debugSS = PlayerAnimationManager.animTimeout.ToString();
-        GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
-#endif
+//        //debugSS = PlayerAnimationManager.animTimeout.ToString();
+//        GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
+//#endif
    }
     
     public void DropFromHand(bool leftHand = true)

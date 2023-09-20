@@ -36,6 +36,7 @@ public class LevelButton : MonoBehaviour
     public bool multiple;
     [HideInInspector]
     public string sceneID;
+    [HideInInspector] public string courseID;
     [HideInInspector]
     public string displayName;
     public Sprite image;
@@ -321,6 +322,7 @@ public class LevelButton : MonoBehaviour
             if (manager != null)
             {
                 manager.currentPEcourseID = sceneID;
+                manager.currentPEAccreditationCourseID = courseID;
             }
         }
         else
@@ -340,10 +342,11 @@ public class LevelButton : MonoBehaviour
                 {
                     manager.currentSceneVisualName = displayName;
                     manager.currentPEcourseID = sceneID;
+                    manager.currentPEAccreditationCourseID = courseID;
                     manager.validatedScene = validated;
                     manager.currentSceneXPoints = xPoints;
-                }
 
+                }
 
                 // filling up options
                 for (int i = 0; i < variations.Count; ++i)
@@ -385,6 +388,7 @@ public class LevelButton : MonoBehaviour
                 {
                     manager.currentSceneVisualName = displayName;
                     manager.currentPEcourseID = sceneID;
+                    manager.currentPEAccreditationCourseID = courseID;
                     manager.validatedScene = validated;
                     manager.currentSceneXPoints = xPoints;
                 }
