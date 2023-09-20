@@ -3,11 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Video;
 using UnityEngine.XR.Interaction.Toolkit;
 
 
 public class PickableObject : MonoBehaviour
 {
+    public List<GameObject> inHandMeshes = new List<GameObject>();
+    public List<GameObject> outHandMeshes = new List<GameObject>();
+    public Transform dropAnchor;
+
     private float poseTransitionDuration = 0.2f;
     private float routineTime = float.PositiveInfinity;
 
@@ -31,9 +36,20 @@ public class PickableObject : MonoBehaviour
         return null;
     }
 
+
+    void ShowViewElements(bool inHand = true)
+    {
+        foreach(GameObject g in inHandMeshes)
+            g.SetActive(inHand);
+        foreach(GameObject g in outHandMeshes)
+            g.SetActive(!inHand);
+    }
+
+
     public void Drop()
     {
         Debug.Log("@ " + name + ": Drop");
+        ShowViewElements(false);
         transformToFallow = null;
         if (gameObject.GetComponent<Rigidbody>() != null)
             gameObject.GetComponent<Rigidbody>().isKinematic = isKinematic;
@@ -45,10 +61,19 @@ public class PickableObject : MonoBehaviour
             if (closestMount != null)
                 AttatchToMount(closestMount);
         }
-}
+        if (dropAnchor != null)
+        {
+            transform.position = dropAnchor.position;
+            transform.rotation = dropAnchor.rotation;
+        }
+    }
+
     
+
     public bool PickUp(Transform handTransform, float transuitionDuration = 0.2f)
     {
+        ShowViewElements(true);
+        
         FallowTransform(handTransform, transuitionDuration);
         if (gameObject.GetComponent<Rigidbody>() != null)
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
@@ -103,5 +128,6 @@ public class PickableObject : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindObjectOfType<PlayerScript>();
+        ShowViewElements(false);
     }
 }

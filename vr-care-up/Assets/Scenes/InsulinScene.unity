@@ -881,7 +881,7 @@ Transform:
   - {fileID: 2698583623878059188}
   - {fileID: 6566877994918823326}
   m_Father: {fileID: 628393742}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &105050822
 BoxCollider:
@@ -924,6 +924,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc9cff516b8c17589f871ccfb9127aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inHandMeshes: []
+  outHandMeshes: []
+  dropAnchor: {fileID: 0}
   pickupWithPinch: 0
 --- !u!114 &105050825
 MonoBehaviour:
@@ -2117,7 +2120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000011202586516, guid: 0a5092d5387c6d84b9b4d4ded84e8cc5, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4000011202586516, guid: 0a5092d5387c6d84b9b4d4ded84e8cc5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5298,6 +5301,37 @@ Transform:
   m_Father: {fileID: 1725832653}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &560515854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 560515855}
+  m_Layer: 3
+  m_Name: ClothDropAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &560515855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560515854}
+  m_LocalRotation: {x: -0.70710576, y: -1.2749635e-13, z: -1.274967e-13, w: 0.7071079}
+  m_LocalPosition: {x: -0.073300004, y: 0.1922, z: 0.116300106}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 628393742}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &570644283
 GameObject:
   m_ObjectHideFlags: 0
@@ -6019,10 +6053,12 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1684913867}
+  - {fileID: 879451679}
   - {fileID: 650100876}
   - {fileID: 1699026531198263780}
   - {fileID: 1695242536}
   - {fileID: 105050821}
+  - {fileID: 560515855}
   - {fileID: 2185873403148785054}
   - {fileID: 4197162448808810447}
   - {fileID: 817161991}
@@ -6901,6 +6937,51 @@ Transform:
   m_Father: {fileID: 1808359553}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &691142839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 691142840}
+  - component: {fileID: 691142841}
+  m_Layer: 3
+  m_Name: OutCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &691142840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691142839}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2185873403148785054}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &691142841
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691142839}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1428361, y: 0.03158497, z: 0.13359232}
+  m_Center: {x: -1.8591893e-22, y: -0.0118668545, z: -0.039073005}
 --- !u!1 &692684940
 GameObject:
   m_ObjectHideFlags: 0
@@ -8648,7 +8729,7 @@ Transform:
   - {fileID: 467331022}
   - {fileID: 741739787}
   m_Father: {fileID: 628393742}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &817161992
 MonoBehaviour:
@@ -8667,8 +8748,8 @@ MonoBehaviour:
   - InsulinPenWithCap
   - InsulinPen
   - InsulinPenWithNeedlePackage
-  description: insulinepen
-  nameArticle: de
+  description: 
+  nameArticle: 
 --- !u!114 &817161993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8717,6 +8798,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc9cff516b8c17589f871ccfb9127aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inHandMeshes: []
+  outHandMeshes: []
+  dropAnchor: {fileID: 0}
   pickupWithPinch: 0
 --- !u!54 &817161996
 Rigidbody:
@@ -9037,6 +9121,69 @@ Transform:
   m_Father: {fileID: 1790908906}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &879451678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 879451679}
+  - component: {fileID: 879451681}
+  - component: {fileID: 879451680}
+  m_Layer: 0
+  m_Name: ConditionalShowCloth
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &879451679
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879451678}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 628393742}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &879451680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879451678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d825d90b0b868c2ab9175f65cf60a64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCurrentAction: 0
+  actionType: 1
+  leftActionManagerObject: WorkField
+  rightActionManagerObject: 
+--- !u!114 &879451681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879451678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e02580ff1501f40921d0c2e3f5d19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToShow:
+  - {fileID: 2185873403148785044}
 --- !u!1 &883473114
 GameObject:
   m_ObjectHideFlags: 0
@@ -10282,8 +10429,8 @@ MonoBehaviour:
   - InsulinPenWithCap
   - InsulinPen
   - InsulinPenWithNeedlePackage
-  description: insulinepen
-  nameArticle: de
+  description: 
+  nameArticle: 
 --- !u!114 &1006104541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10332,6 +10479,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc9cff516b8c17589f871ccfb9127aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inHandMeshes: []
+  outHandMeshes: []
+  dropAnchor: {fileID: 0}
   pickupWithPinch: 1
 --- !u!54 &1006104544
 Rigidbody:
@@ -12173,6 +12323,93 @@ MonoBehaviour:
   actionType: 2
   leftActionManagerObject: Hello
   rightActionManagerObject: 
+--- !u!1001 &1108144024
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2185873403148785054}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.27955803
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.27955803
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.27955803
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0000066757
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0062045
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0372
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 81742a6853710be439597ce01e99a03d, type: 2}
+    - target: {fileID: 919132149155446097, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+      propertyPath: m_Name
+      value: cloth_02
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+--- !u!4 &1108144025 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+  m_PrefabInstance: {fileID: 1108144024}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1108144026 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5b6b3098b3e020dd0abce7e98d33f4e4, type: 3}
+  m_PrefabInstance: {fileID: 1108144024}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1110232196
 GameObject:
   m_ObjectHideFlags: 0
@@ -20045,6 +20282,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc9cff516b8c17589f871ccfb9127aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inHandMeshes: []
+  outHandMeshes: []
+  dropAnchor: {fileID: 0}
   pickupWithPinch: 0
 --- !u!1 &1685896547
 GameObject:
@@ -23509,8 +23749,8 @@ MonoBehaviour:
   - InsulinPenWithCap
   - InsulinPen
   - InsulinPenWithNeedlePackage
-  description: insulinepen
-  nameArticle: de
+  description: 
+  nameArticle: 
 --- !u!114 &1953432892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23559,6 +23799,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc9cff516b8c17589f871ccfb9127aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inHandMeshes: []
+  outHandMeshes: []
+  dropAnchor: {fileID: 0}
   pickupWithPinch: 1
 --- !u!54 &1953432895
 Rigidbody:
@@ -27462,8 +27705,8 @@ MonoBehaviour:
   - InsulinPenWithCap
   - InsulinPen
   - InsulinPenWithNeedlePackage
-  description: insulinepen
-  nameArticle: de
+  description: 
+  nameArticle: 
 --- !u!1 &1043791027216019637
 GameObject:
   m_ObjectHideFlags: 0
@@ -29860,6 +30103,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc9cff516b8c17589f871ccfb9127aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inHandMeshes:
+  - {fileID: 6597092470723864769}
+  outHandMeshes:
+  - {fileID: 1108144026}
+  - {fileID: 691142839}
+  dropAnchor: {fileID: 560515855}
   pickupWithPinch: 0
 --- !u!1 &2185873403148785044
 GameObject:
@@ -29906,15 +30155,17 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2185873403148785044}
   m_LocalRotation: {x: -0.70710576, y: -1.2749635e-13, z: -1.274967e-13, w: 0.7071079}
-  m_LocalPosition: {x: -0.073300004, y: 0.141, z: 0.1163}
+  m_LocalPosition: {x: -0.073300004, y: 0.19219992, z: 0.1163}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3597247969099604867}
   - {fileID: 5745056850234704553}
+  - {fileID: 1108144025}
   - {fileID: 6597092470723572961}
+  - {fileID: 691142840}
   m_Father: {fileID: 628393742}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &2185873403148785055
 MonoBehaviour:
@@ -31284,7 +31535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3782183951739515762, guid: 5eb03201ae4c8ab4f85773ad41464789, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3782183951739515762, guid: 5eb03201ae4c8ab4f85773ad41464789, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31978,6 +32229,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc9cff516b8c17589f871ccfb9127aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inHandMeshes: []
+  outHandMeshes: []
+  dropAnchor: {fileID: 0}
   pickupWithPinch: 0
 --- !u!114 &4197162448808810436
 MonoBehaviour:
@@ -32054,7 +32308,7 @@ Transform:
   - {fileID: 1494479092}
   - {fileID: 363706971}
   m_Father: {fileID: 628393742}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &4218708474009538108
 GameObject:
@@ -33170,7 +33424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4784595800337344, guid: eedf033ee7e35f4fa9fffc2ac4fd7b56, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4784595800337344, guid: eedf033ee7e35f4fa9fffc2ac4fd7b56, type: 3}
       propertyPath: m_LocalPosition.x
@@ -34453,7 +34707,7 @@ Transform:
   m_Children:
   - {fileID: 6157054559110257083}
   m_Father: {fileID: 2185873403148785054}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 82.564, y: 0, z: 29.851}
 --- !u!1 &6597092470723864769
 GameObject:
@@ -34932,11 +35186,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6597092470723864769}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6bc9cff516b8c17589f871ccfb9127aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inHandMeshes: []
+  outHandMeshes: []
+  dropAnchor: {fileID: 0}
   pickupWithPinch: 0
 --- !u!33 &7141068126380512085
 MeshFilter:
