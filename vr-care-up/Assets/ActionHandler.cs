@@ -21,10 +21,10 @@ public class ActionHandler : MonoBehaviour
             case ActionManager.ActionType.PersonTalk:
                 if (result = actionManager.OnTalkAction(leftHandObjectName))
                 { // ^intentionally assign action, not compare
-                    if (TalkingActionModule.latestCaller != null)
-                    {
-                        TalkingActionModule.latestCaller.CompleteDialogueLoadNext();
-                    }
+                    //if (TalkingActionModule.latestCaller != null)
+                    //{
+                    //    TalkingActionModule.latestCaller.CompleteDialogueLoadNext();
+                    //}
                 }
                 
                 // BIG difference between sequence and talk action:
