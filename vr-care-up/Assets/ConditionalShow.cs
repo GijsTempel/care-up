@@ -6,10 +6,14 @@ public class ConditionalShow : MonoBehaviour
 {
     // Show objects if expected step in ActionExpectant is correct
     ActionExpectant actionExpectant;
+    PlayerScript player;
     bool savedIsCurrentAction = false;
+    public bool hideOnPlayerAction = false;
+    private bool forceUpdate = false;
     public List<GameObject> objectsToShow = new List<GameObject>();
     void Start()
     {
+        player = GameObject.FindObjectOfType<PlayerScript>();
         actionExpectant = GetComponent<ActionExpectant>();
         ShowObjects(actionExpectant.isCurrentAction);
     }
@@ -17,14 +21,32 @@ public class ConditionalShow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (savedIsCurrentAction != actionExpectant.isCurrentAction)
-            ShowObjects(actionExpectant.isCurrentAction);
-        savedIsCurrentAction = actionExpectant.isCurrentAction;
+        if (player.IsInAction())
+        {
+            ShowObjects(false);
+        }
+        else
+        {
+            if (savedIsCurrentAction != actionExpectant.isCurrentAction || forceUpdate)
+            {
+                forceUpdate = false;
+                ShowObjects(actionExpectant.isCurrentAction);
+            }
+            savedIsCurrentAction = actionExpectant.isCurrentAction;
+        }
     }
 
     void ShowObjects(bool toShow)
     {
         foreach(GameObject g in objectsToShow)
+        {
+            if (!toShow && g.GetComponent<PickableObject>() != null && 
+                player.GetHandWithThisObject(g) != null)
+            {
+                forceUpdate = true;
+                continue;
+            }
             g.SetActive(toShow);
+        }
     }
 }

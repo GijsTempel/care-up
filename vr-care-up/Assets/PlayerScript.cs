@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Video;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -24,6 +26,13 @@ public class PlayerScript : MonoBehaviour
     private GameUIVR gameUIVR;
     public GameObject LeftHandSphere;
     public GameObject RightHandSphere;
+    const float ACTION_WAIT_TIME = 2.0f;
+    float actionTimeout = ACTION_WAIT_TIME;
+
+    public void ActionStarted()
+    {
+        actionTimeout = ACTION_WAIT_TIME;
+    }
 
     public HandPresence GetHandWithThisObject(GameObject obj)
     {
@@ -37,6 +46,18 @@ public class PlayerScript : MonoBehaviour
     public bool Away()
     {
         return currentWTGName == "";
+    }
+
+    public bool IsInAction()
+    {
+        if (IsInCopyAnimationState())
+        {
+            actionTimeout = ACTION_WAIT_TIME;
+            return true;
+        }
+        if (actionTimeout > 0)
+            return true;
+        return false;
     }
 
     public void DropFromHand(bool leftHand)
@@ -282,6 +303,7 @@ public class PlayerScript : MonoBehaviour
     
     private void Update()
     {
+        actionTimeout -= Time.deltaTime;
         EnableRaycastControllers(!IsInCopyAnimationState());
         Debug.Log("@ Current WTG: " + currentWTGName);
     }
