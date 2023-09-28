@@ -396,6 +396,11 @@ namespace MBS
             bool value = panels.debug_options.transform.Find("Panel/TestServer/Toggle").GetComponent<Toggle>().isOn;
             GameObject.FindObjectOfType<WPServer>().setUseOnlineURL(!value);
         }
+        public void ShowUpdatesChanged()
+        {
+            bool value = panels.debug_options.transform.Find("Panel/ShowUpdatePanel/Toggle").GetComponent<Toggle>().isOn;
+            PlayerPrefsManager.forceShowUpdatesPanel = value;
+        }
 
         public void EditCharacterChanged()
         {
@@ -511,6 +516,7 @@ namespace MBS
             CMLData data = new CMLData();
             data.Set("username", fields.login_username.text.Trim());
             data.Set("password", fields.login_password.text.Trim());
+            SmartlookUnity.Smartlook.SetUserIdentifier(fields.login_username.text.Trim());
             WULogin.AttemptToLogin(data);
             PlayerPrefs.SetInt("Remember Me", attempt_auto_login ? 1 : 0);
             DisplayScreen(panels.login_menu);

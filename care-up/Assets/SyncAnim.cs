@@ -22,9 +22,9 @@ public class SyncAnim : MonoBehaviour
         {
             MasterObject = PlayerAnimator;
         }    
-        //SlaveObject.GetComponent<Animator>();
-        
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -33,7 +33,9 @@ public class SyncAnim : MonoBehaviour
         {
             if (SlaveObject)
             {
-                SlaveObject.Play(AnimName, -1, MasterObject.GetCurrentAnimatorStateInfo(0).normalizedTime);
+                float nTime = Mathf.Repeat(MasterObject.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f);
+                SlaveObject.Play(AnimName, -1, nTime);
+                Debug.Log(nTime);
             }
         }
         
