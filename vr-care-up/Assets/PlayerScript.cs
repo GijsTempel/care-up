@@ -305,7 +305,6 @@ public class PlayerScript : MonoBehaviour
     {
         actionTimeout -= Time.deltaTime;
         EnableRaycastControllers(!IsInCopyAnimationState());
-        Debug.Log("@ Current WTG: " + currentWTGName);
     }
 
     public void UpdateWalkToGroup(string WTGName)

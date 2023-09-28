@@ -95,16 +95,18 @@ public class ActionTrigger : MonoBehaviour
         }
     }
 
-    public void AttemptTrigger()
+    public bool AttemptTrigger()
     {
         if (actionNumberLimit == 0)
-            return;
+            return false;
         if (player == null)
-            return;
+            return false;
         if (CheckTriggerConfirmation())
         {
             EmitTrigger();
+            return true;
         }
+        return false;
     }
   
 }

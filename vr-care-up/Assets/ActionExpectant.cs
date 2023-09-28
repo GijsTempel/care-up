@@ -30,6 +30,5 @@ public class ActionExpectant : MonoBehaviour
             actionHandler = GameObject.FindObjectOfType<ActionHandler>();
         
         isCurrentAction = actionHandler.CheckAction(actionType, leftActionManagerObject, rightActionManagerObject);
-        Debug.Log(isCurrentAction);
     }
 }

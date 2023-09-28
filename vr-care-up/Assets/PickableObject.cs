@@ -23,8 +23,10 @@ public class PickableObject : MonoBehaviour
     bool isKinematic = false;
     private PlayerScript player;
     private Transform transformToFallow;
+    [Header("Pinch pickup and mount")]
     public bool pickupWithPinch = false;
-
+    public ActionTrigger pinchPickupTrigger;
+    public ActionTrigger pinchMountTrigger;
     private MountDetector GetMountInChildren()
     {
         foreach(MountDetector m in gameObject.GetComponentsInChildren<MountDetector>())

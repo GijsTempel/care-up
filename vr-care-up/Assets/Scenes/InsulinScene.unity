@@ -928,6 +928,8 @@ MonoBehaviour:
   outHandMeshes: []
   dropAnchor: {fileID: 0}
   pickupWithPinch: 0
+  pinchPickupTrigger: {fileID: 0}
+  pinchMountTrigger: {fileID: 0}
 --- !u!114 &105050825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6130,7 +6132,7 @@ Transform:
   m_Children:
   - {fileID: 488406376}
   m_Father: {fileID: 1006104539}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &645551936
 MonoBehaviour:
@@ -8798,6 +8800,8 @@ MonoBehaviour:
   outHandMeshes: []
   dropAnchor: {fileID: 0}
   pickupWithPinch: 0
+  pinchPickupTrigger: {fileID: 0}
+  pinchMountTrigger: {fileID: 0}
 --- !u!54 &817161996
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10402,6 +10406,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1144436577}
   - {fileID: 2143949375}
   - {fileID: 1533288417}
   - {fileID: 1159272036}
@@ -10476,6 +10481,8 @@ MonoBehaviour:
   outHandMeshes: []
   dropAnchor: {fileID: 0}
   pickupWithPinch: 1
+  pinchPickupTrigger: {fileID: 1144436578}
+  pinchMountTrigger: {fileID: 0}
 --- !u!54 &1006104544
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12707,6 +12714,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hl_type: 2
+--- !u!1 &1144436576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1144436577}
+  - component: {fileID: 1144436578}
+  m_Layer: 0
+  m_Name: pinch remove cap triggers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1144436577
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144436576}
+  m_LocalRotation: {x: 0.7071054, y: 0.0000020936134, z: 0.70710826, w: 0.0000021383166}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1006104539}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1144436578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144436576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7b86b1118ea4582e930aa4cef899841, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionNumberLimit: -1
+  triggerName: 
+  pickable: {fileID: 0}
+  mirrorAnimation: 0
+  actionType: 0
+  LeftActionManagerObject: InsulinPenWithCap
+  RightActionManagerObject: 
+  checkBeforeAct: 0
+  animationSequenceToTrigger: 
 --- !u!1 &1153600062
 GameObject:
   m_ObjectHideFlags: 0
@@ -12839,7 +12899,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1006104539}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1159272037
 BoxCollider:
@@ -18417,7 +18477,7 @@ Transform:
   m_Children:
   - {fileID: 725408887}
   m_Father: {fileID: 1006104539}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 35.407, y: 16.079, z: 13.226}
 --- !u!114 &1533288418
 MonoBehaviour:
@@ -20279,6 +20339,8 @@ MonoBehaviour:
   outHandMeshes: []
   dropAnchor: {fileID: 0}
   pickupWithPinch: 0
+  pinchPickupTrigger: {fileID: 0}
+  pinchMountTrigger: {fileID: 0}
 --- !u!1 &1685896547
 GameObject:
   m_ObjectHideFlags: 0
@@ -23792,6 +23854,8 @@ MonoBehaviour:
   outHandMeshes: []
   dropAnchor: {fileID: 0}
   pickupWithPinch: 1
+  pinchPickupTrigger: {fileID: 0}
+  pinchMountTrigger: {fileID: 0}
 --- !u!54 &1953432895
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -25957,7 +26021,7 @@ Transform:
   m_Children:
   - {fileID: 1471945974}
   m_Father: {fileID: 1006104539}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -357.836, y: -18.096, z: -154.564}
 --- !u!114 &2143949376
 MonoBehaviour:
@@ -30095,6 +30159,8 @@ MonoBehaviour:
   - {fileID: 691142839}
   dropAnchor: {fileID: 560515855}
   pickupWithPinch: 0
+  pinchPickupTrigger: {fileID: 0}
+  pinchMountTrigger: {fileID: 0}
 --- !u!1 &2185873403148785044
 GameObject:
   m_ObjectHideFlags: 0
@@ -32218,6 +32284,8 @@ MonoBehaviour:
   outHandMeshes: []
   dropAnchor: {fileID: 0}
   pickupWithPinch: 0
+  pinchPickupTrigger: {fileID: 0}
+  pinchMountTrigger: {fileID: 0}
 --- !u!114 &4197162448808810436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35180,6 +35248,8 @@ MonoBehaviour:
   outHandMeshes: []
   dropAnchor: {fileID: 0}
   pickupWithPinch: 0
+  pinchPickupTrigger: {fileID: 0}
+  pinchMountTrigger: {fileID: 0}
 --- !u!33 &7141068126380512085
 MeshFilter:
   m_ObjectHideFlags: 0

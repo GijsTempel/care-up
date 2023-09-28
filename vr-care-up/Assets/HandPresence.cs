@@ -145,7 +145,23 @@ public class HandPresence : MonoBehaviour
         if (closestPickable == null)
             return false;
         if (findMounted)
-            return PickupMountedObject(closestPickable);
+        {
+            bool toPinchPickup = false;
+            if (closestPickable.pinchPickupTrigger != null)
+            {
+
+                toPinchPickup = closestPickable.pinchPickupTrigger.AttemptTrigger();
+                Debug.Log("@Trigger1:" + Random.Range(0, 9999).ToString() + toPinchPickup.ToString());
+            }
+            else
+            {
+                toPinchPickup = true;
+            }
+            if (toPinchPickup)
+                return PickupMountedObject(closestPickable);
+            else
+                return false;
+        }
         else
             return PickUpObject(closestPickable);
     }
