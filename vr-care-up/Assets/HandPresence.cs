@@ -182,9 +182,8 @@ public class HandPresence : MonoBehaviour
         if (findMounted)
         {
             bool toPinchPickup = false;
-            if (closestPickable.pinchPickupTrigger != null)
+            if (closestPickable.pinchPickupTrigger != null && closestPickable.pinchPickupTrigger.gameObject.activeInHierarchy)
             {
-
                 toPinchPickup = closestPickable.pinchPickupTrigger.AttemptTrigger();
                 Debug.Log("@Trigger1:" + Random.Range(0, 9999).ToString() + toPinchPickup.ToString());
             }

@@ -73,28 +73,34 @@ public class ActionTrigger : MonoBehaviour
                 isActionConfirmed = actionHandler.TryExecuteAction(actionType, LeftActionManagerObject, RightActionManagerObject);
             }
         }
+        if (isActionConfirmed)
+        {
+            foreach (TriggerShowHideDeleteAction t in transform.GetComponentsInChildren<TriggerShowHideDeleteAction>())
+                t.StartTimeout();
+        }
         return isActionConfirmed;
     }
 
-    private void EmitTrigger()
+    private bool EmitTrigger()
     {
-
         if (actionNumberLimit == 0)
-            return;
+            return false;
         if (triggerName == "")
-            return;
+            return false;
         GameObject target = null;
         if (transform.Find("CinematicTarget") != null)
             target = transform.Find("CinematicTarget").gameObject;
         bool actionAccepted = player.TriggerAction(triggerName, target, mirrorAnimation);
-        if (actionAccepted && actionNumberLimit > 0)
+        if (actionAccepted)
         {
+
             if (animationSequenceToTrigger != "")
             {
                 ActionManager.TriggerAnimationSequence(animationSequenceToTrigger);
             }
             actionNumberLimit--;
         }
+        return actionAccepted;
     }
 
     public bool AttemptTrigger()
