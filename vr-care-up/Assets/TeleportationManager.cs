@@ -1,18 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
-
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class TeleportationManager : MonoBehaviour
 {
     public GameObject teleportationGameObject;
     public InputActionReference teleportActivationReference;
+    PlayerScript player;
 
     public UnityEvent onTeleportActivate;
     public UnityEvent onTeleportCancel;
-
+    public XRRayInteractor xrRayInteractor;
+    public ActionBasedController actionBasedController;
+        
     private void Start()
     {
+        player = GameObject.FindObjectOfType<PlayerScript>();
         teleportActivationReference.action.performed += TeleportModeActivate;
         teleportActivationReference.action.canceled += TeleportModeCancel;
     }
@@ -23,4 +27,12 @@ public class TeleportationManager : MonoBehaviour
 
     void DeactivateTeleporter() => onTeleportCancel.Invoke();
 
+    public void TeleportModeActivation()
+    {
+        if (!player.IsInActionNoTimeout())
+        {
+            actionBasedController.enableInputActions = true;
+            xrRayInteractor.enabled = true;
+        }
+    }
 }

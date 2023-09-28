@@ -60,6 +60,18 @@ public class PlayerScript : MonoBehaviour
         return false;
     }
 
+    public bool IsInActionNoTimeout()
+    {
+        if (IsInCopyAnimationState())
+        {
+            actionTimeout = ACTION_WAIT_TIME;
+            return true;
+        }
+
+        return false;
+    }
+
+
     public void DropFromHand(bool leftHand)
     {
         if (leftHand && leftHandPresence != null)
