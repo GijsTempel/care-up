@@ -18,6 +18,7 @@ public class TableCleaningAction : MonoBehaviour
     private Vector3 startPos;
     private GameObject colliderHolder;
     ActionExpectant actionExpectant;
+    private bool isTriggered = false;
 
     private bool locakedAction = true;
     // Start is called before the first frame update
@@ -79,10 +80,13 @@ public class TableCleaningAction : MonoBehaviour
         progressImage.fillAmount = currentCleanRatio;
         if (currentCleanRatio >= 1)
         {
-            if (actionExpectant != null)
+            if (!isTriggered && actionExpectant != null)
             {
                 if (actionExpectant.TryExecuteAction())
+                {
+                    isTriggered = true;
                     EnableActionComponents(false);
+                }
             }
         }
     }

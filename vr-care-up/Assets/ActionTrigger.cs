@@ -38,6 +38,8 @@ public class ActionTrigger : MonoBehaviour
 
     public void ReceveTriggerAction(bool isLeftHand, TriggerHandAction tAction)
     {
+        if (actionColliders.Count == 0)
+            return;
         TriggerHand currentTriggerHand = TriggerHand.Right;
         if (isLeftHand)
             currentTriggerHand = TriggerHand.Left;

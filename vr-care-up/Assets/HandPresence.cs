@@ -27,6 +27,7 @@ public class HandPresence : MonoBehaviour
     PickableObject objectInHand;
     private GameUIVR gameUIVR;
     bool allowTriggerDrop = false;
+    float maxPickupDistance = 0.05f;
 
     public HandPoseControl GetHandPoseControl()
     {
@@ -97,6 +98,8 @@ public class HandPresence : MonoBehaviour
             {
                 if (pinchPickup && !p.pickupWithPinch)
                     continue;
+                if (!p.gameObject.activeInHierarchy)
+                    continue;
                 if (!findMounted && p.transform.parent.tag == "MountingPoint")
                     continue;
                 if (findMounted && p.transform.parent.tag != "MountingPoint")
@@ -110,6 +113,34 @@ public class HandPresence : MonoBehaviour
                 }
             }
         }
+        if (closest == null)
+        {
+            foreach (PickableObject p in GameObject.FindObjectsOfType<PickableObject>())
+            {
+                if (p != null)
+                {
+                    if (pinchPickup && !p.pickupWithPinch)
+                        continue;
+                    if (!p.gameObject.activeInHierarchy)
+                        continue;
+                    if (Vector3.Distance(transform.position, p.transform.position) > maxPickupDistance)
+                        continue;
+                    if (!findMounted && p.transform.parent.tag == "MountingPoint")
+                        continue;
+                    if (findMounted && p.transform.parent.tag != "MountingPoint")
+                        continue;
+
+                    float nextDist = Vector3.Distance(transform.position, p.transform.position);
+                    if (nextDist < dist)
+                    {
+                        dist = nextDist;
+                        closest = p;
+                    }
+                }
+            }
+        }
+
+
         return closest;
     }
 
@@ -125,10 +156,14 @@ public class HandPresence : MonoBehaviour
     private void OnTriggerExit(Collider collision)
     {
         PickableObject pickableObject = collision.GetComponent<PickableObject>();
+        RemoveObjectFromArea(pickableObject);
+    }
+
+
+    private void RemoveObjectFromArea(PickableObject pickableObject)
+    {
         if (pickableObject != null && (pickablesInArea.Contains(pickableObject)))
-        {
             pickablesInArea.Remove(pickableObject);
-        }
     }
 
     private bool TryToPickUp(bool findMounted = false, bool pinchPickup = false)
@@ -234,6 +269,7 @@ public class HandPresence : MonoBehaviour
             if (grabHandPose != null && spawnHandModel != null)
                 grabHandPose.UnSetPose(spawnHandModel.GetComponent<HandPoseData>());
         }
+        //RemoveObjectFromArea(objectInHand);
         objectInHand.Drop();
 
         objectInHand = null;

@@ -29,7 +29,6 @@ public class CleaningCollider : MonoBehaviour
     {
         if (collision.gameObject.tag == "Cloth")
         {
-            Debug.Log(collision.gameObject.name);
             TriggerCleanup();
         }
     }
