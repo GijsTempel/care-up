@@ -26,7 +26,7 @@ public class PlayerScript : MonoBehaviour
     private GameUIVR gameUIVR;
     public GameObject LeftHandSphere;
     public GameObject RightHandSphere;
-    const float ACTION_WAIT_TIME = 2.0f;
+    const float ACTION_WAIT_TIME = 1.2f;
     float actionTimeout = ACTION_WAIT_TIME;
 
     public void ActionStarted()

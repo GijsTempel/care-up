@@ -18,6 +18,7 @@ public class PickableObject : MonoBehaviour
 
     private Vector3 startPos;
     private Quaternion startRotation;
+    public bool deleteOnDrop = false;
 
 
     bool isKinematic = false;
@@ -50,6 +51,9 @@ public class PickableObject : MonoBehaviour
 
     public void Drop()
     {
+        if (deleteOnDrop)
+            Destroy(gameObject);
+            
         Debug.Log("@ " + name + ": Drop");
         ShowViewElements(false);
         transformToFallow = null;
