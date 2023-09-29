@@ -67,6 +67,7 @@ public class PickableObject : MonoBehaviour
         {
             transform.position = dropAnchor.position;
             transform.rotation = dropAnchor.rotation;
+            FallowTransform(dropAnchor);
         }
     }
 
@@ -131,5 +132,7 @@ public class PickableObject : MonoBehaviour
     {
         player = GameObject.FindObjectOfType<PlayerScript>();
         ShowViewElements(false);
+        if (dropAnchor != null)
+            FallowTransform(dropAnchor);
     }
 }

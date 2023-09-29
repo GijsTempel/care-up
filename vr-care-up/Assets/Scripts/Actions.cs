@@ -48,7 +48,7 @@ namespace CareUp.Actions
         public int storedIndex;
         public bool ignorePosition = false;
         public float UITimeout = 0f;
-
+        public bool hideHint = false;
         protected ActionManager.ActionType type;
 
         private int subindex = 0;

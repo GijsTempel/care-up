@@ -174,6 +174,8 @@ public class GameUIVR : MonoBehaviour
 
         foreach (Action a in actionManager.IncompletedActions)
         {
+            if (a.hideHint)
+                continue;
             string[] ObjectNames = new string[0];
             if (!player.IsInCopyAnimationState())
                 a.ObjectNames(out ObjectNames);
@@ -194,62 +196,7 @@ public class GameUIVR : MonoBehaviour
                         h.setGold(true);
                     }
                     newHLObjects.Add(currentObjectToUse.name);
-                    //    if (PointToObject == null)
-                    //        PointToObject = GameObject.Find(objectToUse);
-                    //    if (PointToObject != null)
-                    //    {
-                    //        if (PointToObject.GetComponent<PersonObject>() != null)
-                    //            PointToObject = null;
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    GameObject usableHL = null;
-
-                    //    foreach (UsableObject u in GameObject.FindObjectsOfType<UsableObject>())
-                    //    {
-                    //        if (u.PrefabToAppear == objectToUse && u.PrefabToAppear != "")
-                    //        {
-                    //            usableHL = u.gameObject;
-                    //            break;
-                    //        }
-                    //    }
-                    //    if (usableHL == null)
-                    //    {
-                    //        foreach (PickableObject p in GameObject.FindObjectsOfType<PickableObject>())
-                    //        {
-                    //            if (p.prefabInHands == objectToUse && p.prefabInHands != "")
-                    //            {
-                    //                if (AlloweAutoAction && !autoObjectSelected)
-                    //                {
-                    //                    AutoActionObject = p.gameObject;
-                    //                    autoObjectSelected = true;
-                    //                    Invoke("AutoPlay", 4f);
-                    //                }
-                    //                HighlightObject h = AddHighlight(p.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
-                    //                if (h != null)
-                    //                {
-                    //                    h.setGold(true);
-                    //                }
-                    //                newHLObjects.Add(p.name);
-                    //            }
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        if (AlloweAutoAction && !autoObjectSelected)
-                    //        {
-                    //            AutoActionObject = usableHL;
-                    //            autoObjectSelected = true;
-                    //            Invoke("AutoPlay", 4f);
-                    //        }
-                    //        HighlightObject h = AddHighlight(usableHL.transform, prefix, HighlightObject.type.NoChange, 2f + Random.Range(0f, 0.5f));
-                    //        if (h != null)
-                    //        {
-                    //            h.setGold(true);
-                    //        }
-                    //        newHLObjects.Add(usableHL.name);
-                    //    }
+                   
                 }
             }
         }

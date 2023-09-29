@@ -860,7 +860,7 @@ public class ActionManager : MonoBehaviour
         }
     }
 
-     public List<string> CurrentDescriptionVR
+    public List<string> CurrentDescriptionVR
     {
         get
         {
@@ -1169,6 +1169,7 @@ public class ActionManager : MonoBehaviour
                 descriptionVR = LocalizationManager.GetValueIfKey(action.Attributes["descriptionVR"].Value);
 
 
+
             string comment = "";
             if (action.Attributes["comment"] != null)
             {
@@ -1223,6 +1224,12 @@ public class ActionManager : MonoBehaviour
                 int intUITimeout = 0;
                 int.TryParse(action.Attributes["ui_timeout"].Value, out intUITimeout);
                 UITimeout = intUITimeout;
+            }
+            bool toHideHint = false;
+            if (action.Attributes["hideHint"] != null)
+            {
+                if (action.Attributes["hideHint"].Value == "true")
+                    toHideHint = false;
             }
 
             bool notNeeded = action.Attributes["optional"] != null;
@@ -1390,6 +1397,7 @@ public class ActionManager : MonoBehaviour
             actionList[actionList.Count - 1].placeRequirement = place;
             actionList[actionList.Count - 1].ignorePosition = ignorePosition;
             actionList[actionList.Count - 1].UITimeout = UITimeout;
+            actionList[actionList.Count - 1].hideHint = toHideHint;
             actionList[actionList.Count - 1].sequentialNumber = actionList.Count - 1;
 
         }
