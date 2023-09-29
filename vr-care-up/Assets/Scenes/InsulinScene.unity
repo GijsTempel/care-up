@@ -1442,6 +1442,7 @@ Transform:
   m_Children:
   - {fileID: 1272500399}
   - {fileID: 549835750}
+  - {fileID: 874989386}
   m_Father: {fileID: 797368412}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10822,10 +10823,10 @@ GameObject:
   m_Layer: 3
   m_Name: InsulinNeedlePackage
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &797368412
 Transform:
   m_ObjectHideFlags: 0
@@ -10881,6 +10882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hidenObjects:
   - {fileID: 1814065951}
+  - {fileID: 239220326}
 --- !u!114 &797368416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11562,6 +11564,57 @@ Transform:
   m_Father: {fileID: 1790908906}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &874989385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 874989386}
+  - component: {fileID: 874989387}
+  m_Layer: 0
+  m_Name: HideNeedleFromCap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &874989386
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874989385}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 142608129}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &874989387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874989385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95521c2fff29f2d4c83059ebccf446de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toShow: 0
+  toDelete: 0
+  waitTime: 0
+  ControlObjectName: InsulinNeedlePackage
+  ObjNames:
+  - InsulinNeedlePackage
+  meshRenderer: 0
 --- !u!1 &879451678
 GameObject:
   m_ObjectHideFlags: 0
@@ -18538,7 +18591,7 @@ GameObject:
   m_Layer: 0
   m_Name: TableHiddenItems
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -18556,7 +18609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hidenObjects:
   - {fileID: 1695242530}
-  - {fileID: 0}
+  - {fileID: 797368411}
   - {fileID: 105050820}
 --- !u!4 &1332077255
 Transform:
@@ -24964,7 +25017,7 @@ GameObject:
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1695242531
 MonoBehaviour:
   m_ObjectHideFlags: 0
