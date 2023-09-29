@@ -269,11 +269,12 @@ public class HandPresence : MonoBehaviour
                 grabHandPose.UnSetPose(spawnHandModel.GetComponent<HandPoseData>());
         }
         //RemoveObjectFromArea(objectInHand);
-        objectInHand.Drop();
-
-        objectInHand = null;
-        if (gameUIVR != null)
-            gameUIVR.UpdateHelpWitDelay(0.1f);
+        if (objectInHand.Drop())
+        {
+            objectInHand = null;
+            if (gameUIVR != null)
+                gameUIVR.UpdateHelpWitDelay(0.1f);
+        }
     }
 
 

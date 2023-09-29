@@ -49,11 +49,11 @@ public class PickableObject : MonoBehaviour
     }
 
 
-    public void Drop()
+    public bool Drop()
     {
         if (deleteOnDrop)
             Destroy(gameObject);
-            
+
         Debug.Log("@ " + name + ": Drop");
         ShowViewElements(false);
         transformToFallow = null;
@@ -65,7 +65,10 @@ public class PickableObject : MonoBehaviour
         {
             Transform closestMount = mountDetector.FindClosestMount();
             if (closestMount != null)
-                AttatchToMount(closestMount);
+            {
+                if (!AttatchToMount(closestMount))
+                    return false;
+            }
         }
         if (dropAnchor != null)
         {
@@ -73,6 +76,7 @@ public class PickableObject : MonoBehaviour
             transform.rotation = dropAnchor.rotation;
             FallowTransform(dropAnchor);
         }
+        return true;
     }
 
     
@@ -111,13 +115,17 @@ public class PickableObject : MonoBehaviour
         routineTime += Time.deltaTime;
     }
 
-    void AttatchToMount(Transform mount)
+    bool AttatchToMount(Transform mount)
     {
+        if (pinchMountTrigger != null && pinchMountTrigger.gameObject.activeInHierarchy)
+            if (!pinchMountTrigger.AttemptTrigger())
+                return false;
         transform.SetParent(mount);
         transform.position = mount.position;
         transform.rotation = mount.rotation;
         if (gameObject.GetComponent<Rigidbody>() != null)
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        return true;
     }
 
     void Awake()
