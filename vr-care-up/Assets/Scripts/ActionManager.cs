@@ -1229,7 +1229,7 @@ public class ActionManager : MonoBehaviour
             if (action.Attributes["hideHint"] != null)
             {
                 if (action.Attributes["hideHint"].Value == "true")
-                    toHideHint = false;
+                    toHideHint = true;
             }
 
             bool notNeeded = action.Attributes["optional"] != null;
