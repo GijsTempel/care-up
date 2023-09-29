@@ -35,7 +35,6 @@ public class PickableObject : MonoBehaviour
             if (m.transform.parent == transform)
                 return m;
         }
-
         return null;
     }
 

@@ -104,7 +104,14 @@ public class HandPresence : MonoBehaviour
                     continue;
                 if (findMounted && p.transform.parent.tag != "MountingPoint")
                     continue;
-
+                if (findMounted)
+                {
+                    Transform moundetTo = p.transform.parent.transform.parent;
+                    if (moundetTo != null 
+                        && moundetTo.GetComponent<PickableObject>() != null
+                        && player.GetHandWithThisObject(moundetTo.gameObject) == null)
+                        continue;
+                }
                 float nextDist = Vector3.Distance(transform.position, p.transform.position);
                 if (nextDist < dist)
                 {
@@ -129,7 +136,14 @@ public class HandPresence : MonoBehaviour
                         continue;
                     if (findMounted && p.transform.parent.tag != "MountingPoint")
                         continue;
-
+                    if (findMounted)
+                    {
+                        Transform moundetTo = p.transform.parent.transform.parent;
+                        if (moundetTo != null 
+                            && moundetTo.GetComponent<PickableObject>() != null
+                            && player.GetHandWithThisObject(moundetTo.gameObject) == null)
+                            continue;
+                    }
                     float nextDist = Vector3.Distance(transform.position, p.transform.position);
                     if (nextDist < dist)
                     {
@@ -181,7 +195,7 @@ public class HandPresence : MonoBehaviour
             return false;
         if (findMounted)
         {
-            bool toPinchPickup = false;
+            bool toPinchPickup;
             if (closestPickable.pinchPickupTrigger != null && closestPickable.pinchPickupTrigger.gameObject.activeInHierarchy)
             {
                 toPinchPickup = closestPickable.pinchPickupTrigger.AttemptTrigger();
