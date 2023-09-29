@@ -44,14 +44,14 @@ public class GrabHandPose : MonoBehaviour
    
 #if UNITY_EDITOR
 
-    [MenuItem("Tools/HandPose/R Mirror Selected Right Grab Pose")]
+    [MenuItem("Tools/HandPose/Mirror from Right to Left")]
     public static void MirrorRightPose()
     {
         GrabHandPose handPose = Selection.activeGameObject.GetComponent<GrabHandPose>();
         if (handPose != null)
             handPose.MirrorPose(handPose.leftHandPose, handPose.righHandPose);
     }
-    [MenuItem("Tools/HandPose/L Mirror Selected Left Grab Pose")]
+    [MenuItem("Tools/HandPose/Mirror from Left to Right")]
     public static void MirrorLefttPose()
     {
         GrabHandPose handPose = Selection.activeGameObject.GetComponent<GrabHandPose>();
