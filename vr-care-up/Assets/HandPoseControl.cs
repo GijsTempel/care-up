@@ -99,8 +99,8 @@ public class HandPoseControl : MonoBehaviour
         handDataRoutineTime = 0f;
         if (h2 != null)
             SetupPose(h2, newPoseTransitionDuration);
-        handHoloMesh.SetActive(false);
-        handWMesh.SetActive(true);
+        // handHoloMesh.SetActive(false);
+        // handWMesh.SetActive(true);
 
     }
 
@@ -118,8 +118,8 @@ public class HandPoseControl : MonoBehaviour
         {
             startingFingerRotations[i] = handPose.fingerBones[i].localRotation;
         }
-        handHoloMesh.SetActive(true);
-        handWMesh.SetActive(false);
+        // handHoloMesh.SetActive(true);
+        // handWMesh.SetActive(false);
     }
 
     public void UpdateCopyAnimationData()
