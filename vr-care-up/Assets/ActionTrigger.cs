@@ -21,7 +21,8 @@ public class ActionTrigger : MonoBehaviour
     [Tooltip("Check if action is correct, before executing")]
     public bool checkBeforeAct = false;
     List<ActionCollider> actionColliders = new List<ActionCollider>();
-
+    public float triggerDelay = -1f;
+    private bool triggered = false;
 
     [Header("Trigger Animation Sequence")]
     public string animationSequenceToTrigger;
@@ -34,7 +35,23 @@ public class ActionTrigger : MonoBehaviour
         {
             actionColliders.Add(a);
         }
+        enabled = false;
     }
+
+
+    private void Update()
+    {
+        if (triggerDelay > 0 && triggered)
+        {
+            triggerDelay -= Time.deltaTime;
+            if (triggerDelay < 0)
+            {
+                AttemptTrigger();
+                triggered = false;
+            }
+        }
+    }
+
 
     public void ReceveTriggerAction(bool isLeftHand, TriggerHandAction tAction)
     {
@@ -49,6 +66,11 @@ public class ActionTrigger : MonoBehaviour
 
     private bool CheckTriggerConfirmation(TriggerHand currentTriggerHand = TriggerHand.None, TriggerHandAction currentTriggerHandAction = TriggerHandAction.None)
     {
+        if (actionType == ActionManager.ActionType.None)
+        {
+            TriggerIncludedObjects();
+            return true;
+        }
         if (actionNumberLimit == 0)
             return false;
         bool isActionConfirmed = true;
@@ -74,11 +96,20 @@ public class ActionTrigger : MonoBehaviour
             }
         }
         if (isActionConfirmed)
-        {
-            foreach (TriggerShowHideDeleteAction t in transform.GetComponentsInChildren<TriggerShowHideDeleteAction>())
-                t.StartTimeout();
-        }
+            TriggerIncludedObjects();
+
         return isActionConfirmed;
+    }
+
+    private void TriggerIncludedObjects()
+    {
+        foreach (TriggerShowHideDeleteAction t in transform.GetComponentsInChildren<TriggerShowHideDeleteAction>())
+            t.StartTimeout();
+        foreach (ActionTrigger t in transform.GetComponentsInChildren<ActionTrigger>())
+        {
+            if (t != this)
+                t.AttemptTrigger();
+        }
     }
 
     private bool EmitTrigger()
@@ -93,7 +124,6 @@ public class ActionTrigger : MonoBehaviour
         bool actionAccepted = player.TriggerAction(triggerName, target, mirrorAnimation);
         if (actionAccepted)
         {
-
             if (animationSequenceToTrigger != "")
             {
                 ActionManager.TriggerAnimationSequence(animationSequenceToTrigger);
@@ -103,8 +133,15 @@ public class ActionTrigger : MonoBehaviour
         return actionAccepted;
     }
 
+
     public bool AttemptTrigger()
     {
+        if (triggerDelay > 0)
+        {
+            enabled = true;
+            triggered = true;
+            return false;
+        }
         if (actionNumberLimit == 0)
             return false;
         if (player == null)
