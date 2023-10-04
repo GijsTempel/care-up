@@ -64,6 +64,13 @@ public class ActionTrigger : MonoBehaviour
 
     private bool CheckTriggerConfirmation(TriggerHand currentTriggerHand = TriggerHand.None, TriggerHandAction currentTriggerHandAction = TriggerHandAction.None)
     {
+        for (int i = 0; i < transform.childCount; i ++)
+        {
+            ItemInHandCheck c = transform.GetChild(i).GetComponent<ItemInHandCheck>();
+            if (c != null)
+                if (!c.Check())
+                    return false;
+        }
         if (actionType == ActionManager.ActionType.None)
         {
             TriggerIncludedObjects();

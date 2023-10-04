@@ -964,7 +964,6 @@ MonoBehaviour:
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 0
-  animationSequenceToTrigger: 
 --- !u!1 &101607780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1445,6 +1444,7 @@ Transform:
   - {fileID: 549835750}
   - {fileID: 874989386}
   - {fileID: 1528215629}
+  - {fileID: 495758330}
   m_Father: {fileID: 797368412}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1469,7 +1469,6 @@ MonoBehaviour:
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 0
-  animationSequenceToTrigger: 
 --- !u!1 &151528616
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,7 +1587,6 @@ MonoBehaviour:
   RightActionManagerObject: InsulinOpenedNeedlePackage
   checkBeforeAct: 0
   triggerDelay: 0
-  animationSequenceToTrigger: 
 --- !u!1 &162307313
 GameObject:
   m_ObjectHideFlags: 0
@@ -5042,6 +5040,52 @@ MonoBehaviour:
   - {fileID: 259018401}
   - {fileID: 1333497252}
   rootBone: {fileID: 37558805}
+--- !u!1 &431707474
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 431707475}
+  - component: {fileID: 431707476}
+  m_Layer: 0
+  m_Name: SequenceTriggerRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &431707475
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431707474}
+  m_LocalRotation: {x: -5.684341e-14, y: 2.2470911e-13, z: 8.014825e-27, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1528215629}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &431707476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431707474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3d881b8fe62d23c98807418f1564b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handSide: 3
+  objectInHand: insuline
 --- !u!1 &438744968
 GameObject:
   m_ObjectHideFlags: 0
@@ -6210,6 +6254,60 @@ Transform:
   m_Father: {fileID: 503439776}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &495758329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 495758330}
+  - component: {fileID: 495758331}
+  m_Layer: 0
+  m_Name: StartSequenceAnimationLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &495758330
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495758329}
+  m_LocalRotation: {x: 7.105427e-14, y: -3.3750777e-13, z: 0.000000014900979, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1519766812}
+  m_Father: {fileID: 142608129}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &495758331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495758329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7b86b1118ea4582e930aa4cef899841, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionNumberLimit: -1
+  triggerName: sequence_left
+  pickable: {fileID: 0}
+  mirrorAnimation: 0
+  actionType: 10
+  LeftActionManagerObject: 
+  RightActionManagerObject: 
+  checkBeforeAct: 0
+  triggerDelay: 2
 --- !u!1 &496091211
 GameObject:
   m_ObjectHideFlags: 0
@@ -11536,7 +11634,6 @@ MonoBehaviour:
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 0
-  animationSequenceToTrigger: 
 --- !u!1 &874022415
 GameObject:
   m_ObjectHideFlags: 0
@@ -12097,7 +12194,6 @@ MonoBehaviour:
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 0
-  animationSequenceToTrigger: 
 --- !u!1 &920887658
 GameObject:
   m_ObjectHideFlags: 0
@@ -12737,7 +12833,6 @@ MonoBehaviour:
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 0
-  animationSequenceToTrigger: 
 --- !u!1 &966329466
 GameObject:
   m_ObjectHideFlags: 0
@@ -22491,6 +22586,52 @@ Transform:
   m_Father: {fileID: 151528617}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1519766811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1519766812}
+  - component: {fileID: 1519766813}
+  m_Layer: 0
+  m_Name: SequenceTriggerRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1519766812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519766811}
+  m_LocalRotation: {x: -5.684341e-14, y: 2.2470911e-13, z: 8.014825e-27, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 495758330}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1519766813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519766811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3d881b8fe62d23c98807418f1564b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handSide: 2
+  objectInHand: insuline
 --- !u!1 &1528215628
 GameObject:
   m_ObjectHideFlags: 0
@@ -22502,7 +22643,7 @@ GameObject:
   - component: {fileID: 1528215629}
   - component: {fileID: 1528215630}
   m_Layer: 0
-  m_Name: StartSequenceAnimation
+  m_Name: StartSequenceAnimationRight
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -22515,11 +22656,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1528215628}
-  m_LocalRotation: {x: 1.4210853e-14, y: -1.12798646e-13, z: 0.000000014900979, w: 1}
+  m_LocalRotation: {x: 7.105427e-14, y: -3.3750777e-13, z: 0.000000014900979, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 431707475}
   m_Father: {fileID: 142608129}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22544,7 +22686,6 @@ MonoBehaviour:
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 2
-  animationSequenceToTrigger: 
 --- !u!1 &1533288416
 GameObject:
   m_ObjectHideFlags: 0
@@ -22696,7 +22837,6 @@ MonoBehaviour:
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 0
-  animationSequenceToTrigger: 
 --- !u!1 &1546585277
 GameObject:
   m_ObjectHideFlags: 0
@@ -31947,7 +32087,6 @@ MonoBehaviour:
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 0
-  animationSequenceToTrigger: 
 --- !u!1 &2120790567
 GameObject:
   m_ObjectHideFlags: 0
@@ -40731,7 +40870,6 @@ MonoBehaviour:
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 0
-  animationSequenceToTrigger: 
 --- !u!4 &4885574725945407141
 Transform:
   m_ObjectHideFlags: 0
@@ -41417,7 +41555,6 @@ MonoBehaviour:
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 0
-  animationSequenceToTrigger: 
 --- !u!1 &5245958343611124118
 GameObject:
   m_ObjectHideFlags: 0
@@ -44231,7 +44368,6 @@ MonoBehaviour:
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 0
-  animationSequenceToTrigger: 
 --- !u!114 &7604197009465733851
 MonoBehaviour:
   m_ObjectHideFlags: 0
