@@ -24,9 +24,6 @@ public class ActionTrigger : MonoBehaviour
     public float triggerDelay = -1f;
     private bool triggered = false;
 
-    [Header("Trigger Animation Sequence")]
-    public string animationSequenceToTrigger;
-    // Start is called before the first frame update
     void Start()
     {
         actionHandler = GameObject.FindObjectOfType<ActionHandler>();
@@ -46,6 +43,7 @@ public class ActionTrigger : MonoBehaviour
             triggerDelay -= Time.deltaTime;
             if (triggerDelay < 0)
             {
+                player.BlockPlayerActions(false);
                 AttemptTrigger();
                 triggered = false;
             }
@@ -103,12 +101,12 @@ public class ActionTrigger : MonoBehaviour
 
     private void TriggerIncludedObjects()
     {
-        foreach (TriggerShowHideDeleteAction t in transform.GetComponentsInChildren<TriggerShowHideDeleteAction>())
-            t.StartTimeout();
-        foreach (ActionTrigger t in transform.GetComponentsInChildren<ActionTrigger>())
+        for (int i = 0; i < transform.childCount; i++)
         {
-            if (t != this)
-                t.AttemptTrigger();
+            if (transform.GetChild(i).GetComponent<TriggerShowHideDeleteAction>() != null)
+                transform.GetChild(i).GetComponent<TriggerShowHideDeleteAction>().StartTimeout();
+            if (transform.GetChild(i).GetComponent<ActionTrigger>() != null)
+                transform.GetChild(i).GetComponent<ActionTrigger>().AttemptTrigger();
         }
     }
 
@@ -124,10 +122,6 @@ public class ActionTrigger : MonoBehaviour
         bool actionAccepted = player.TriggerAction(triggerName, target, mirrorAnimation);
         if (actionAccepted)
         {
-            if (animationSequenceToTrigger != "")
-            {
-                ActionManager.TriggerAnimationSequence(animationSequenceToTrigger);
-            }
             actionNumberLimit--;
         }
         return actionAccepted;
@@ -140,6 +134,7 @@ public class ActionTrigger : MonoBehaviour
         {
             enabled = true;
             triggered = true;
+            player.BlockPlayerActions(true);
             return false;
         }
         if (actionNumberLimit == 0)

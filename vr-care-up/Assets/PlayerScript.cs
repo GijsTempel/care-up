@@ -28,6 +28,13 @@ public class PlayerScript : MonoBehaviour
     public GameObject RightHandSphere;
     const float ACTION_WAIT_TIME = 1.2f;
     float actionTimeout = ACTION_WAIT_TIME;
+    bool toBlockPlayerActions = false;
+
+
+    public void BlockPlayerActions(bool toBlock)
+    {
+        toBlockPlayerActions = toBlock;
+    }
 
     public void ActionStarted()
     {
@@ -249,6 +256,8 @@ public class PlayerScript : MonoBehaviour
 
     public bool IsInCopyAnimationState()
     {
+        if (toBlockPlayerActions)
+            return true;
         if (leftHandPoseControl != null)
         {
             if (leftHandPoseControl.handPoseMode == HandPoseControl.HandPoseMode.CopyAnimIn ||
@@ -315,6 +324,7 @@ public class PlayerScript : MonoBehaviour
     
     private void Update()
     {
+        Debug.Log("@ blocked: " + toBlockPlayerActions.ToString());
         actionTimeout -= Time.deltaTime;
         EnableRaycastControllers(!IsInCopyAnimationState());
     }

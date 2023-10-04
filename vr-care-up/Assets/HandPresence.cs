@@ -270,6 +270,8 @@ public class HandPresence : MonoBehaviour
 
     public void DropObjectFromHand(bool noPoseChange = false, bool toForce = false)
     {
+        if (!toForce && player.IsInCopyAnimationState())
+            return;
         if (objectInHand == null)
             return;
         if (handPoseControl == null)
