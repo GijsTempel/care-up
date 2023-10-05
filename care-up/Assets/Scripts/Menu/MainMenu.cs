@@ -99,8 +99,13 @@ public class MainMenu : MonoBehaviour
             bool updatesSeen = PlayerPrefs.GetInt("_updatesSeen") == 1;
             string versionSeen = PlayerPrefs.GetString("__version", "");
             string currentVersion = Application.version;
-
-            if (updatesSeen == false && versionSeen != currentVersion)
+            if (PlayerPrefsManager.forceShowUpdatesPanel)
+            {
+                UpdatesPanel.SetActive(true);
+                PlayerPrefs.SetInt("_updatesSeen", 0);
+                PlayerPrefs.SetString("__version", "0.0.1");
+            }
+            else if (updatesSeen == false && versionSeen != currentVersion)
             {
                UpdatesPanel.SetActive(true);
                PlayerPrefs.SetInt("_updatesSeen", 1);

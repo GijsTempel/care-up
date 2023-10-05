@@ -75,6 +75,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public int currentPracticePlays = -1;
     public static bool CAKeyboardVisible = false;
     List<string> scenesWithFreeCert = new List<string>();
+    public static bool forceShowUpdatesPanel = false;
 
     public bool VR = true;
     public bool practiceMode = true;
