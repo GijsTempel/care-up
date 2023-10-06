@@ -147,19 +147,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!114 &-8382925461809706814
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82973a60f3f573dc0a1793bdaeed7526, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionFrame: 125
 --- !u!1101 &-8350397967962936067
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -493,6 +480,24 @@ MonoBehaviour:
   - 03 swerve
   toShow: 1
   meshRenderer: 0
+--- !u!114 &-5993101952813720742
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 499205302ad2f1a678fc71a913692a95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: insuline
+  showFrame: 10
+  ObjNames:
+  - 04 useOn2
+  toShow: 1
+  meshRenderer: 0
 --- !u!1101 &-5924544340139134243
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -515,6 +520,24 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-5874369697740668357
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 499205302ad2f1a678fc71a913692a95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: insuline
+  showFrame: 10
+  ObjNames:
+  - 04 useOn
+  toShow: 0
+  meshRenderer: 0
 --- !u!1101 &-5572212445577168033
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -549,6 +572,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3e5a5dc9a1da85c9df9ce93399d825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1101 &-5207086433415315573
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: UseRight InsulinPenWithNeedle Sq
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 270870797739044592}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!114 &-5145062360886331015
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -589,6 +637,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3e5a5dc9a1da85c9df9ce93399d825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1101 &-4489821065869568839
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 0}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 1
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9860205
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!114 &-4487802458785684328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -729,7 +799,8 @@ AnimatorState:
   - {fileID: 8348603065643239443}
   m_StateMachineBehaviours:
   - {fileID: -4675610836530485317}
-  - {fileID: 5492096577242675538}
+  - {fileID: -1533413331597454734}
+  - {fileID: -3155257349543370962}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -759,6 +830,24 @@ MonoBehaviour:
   showFrame: 47
   objectName: InsulinPenCap
   toLeftHand: 0
+--- !u!114 &-3155257349543370962
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 499205302ad2f1a678fc71a913692a95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: insuline
+  showFrame: 10
+  ObjNames:
+  - 04 useOn2
+  toShow: 1
+  meshRenderer: 0
 --- !u!114 &-2919291385949325935
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -869,6 +958,18 @@ MonoBehaviour:
   - 05 remove needle cap
   toShow: 1
   meshRenderer: 0
+--- !u!114 &-2328086069506791557
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3e5a5dc9a1da85c9df9ce93399d825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-2083816857578636438
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -943,6 +1044,24 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-1533413331597454734
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 499205302ad2f1a678fc71a913692a95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: insuline
+  showFrame: 10
+  ObjNames:
+  - 04 useOn
+  toShow: 0
+  meshRenderer: 0
 --- !u!1101 &-1356698524488619182
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1271,6 +1390,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+  - m_Name: UseRight InsulinPenWithNeedle Sq
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -1298,6 +1423,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deleteFrame: 0
   isLeftHand: 1
+--- !u!1102 &270870797739044592
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Armature|1030_insulineInjection_L_Lib_003
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: -4489821065869568839}
+  m_StateMachineBehaviours:
+  - {fileID: -2328086069506791557}
+  - {fileID: 651130692962476987}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 3576071057422413741, guid: bfeefd53b4ccf4022828b18f53ac65e1, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!114 &353932783191965153
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1376,6 +1530,21 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &651130692962476987
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 416da83697a580bd1bafcb5bb36c8927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SequenceName: InsulinInjection
+  TuggleFromCinematic: 1
+  keyFrames: 23000000470100005b01000037020000770200002a03000093030000
 --- !u!1101 &1071453014045325248
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1735,6 +1904,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 8212566657506049176}
     m_Position: {x: 110, y: 980, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 270870797739044592}
+    m_Position: {x: 200, y: 1140, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -8647459493386586834}
@@ -1751,6 +1923,7 @@ AnimatorStateMachine:
   - {fileID: 1379144758936533898}
   - {fileID: 2882436086132034480}
   - {fileID: -4018657659289127634}
+  - {fileID: -5207086433415315573}
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
@@ -1971,19 +2144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionFrame: 436
---- !u!114 &5492096577242675538
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82973a60f3f573dc0a1793bdaeed7526, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionFrame: 125
 --- !u!1101 &5511375962234108290
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2260,7 +2420,8 @@ AnimatorState:
   - {fileID: -1269375044598098343}
   m_StateMachineBehaviours:
   - {fileID: -2720578660838440305}
-  - {fileID: -8382925461809706814}
+  - {fileID: -5874369697740668357}
+  - {fileID: -5993101952813720742}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

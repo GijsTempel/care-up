@@ -324,7 +324,6 @@ public class PlayerScript : MonoBehaviour
     
     private void Update()
     {
-        Debug.Log("@ blocked: " + toBlockPlayerActions.ToString());
         actionTimeout -= Time.deltaTime;
         EnableRaycastControllers(!IsInCopyAnimationState());
     }
