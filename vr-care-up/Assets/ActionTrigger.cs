@@ -114,6 +114,10 @@ public class ActionTrigger : MonoBehaviour
                 transform.GetChild(i).GetComponent<TriggerShowHideDeleteAction>().StartTimeout();
             if (transform.GetChild(i).GetComponent<ActionTrigger>() != null)
                 transform.GetChild(i).GetComponent<ActionTrigger>().AttemptTrigger();
+            if (transform.GetChild(i).GetComponent<ATAnimationTrigger>() != null)
+                transform.GetChild(i).GetComponent<ATAnimationTrigger>().Execute();
+            if (transform.GetChild(i).GetComponent<ATAudioTrigger>() != null)
+                transform.GetChild(i).GetComponent<ATAudioTrigger>().Execute();
         }
     }
 

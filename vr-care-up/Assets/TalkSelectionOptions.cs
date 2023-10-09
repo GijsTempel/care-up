@@ -8,6 +8,7 @@ using TMPro;
 public class TalkSelectionOptions : MonoBehaviour
 {
     public List<Button> optionButtons = new List<Button>();
+    public ActionExpectant actionExpectant;
 
     public void TalkActionButtonClicked(int buttonIndex)
     {
@@ -33,11 +34,20 @@ public class TalkSelectionOptions : MonoBehaviour
                 optionButtons[i].gameObject.SetActive(true);
                 optionButtons[i].transform.Find("Text").GetComponent<TextMeshProUGUI>().text = optionList[i].text;
                 optionButtons[i].GetComponent<ActionTrigger>().LeftActionManagerObject = optionList[i].attribute;
+                if (optionList[i].attribute != "")
+                    optionButtons[i].onClick.AddListener(TriggerExpectant);
             }
             else
                 optionButtons[i].gameObject.SetActive(false);
         }
+    }
 
+    public void TriggerExpectant()
+    {
+        if (actionExpectant != null)
+        {
+            actionExpectant.TryExecuteAction();
+        }
     }
 
 }

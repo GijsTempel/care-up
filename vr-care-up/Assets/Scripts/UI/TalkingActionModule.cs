@@ -53,6 +53,7 @@ public class TalkingActionModule : MonoBehaviour
             selectionDialogueInstance.transform.localRotation = Quaternion.identity;
 
             TalkSelectionOptions dialogue = selectionDialogueInstance.GetComponent<TalkSelectionOptions>();
+            dialogue.actionExpectant = actionExpectant;
             dialogue.AddOptions(optionsList);
         }
     }

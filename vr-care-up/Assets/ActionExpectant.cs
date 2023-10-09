@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class ActionExpectant : MonoBehaviour
@@ -18,9 +19,16 @@ public class ActionExpectant : MonoBehaviour
 
     public bool TryExecuteAction()
     {
-        if (actionHandler == null)
-            actionHandler = GameObject.FindObjectOfType<ActionHandler>();
-        return actionHandler.TryExecuteAction(actionType, leftActionManagerObject, rightActionManagerObject);
+        bool result = false;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).GetComponent<ActionTrigger>() != null)
+            {
+                transform.GetChild(i).GetComponent<ActionTrigger>().AttemptTrigger();
+                result = true;
+            }
+        }
+        return result;
     }
     
     

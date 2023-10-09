@@ -56,7 +56,7 @@ public class ShowOnFrame : StateMachineBehaviour
 
     void SetObject()
     {
-        if (ControlObjectName == "-")
+        if (ControlObjectName == "-" || ControlObjectName == "")
         {
             foreach (string name in ObjNames)
             {
