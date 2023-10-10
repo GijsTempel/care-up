@@ -83,6 +83,7 @@ public class ActionExpectant : MonoBehaviour
                     }
                 }
             }
+            isCurrentAction = true;
         }
     }
 }
