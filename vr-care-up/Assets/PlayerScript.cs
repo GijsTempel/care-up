@@ -79,13 +79,12 @@ public class PlayerScript : MonoBehaviour
     }
 
 
-    public void DropFromHand(bool leftHand)
+    public void DropFromHand(bool leftHand, bool noPoseChange = false)
     {
         if (leftHand && leftHandPresence != null)
-            leftHandPresence.DropObjectFromHand();
+            leftHandPresence.DropObjectFromHand(noPoseChange);
         else if (!leftHand && rightHandPresence != null)
-            rightHandPresence.DropObjectFromHand();
-
+            rightHandPresence.DropObjectFromHand(noPoseChange);
     }
 
     public GameObject GetObjectInHand(bool isLeft)
@@ -148,8 +147,7 @@ public class PlayerScript : MonoBehaviour
             ForcePickUpObject(rightObject.GetComponent<PickableObject>(), true);
         }
         Debug.Log(mess);
-
-}
+    }
 
 
     public void ForceDeleteObjectFromHand(bool isLeftHand)
@@ -170,7 +168,6 @@ public class PlayerScript : MonoBehaviour
             return;
         currentHand.DropObjectFromHand(true);
         Destroy(objInHand);
-
     }
 
     public void EnableRaycastControllers(bool toEnable)

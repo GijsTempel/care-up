@@ -21,7 +21,7 @@ public class ButtonActionTriggerModule : MonoBehaviour
         {
             buttonInstance = GameObject.Instantiate<GameObject>(buttonPrefab, buttonAnchor);
             buttonInstance.transform.localRotation = Quaternion.identity;
-            // buttonInstance.SetActive(false);
+            buttonInstance.SetActive(false);
             buttonInstance.GetComponent<ButtonActionTrigger>().actionTrigger = actionTrigger;
             buttonInstance.GetComponent<ButtonActionTrigger>().SetText(buttonText);
 
