@@ -28,6 +28,15 @@ public class PickableObject : MonoBehaviour
     public bool pickupWithPinch = false;
     public ActionTrigger pinchPickupTrigger;
     public ActionTrigger pinchMountTrigger;
+
+
+    public bool IsMounted()
+    {
+        if (transform.parent.tag == "MountingPoint")
+            return true;
+        return false;
+    }
+
     private MountDetector GetMountInChildren()
     {
         foreach(MountDetector m in gameObject.GetComponentsInChildren<MountDetector>())
