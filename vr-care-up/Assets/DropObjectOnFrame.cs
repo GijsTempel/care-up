@@ -52,7 +52,7 @@ public class DropObjectOnFrame : StateMachineBehaviour
             GameObject obj = player.GetObjectInHand(isLeftHand);
             if (obj != null)
             {
-                player.DropFromHand(isLeftHand, true);
+                player.ForceDropFromHand(isLeftHand, true);
                 GameObject posObj = GameObject.Find(targetPositionObjectName);
                 if (posObj != null)
                 {

@@ -87,6 +87,14 @@ public class PlayerScript : MonoBehaviour
             rightHandPresence.DropObjectFromHand(noPoseChange);
     }
 
+    public void ForceDropFromHand(bool leftHand, bool noPoseChange = false)
+    {
+        if (leftHand && leftHandPresence != null)
+            leftHandPresence.DropObjectFromHand(noPoseChange, true);
+        else if (!leftHand && rightHandPresence != null)
+            rightHandPresence.DropObjectFromHand(noPoseChange, true);
+    }
+
     public GameObject GetObjectInHand(bool isLeft)
     {
         if (isLeft && leftHandPresence != null)
