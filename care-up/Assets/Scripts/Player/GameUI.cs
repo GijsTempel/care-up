@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
+
+    public GameObject subjectWindow;
     string autoPlayMoveWTGName = "";
     public AnimatedFingerHint animatedFinger;
     GameObject Player;
@@ -507,6 +509,11 @@ public class GameUI : MonoBehaviour
         GameObject.Find("theoryPanel/panel/quizElements/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
             () => GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI());
         theoryTab.Show(false);
+    }
+
+    public void ShowSubjectWindow(bool toShow = true)
+    {
+        subjectWindow.SetActive(toShow);
     }
 
     // Use this for initialization
