@@ -1093,6 +1093,11 @@ public class ActionManager : MonoBehaviour
             {
                 commentUA = action.Attributes["commentUA"].Value;
             }
+            string subjectTitle = "";
+            if (action.Attributes["subjectTitle"] != null)
+            {
+                subjectTitle = action.Attributes["subjectTitle"].Value;
+            }
 
             string item = "";
             if (action.Attributes["item"] != null)
@@ -1289,7 +1294,7 @@ public class ActionManager : MonoBehaviour
             actionList[actionList.Count - 1].ignorePosition = ignorePosition;
             actionList[actionList.Count - 1].UITimeout = UITimeout;
             actionList[actionList.Count - 1].sequentialNumber = actionList.Count - 1;
-
+            actionList[actionList.Count - 1].subjectTitle = subjectTitle;
         }
 
         actionList.Last<Action>().sceneDoneTrigger = true;

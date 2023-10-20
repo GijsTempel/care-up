@@ -47,6 +47,7 @@ namespace CareUp.Actions
         public int storedIndex;
         public bool ignorePosition = false;
         public float UITimeout = 0f;
+        public string subjectTitle = "";
 
         protected ActionManager.ActionType type;
 
