@@ -514,6 +514,10 @@ public class GameUI : MonoBehaviour
     public void ShowSubjectWindow(bool toShow = true)
     {
         subjectWindow.SetActive(toShow);
+        if (toShow)
+        {
+            subjectWindow.transform.parent.GetComponent<ActionSubjectWindow>().RefrashWindow();
+        }
     }
 
     // Use this for initialization
