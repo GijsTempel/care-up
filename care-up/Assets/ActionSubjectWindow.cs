@@ -11,13 +11,16 @@ public class ActionSubjectWindow : MonoBehaviour
     ActionManager actionManager;
     Color subjectBaseColor = new Color();
     Color actionBaseColor = new Color();
+    private PlayerPrefsManager manager;
 
     bool subjectColorSet = false;
     bool actionColorSet = false;
+
     Dictionary<int, List<GameObject>> ActionStepElements = new Dictionary<int, List<GameObject>>();
     void Start()
     {
         actionManager = GameObject.FindObjectOfType<ActionManager>();
+        manager = GameObject.FindObjectOfType<PlayerPrefsManager>();
         BuildActionsList();
     }
 
@@ -25,6 +28,7 @@ public class ActionSubjectWindow : MonoBehaviour
     {
         if (actionManager != null)
         {
+            
             int currentActionIndex = actionManager.CurrentActionIndex;
             foreach (Action a in actionManager.actionList)
             {
@@ -34,21 +38,40 @@ public class ActionSubjectWindow : MonoBehaviour
                     foreach(GameObject g in ActionStepElements[a.sequentialNumber])
                     {
                         Image img = g.transform.GetChild(0).GetComponent<Image>();
+
+                        //Is current step
                         if (currentActionIndex == index)
                         {
-                            img.color = new Color(0f, 1f, 0f, 0.4f);
+                            if (!manager.practiceMode)
+                                g.SetActive(false);
+                            else
+                                img.color = new Color(0f, 0.7f, 0f, 0.2f);
                         }
+
+                        //Passed step
                         else if (index < currentActionIndex)
                         {
-                            img.color = new Color(.5f, .5f, .5f, 0.4f);
+                            if (!manager.practiceMode)
+                                g.SetActive(true);
+                            else
+                                img.color = new Color(.3f, .3f, .3f, 0.4f);
                         }
+                        //A step that has not yet been reached
                         else
                         {
-                            img.color = new Color(1f, .6f, 0f, 0.4f);
+                            if (!manager.practiceMode)
+                                g.SetActive(false);
+                            else
+                                img.color = new Color(.6f, .6f, .6f, 0.4f);
+                        }
+                        //Complited correctly step
+                        if (a.matched)
+                        {
+                            if (!manager.practiceMode)
+                                g.SetActive(true);
                         }
                     }
                 }
-                Debug.Log(a.SubIndex);
             }
         }
     }

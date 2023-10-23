@@ -1294,7 +1294,8 @@ public class ActionManager : MonoBehaviour
             actionList[actionList.Count - 1].ignorePosition = ignorePosition;
             actionList[actionList.Count - 1].UITimeout = UITimeout;
             actionList[actionList.Count - 1].sequentialNumber = actionList.Count - 1;
-            actionList[actionList.Count - 1].subjectTitle = subjectTitle;
+            actionList[actionList.Count - 1].subjectTitle = LocalizationManager.GetValueIfKey(
+                subjectTitle);
         }
 
         actionList.Last<Action>().sceneDoneTrigger = true;
