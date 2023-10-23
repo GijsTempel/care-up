@@ -1527,6 +1527,14 @@ public class ActionManager : MonoBehaviour
             gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
     }
 
+    public bool IsActionDoneWrong(Action action)
+    {
+        int actionIndex = actionList.IndexOf(action);
+        if (wrongStepIndexes.Contains(actionIndex))
+            return true;
+        return false;
+    }
+
     /// <summary>
     /// Checks if triggered action is correct ( expected to be done in action list ).
     /// Plays WrongAction sound from Narrator if wrong.

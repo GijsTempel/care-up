@@ -13,8 +13,10 @@ public class ActionSubjectWindow : MonoBehaviour
     Color actionBaseColor = new Color();
     private PlayerPrefsManager manager;
 
-    bool subjectColorSet = false;
-    bool actionColorSet = false;
+
+    Color defaultColor;
+    Color currentStepColor;
+    Color complitedStepColor;
 
     Dictionary<int, List<GameObject>> ActionStepElements = new Dictionary<int, List<GameObject>>();
     void Start()
@@ -45,7 +47,7 @@ public class ActionSubjectWindow : MonoBehaviour
                             if (!manager.practiceMode)
                                 g.SetActive(false);
                             else
-                                img.color = new Color(0f, 0.7f, 0f, 0.2f);
+                                img.color = new Color(.4f, .8f, .97f, 0.4f);
                         }
 
                         //Passed step
@@ -54,7 +56,7 @@ public class ActionSubjectWindow : MonoBehaviour
                             if (!manager.practiceMode)
                                 g.SetActive(true);
                             else
-                                img.color = new Color(.3f, .3f, .3f, 0.4f);
+                                img.color = new Color(0f, 0.7f, 0f, 0.2f);
                         }
                         //A step that has not yet been reached
                         else
@@ -69,6 +71,20 @@ public class ActionSubjectWindow : MonoBehaviour
                         {
                             if (!manager.practiceMode)
                                 g.SetActive(true);
+                            //Step completed wrongly
+                            if (actionManager.IsActionDoneWrong(a))
+                            {
+                                img.color = new Color(1f, .0f, .0f, 0.6f);
+                            }
+                            else
+                            {
+                                Transform checkMark = g.transform.Find("Panel/CheckMark");
+                                if (checkMark != null)
+                                {
+                                    checkMark.GetComponent<Image>().enabled = true;
+                                }
+                                img.color = new Color(0f, 0.9f, 0.1f, 0.3f);
+                            }
                         }
                     }
                 }
@@ -90,11 +106,6 @@ public class ActionSubjectWindow : MonoBehaviour
                     subjectTitleObj.transform.Find("Panel/Text").GetComponent<TextMeshProUGUI>().text =
                         a.subjectTitle;
                     currentActionElements.Add(subjectTitleObj);
-                    if (!subjectColorSet)
-                    {
-                        subjectBaseColor = subjectTitleObj.GetComponent<Image>().color;
-                        subjectColorSet = true;
-                    }
                 }
                 GameObject actionStep = GameObject.Instantiate(Resources.Load<GameObject>(
                     "NecessaryPrefabs/UI/SubjectStep"), scrollContent);
@@ -102,11 +113,6 @@ public class ActionSubjectWindow : MonoBehaviour
                     a.shortDescr;
                 currentActionElements.Add(actionStep);
                 ActionStepElements.Add(a.sequentialNumber, currentActionElements);
-                if (!actionColorSet)
-                {
-                    actionBaseColor = actionStep.GetComponent<Image>().color;
-                    actionColorSet = true;
-                }
             }
             GameObject.Instantiate(Resources.Load<GameObject>(
                 "NecessaryPrefabs/UI/SubjectEmpty"), scrollContent);
