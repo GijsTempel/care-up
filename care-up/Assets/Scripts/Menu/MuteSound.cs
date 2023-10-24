@@ -47,6 +47,7 @@ public class MuteSound : MonoBehaviour
                 generalAudioImage.sprite = normal;
             }
         }
+        GameObject.FindObjectOfType<UMP_Options>().Apply();
     }
 
     public void ToggleMuteMenuButton()
@@ -63,5 +64,6 @@ public class MuteSound : MonoBehaviour
             manager.MenuAudio = 1;
             menuAudioImage.sprite = normal;
         }
+        GameObject.FindObjectOfType<UMP_Options>().Apply();
     }
 }

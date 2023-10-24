@@ -228,6 +228,7 @@ public class UMP_Options : MonoBehaviour
     /// </summary>
     public void Apply()
     {
+        Debug.Log("Apply!!!!!");
         Toggle postProcessing = GameObject.Find("PostProcessingToggle").GetComponent<Toggle>();
         GameObject preferences = GameObject.Find("Preferences");
         if (preferences != null)
