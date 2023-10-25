@@ -6,6 +6,7 @@ using UnityEngine.Video;
 public class VRCollarHolder : MonoBehaviour
 {
     public Transform targetVRObject;
+    public Animator tutAnimator;
     Animator animator;
     bool isOpened = false;
     float openTimer = 5f;
@@ -15,6 +16,12 @@ public class VRCollarHolder : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    public void TriggerTutorialAnimation(string triggerName)
+    {
+        if (!isOpened)
+            OpenTutorialShelf();
+        tutAnimator.SetTrigger(triggerName);
+    }
 
     void Update()
     {   

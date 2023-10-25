@@ -335,6 +335,9 @@ public class PlayerScript : MonoBehaviour
 
     public void UpdateWalkToGroup(string WTGName)
     {
+        VRCollarHolder vRCollarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
+        if (vRCollarHolder != null)
+            vRCollarHolder.CloseTutorialShelf();
         currentWTGName = WTGName;
         if (gameUIVR != null)
             gameUIVR.UpdateHelpWitDelay(1f);

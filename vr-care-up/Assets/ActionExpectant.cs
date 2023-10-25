@@ -60,14 +60,26 @@ public class ActionExpectant : MonoBehaviour
 
     private void Update()
     {
+        if (noExtraConditions && 
+            actionType == ActionManager.ActionType.None && 
+            walkToGroupName == "-")
+        {
+            isCurrentAction = true;
+            return;
+        }
         if (!noExtraConditions)
         {
+            if (walkToGroupName == "-")
+            {
+                Debug.Log("AAAAAAAAAAAA");
+            }
             if (!savedIsCurrentAction)
             {
                 isCurrentAction = false;
                 return;
             }
-            if (walkToGroupName != "" && player.currentWTGName != walkToGroupName)
+            if ((walkToGroupName != "" && player.currentWTGName != walkToGroupName) && 
+                !(walkToGroupName == "-" && player.currentWTGName == ""))
             {
                 isCurrentAction = false;
                 return;
