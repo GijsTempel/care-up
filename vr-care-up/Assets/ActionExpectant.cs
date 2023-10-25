@@ -29,8 +29,8 @@ public class ActionExpectant : MonoBehaviour
                 break;
             }
         }
-        if (walkToGroupName == "" && noExtraConditions)
-            enabled = false;
+        // if (walkToGroupName == "" && noExtraConditions)
+        //     enabled = false;
     }
 
     public bool TryExecuteAction()
@@ -54,7 +54,7 @@ public class ActionExpectant : MonoBehaviour
             actionHandler = GameObject.FindObjectOfType<ActionHandler>();
         
         savedIsCurrentAction = actionHandler.CheckAction(actionType, leftActionManagerObject, rightActionManagerObject);
-        if (noExtraConditions)
+        if (noExtraConditions && walkToGroupName != "")
             isCurrentAction = savedIsCurrentAction;
     }
 
@@ -62,28 +62,24 @@ public class ActionExpectant : MonoBehaviour
     {
         if (noExtraConditions && 
             actionType == ActionManager.ActionType.None && 
-            walkToGroupName == "-")
+            walkToGroupName == "-" &&
+            player.currentWTGName == "")
         {
             isCurrentAction = true;
             return;
         }
-        if (!noExtraConditions)
+        if (!savedIsCurrentAction)
         {
-            if (walkToGroupName == "-")
-            {
-                Debug.Log("AAAAAAAAAAAA");
-            }
-            if (!savedIsCurrentAction)
-            {
-                isCurrentAction = false;
-                return;
-            }
-            if ((walkToGroupName != "" && player.currentWTGName != walkToGroupName) && 
-                !(walkToGroupName == "-" && player.currentWTGName == ""))
-            {
-                isCurrentAction = false;
-                return;
-            }
+            isCurrentAction = false;
+            return;
+        }
+        
+        if ((walkToGroupName != "" && player.currentWTGName != walkToGroupName))
+        {
+            isCurrentAction = false;
+            return;
+        }
+        if (!noExtraConditions)
             for (int i = 0; i < transform.childCount; i++)
             {
                 if (transform.GetChild(i).GetComponent<ItemInHandCheck>() != null)
@@ -95,7 +91,6 @@ public class ActionExpectant : MonoBehaviour
                     }
                 }
             }
-            isCurrentAction = true;
-        }
+        isCurrentAction = true;
     }
 }

@@ -7,6 +7,7 @@ public class ItemInHandCheck : MonoBehaviour
 {
     public ActionTrigger.TriggerHand handSide;
     public string objectInHand = "";
+    public bool invert = false;
 
     public bool Check()
     {
@@ -31,6 +32,8 @@ public class ItemInHandCheck : MonoBehaviour
                 (player.GetObjectInHand(false) != null &&
                 player.GetObjectInHand(false).name == objectInHand))
             {
+                if (invert)
+                    return false;
                 return true;
             }
         }
@@ -38,14 +41,24 @@ public class ItemInHandCheck : MonoBehaviour
         {
             if (player.GetObjectInHand(true) != null && 
                 player.GetObjectInHand(true).name == objectInHand)
-                return true;
+                {
+                    if (invert)
+                        return false;
+                    return true;
+                }
         }
         if (handSide == ActionTrigger.TriggerHand.Right)
         {
             if (player.GetObjectInHand(false) != null && 
                 player.GetObjectInHand(false).name == objectInHand)
-                return true;
+                {
+                    if (invert)
+                        return false;
+                    return true;
+                }
         }
+        if (invert)
+            return true;
         return false;
     }
 }

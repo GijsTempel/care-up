@@ -36,7 +36,12 @@ public class VRTutorialTigger : MonoBehaviour
             ActionExpectant e = transform.GetChild(i).GetComponent<ActionExpectant>();
             if (e != null && !e.isCurrentAction)
                 return false;
+            ItemInHandCheck itemInHandCheck = transform.GetChild(i).GetComponent<ItemInHandCheck>();
+            if (itemInHandCheck != null && !itemInHandCheck.Check())
+                return false;
         }
+        if (playerScript.IsInCopyAnimationState())
+            return false;
         return true;
     }
 

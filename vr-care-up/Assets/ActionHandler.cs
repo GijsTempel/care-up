@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,12 @@ public class ActionHandler : MonoBehaviour
 {
     private ActionManager actionManager;
     private GameUIVR gameUIVR;
+    private VRCollarHolder vrCollarHolder;
+    
+    void Start()
+    {
+        vrCollarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
+    }
   
     public bool TryExecuteAction(ActionManager.ActionType actionType, string leftHandObjectName, string rightHandObjectName)
     {
@@ -64,7 +71,11 @@ public class ActionHandler : MonoBehaviour
         }
         if (gameUIVR != null)
             gameUIVR.UpdateHelpHighlight();
-
+        
+        if (vrCollarHolder != null)
+        {
+            vrCollarHolder.CloseTutorialShelf();
+        }
         return result;
     }
 

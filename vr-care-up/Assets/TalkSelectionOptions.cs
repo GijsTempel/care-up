@@ -46,6 +46,7 @@ public class TalkSelectionOptions : MonoBehaviour
     {
         if (actionExpectant != null)
         {
+            Debug.Log("@TriggerExpectant():" + Random.Range(0, 99999).ToString());
             actionExpectant.TryExecuteAction();
         }
     }

@@ -59,6 +59,9 @@ public class PickableObject : MonoBehaviour
 
     public bool Drop()
     {
+        VRCollarHolder vRCollarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
+        if (vRCollarHolder != null)
+            vRCollarHolder.CloseTutorialShelf();
         if (deleteOnDrop)
             Destroy(gameObject);
 
@@ -91,6 +94,9 @@ public class PickableObject : MonoBehaviour
 
     public bool PickUp(Transform handTransform, float transuitionDuration = 0.2f)
     {
+        VRCollarHolder vRCollarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
+        if (vRCollarHolder != null)
+            vRCollarHolder.CloseTutorialShelf();
         ShowViewElements(true);
         
         FallowTransform(handTransform, transuitionDuration);
