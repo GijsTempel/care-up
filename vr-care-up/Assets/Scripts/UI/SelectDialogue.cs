@@ -19,6 +19,8 @@ public class SelectDialogue : MonoBehaviour
     //GameUI gameUI;
     public GameObject selectionDialogueElements;
     public RectTransform pointCursor;
+    public Image pointImage;
+
     //public GameObject prevStepInfoElements;
     //public Button prevStepInfoButton;
     DialogueOption prevStepInfo = null;
@@ -71,14 +73,14 @@ public class SelectDialogue : MonoBehaviour
         if (sqButtonInPos != null)
         {
             progressImage.gameObject.SetActive(true);
-            pointCursor.GetComponent<Image>().color = Color.green;
+            pointImage.color = Color.green;
             newProgressTarget = sqButtonInPos;
             contactTimer = FADEOUT_MAX / 2;
         }
         else
         {
             progressImage.gameObject.SetActive(false);
-            pointCursor.GetComponent<Image>().color = Color.gray;
+            pointImage.color = Color.gray;
         }
     }
 

@@ -2023,7 +2023,12 @@ public class ActionManager : MonoBehaviour
     {
         // RobotManager.RobotWrongAction();
         // if (GameObject.FindObjectOfType<HelpCharacterManager>() != null)
-        GameObject.FindObjectOfType<HelpCharacterManager>().WrongAction();
+        HelpCharacterManager helpCharacterManager = GameObject.FindObjectOfType<HelpCharacterManager>();
+        if (helpCharacterManager != null)
+            helpCharacterManager.WrongAction();
+        EyePointerElement eyePointerElement = GameObject.FindObjectOfType<EyePointerElement>();
+        if (eyePointerElement != null)
+            eyePointerElement.IncorrectAction();
         Narrator.PlaySound("WrongAction");
 
         if (headAnimation)
@@ -2044,8 +2049,13 @@ public class ActionManager : MonoBehaviour
     {
         GameObject.FindObjectOfType<ActionManager>().actionsCount++;
         // RobotManager.RobotCorrectAction();
-        if (GameObject.FindObjectOfType<HelpCharacterManager>() != null)
-            GameObject.FindObjectOfType<HelpCharacterManager>().CorrectAction();
+        HelpCharacterManager helpCharacterManager = GameObject.FindObjectOfType<HelpCharacterManager>();
+        if (helpCharacterManager != null)
+            helpCharacterManager.CorrectAction();
+        
+        EyePointerElement eyePointerElement = GameObject.FindObjectOfType<EyePointerElement>();
+        if (eyePointerElement != null)
+            eyePointerElement.IncorrectAction();
         ActionManager.PlayAddPointSound();
 
         ActionManager.BuildRequirements();
