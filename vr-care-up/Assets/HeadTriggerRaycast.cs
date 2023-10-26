@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.UIElements;
 
 public class HeadTriggerRaycast : MonoBehaviour
 {
@@ -12,19 +14,31 @@ public class HeadTriggerRaycast : MonoBehaviour
     public float coneAngle = 25f;
     [Range(0f, 2f)]
     public float rayCastDistance = 0.5f;
+    WalkToGroupVR savedTeleportAnchor = null;
+
 
     PlayerScript player;
     public RaycastProgressBar progressBar;
     private List<ActionCollider> actionColliders = new List<ActionCollider>();
 
     private ActionManager actionManager = null;
-
+    public GameObject teleportProgressCanvas;
+    float teleportationWaitTime = 2f;
+    const float tTimeStartValue = -0.05f;
+    float teleportationTimeValue = tTimeStartValue;
+    bool justTeleported = false;
+    public UnityEngine.UI.Image teleportationProgressImage;
     public void RegisterActionCollider(ActionCollider col)
     {
         if (!actionColliders.Contains(col))
         {
             actionColliders.Add(col);
         }
+    }
+
+    public bool IsLookingAtTeleport()
+    {
+        return teleportationTimeValue > 0;
     }
 
     private void Start()
@@ -63,6 +77,43 @@ public class HeadTriggerRaycast : MonoBehaviour
                 raycastButton.PointerRayHit(phit.point);
         }
 
+
+        const int teleportLayerMask = 0b11111111;
+        teleportProgressCanvas.SetActive(false);
+        WalkToGroupVR currentTeleportAnchor = null;
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit thit, 10f, teleportLayerMask))
+        {
+            WalkToGroupVR teleportationAnchor = thit.collider.GetComponent<WalkToGroupVR>();
+            if (teleportationAnchor != null)
+            {
+                Debug.Log("TeleportRay:" + thit.collider.name + " " +
+                    UnityEngine.Random.Range(0, 9999).ToString());
+                currentTeleportAnchor = teleportationAnchor;
+            }
+        }
+        if (!justTeleported && currentTeleportAnchor != null && savedTeleportAnchor == currentTeleportAnchor)
+        {
+            teleportationTimeValue += Time.deltaTime;
+            if (teleportationTimeValue > 0)
+            {
+                teleportProgressCanvas.SetActive(true);
+                teleportationProgressImage.fillAmount =
+                    Remap(teleportationTimeValue, 0f, teleportationWaitTime, 1f, 0f);
+            }
+            if (teleportationTimeValue > teleportationWaitTime)
+            {
+                justTeleported = false;
+                teleportationTimeValue = tTimeStartValue;
+                player.TriggerTeleportation(currentTeleportAnchor.GetTeleportationAnchor(),
+                    currentTeleportAnchor);
+            }
+        }
+        else
+        {
+            justTeleported = false;
+            teleportationTimeValue = tTimeStartValue;
+        }
+        savedTeleportAnchor = currentTeleportAnchor;
 
         if (actionManager == null)
         {
@@ -157,5 +208,10 @@ public class HeadTriggerRaycast : MonoBehaviour
             progressBar.target = null;
             progressBar.currentProgress = 0f;
         }
+    }
+
+    float Remap(float source, float sourceFrom, float sourceTo, float targetFrom, float targetTo)
+    {
+        return targetFrom + (source-sourceFrom)*(targetTo-targetFrom)/(sourceTo-sourceFrom);
     }
 }

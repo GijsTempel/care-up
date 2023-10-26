@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Video;
+using UnityEngine.XR;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -29,7 +31,29 @@ public class PlayerScript : MonoBehaviour
     const float ACTION_WAIT_TIME = 1.2f;
     float actionTimeout = ACTION_WAIT_TIME;
     bool toBlockPlayerActions = false;
+    public Transform cameraTransform;
 
+    public void TriggerTeleportation(Transform teleportAnchor, WalkToGroupVR wtg = null)
+    {
+        if (wtg != null)
+            wtg.PlayerWalkedIn();
+        else
+            UpdateWalkToGroup("");
+        Vector3 maskVec = new Vector3(1f, 0f, 1f);
+        Vector3 cameraOffset = Vector3.Scale(transform.position, maskVec) -
+            Vector3.Scale(cameraTransform.position, maskVec);
+        
+        transform.position = teleportAnchor.position + cameraOffset;
+
+        float yRot = Vector3.SignedAngle(
+            Vector3.Scale(teleportAnchor.forward, maskVec).normalized,
+            Vector3.Scale(cameraTransform.forward, maskVec).normalized,
+            Vector3.up);
+
+        Debug.Log("@rotAngle:" + yRot.ToString());
+        transform.RotateAround(teleportAnchor.position, Vector3.up, -yRot);
+        
+    }
 
     public void BlockPlayerActions(bool toBlock)
     {
@@ -257,7 +281,6 @@ public class PlayerScript : MonoBehaviour
                 objectInRight.GetComponent<PickableObject>().FallowTransform(rightToolTransform, transuitionDuration);
         }
     }
-
 
     public bool IsInCopyAnimationState()
     {

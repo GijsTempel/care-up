@@ -8,11 +8,13 @@ public class VRTutorialTigger : MonoBehaviour
     public float waitTime = 2f;
     float timeoutValue = 2f;
     PlayerScript playerScript;
+    HeadTriggerRaycast headTriggerRaycast;
     // Start is called before the first frame update
     void Start()
     {
         timeoutValue = waitTime;
         playerScript = GameObject.FindObjectOfType<PlayerScript>();
+        headTriggerRaycast = GameObject.FindObjectOfType<HeadTriggerRaycast>();
     }
 
     // Update is called once per frame
@@ -30,7 +32,10 @@ public class VRTutorialTigger : MonoBehaviour
 
     bool CheckConditions()
     {
-
+        if (playerScript.IsInCopyAnimationState())
+            return false;
+        if (headTriggerRaycast.IsLookingAtTeleport())
+            return false;
         for(int i = 0; i < transform.childCount; i++)
         {
             ActionExpectant e = transform.GetChild(i).GetComponent<ActionExpectant>();
@@ -40,8 +45,6 @@ public class VRTutorialTigger : MonoBehaviour
             if (itemInHandCheck != null && !itemInHandCheck.Check())
                 return false;
         }
-        if (playerScript.IsInCopyAnimationState())
-            return false;
         return true;
     }
 

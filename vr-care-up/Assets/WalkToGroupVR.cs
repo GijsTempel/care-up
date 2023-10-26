@@ -8,10 +8,15 @@ public class WalkToGroupVR : MonoBehaviour
     public string walkToGroupName = "";
     public string description;
     PlayerScript player;
+    public Transform teleportationAnchor;
     private void Start()
     {
         player = GameObject.FindObjectOfType<PlayerScript>();
+    }
 
+    public Transform GetTeleportationAnchor()
+    {
+        return teleportationAnchor;
     }
     
     public void PlayerWalkedIn()
