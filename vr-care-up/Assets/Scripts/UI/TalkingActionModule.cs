@@ -24,6 +24,7 @@ public class TalkingActionModule : MonoBehaviour
     private PlayerScript player;
     private string currentPlayerWTG = "";
     private bool toShowDialogue = false;
+    public ActionTrigger notifBubbleActionTrigger;
 
     void Start()
     {
@@ -45,7 +46,8 @@ public class TalkingActionModule : MonoBehaviour
             UnityEngine.UI.Button button = notifBubbleInstance.GetComponentInChildren<UnityEngine.UI.Button>();
             if (button != null)
                 button.onClick.AddListener(delegate { Debug.Log("delegateButtonClickTest"); this.ShowChatOptions(); });
-
+            if (button != null && notifBubbleActionTrigger != null)
+                button.onClick.AddListener(delegate { notifBubbleActionTrigger.AttemptTrigger(); } );
 
             //---------------------------------------------
             selectionDialogueInstance = Object.Instantiate(selectionDialogPrefab, notifBubbleAnchor) as GameObject;

@@ -26,6 +26,9 @@ public class CleaningCollider : MonoBehaviour
         particles.SetActive(true);
         wipeAudio.gameObject.SetActive(true);
         cleaningMaster.CleanActionCount();
+        VRCollarHolder vRCollarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
+        if (vRCollarHolder != null)
+            vRCollarHolder.CloseTutorialShelf();
     }
 
     private void OnTriggerEnter(Collider collision)
