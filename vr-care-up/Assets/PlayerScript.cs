@@ -205,7 +205,7 @@ public class PlayerScript : MonoBehaviour
     public void EnableRaycastControllers(bool toEnable)
     {
         LongRangeLeftRay.SetActive(toEnable);
-        LongRangeRightRay.SetActive(true);//toEnable);
+        LongRangeRightRay.SetActive(toEnable);
         ShortRangeLeftRay.SetActive(toEnable);
         ShortRangeRightRay.SetActive(toEnable);
     }
@@ -225,7 +225,6 @@ public class PlayerScript : MonoBehaviour
         if (leftHandPoseControl.handPoseMode != HandPoseControl.HandPoseMode.Default ||
             rightHandPoseControl.handPoseMode != HandPoseControl.HandPoseMode.Default )
             return false;
-
         if (cinematicTarget != null)
         {
             // fadeAnimation.Play();
@@ -250,7 +249,7 @@ public class PlayerScript : MonoBehaviour
         rightHandPoseControl.SetupCopyAnimationData(mirrorAnimation);
         RightHandSphere.GetComponent<Animation>().Play();
 
-        // EnableRaycastControllers(false);
+        EnableRaycastControllers(false);
         ObjectsInHandsFallowAnimation();
         animHandsAnimator = animHandsTransform.animator;
         animHandsAnimator.SetTrigger(triggerName);
@@ -333,7 +332,7 @@ public class PlayerScript : MonoBehaviour
         LeftHandSphere.GetComponent<MeshRenderer>().enabled = false;
         RightHandSphere.GetComponent<MeshRenderer>().enabled = false;
 
-        // EnableRaycastControllers(true);
+        EnableRaycastControllers(true);
     }
 
     public void AddHandPoseControl(HandPoseControl control, bool isLeftHand)
