@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using TMPro;
 using Unity.XR.CoreUtils;
 using UnityEngine.Rendering;
 
@@ -217,7 +216,7 @@ public class SelectDialogue : MonoBehaviour
                         cheatSimbol = "@";
                 }
 #endif*/
-                sqButtons[i].transform.Find("Text").GetComponent<TextMeshProUGUI>().text = /*cheatSimbol +*/ options[i].text;
+                sqButtons[i].transform.Find("Text").GetComponent<Text>().text = /*cheatSimbol +*/ options[i].text;
                 sqButtons[i].GetComponent<ActionTrigger>().LeftActionManagerObject = options[i].attribute;
                 /*if (gameUI.AllowAutoPlay(false))
                     if (options[i].attribute != "" && options[i].attribute != "CM_Leave")

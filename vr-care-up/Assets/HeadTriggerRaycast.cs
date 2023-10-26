@@ -23,7 +23,7 @@ public class HeadTriggerRaycast : MonoBehaviour
 
     private ActionManager actionManager = null;
     public GameObject teleportProgressCanvas;
-    float teleportationWaitTime = 2f;
+    float teleportationWaitTime = 1.5f;
     const float tTimeStartValue = -0.05f;
     float teleportationTimeValue = tTimeStartValue;
     bool justTeleported = false;
@@ -77,43 +77,45 @@ public class HeadTriggerRaycast : MonoBehaviour
                 raycastButton.PointerRayHit(phit.point);
         }
 
-
-        const int teleportLayerMask = 0b11111111;
-        teleportProgressCanvas.SetActive(false);
-        WalkToGroupVR currentTeleportAnchor = null;
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit thit, 10f, teleportLayerMask))
+        if (!player.IsInCopyAnimationState())
         {
-            WalkToGroupVR teleportationAnchor = thit.collider.GetComponent<WalkToGroupVR>();
-            if (teleportationAnchor != null)
+            const int teleportLayerMask = 0b1111111111;
+            teleportProgressCanvas.SetActive(false);
+            WalkToGroupVR currentTeleportAnchor = null;
+            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit thit, 10f, teleportLayerMask))
             {
-                Debug.Log("TeleportRay:" + thit.collider.name + " " +
-                    UnityEngine.Random.Range(0, 9999).ToString());
-                currentTeleportAnchor = teleportationAnchor;
+                WalkToGroupVR teleportationAnchor = thit.collider.GetComponent<WalkToGroupVR>();
+                if (teleportationAnchor != null)
+                {
+                    Debug.Log("TeleportRay:" + thit.collider.name + " " +
+                        UnityEngine.Random.Range(0, 9999).ToString());
+                    currentTeleportAnchor = teleportationAnchor;
+                }
             }
-        }
-        if (!justTeleported && currentTeleportAnchor != null && savedTeleportAnchor == currentTeleportAnchor)
-        {
-            teleportationTimeValue += Time.deltaTime;
-            if (teleportationTimeValue > 0)
+            if (!justTeleported && currentTeleportAnchor != null && savedTeleportAnchor == currentTeleportAnchor)
             {
-                teleportProgressCanvas.SetActive(true);
-                teleportationProgressImage.fillAmount =
-                    Remap(teleportationTimeValue, 0f, teleportationWaitTime, 1f, 0f);
+                teleportationTimeValue += Time.deltaTime;
+                if (teleportationTimeValue > 0)
+                {
+                    teleportProgressCanvas.SetActive(true);
+                    teleportationProgressImage.fillAmount =
+                        Remap(teleportationTimeValue, 0f, teleportationWaitTime, 1f, 0f);
+                }
+                if (teleportationTimeValue > teleportationWaitTime)
+                {
+                    justTeleported = false;
+                    teleportationTimeValue = tTimeStartValue;
+                    player.TriggerTeleportation(currentTeleportAnchor.GetTeleportationAnchor(),
+                        currentTeleportAnchor);
+                }
             }
-            if (teleportationTimeValue > teleportationWaitTime)
+            else
             {
                 justTeleported = false;
                 teleportationTimeValue = tTimeStartValue;
-                player.TriggerTeleportation(currentTeleportAnchor.GetTeleportationAnchor(),
-                    currentTeleportAnchor);
             }
+            savedTeleportAnchor = currentTeleportAnchor;
         }
-        else
-        {
-            justTeleported = false;
-            teleportationTimeValue = tTimeStartValue;
-        }
-        savedTeleportAnchor = currentTeleportAnchor;
 
         if (actionManager == null)
         {
