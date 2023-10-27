@@ -41,7 +41,8 @@ public class TalkSelectionOptions : MonoBehaviour
             else
                 optionButtons[i].gameObject.SetActive(false);
         }
-        line2.SetActive(optionList.Count > 2);
+        if (line2 != null)
+            line2.SetActive(optionList.Count > 2);
         if (optionList.Count <= 2)
         {
             answerPanelVerticalLayoutGroup.padding.top = 0;
