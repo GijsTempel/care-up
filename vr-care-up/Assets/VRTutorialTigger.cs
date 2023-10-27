@@ -53,6 +53,16 @@ public class VRTutorialTigger : MonoBehaviour
         VRCollarHolder collarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
         if (collarHolder != null)
             collarHolder.TriggerTutorialAnimation(triggerName);
+        
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            ActionExpectant e = transform.GetChild(i).GetComponent<ActionExpectant>();
+            if (e != null)
+                e.TryExecuteAction();
+            ActionTrigger a = transform.GetChild(i).GetComponent<ActionTrigger>();
+            if (a != null)
+                a.AttemptTrigger();
+        }
         gameObject.SetActive(false);
     }
 }

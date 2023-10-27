@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionTriggerButton : MonoBehaviour
+public class ButtonToTriggerAction : MonoBehaviour
 {
     public void OnButtonClicked()
     {

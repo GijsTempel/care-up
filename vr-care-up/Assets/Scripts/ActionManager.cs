@@ -1662,6 +1662,8 @@ public class ActionManager : MonoBehaviour
         List<Action> subtypelist = UnlockedIncompletedActions.Where(action => action.Type == type).ToList();
         if (type == ActionType.PersonTalk)
             info = new string[] {info[0]};
+        if (type == ActionType.ObjectExamine)
+            info[1] = "good";
         if (IncompletedActions.Count != 0)
         {
             foreach (Action action in subtypelist)
