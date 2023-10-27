@@ -45,13 +45,13 @@ public class TalkSelectionOptions : MonoBehaviour
             line2.SetActive(optionList.Count > 2);
         if (optionList.Count <= 2)
         {
-            answerPanelVerticalLayoutGroup.padding.top = 0;
-            answerPanelVerticalLayoutGroup.padding.bottom = 0;
+            answerPanelVerticalLayoutGroup.padding.top = 50;
+            answerPanelVerticalLayoutGroup.padding.bottom = 50;
         }
         else
         {
-            answerPanelVerticalLayoutGroup.padding.top = 50;
-            answerPanelVerticalLayoutGroup.padding.bottom = 50;
+            answerPanelVerticalLayoutGroup.padding.top = 0;
+            answerPanelVerticalLayoutGroup.padding.bottom = 0;
         }
     }
 
