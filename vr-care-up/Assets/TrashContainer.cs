@@ -24,7 +24,6 @@ public class TrashContainer : MonoBehaviour
             return;
         if (collision.GetComponent<PickableObject>().IsMounted())
             return;
-        Debug.Log("@To Trash:" + collision.name);
         if (objectsAllowed.Keys.Contains(collision.name))
         { 
             if (objectsAllowed[collision.name].AttemptTrigger())

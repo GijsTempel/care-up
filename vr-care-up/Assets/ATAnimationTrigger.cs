@@ -12,7 +12,6 @@ public class ATAnimationTrigger : MonoBehaviour
     // Update is called once per frame
     public void Execute()
     {
-        Debug.Log("@bbbbbbbbbbb:b");
         if (objectName != "" && trigger != "")
         {
             GameObject obj = GameObject.Find(objectName);

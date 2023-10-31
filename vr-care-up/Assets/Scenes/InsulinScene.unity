@@ -1878,7 +1878,6 @@ MonoBehaviour:
   leftActionManagerObject: Hello
   rightActionManagerObject: 
   walkToGroupName: 
-  debugElement: 0
 --- !u!114 &125058622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2943,7 +2942,6 @@ MonoBehaviour:
   leftActionManagerObject: PrescriptionForm
   rightActionManagerObject: 
   walkToGroupName: 
-  debugElement: 1
 --- !u!1 &198898795
 GameObject:
   m_ObjectHideFlags: 0
@@ -4409,9 +4407,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toShow: 0
-  toDelete: 1
+  toDelete: 0
   waitTime: 0
-  ControlObjectName: 
+  ControlObjectName: TutorialTriggers
   ObjNames:
   - 061ClickInTablet
   meshRenderer: 0
@@ -9296,6 +9294,53 @@ Transform:
   m_Father: {fileID: 1725832653}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &553925283
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 553925284}
+  - component: {fileID: 553925285}
+  m_Layer: 0
+  m_Name: PenInHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &553925284
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553925283}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1302240675}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &553925285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553925283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3d881b8fe62d23c98807418f1564b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handSide: 1
+  objectInHand: insuline
+  invert: 0
 --- !u!1 &560515854
 GameObject:
   m_ObjectHideFlags: 0
@@ -9774,7 +9819,6 @@ MonoBehaviour:
   leftActionManagerObject: DoubleCheck
   rightActionManagerObject: 
   walkToGroupName: 
-  debugElement: 0
 --- !u!1 &580524312
 GameObject:
   m_ObjectHideFlags: 0
@@ -10856,7 +10900,6 @@ MonoBehaviour:
   leftActionManagerObject: WorkField
   rightActionManagerObject: 
   walkToGroupName: 
-  debugElement: 0
 --- !u!1 &653058325
 GameObject:
   m_ObjectHideFlags: 0
@@ -12012,7 +12055,6 @@ MonoBehaviour:
   leftActionManagerObject: WorkField
   rightActionManagerObject: 
   walkToGroupName: 
-  debugElement: 0
 --- !u!1 &700253271
 GameObject:
   m_ObjectHideFlags: 0
@@ -12523,9 +12565,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toShow: 0
-  toDelete: 1
+  toDelete: 0
   waitTime: 0
-  ControlObjectName: 
+  ControlObjectName: TutorialTriggers
   ObjNames:
   - 061ClickInTablet
   meshRenderer: 0
@@ -12934,6 +12976,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 133f9e4afe5e397ca8e95cb973374271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &744298624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 744298625}
+  - component: {fileID: 744298626}
+  m_Layer: 0
+  m_Name: 080ShakePen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &744298625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744298624}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 858125199}
+  - {fileID: 1594185328}
+  m_Father: {fileID: 1199344748}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &744298626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744298624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f60adbd5442fdb61b9da60917bb77d04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerName: pinch_pen
+  waitTime: 4
 --- !u!1 &747186809
 GameObject:
   m_ObjectHideFlags: 0
@@ -15239,6 +15329,55 @@ MonoBehaviour:
   ObjNames:
   - 04 useOn2
   meshRenderer: 0
+--- !u!1 &858125198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 858125199}
+  - component: {fileID: 858125200}
+  m_Layer: 0
+  m_Name: ShakeAction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &858125199
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858125198}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 744298625}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &858125200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858125198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d825d90b0b868c2ab9175f65cf60a64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCurrentAction: 0
+  actionType: 3
+  leftActionManagerObject: InsulinPen
+  rightActionManagerObject: 
+  walkToGroupName: 
 --- !u!1 &874022415
 GameObject:
   m_ObjectHideFlags: 0
@@ -15448,7 +15587,6 @@ MonoBehaviour:
   leftActionManagerObject: WorkField
   rightActionManagerObject: 
   walkToGroupName: 
-  debugElement: 0
 --- !u!114 &879451681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15755,7 +15893,6 @@ MonoBehaviour:
   leftActionManagerObject: InsulinPenWithCap
   rightActionManagerObject: 
   walkToGroupName: Table
-  debugElement: 0
 --- !u!1 &903479716
 GameObject:
   m_ObjectHideFlags: 0
@@ -19709,7 +19846,6 @@ MonoBehaviour:
   leftActionManagerObject: Hello
   rightActionManagerObject: 
   walkToGroupName: 
-  debugElement: 0
 --- !u!1 &1106931510
 GameObject:
   m_ObjectHideFlags: 0
@@ -20387,7 +20523,6 @@ MonoBehaviour:
   leftActionManagerObject: WorkField
   rightActionManagerObject: 
   walkToGroupName: Table
-  debugElement: 0
 --- !u!1 &1143702103
 GameObject:
   m_ObjectHideFlags: 0
@@ -21479,6 +21614,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1199344748}
+  - component: {fileID: 1199344749}
   m_Layer: 0
   m_Name: TutorialTriggers
   m_TagString: Untagged
@@ -21506,9 +21642,25 @@ Transform:
   - {fileID: 1396779903}
   - {fileID: 233075352}
   - {fileID: 1110542371}
+  - {fileID: 1302240675}
+  - {fileID: 744298625}
   m_Father: {fileID: 0}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1199344749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199344747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b90bfd4d59e4d00a9dd05c729840146, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hidenObjects:
+  - {fileID: 1110542370}
 --- !u!1 &1204455796
 GameObject:
   m_ObjectHideFlags: 0
@@ -23304,6 +23456,54 @@ Transform:
   m_Father: {fileID: 1876237549}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 19.301, y: 5.704, z: -4.716}
+--- !u!1 &1302240674
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1302240675}
+  - component: {fileID: 1302240676}
+  m_Layer: 0
+  m_Name: 070ExamPen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1302240675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302240674}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1781894958}
+  - {fileID: 553925284}
+  m_Father: {fileID: 1199344748}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1302240676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302240674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f60adbd5442fdb61b9da60917bb77d04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerName: exam_pen
+  waitTime: 4
 --- !u!1 &1303823118
 GameObject:
   m_ObjectHideFlags: 0
@@ -24505,7 +24705,6 @@ MonoBehaviour:
   leftActionManagerObject: InsulinPenWithCap
   rightActionManagerObject: 
   walkToGroupName: Table
-  debugElement: 0
 --- !u!1 &1351821765
 GameObject:
   m_ObjectHideFlags: 0
@@ -25506,7 +25705,6 @@ MonoBehaviour:
   leftActionManagerObject: WorkField
   rightActionManagerObject: 
   walkToGroupName: Table
-  debugElement: 0
 --- !u!1 &1410120703
 GameObject:
   m_ObjectHideFlags: 0
@@ -28547,7 +28745,6 @@ MonoBehaviour:
   leftActionManagerObject: ShowBellyForInsulin
   rightActionManagerObject: 
   walkToGroupName: 
-  debugElement: 0
 --- !u!1 &1517600857
 GameObject:
   m_ObjectHideFlags: 0
@@ -29596,6 +29793,53 @@ Transform:
   m_Father: {fileID: 1808165104}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1594185327
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1594185328}
+  - component: {fileID: 1594185329}
+  m_Layer: 0
+  m_Name: PenInHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1594185328
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594185327}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 744298625}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1594185329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594185327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3d881b8fe62d23c98807418f1564b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handSide: 1
+  objectInHand: insuline
+  invert: 0
 --- !u!1 &1598203504
 GameObject:
   m_ObjectHideFlags: 0
@@ -31858,6 +32102,7 @@ GameObject:
   - component: {fileID: 1695242531}
   - component: {fileID: 1695242537}
   - component: {fileID: 3782183951739515764}
+  - component: {fileID: 3782183951739515765}
   m_Layer: 3
   m_Name: insuline
   m_TagString: Untagged
@@ -33715,6 +33960,55 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1350945339721870021, guid: dd50242a0086d7384b603a375973bb2d, type: 3}
   m_PrefabInstance: {fileID: 1776338889}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1781894957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1781894958}
+  - component: {fileID: 1781894959}
+  m_Layer: 0
+  m_Name: ExamPenAction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1781894958
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781894957}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1302240675}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1781894959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781894957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d825d90b0b868c2ab9175f65cf60a64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCurrentAction: 0
+  actionType: 4
+  leftActionManagerObject: InsulinPen
+  rightActionManagerObject: 
+  walkToGroupName: 
 --- !u!1 &1785955928
 GameObject:
   m_ObjectHideFlags: 0
@@ -34014,7 +34308,6 @@ MonoBehaviour:
   leftActionManagerObject: InsulinPenWithNeedle
   rightActionManagerObject: 
   walkToGroupName: Bed
-  debugElement: 0
 --- !u!1 &1804428562
 GameObject:
   m_ObjectHideFlags: 0
@@ -35383,7 +35676,6 @@ MonoBehaviour:
   leftActionManagerObject: HandCleaner
   rightActionManagerObject: 
   walkToGroupName: Table
-  debugElement: 0
 --- !u!1 &1846347520
 GameObject:
   m_ObjectHideFlags: 0
@@ -36540,7 +36832,6 @@ MonoBehaviour:
   leftActionManagerObject: Hello
   rightActionManagerObject: 
   walkToGroupName: Bed
-  debugElement: 0
 --- !u!1 &1932607679
 GameObject:
   m_ObjectHideFlags: 0
@@ -37636,7 +37927,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1940628411}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40333,7 +40624,6 @@ MonoBehaviour:
   leftActionManagerObject: 
   rightActionManagerObject: 
   walkToGroupName: '-'
-  debugElement: 0
 --- !u!1 &2118520470
 GameObject:
   m_ObjectHideFlags: 1
@@ -48871,6 +49161,27 @@ MonoBehaviour:
   - InsulinPenWithNeedle
   description: insulinepen
   nameArticle: de
+--- !u!95 &3782183951739515765
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695242530}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0f9b88090984c11a583fce6ab221e025, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!65 &3782183952038628761
 BoxCollider:
   m_ObjectHideFlags: 0

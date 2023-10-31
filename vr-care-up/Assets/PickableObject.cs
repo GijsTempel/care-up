@@ -65,7 +65,6 @@ public class PickableObject : MonoBehaviour
         if (deleteOnDrop)
             Destroy(gameObject);
 
-        Debug.Log("@ " + name + ": Drop");
         ShowViewElements(false);
         transformToFallow = null;
         if (gameObject.GetComponent<Rigidbody>() != null)

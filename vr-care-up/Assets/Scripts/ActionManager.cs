@@ -2280,8 +2280,6 @@ public class ActionManager : MonoBehaviour
     {
         if (currentSequence != null)
         {
-            Debug.Log("@ __Current Sequence:" + currentSequence.Completed.ToString() + " " +
-                Random.Range(0, 999).ToString());
             if (!currentSequence.Completed)
             {
                 currentSequence.NextStep();

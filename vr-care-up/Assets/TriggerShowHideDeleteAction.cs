@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TriggerShowHideDeleteAction : MonoBehaviour
@@ -27,7 +28,10 @@ public class TriggerShowHideDeleteAction : MonoBehaviour
 
     public void StartTimeout()
     {
-        timeOutStarted = true;
+        if (waitTime <= 0)
+            Proceed();
+        else
+            timeOutStarted = true;
     }
 
     void Proceed()

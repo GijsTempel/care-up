@@ -50,7 +50,6 @@ public class PlayerScript : MonoBehaviour
             Vector3.Scale(cameraTransform.forward, maskVec).normalized,
             Vector3.up);
 
-        Debug.Log("@rotAngle:" + yRot.ToString());
         transform.RotateAround(teleportAnchor.position, Vector3.up, -yRot);
         
     }

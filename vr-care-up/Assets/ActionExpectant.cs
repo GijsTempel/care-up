@@ -16,7 +16,6 @@ public class ActionExpectant : MonoBehaviour
     public string walkToGroupName = "";
     bool noExtraConditions = true;
     private PlayerScript player;
-    public bool debugElement = false;
 
     void Start()
     {
@@ -54,10 +53,6 @@ public class ActionExpectant : MonoBehaviour
         if (actionHandler == null)
             actionHandler = GameObject.FindObjectOfType<ActionHandler>();
         
-        if (debugElement)
-        {
-            Debug.Log("ddd");
-        }
         savedIsCurrentAction = actionHandler.CheckAction(actionType, leftActionManagerObject, rightActionManagerObject);
         if (noExtraConditions && walkToGroupName != "")
             isCurrentAction = savedIsCurrentAction;
