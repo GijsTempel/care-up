@@ -118,6 +118,9 @@ public class ActionTrigger : MonoBehaviour
                 transform.GetChild(i).GetComponent<ATAnimationTrigger>().Execute();
             if (transform.GetChild(i).GetComponent<ATAudioTrigger>() != null)
                 transform.GetChild(i).GetComponent<ATAudioTrigger>().Execute();
+            if (transform.GetChild(i).GetComponent<VRTutorialTigger>() != null)
+                transform.GetChild(i).GetComponent<VRTutorialTigger>().Execute();
+
         }
     }
 

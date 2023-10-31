@@ -9,6 +9,7 @@ public class VRTutorialTigger : MonoBehaviour
     float timeoutValue = 2f;
     PlayerScript playerScript;
     HeadTriggerRaycast headTriggerRaycast;
+    bool noConditions = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,27 +33,49 @@ public class VRTutorialTigger : MonoBehaviour
 
     bool CheckConditions()
     {
+        if (noConditions)
+            return false;
         if (playerScript.IsInCopyAnimationState())
             return false;
         if (headTriggerRaycast.IsLookingAtTeleport())
             return false;
+        int conditionElements = 0;
         for(int i = 0; i < transform.childCount; i++)
         {
             ActionExpectant e = transform.GetChild(i).GetComponent<ActionExpectant>();
-            if (e != null && !e.isCurrentAction)
-                return false;
+            if (e != null)
+            {
+                conditionElements++;
+                if (!e.isCurrentAction)
+                    return false;
+            }
             ItemInHandCheck itemInHandCheck = transform.GetChild(i).GetComponent<ItemInHandCheck>();
-            if (itemInHandCheck != null && !itemInHandCheck.Check())
+            if (itemInHandCheck != null)
+            {
+                conditionElements++;
+                if (!itemInHandCheck.Check())
+                    return false;
+            }
+            if (conditionElements == 0)
+            {
+                noConditions = true;
                 return false;
+            }
         }
         return true;
     }
 
-    void Execute()
+    public void Execute()
     {
         VRCollarHolder collarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
+
         if (collarHolder != null)
-            collarHolder.TriggerTutorialAnimation(triggerName);
+        {
+            if (triggerName != "")
+                collarHolder.TriggerTutorialAnimation(triggerName);
+            else
+                collarHolder.CloseTutorialShelf();
+        }
         
         for(int i = 0; i < transform.childCount; i++)
         {
