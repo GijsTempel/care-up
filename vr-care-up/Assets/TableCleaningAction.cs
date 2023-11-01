@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class TableCleaningAction : MonoBehaviour
 {
-    public GameObject cleanUpUI;
     public Image progressImage;
     public GameObject cleanColliderPrefab;
     public Vector3 posOffset = new Vector3(0.05f, 0, -0.05f);

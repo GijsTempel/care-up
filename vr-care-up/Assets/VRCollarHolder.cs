@@ -10,6 +10,9 @@ public class VRCollarHolder : MonoBehaviour
     Animator animator;
     bool isOpened = false;
     float openTimer = 5f;
+    float closeWaitTime = 1.5f;
+    float closeWaitTimeValue = 1.5f;
+    bool toClose = false;
 
     void Start()
     {
@@ -19,12 +22,19 @@ public class VRCollarHolder : MonoBehaviour
     public void TriggerTutorialAnimation(string triggerName)
     {
         if (!isOpened)
+        {
+            closeWaitTimeValue = closeWaitTime;
             OpenTutorialShelf();
+        }
         tutAnimator.SetTrigger(triggerName);
     }
 
     void Update()
     {   
+        if (isOpened && closeWaitTimeValue > 0)
+            closeWaitTimeValue -= Time.deltaTime;
+        if (toClose && closeWaitTimeValue <= 0)
+            CloseTutorialShelf();
         // if (!isOpened)
         // {
         //     openTimer -= Time.deltaTime;
@@ -51,6 +61,12 @@ public class VRCollarHolder : MonoBehaviour
     {
         if (!isOpened)
             return;
+        if (closeWaitTimeValue > 0)
+        {
+            toClose = true;
+            return;
+        }
+        toClose = false;
         animator.SetTrigger("Close");
         isOpened = false;
         openTimer = 5f;
