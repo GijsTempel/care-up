@@ -17,7 +17,7 @@ public class PlayerScript : MonoBehaviour
         get 
         {
             if (currentWTG != null)
-                return currentWTG.name;
+                return currentWTG.walkToGroupName;
             return ""; 
         }
     }

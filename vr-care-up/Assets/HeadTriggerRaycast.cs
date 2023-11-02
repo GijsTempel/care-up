@@ -99,7 +99,7 @@ public class HeadTriggerRaycast : MonoBehaviour
                 {
                     teleportProgressCanvas.SetActive(true);
                     teleportationProgressImage.fillAmount =
-                        Remap(teleportationTimeValue, 0f, teleportationWaitTime, 1f, 0f);
+                        Remap(teleportationTimeValue, 0f, teleportationWaitTime, 0f, 1f);
                 }
                 if (teleportationTimeValue > teleportationWaitTime)
                 {

@@ -104,7 +104,7 @@ public class SelectDialogue : MonoBehaviour
         progressTarget = newProgressTarget;
         if (progressTarget != null)
         {
-            progressImage.fillAmount = Mathf.Clamp01(progressCounter / MAX_PROGRESS_COUNTER);
+            progressImage.fillAmount = 1f - Mathf.Clamp01(progressCounter / MAX_PROGRESS_COUNTER);
             if (progressCounter < 0 && progressCounter > -1f)
             {
                 if (progressTarget.GetComponent<ActionTrigger>() != null)
