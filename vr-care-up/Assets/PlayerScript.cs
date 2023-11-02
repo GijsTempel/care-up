@@ -11,7 +11,18 @@ public class PlayerScript : MonoBehaviour
     const float OBJ_TRANS_DURATION = 0.2f;
     public AnimHandsTransform animHandsTransform;
     private Animator animHandsAnimator;
-    public string currentWTGName = "";
+
+    public string currentWTGName
+    {
+        get 
+        {
+            if (currentWTG != null)
+                return currentWTG.name;
+            return ""; 
+        }
+    }
+
+    private WalkToGroupVR currentWTG = null;
     private HandPoseControl leftHandPoseControl;
     private HandPoseControl rightHandPoseControl;
     private Transform mainCameraTransform;
@@ -32,26 +43,55 @@ public class PlayerScript : MonoBehaviour
     float actionTimeout = ACTION_WAIT_TIME;
     bool toBlockPlayerActions = false;
     public Transform cameraTransform;
+    WalkToGroupVR nextWTG = null;
+    Transform nextTeleportationAnchor = null;
+    public Animator fadeAnimator;
 
-    public void TriggerTeleportation(Transform teleportAnchor, WalkToGroupVR wtg = null)
+
+    public void ProceedWithTeleportation(bool toFadeOut = true)
     {
-        if (wtg != null)
-            wtg.PlayerWalkedIn();
-        else
-            UpdateWalkToGroup("");
+        if (nextTeleportationAnchor == null)
+            return;
+        if (currentWTG != null)
+            currentWTG.PlayerOut();
+        currentWTG = nextWTG;
         Vector3 maskVec = new Vector3(1f, 0f, 1f);
         Vector3 cameraOffset = Vector3.Scale(transform.position, maskVec) -
             Vector3.Scale(cameraTransform.position, maskVec);
         
-        transform.position = teleportAnchor.position + cameraOffset;
+        transform.position = nextTeleportationAnchor.position + cameraOffset;
 
         float yRot = Vector3.SignedAngle(
-            Vector3.Scale(teleportAnchor.forward, maskVec).normalized,
+            Vector3.Scale(nextTeleportationAnchor.forward, maskVec).normalized,
             Vector3.Scale(cameraTransform.forward, maskVec).normalized,
             Vector3.up);
 
-        transform.RotateAround(teleportAnchor.position, Vector3.up, -yRot);
-        
+        transform.RotateAround(nextTeleportationAnchor.position, Vector3.up, -yRot);
+        nextWTG = null;
+        nextTeleportationAnchor = null;
+        if (gameUIVR != null)
+            gameUIVR.UpdateHelpWitDelay(1f);
+        ActionManager.UpdateRequirements();
+        if (toFadeOut)
+            fadeAnimator.SetTrigger("out");
+    }
+
+
+    public void TriggerTeleportation(Transform teleportAnchor, WalkToGroupVR wtg = null, bool immediate = false)
+    {
+        nextWTG = wtg;
+        nextTeleportationAnchor = teleportAnchor;
+        if (nextWTG != null)
+            nextWTG.PlayerWalkedIn();
+        VRCollarHolder vRCollarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
+        if (vRCollarHolder != null)
+            vRCollarHolder.CloseTutorialShelf();
+        if (immediate)
+        {
+            ProceedWithTeleportation(false);
+            return;
+        }
+        fadeAnimator.SetTrigger("in");
     }
 
     public void BlockPlayerActions(bool toBlock)
@@ -75,7 +115,7 @@ public class PlayerScript : MonoBehaviour
 
     public bool Away()
     {
-        return currentWTGName == "";
+        return currentWTG == null;
     }
 
     public bool IsInAction()
@@ -354,15 +394,5 @@ public class PlayerScript : MonoBehaviour
         EnableRaycastControllers(!IsInCopyAnimationState());
     }
 
-    public void UpdateWalkToGroup(string WTGName)
-    {
-        VRCollarHolder vRCollarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
-        if (vRCollarHolder != null)
-            vRCollarHolder.CloseTutorialShelf();
-        currentWTGName = WTGName;
-        if (gameUIVR != null)
-            gameUIVR.UpdateHelpWitDelay(1f);
-        ActionManager.UpdateRequirements();
-    }
 
 }
