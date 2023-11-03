@@ -50,6 +50,13 @@ public class ActionExpectant : MonoBehaviour
     
     public void UpdateAction()
     {
+        if (actionType == ActionManager.ActionType.None)
+        {
+            savedIsCurrentAction = true;
+            isCurrentAction = savedIsCurrentAction;
+            return;
+        }
+
         if (actionHandler == null)
             actionHandler = GameObject.FindObjectOfType<ActionHandler>();
         
@@ -74,11 +81,13 @@ public class ActionExpectant : MonoBehaviour
             return;
         }
         
-        if ((walkToGroupName != "" && player.currentWTGName != walkToGroupName))
-        {
-            isCurrentAction = false;
-            return;
-        }
+        if (walkToGroupName != "-")
+            if (walkToGroupName != "" && player.currentWTGName != walkToGroupName)
+            {
+                isCurrentAction = false;
+                return;
+            }
+            
         if (!noExtraConditions)
             for (int i = 0; i < transform.childCount; i++)
             {

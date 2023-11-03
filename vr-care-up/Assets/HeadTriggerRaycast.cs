@@ -90,6 +90,11 @@ public class HeadTriggerRaycast : MonoBehaviour
             WalkToGroupVR currentTeleportAnchor = null;
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit thit, 10f, teleportLayerMask))
             {
+                if (thit.collider.tag == "ScreenCollider")
+                {
+                    pointer3DObject.transform.position = thit.point;
+                    set3DPointerVisible = true;
+                }
                 WalkToGroupVR teleportationAnchor = thit.collider.GetComponent<WalkToGroupVR>();
                 if (teleportationAnchor != null)
                 {
