@@ -10,11 +10,16 @@ using UnityEngine.UIElements;
 
 public class HeadTriggerRaycast : MonoBehaviour
 {
+    public GameObject pointer3DObject;
     [Range(0f, 120f)]
     public float coneAngle = 25f;
     [Range(0f, 2f)]
     public float rayCastDistance = 0.5f;
     WalkToGroupVR savedTeleportAnchor = null;
+    float hoveringButtonTimerValue = 2f;
+
+    HoveringRayButtonCollider currentHoveringButton = null;
+    HoveringRayButtonCollider executedHoveringButton = null;
 
 
     PlayerScript player;
@@ -63,8 +68,8 @@ public class HeadTriggerRaycast : MonoBehaviour
 
     void UpdateRayCast()
     {
+        bool set3DPointerVisible = false;
         const int layerMask = 0b01001001;
-
         //UI pointer ray
         const int pointerLayerMask = 0b100000000;
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit phit, 5f, pointerLayerMask))
@@ -77,6 +82,7 @@ public class HeadTriggerRaycast : MonoBehaviour
                 raycastButton.PointerRayHit(phit.point);
         }
 
+        //Teleportation / single button Ray
         if (!player.IsInCopyAnimationState())
         {
             const int teleportLayerMask = 0b1111111111;
@@ -91,6 +97,50 @@ public class HeadTriggerRaycast : MonoBehaviour
                         UnityEngine.Random.Range(0, 9999).ToString());
                     currentTeleportAnchor = teleportationAnchor;
                 }
+
+                //Hovering button raycast operations
+                HoveringRayButtonCollider hoveringButton = thit.collider.GetComponent<HoveringRayButtonCollider>();
+                if (hoveringButton != null)
+                {
+                    pointer3DObject.transform.position = thit.point;
+                    set3DPointerVisible = true;
+                }
+                //eyes moved from hovering button
+                //Then hide it's progress image
+                if (currentHoveringButton != null && currentHoveringButton != hoveringButton)
+                    currentHoveringButton.SetProgressValue(-1f);
+                
+                //eyes moved to new hovering button
+                if (hoveringButton != null && hoveringButton != currentHoveringButton)
+                {
+                    hoveringButtonTimerValue = hoveringButton.waitTime;
+                    executedHoveringButton = null;
+                    // currentHoveringButton.SetProgressValue(-1f);
+                }
+
+                //eyes stayed on the same hovering button
+                //and it was not executed yet
+                if (currentHoveringButton != null && 
+                    hoveringButton == currentHoveringButton &&
+                    executedHoveringButton != hoveringButton)
+                {
+                    hoveringButtonTimerValue -= Time.deltaTime;
+                    float progressValue = 1f - Mathf.Clamp01(
+                        hoveringButtonTimerValue / hoveringButton.waitTime);
+                    hoveringButton.SetProgressValue(progressValue);
+                    if (hoveringButtonTimerValue < 0)
+                    {
+                        //execute hovering button action
+                        currentHoveringButton.Execute();
+                        executedHoveringButton = currentHoveringButton;
+                    }
+                }
+                if (hoveringButton == null)
+                    executedHoveringButton = null;
+
+                currentHoveringButton = hoveringButton;
+
+                
             }
             if (!justTeleported && currentTeleportAnchor != null && savedTeleportAnchor == currentTeleportAnchor)
             {
@@ -116,7 +166,7 @@ public class HeadTriggerRaycast : MonoBehaviour
             }
             savedTeleportAnchor = currentTeleportAnchor;
         }
-
+        pointer3DObject.SetActive(set3DPointerVisible);
         if (actionManager == null)
         {
             Debug.LogWarning("UpdateRayCast() failed, actionManager is null");
