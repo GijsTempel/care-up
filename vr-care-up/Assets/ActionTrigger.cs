@@ -120,7 +120,8 @@ public class ActionTrigger : MonoBehaviour
                 transform.GetChild(i).GetComponent<ATAudioTrigger>().Execute();
             if (transform.GetChild(i).GetComponent<VRTutorialTigger>() != null)
                 transform.GetChild(i).GetComponent<VRTutorialTigger>().Execute();
-
+            if (transform.GetChild(i).GetComponent<ActionTriggerIgniter>() != null)
+                transform.GetChild(i).GetComponent<ActionTriggerIgniter>().Execute();
         }
     }
 

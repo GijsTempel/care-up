@@ -12,14 +12,6 @@ public class ItemInHandCheck : MonoBehaviour
     public bool Check()
     {
         PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
-        string ss = "@Objects In Hands: L|";
-        if (player.GetObjectInHand(true) != null)
-            ss += (player.GetObjectInHand(true).name + " ");
-        ss += "R|";
-        if (player.GetObjectInHand(false) != null)
-            ss += (player.GetObjectInHand(false).name + " ");
-        
-        Debug.Log(ss);
         if (handSide == ActionTrigger.TriggerHand.None)
         {
             if (player.GetObjectInHand(true) != null && player.GetObjectInHand(false) == true)

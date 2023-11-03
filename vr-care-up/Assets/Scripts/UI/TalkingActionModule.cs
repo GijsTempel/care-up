@@ -19,15 +19,17 @@ public class TalkingActionModule : MonoBehaviour
     public string dialogueXml;
     public string walkToGroupName = "";
     private List<SelectDialogue.DialogueOption> optionsList;
-    public ActionExpectant actionExpectant;
+    private ActionExpectant actionExpectant;
     public static TalkingActionModule latestCaller = null;
     private PlayerScript player;
     private string currentPlayerWTG = "";
     private bool toShowDialogue = false;
     public ActionTrigger notifBubbleActionTrigger;
+    public ActionTriggerIgniter actionTriggerIgniter;
 
     void Start()
     {
+        actionExpectant = GetComponent<ActionExpectant>();
         player = GameObject.FindObjectOfType<PlayerScript>();
         actionManager = GameObject.FindAnyObjectByType<ActionManager>();
         optionsList = new List<SelectDialogue.DialogueOption>();
@@ -66,9 +68,9 @@ public class TalkingActionModule : MonoBehaviour
             selectionDialogueInstance = Object.Instantiate(selectionDialogPrefab, notifBubbleAnchor) as GameObject;
             selectionDialogueInstance.transform.localPosition = new Vector3();
             selectionDialogueInstance.transform.localRotation = Quaternion.identity;
-
-            TalkSelectionOptions dialogue = selectionDialogueInstance.GetComponent<TalkSelectionOptions>();
-            dialogue.actionExpectant = actionExpectant;
+            SelectDialogue dialogue = selectionDialogueInstance.GetComponent<SelectDialogue>();
+            dialogue.actionType = ActionManager.ActionType.PersonTalk;
+            dialogue.actionTriggerIgniter = actionTriggerIgniter;
             dialogue.AddOptions(optionsList);
         }
     }

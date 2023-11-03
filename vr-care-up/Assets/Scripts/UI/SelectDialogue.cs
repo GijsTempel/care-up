@@ -10,6 +10,11 @@ using UnityEngine.Rendering;
 public class SelectDialogue : MonoBehaviour
 {
     public Image progressImage;
+    public GameObject line2;
+    public VerticalLayoutGroup answerPanelVerticalLayoutGroup;
+
+    [HideInInspector]
+    public ActionTriggerIgniter actionTriggerIgniter;
 
     /*public bool tutorial_lock = false;
     public bool cheated = false;*/
@@ -31,6 +36,7 @@ public class SelectDialogue : MonoBehaviour
 
     GameObject progressTarget;
     GameObject newProgressTarget;
+    public ActionManager.ActionType actionType = ActionManager.ActionType.SequenceStep;
 
     public class DialogueOption
     {
@@ -107,9 +113,7 @@ public class SelectDialogue : MonoBehaviour
             if (progressCounter < 0 && progressCounter > -1f)
             {
                 if (progressTarget.GetComponent<ActionTrigger>() != null)
-                {
                     progressTarget.GetComponent<ActionTrigger>().AttemptTrigger();
-                }
                 progressCounter = -2f;
             }
         }
@@ -200,46 +204,36 @@ public class SelectDialogue : MonoBehaviour
             Debug.LogError("0 options inited.");
             return;
         }
-
         for (int i = 0; i < 4; i++)
         {
             if (i < options.Count)
             {
                 sqButtons[i].gameObject.SetActive(true);
-                /*string cheatSimbol = "";
-#if UNITY_EDITOR
-                ObjectsIDsController objectsIDsController = GameObject.FindAnyObjectByType<ObjectsIDsController>();
-                if (objectsIDsController != null && objectsIDsController.cheat)
-                {
-                    if (options[i].attribute != "" && options[i].attribute != "CM_Leave")
-                        cheatSimbol = "@";
-                }
-#endif*/
+
                 sqButtons[i].transform.Find("Text").GetComponent<Text>().text = /*cheatSimbol +*/ options[i].text;
+
+                sqButtons[i].GetComponent<ActionTrigger>().actionType = actionType;
                 sqButtons[i].GetComponent<ActionTrigger>().LeftActionManagerObject = options[i].attribute;
-                /*if (gameUI.AllowAutoPlay(false))
-                    if (options[i].attribute != "" && options[i].attribute != "CM_Leave")
-                    {
-                        correctAnswerID = i;
-                        Invoke("AutoPlay", 3f);
-                    }*/
+                if (actionTriggerIgniter != null && options[i].attribute != "")
+                    actionTriggerIgniter.transform.parent = sqButtons[i].transform;
             }
             else
                 sqButtons[i].gameObject.SetActive(false);
         }
-     
-        //ShowAnswer();
-    }
 
-    /*void AutoPlay()
-    {
-        if (correctAnswerID >= 0)
+        if (line2 != null)
+            line2.SetActive(options.Count > 2);
+        if (options.Count <= 2)
         {
-            if (sqButtons[correctAnswerID].gameObject.activeSelf)
-                sqButtons[correctAnswerID].GetComponent<Button>().onClick.Invoke();
+            answerPanelVerticalLayoutGroup.padding.top = 50;
+            answerPanelVerticalLayoutGroup.padding.bottom = 50;
         }
-    }*/
-
+        else
+        {
+            answerPanelVerticalLayoutGroup.padding.top = 0;
+            answerPanelVerticalLayoutGroup.padding.bottom = 0;
+        }
+    }
     public void SetText(string t)
     {
         text = t;
