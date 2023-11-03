@@ -9,7 +9,6 @@ using UnityEngine.Rendering;
 /// </summary>
 public class SelectDialogue : MonoBehaviour
 {
-    public Transform testObject;
     public Image progressImage;
 
     /*public bool tutorial_lock = false;
