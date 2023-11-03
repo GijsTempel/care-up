@@ -11,6 +11,7 @@ public class HoveringRayButtonCollider : MonoBehaviour
 
     public Image progressImage;
     public float waitTime = 1.5f;
+    public PickableObject pickableObject;
 
     public void SetProgressValue(float value)
     {

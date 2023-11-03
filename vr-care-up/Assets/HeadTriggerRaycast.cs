@@ -85,7 +85,7 @@ public class HeadTriggerRaycast : MonoBehaviour
         //Teleportation / single button Ray
         if (!player.IsInCopyAnimationState())
         {
-            const int teleportLayerMask = 0b1111111111;
+            const int teleportLayerMask = 0b11100111111;
             teleportProgressCanvas.SetActive(false);
             WalkToGroupVR currentTeleportAnchor = null;
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit thit, 10f, teleportLayerMask))
@@ -107,8 +107,16 @@ public class HeadTriggerRaycast : MonoBehaviour
                 HoveringRayButtonCollider hoveringButton = thit.collider.GetComponent<HoveringRayButtonCollider>();
                 if (hoveringButton != null)
                 {
-                    pointer3DObject.transform.position = thit.point;
-                    set3DPointerVisible = true;
+                    if (hoveringButton.pickableObject != null &&
+                            player.GetHandWithThisObject(hoveringButton.pickableObject.gameObject) == null)
+                    {
+                        hoveringButton = null;
+                    }
+                    else
+                    {
+                        pointer3DObject.transform.position = thit.point;
+                        set3DPointerVisible = true;
+                    }
                 }
                 //eyes moved from hovering button
                 //Then hide it's progress image
