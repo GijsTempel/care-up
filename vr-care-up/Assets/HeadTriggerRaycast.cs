@@ -83,6 +83,7 @@ public class HeadTriggerRaycast : MonoBehaviour
         }
 
         //Teleportation / single button Ray
+        HoveringRayButtonCollider hoveringButton = null;
         if (!player.IsInCopyAnimationState())
         {
             const int teleportLayerMask = 0b11100111111;
@@ -104,7 +105,7 @@ public class HeadTriggerRaycast : MonoBehaviour
                 }
 
                 //Hovering button raycast operations
-                HoveringRayButtonCollider hoveringButton = thit.collider.GetComponent<HoveringRayButtonCollider>();
+                hoveringButton = thit.collider.GetComponent<HoveringRayButtonCollider>();
                 if (hoveringButton != null)
                 {
                     if (hoveringButton.pickableObject != null &&
@@ -128,7 +129,6 @@ public class HeadTriggerRaycast : MonoBehaviour
                 {
                     hoveringButtonTimerValue = hoveringButton.waitTime;
                     executedHoveringButton = null;
-                    // currentHoveringButton.SetProgressValue(-1f);
                 }
 
                 //eyes stayed on the same hovering button
@@ -148,13 +148,8 @@ public class HeadTriggerRaycast : MonoBehaviour
                         executedHoveringButton = currentHoveringButton;
                     }
                 }
-                if (hoveringButton == null)
-                    executedHoveringButton = null;
-
-                currentHoveringButton = hoveringButton;
-
-                
             }
+
             if (!justTeleported && currentTeleportAnchor != null && savedTeleportAnchor == currentTeleportAnchor)
             {
                 teleportationTimeValue += Time.deltaTime;
@@ -179,6 +174,15 @@ public class HeadTriggerRaycast : MonoBehaviour
             }
             savedTeleportAnchor = currentTeleportAnchor;
         }
+        if (hoveringButton == null)
+        {
+            executedHoveringButton = null;
+            if (currentHoveringButton != null)
+                currentHoveringButton.SetProgressValue(-1f);
+        }
+        
+        currentHoveringButton = hoveringButton;
+
         pointer3DObject.SetActive(set3DPointerVisible);
         if (actionManager == null)
         {

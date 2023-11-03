@@ -43,11 +43,24 @@ public class TalkingActionModule : MonoBehaviour
             notifBubbleInstance = GameObject.Instantiate<GameObject>(notifBubblePrefab, notifBubbleAnchor);
             notifBubbleInstance.transform.localRotation = Quaternion.identity;
             notifBubbleInstance.SetActive(false);
-            UnityEngine.UI.Button button = notifBubbleInstance.GetComponentInChildren<UnityEngine.UI.Button>();
+            UnityEngine.UI.Button button = 
+                notifBubbleInstance.GetComponentInChildren<UnityEngine.UI.Button>();
+            
             if (button != null)
+            {
                 button.onClick.AddListener(delegate { Debug.Log("delegateButtonClickTest"); this.ShowChatOptions(); });
-            if (button != null && notifBubbleActionTrigger != null)
-                button.onClick.AddListener(delegate { notifBubbleActionTrigger.AttemptTrigger(); } );
+                if (notifBubbleActionTrigger != null)
+                    button.onClick.AddListener(delegate { notifBubbleActionTrigger.AttemptTrigger(); } );
+            }
+
+            HoveringRayButtonCollider hoverButton =
+                notifBubbleInstance.GetComponentInChildren<HoveringRayButtonCollider>();
+            if (hoverButton != null)
+            {
+                hoverButton.triggerButton.AddListener(delegate { Debug.Log("delegateButtonClickTest"); this.ShowChatOptions(); });
+                if (notifBubbleActionTrigger != null)
+                    hoverButton.triggerButton.AddListener(delegate { notifBubbleActionTrigger.AttemptTrigger(); } );
+            }
 
             //---------------------------------------------
             selectionDialogueInstance = Object.Instantiate(selectionDialogPrefab, notifBubbleAnchor) as GameObject;

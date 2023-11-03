@@ -109,7 +109,7 @@ public class SelectDialogue : MonoBehaviour
             {
                 if (progressTarget.GetComponent<ActionTrigger>() != null)
                 {
-                    progressTarget.GetComponent<ActionTrigger>().GetComponentInChildren<ActionCollider>().RayTriggerAction();
+                    progressTarget.GetComponent<ActionTrigger>().AttemptTrigger();
                 }
                 progressCounter = -2f;
             }
