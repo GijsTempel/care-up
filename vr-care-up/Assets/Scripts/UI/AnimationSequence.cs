@@ -161,6 +161,16 @@ public class AnimationSequence
         }
     }
 
+    SelectDialogue GetCurrentStepSelectionDialogue()
+    {
+        foreach(SelectDialogue s in GameObject.FindObjectsOfType<SelectDialogue>())
+        {
+            if (s.actionType == ActionManager.ActionType.SequenceStep)
+                return s;
+        }
+        return null;
+    }
+
     /// <summary>
     /// Handles result of selection of sequence step.
     /// </summary>
@@ -172,12 +182,12 @@ public class AnimationSequence
         {
             if (dialogueOption != null)
             {
-                Object.Destroy(GameObject.Find("SelectionDialogue"));
+                // Object.Destroy(GameObject.Find("SelectionDialogue"));
                 NextStep(dialogueOption);
 
                 if (!ActionManager.practiceMode)
                 {
-                    GameObject selectionDialogue = GameObject.Find("SelectionDialogue");
+                    SelectDialogue selectionDialogue = GetCurrentStepSelectionDialogue();
                     if (selectionDialogue != null)
                     {
                         selectionDialogue.transform.Find("Top").Find("Title").GetComponent<Text>().text = question;
@@ -268,7 +278,8 @@ public class AnimationSequence
             {
                 actionManager.OnSequenceStepAction(animation);
                 pointsEarned++;
-                Object.Destroy(GameObject.Find("SelectionDialogue"));
+                //??????
+                // Object.Destroy(GameObject.Find("SelectionDialogue"));
                 //PlayerAnimationManager.NextSequenceStep(false);
 
                 AudioClip clip = Resources.Load<AudioClip>("Audio/" + audio);
@@ -283,20 +294,20 @@ public class AnimationSequence
     public void NextStep(List<SelectDialogue.DialogueOption> additionalSteps = null)
     {
         //GameObject.FindObjectOfType<GameUI>().ShowIpad(true);     
-
-        GameObject dialogueObject = GameObject.FindObjectOfType<SelectDialogue>(true) != null ? 
-            GameObject.FindObjectOfType<SelectDialogue>(true).gameObject : null;
+        //?????
+        // GameObject dialogueObject = GameObject.FindObjectOfType<SelectDialogue>(true) != null ? 
+        //     GameObject.FindObjectOfType<SelectDialogue>(true).gameObject : null;
 
         if (currentStep < steps.Count)
         {
             // destroying and instantiating a new one is probably not the best way to do it
             // but this was the way for years, might refactor later
-            if (dialogueObject != null)
-            {
-                Object.Destroy(dialogueObject.gameObject);
-            }
+            // if (dialogueObject != null)
+            // {
+            //     Object.Destroy(dialogueObject.gameObject);
+            // }
             Transform head = GameObject.Find("HeadTriggerRaycast").transform;
-            dialogueObject = Object.Instantiate(Resources.Load<GameObject>("SelectionDialogue"),
+            GameObject dialogueObject = Object.Instantiate(Resources.Load<GameObject>("SelectionDialogue"),
                 head.position + head.forward, Quaternion.identity) as GameObject;
             dialogueObject.transform.LookAt(head, Vector3.up);
             dialogueObject.transform.Rotate(Vector3.up, 180f);
@@ -333,11 +344,11 @@ public class AnimationSequence
         }
         else
         {
-            if (dialogueObject != null)
-            {
-                // maybe obsolete
-                Object.Destroy(dialogueObject.gameObject);
-            }
+            // if (dialogueObject != null)
+            // {
+            //     // maybe obsolete
+            //     Object.Destroy(dialogueObject.gameObject);
+            // }
             /*CameraMode cameraMode = GameObject.Find("GameLogic").GetComponent<CameraMode>();
             cameraMode.ToggleCameraMode(CameraMode.Mode.Cinematic);
             cameraMode.animationEnded = true;

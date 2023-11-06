@@ -1231,6 +1231,37 @@ Transform:
   m_Father: {fileID: 207414492}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &88160450
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 88160451}
+  m_Layer: 0
+  m_Name: NotifAnchor2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &88160451
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88160450}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 733717896}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &88327398
 GameObject:
   m_ObjectHideFlags: 0
@@ -2117,7 +2148,7 @@ MonoBehaviour:
   actionType: 2
   leftActionManagerObject: Hello
   rightActionManagerObject: 
-  walkToGroupName: 
+  walkToGroupName: Bed
 --- !u!114 &125058622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2134,9 +2165,9 @@ MonoBehaviour:
   notifBubblePrefab: {fileID: 3987040014674518261, guid: 56a73d836f961234c92d825a904cb061, type: 3}
   notifBubbleAnchor: {fileID: 1930786931}
   dialogueXml: 
-  walkToGroupName: Bed
   notifBubbleActionTrigger: {fileID: 2129548183}
   actionTriggerIgniter: {fileID: 889112779}
+  debugElement: 0
 --- !u!1 &130413862
 GameObject:
   m_ObjectHideFlags: 0
@@ -11043,9 +11074,9 @@ MonoBehaviour:
   notifBubblePrefab: {fileID: 3987040014674518261, guid: 3674a622b7732b17da47f766297c6355, type: 3}
   notifBubbleAnchor: {fileID: 1846347521}
   dialogueXml: DoctorDialog
-  walkToGroupName: Table
   notifBubbleActionTrigger: {fileID: 0}
   actionTriggerIgniter: {fileID: 443356701}
+  debugElement: 0
 --- !u!114 &580037286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11062,7 +11093,7 @@ MonoBehaviour:
   actionType: 2
   leftActionManagerObject: DoubleCheck
   rightActionManagerObject: 
-  walkToGroupName: 
+  walkToGroupName: Table
 --- !u!1 &580524312
 GameObject:
   m_ObjectHideFlags: 0
@@ -14121,6 +14152,7 @@ Transform:
   m_Children:
   - {fileID: 125058620}
   - {fileID: 1930786931}
+  - {fileID: 88160451}
   - {fileID: 1516784079}
   - {fileID: 1933024192}
   - {fileID: 2129548182}
@@ -15308,7 +15340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &767964570
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20253,7 +20285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1046248828
 Transform:
   m_ObjectHideFlags: 0
@@ -21552,9 +21584,9 @@ MonoBehaviour:
   notifBubblePrefab: {fileID: 3987040014674518261, guid: 56a73d836f961234c92d825a904cb061, type: 3}
   notifBubbleAnchor: {fileID: 453009999}
   dialogueXml: 
-  walkToGroupName: Table
   notifBubbleActionTrigger: {fileID: 0}
   actionTriggerIgniter: {fileID: 0}
+  debugElement: 0
 --- !u!114 &1098674753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35793,7 +35825,7 @@ Transform:
   - {fileID: 1393214128}
   - {fileID: 522175278}
   m_Father: {fileID: 733717896}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1516784080
 MonoBehaviour:
@@ -35809,11 +35841,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionDialogPrefab: {fileID: 2625760632219510049, guid: 02a2f06edfb06b544a4ca2273175a922, type: 3}
   notifBubblePrefab: {fileID: 3987040014674518261, guid: 56a73d836f961234c92d825a904cb061, type: 3}
-  notifBubbleAnchor: {fileID: 1930786931}
+  notifBubbleAnchor: {fileID: 88160451}
   dialogueXml: InsulinPatient
-  walkToGroupName: Bed
   notifBubbleActionTrigger: {fileID: 0}
   actionTriggerIgniter: {fileID: 522175279}
+  debugElement: 1
 --- !u!114 &1516784081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35830,7 +35862,7 @@ MonoBehaviour:
   actionType: 2
   leftActionManagerObject: ShowBellyForInsulin
   rightActionManagerObject: 
-  walkToGroupName: 
+  walkToGroupName: Bed
 --- !u!1 &1517600857
 GameObject:
   m_ObjectHideFlags: 0
@@ -44546,7 +44578,7 @@ Transform:
   - {fileID: 1471807798}
   - {fileID: 1803806489}
   m_Father: {fileID: 733717896}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1933024195
 MonoBehaviour:
@@ -47557,7 +47589,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: BUILD #8
+  m_Text: BUILD #9
 --- !u!222 &2044717554
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -48741,7 +48773,7 @@ Transform:
   m_Children:
   - {fileID: 1932671971}
   m_Father: {fileID: 733717896}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2129548183
 MonoBehaviour:

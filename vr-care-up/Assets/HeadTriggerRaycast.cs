@@ -193,6 +193,8 @@ public class HeadTriggerRaycast : MonoBehaviour
         ActionManager.ActionType actionType = ActionManager.ActionType.None;
         actionType = actionManager.IsNextActionExamineAction() ? ActionManager.ActionType.ObjectExamine : actionType;
         actionType = actionManager.IsNextActionSequenceStep() ? ActionManager.ActionType.SequenceStep : actionType;
+        
+        //???????
         // check whether the ActionType is either of these two
         // aka we don't need to raycast if action type is wrong
         if (GameObject.Find("SelectionDialogue") != null)

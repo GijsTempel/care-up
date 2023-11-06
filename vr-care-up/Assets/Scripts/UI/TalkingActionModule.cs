@@ -17,7 +17,6 @@ public class TalkingActionModule : MonoBehaviour
     public Transform notifBubbleAnchor;
 
     public string dialogueXml;
-    public string walkToGroupName = "";
     private List<SelectDialogue.DialogueOption> optionsList;
     private ActionExpectant actionExpectant;
     public static TalkingActionModule latestCaller = null;
@@ -26,6 +25,7 @@ public class TalkingActionModule : MonoBehaviour
     private bool toShowDialogue = false;
     public ActionTrigger notifBubbleActionTrigger;
     public ActionTriggerIgniter actionTriggerIgniter;
+    public bool debugElement = false;
 
     void Start()
     {
@@ -66,6 +66,7 @@ public class TalkingActionModule : MonoBehaviour
 
             //---------------------------------------------
             selectionDialogueInstance = Object.Instantiate(selectionDialogPrefab, notifBubbleAnchor) as GameObject;
+            selectionDialogueInstance.name = "SelectionDialogueTalk";
             selectionDialogueInstance.transform.localPosition = new Vector3();
             selectionDialogueInstance.transform.localRotation = Quaternion.identity;
             SelectDialogue dialogue = selectionDialogueInstance.GetComponent<SelectDialogue>();
@@ -97,16 +98,18 @@ public class TalkingActionModule : MonoBehaviour
 
     void UpdateNotifBubble()
     {
-        // Debug.Log("@pcWTG == wtgName: " + (player.currentWTGName == walkToGroupName).ToString());
-        if (player.currentWTGName == walkToGroupName && actionExpectant.isCurrentAction)
+
+        if (actionExpectant.isCurrentAction)
         {
             notifBubbleInstance.SetActive(!toShowDialogue);
-            selectionDialogueInstance.SetActive(toShowDialogue);
+            if (selectionDialogueInstance != null)
+                selectionDialogueInstance.SetActive(toShowDialogue);
         }
         else
         {
             notifBubbleInstance.SetActive(false);
-            selectionDialogueInstance.SetActive(false);
+            if (selectionDialogueInstance != null)
+                selectionDialogueInstance.SetActive(false);
         }
     }
 
