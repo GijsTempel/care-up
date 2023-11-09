@@ -303,6 +303,8 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
                 m_HandRoot.transform.localRotation = Quaternion.identity;
 
                 Transform wristRootXform = null;
+                if (m_HandRoot.transform.Find("Armature") != null)
+                    m_HandRoot.transform.Find("Armature").GetChild(0).parent = m_HandRoot.transform;
                 for (int childIndex = 0; childIndex < m_HandRoot.transform.childCount; ++childIndex)
                 {
                     var child = m_HandRoot.transform.GetChild(childIndex);
@@ -436,7 +438,7 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
             public void UpdateRootPose(XRHand hand)
             {
                 var xform = m_JointXforms[XRHandJointID.Wrist.ToIndex()];
-                xform.localPosition = hand.rootPose.position;
+                xform.localPosition = hand.rootPose.position;//!!!!!!
                 xform.localRotation = hand.rootPose.rotation;
             }
 
