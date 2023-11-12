@@ -58,8 +58,15 @@ public class ActionExpectant : MonoBehaviour
         }
 
         if (actionHandler == null)
-            actionHandler = GameObject.FindObjectOfType<ActionHandler>();
-        
+        {
+            if ((actionHandler = GameObject.FindObjectOfType<ActionHandler>()) == null)
+            {
+                // we're here if there's still no actionHandler after looking for one
+                Debug.LogWarning("No actionHandler found, not a game scene?");
+                return;
+            }
+        }
+
         savedIsCurrentAction = actionHandler.CheckAction(actionType, leftActionManagerObject, rightActionManagerObject);
         if (noExtraConditions && walkToGroupName != "")
             isCurrentAction = savedIsCurrentAction;
