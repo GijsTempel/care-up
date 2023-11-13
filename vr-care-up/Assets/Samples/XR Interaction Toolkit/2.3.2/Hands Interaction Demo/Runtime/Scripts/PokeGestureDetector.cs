@@ -19,7 +19,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
 #else
         int m_Handedness;
 #endif
-
+        const float PINCH_DIST = 0.01f;
         [SerializeField]
         [Tooltip("Called when the hand has started a poke gesture.")]
         UnityEvent m_PokeGestureStarted;
@@ -31,6 +31,8 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
 #if XR_HANDS
         XRHandSubsystem m_Subsystem;
         bool m_IsPoking;
+        bool m_IsGripping;
+        bool m_IsPinching;
 
         static readonly List<XRHandSubsystem> s_Subsystems = new List<XRHandSubsystem>();
 #endif
@@ -70,6 +72,8 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
         void OnUpdatedHands(XRHandSubsystem subsystem, XRHandSubsystem.UpdateSuccessFlags updateSuccessFlags, XRHandSubsystem.UpdateType updateType)
         {
             var wasPoking = m_IsPoking;
+            var wasGripping = m_IsGripping;
+            var wasPinching = m_IsPinching;
             switch (m_Handedness)
             {
                 case Handedness.Left:
@@ -79,6 +83,8 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
                     var leftHand = subsystem.leftHand;
                     m_IsPoking = IsIndexExtended(leftHand) && IsMiddleGrabbing(leftHand) && IsRingGrabbing(leftHand) &&
                         IsLittleGrabbing(leftHand);
+                    m_IsGripping = IsMiddleGrabbing(leftHand) && IsRingGrabbing(leftHand) && IsLittleGrabbing(leftHand);
+                    m_IsPinching = IsIndexPinching(leftHand, name);
                     break;
                 case Handedness.Right:
                     if (!HasUpdateSuccessFlag(updateSuccessFlags, XRHandSubsystem.UpdateSuccessFlags.RightHandJoints))
@@ -87,6 +93,8 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
                     var rightHand = subsystem.rightHand;
                     m_IsPoking = IsIndexExtended(rightHand) && IsMiddleGrabbing(rightHand) && IsRingGrabbing(rightHand) &&
                         IsLittleGrabbing(rightHand);
+                    m_IsGripping = IsMiddleGrabbing(rightHand) && IsRingGrabbing(rightHand) && IsLittleGrabbing(rightHand);
+                    m_IsPinching = IsIndexPinching(rightHand, name);
                     break;
             }
 
@@ -94,6 +102,17 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
                 StartPokeGesture();
             else if (!m_IsPoking && wasPoking)
                 EndPokeGesture();
+
+            if (m_IsGripping && !wasGripping)
+                StartGripGesture();
+            else if (!m_IsGripping && wasGripping)
+                EndGripGesture();
+
+            if (m_IsPinching && !wasPinching)
+                StartPinchGesture();
+            else if (!m_IsPinching && wasPinching)
+                EndPinchGesture();
+            
         }
 
         /// <summary>
@@ -146,6 +165,19 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
             return wristToProximal.sqrMagnitude >= wristToTip.sqrMagnitude;
         }
 
+        static bool IsIndexPinching(XRHand hand, string handName = "")
+        {
+//&&&&
+            if (!(hand.GetJoint(XRHandJointID.IndexTip).TryGetPose(out var indexTipPose) &&
+                  hand.GetJoint(XRHandJointID.ThumbTip).TryGetPose(out var thumbTipPose)))
+            {
+                return false;
+            }
+            Debug.Log("@$$ pinch Dist" + handName + ":" + Vector3.Distance(thumbTipPose.position, indexTipPose.position).ToString());
+            
+            return Vector3.Distance(thumbTipPose.position, indexTipPose.position) < PINCH_DIST;
+        }
+
         /// <summary>
         /// Returns true if the given hand's ring finger tip is closer to the wrist than the ring proximal joint.
         /// </summary>
@@ -182,6 +214,25 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
             var wristToTip = tipPose.position - wristPose.position;
             var wristToProximal = proximalPose.position - wristPose.position;
             return wristToProximal.sqrMagnitude >= wristToTip.sqrMagnitude;
+        }
+        void StartGripGesture()
+        {
+            Debug.Log("@!!Gripping " + name + ":Start" + Random.Range(0, 9999).ToString());
+        }
+
+        void EndGripGesture()
+        {
+            Debug.Log("@!!Gripping " + name + ":End" + Random.Range(0, 9999).ToString());
+        }
+
+        void StartPinchGesture()
+        {
+            Debug.Log("@!!Pinch " + name + ":Start" + Random.Range(0, 9999).ToString());
+        }
+
+        void EndPinchGesture()
+        {
+            Debug.Log("@!!Pinch " + name + ":End" + Random.Range(0, 9999).ToString());
         }
 
         void StartPokeGesture()

@@ -13,8 +13,10 @@ public class HandPresence : MonoBehaviour
     public bool showController = false;
     public GameObject handModelPrefab;
     public InputDeviceCharacteristics controllerCharacteristics;
+    public InputDeviceCharacteristics handTrackingCharacteristics;
     public List<GameObject> controllerPrefabs;
     private InputDevice targetDevice;
+    private InputDevice handTrackingDevice;
     private GameObject spawnController;
     private GameObject spawnHandModel;
     private PlayerScript player;
@@ -52,7 +54,24 @@ public class HandPresence : MonoBehaviour
     void Start()
     {
         TryInitialize();
+        TryInitializeHandTracking();
         gameUIVR = GameObject.FindObjectOfType<GameUIVR>();
+    }
+
+
+    void TryInitializeHandTracking()
+    {
+        List<InputDevice> devices = new List<InputDevice>();
+        InputDevices.GetDevicesWithCharacteristics(handTrackingCharacteristics, devices);
+        handName = transform.parent.name.Split(" ")[0];
+        foreach (var item in devices)
+        {
+            Debug.Log("@!!!" + handName + ":" + item.name + item.characteristics);
+        }
+        if (devices.Count > 0)
+        {
+            // handTrackingDevice = devices[0];
+        }
     }
 
     void TryInitialize()
@@ -62,7 +81,7 @@ public class HandPresence : MonoBehaviour
         handName = transform.parent.name.Split(" ")[0];
         foreach (var item in devices)
         {
-            // Debug.Log(handName + ":" + item.name + item.characteristics);
+            Debug.Log("@$$" + handName + ":" + item.name + item.characteristics + " " + Random.Range(0, 9999).ToString());
         }
         if (devices.Count > 0)
         {
@@ -309,10 +328,11 @@ public class HandPresence : MonoBehaviour
 
     void Update()
     {
+        if (!handTrackingDevice.isValid)
+            TryInitializeHandTracking();
+
         if (!targetDevice.isValid)
-        {
             TryInitialize();
-        }
         else
         {
             bool pickedUp = false;
