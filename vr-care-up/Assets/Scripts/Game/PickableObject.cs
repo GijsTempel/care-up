@@ -149,18 +149,21 @@ public class PickableObject : MonoBehaviour
         {
             stored_current_timer += Time.deltaTime;
 
-            // reset timer if the object is moving
-            if (transform.position != stored_temp_position ||
-                transform.rotation != stored_temp_rotation)
-            {
-                stored_current_timer = 0;
-            }
-
             // save transform if enough time passed
             if (stored_current_timer > stored_time_needed)
             {
                 stored_position = transform.position;
                 stored_rotation = transform.rotation;
+                stored_current_timer = 0;
+            }
+
+            // order matters, save first to instantly save position when object activates
+            // otherwise, it's possible to drop before saving at all
+
+            // reset timer if the object is moving
+            if (transform.position != stored_temp_position ||
+                transform.rotation != stored_temp_rotation)
+            {
                 stored_current_timer = 0;
             }
 
@@ -208,7 +211,7 @@ public class PickableObject : MonoBehaviour
         }
     }
 
-    public IEnumerator OnItemDroppedOnGround()
+    public IEnumerator OnItemDroppedOnGround(GameObject _dParticles, GameObject _aParticles, GameObject _line)
     {
         if (teleport_transition_flag)
         {
@@ -217,7 +220,6 @@ public class PickableObject : MonoBehaviour
             yield break;
         }
 
-        Debug.Log(this.name + " dropped, starting to teleport");
         teleport_transition_flag = true;
 
         // trigger tutorial to explain item teleportation?
@@ -240,15 +242,38 @@ public class PickableObject : MonoBehaviour
 
         // start animating disappearance? 
         // emit particles during teleportation time?
-        // and/or maybe fade-out item?
-        //
+        if (_dParticles == null)
+        {
+            _dParticles = Resources.Load<GameObject>("Prefabs/DroppedObject_Disappearing");
+        }
+
+        if (_dParticles != null)
+        {
+            GameObject dParticles = Instantiate<GameObject>(_dParticles,
+                transform.position, Quaternion.Euler(-90f, 0f, 0f)) as GameObject;
+            GameObject.Destroy(dParticles, teleport_speed);
+        }
 
         // possibly a line between _from_ and _to_
         // for a second for the teleportation time?
+        if (_line == null)
+        {
+            _line = Resources.Load<GameObject>("Prefabs/DroppedObject_Line");
+        }
+
+        if (_line != null)
+        {
+            GameObject line = Instantiate<GameObject>(_line) as GameObject;
+            LineRenderer lineRenderer = line.GetComponent<LineRenderer>();
+            Vector3[] points = { 
+                new Vector3(transform.position.x, transform.position.y, transform.position.z), 
+                new Vector3(stored_position.x, stored_position.y, stored_position.z) 
+            };
+            lineRenderer.SetPositions(points);
+            GameObject.Destroy(line, teleport_speed + 1f);
+        }
 
         yield return new WaitForSeconds(teleport_speed);
-
-        // and turn off the glowing line now?
 
         // finally teleport an object
         transform.position = stored_position;
@@ -257,7 +282,17 @@ public class PickableObject : MonoBehaviour
 
         // animate appearance ?
         // burst of particles (firework-like) for a frame?
-        //
+        if (_aParticles == null)
+        {
+            _aParticles = Resources.Load<GameObject>("Prefabs/DroppedObject_Appear");
+        }
+
+        if (_aParticles != null)
+        {
+            GameObject aParticles = Instantiate<GameObject>(_aParticles,
+                transform.position, Quaternion.identity) as GameObject;
+            GameObject.Destroy(aParticles, 3f);
+        }
 
         teleport_transition_flag = false;
     }

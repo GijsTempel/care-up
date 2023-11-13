@@ -5,9 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class ItemDroppedTrigger : MonoBehaviour
 {
+    [SerializeField]
+    public GameObject disappearing_particles_prefab;
+    [SerializeField]
+    public GameObject appering_particles_prefab;
+    [SerializeField]
+    public GameObject path_line_from_a_to_b;
+
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter : " + other.name);
         PickableObject o = null;
         if (other.TryGetComponent<PickableObject>(out o))
         {
@@ -27,7 +33,10 @@ public class ItemDroppedTrigger : MonoBehaviour
             }
 
             // initiate async sequence of teleporting object
-            StartCoroutine(o.OnItemDroppedOnGround());
+            StartCoroutine(o.OnItemDroppedOnGround(
+                disappearing_particles_prefab, 
+                appering_particles_prefab,
+                path_line_from_a_to_b));
         }
     }
 }
