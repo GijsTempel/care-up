@@ -1142,14 +1142,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 79152732}
-  m_LocalRotation: {x: 0.000000016290278, y: -0.745356, z: 0.0000000145704675, w: 0.66666675}
+  m_LocalRotation: {x: 0, y: -0.7040147, z: 0, w: 0.71018535}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 99.99998, y: 100, z: 99.99998}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 353096618}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -89.5, z: 0}
 --- !u!23 &79152734
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -35433,6 +35433,67 @@ MonoBehaviour:
   handSide: 2
   objectInHand: insuline
   invert: 0
+--- !u!1 &1524072433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1524072435}
+  - component: {fileID: 1524072434}
+  - component: {fileID: 1524072436}
+  m_Layer: 0
+  m_Name: ItemDroppedTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1524072434
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524072433}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 13, y: 0.1, z: 13}
+  m_Center: {x: 0, y: -1, z: 0}
+--- !u!4 &1524072435
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524072433}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.968, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 26
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1524072436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524072433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a07a98ef35c4084faa64e235cee4da4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disappearing_particles_prefab: {fileID: 8737557994095967800, guid: f37f9580222496040a7b5b122c1cd4f9, type: 3}
+  appering_particles_prefab: {fileID: 6823642605875602421, guid: 499ba36d41b709040bfb374622d69a7f, type: 3}
+  path_line_from_a_to_b: {fileID: 3598783284704081201, guid: d44986592a7fc494b99ee153d2148dcd, type: 3}
 --- !u!1 &1528215628
 GameObject:
   m_ObjectHideFlags: 0

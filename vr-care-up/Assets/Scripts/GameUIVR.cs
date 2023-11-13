@@ -172,6 +172,16 @@ public class GameUIVR : MonoBehaviour
         if (rightHandObjectData != null)
             RemoveHighlight(prefix, rightHandObjectData.name);
 
+        if (actionManager == null)
+        {
+            if ((actionManager = GameObject.FindAnyObjectByType<ActionManager>()) == null)
+            {
+                // we're here if there's still no actionHandler after looking for one
+                Debug.LogWarning("No actionManager found, not a game scene?");
+                return;
+            }
+        }
+
         foreach (Action a in actionManager.IncompletedActions)
         {
             if (a.hideHint)

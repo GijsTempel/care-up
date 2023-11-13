@@ -285,6 +285,13 @@ public class ActionManager : MonoBehaviour
     {
         //Debug.Log("@UpdateRequirements:(float showDelay = 0f)");
         ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
+
+        if (actManager == null)
+        {
+            Debug.LogWarning("No actionManager found, not a game scene?");
+            return;
+        }
+
         if (playerScript == null)
             playerScript = GameObject.FindObjectOfType<PlayerScript>();
 
