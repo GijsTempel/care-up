@@ -19,7 +19,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
 #else
         int m_Handedness;
 #endif
-        const float PINCH_DIST = 0.01f;
+        const float PINCH_DIST = 0.017f;
         [SerializeField]
         [Tooltip("Called when the hand has started a poke gesture.")]
         UnityEvent m_PokeGestureStarted;
@@ -27,6 +27,24 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
         [SerializeField]
         [Tooltip("Called when the hand has ended a poke gesture.")]
         UnityEvent m_PokeGestureEnded;
+
+
+        [SerializeField]
+        [Tooltip("Called when the hand has started a grab gesture.")]
+        UnityEvent m_GrabGestureStarted;
+
+        [SerializeField]
+        [Tooltip("Called when the hand has ended a grab gesture.")]
+        UnityEvent m_GrabGestureEnded;
+
+        [SerializeField]
+        [Tooltip("Called when the hand has started a pinch gesture.")]
+        UnityEvent m_PinchGestureStarted;
+
+        [SerializeField]
+        [Tooltip("Called when the hand has ended a pinch gesture.")]
+        UnityEvent m_PinchGestureEnded;
+
 
 #if XR_HANDS
         XRHandSubsystem m_Subsystem;
@@ -218,21 +236,26 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
         void StartGripGesture()
         {
             Debug.Log("@!!Gripping " + name + ":Start" + Random.Range(0, 9999).ToString());
+            m_GrabGestureStarted.Invoke();
         }
 
         void EndGripGesture()
         {
             Debug.Log("@!!Gripping " + name + ":End" + Random.Range(0, 9999).ToString());
+            m_GrabGestureEnded.Invoke();
         }
 
         void StartPinchGesture()
         {
             Debug.Log("@!!Pinch " + name + ":Start" + Random.Range(0, 9999).ToString());
+            m_PinchGestureStarted.Invoke();
+
         }
 
         void EndPinchGesture()
         {
             Debug.Log("@!!Pinch " + name + ":End" + Random.Range(0, 9999).ToString());
+            m_PinchGestureEnded.Invoke();
         }
 
         void StartPokeGesture()
