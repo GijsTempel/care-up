@@ -48,6 +48,12 @@ public class PickableObject : MonoBehaviour
     // till the moment it is back at stored transform
     private static float teleport_speed = 1f;
 
+    // line animation stuff
+    private bool line_animating_flag = false;
+    private float line_timer = 0f;
+    private Vector3 line_og_position = Vector3.zero;
+    private LineRenderer line_ref = null;
+
     public bool IsMounted()
     {
         if (transform.parent.tag == "MountingPoint")
@@ -171,6 +177,9 @@ public class PickableObject : MonoBehaviour
             stored_temp_position = transform.position;
             stored_temp_rotation = transform.rotation;
         }
+
+        // handle line animation variables
+        HandleLineAnimationStep();
     }
 
     bool AttatchToMount(Transform mount)
@@ -242,11 +251,6 @@ public class PickableObject : MonoBehaviour
 
         // start animating disappearance? 
         // emit particles during teleportation time?
-        if (_dParticles == null)
-        {
-            _dParticles = Resources.Load<GameObject>("Prefabs/DroppedObject_Disappearing");
-        }
-
         if (_dParticles != null)
         {
             GameObject dParticles = Instantiate<GameObject>(_dParticles,
@@ -256,21 +260,13 @@ public class PickableObject : MonoBehaviour
 
         // possibly a line between _from_ and _to_
         // for a second for the teleportation time?
-        if (_line == null)
-        {
-            _line = Resources.Load<GameObject>("Prefabs/DroppedObject_Line");
-        }
-
         if (_line != null)
         {
             GameObject line = Instantiate<GameObject>(_line) as GameObject;
-            LineRenderer lineRenderer = line.GetComponent<LineRenderer>();
-            Vector3[] points = { 
-                new Vector3(transform.position.x, transform.position.y, transform.position.z), 
-                new Vector3(stored_position.x, stored_position.y, stored_position.z) 
-            };
-            lineRenderer.SetPositions(points);
-            GameObject.Destroy(line, teleport_speed + 1f);
+            line_ref = line.GetComponent<LineRenderer>();
+            line_og_position = transform.position;
+            line_animating_flag = true;
+            GameObject.Destroy(line, teleport_speed);
         }
 
         yield return new WaitForSeconds(teleport_speed);
@@ -282,11 +278,6 @@ public class PickableObject : MonoBehaviour
 
         // animate appearance ?
         // burst of particles (firework-like) for a frame?
-        if (_aParticles == null)
-        {
-            _aParticles = Resources.Load<GameObject>("Prefabs/DroppedObject_Appear");
-        }
-
         if (_aParticles != null)
         {
             GameObject aParticles = Instantiate<GameObject>(_aParticles,
@@ -295,5 +286,35 @@ public class PickableObject : MonoBehaviour
         }
 
         teleport_transition_flag = false;
+    }
+
+    public void HandleLineAnimationStep()
+    {
+        if (!line_animating_flag)
+            return;
+
+        line_timer += Time.deltaTime;
+
+        if (line_timer > teleport_speed)
+        { // if we're here, object is teleported
+            line_animating_flag = false;
+            line_timer = 0f;
+            return;
+        }
+
+        // calculate starting and ending positions of the line
+        // use line_timer as the center percentage (p_timer) 
+        // and size as an offset from that center to start/end points
+        const float line_size = 0.1f;
+        float p_timer = line_timer / teleport_speed;
+        float s_timer = p_timer - line_size;
+        float e_timer = p_timer + line_size;
+        Vector3 sPos = Vector3.Lerp(line_og_position, stored_position, s_timer);
+        Vector3 ePos = Vector3.Lerp(line_og_position, stored_position, e_timer);
+        Vector3[] points = {
+                new Vector3(sPos.x, sPos.y, sPos.z),
+                new Vector3(ePos.x, ePos.y, ePos.z)
+            };
+        line_ref.SetPositions(points);
     }
 }
