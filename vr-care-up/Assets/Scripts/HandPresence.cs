@@ -13,7 +13,6 @@ public class HandPresence : MonoBehaviour
     public bool showController = false;
     public GameObject handModelPrefab;
     public InputDeviceCharacteristics controllerCharacteristics;
-    public InputDeviceCharacteristics handTrackingCharacteristics;
     public List<GameObject> controllerPrefabs;
     private InputDevice targetDevice;
     private InputDevice handTrackingDevice;
@@ -30,6 +29,7 @@ public class HandPresence : MonoBehaviour
     private GameUIVR gameUIVR;
     bool allowTriggerDrop = false;
     float maxPickupDistance = 0.05f;
+    public Transform controllerTransform;
 
     public HandPoseControl GetHandPoseControl()
     {
@@ -46,7 +46,7 @@ public class HandPresence : MonoBehaviour
 
     public bool IsLeftHand()
     {
-        return spawnHandModel.GetComponent<HandPoseData>().handType == HandPoseData.HandModelType.Left;
+        return tag == "LeftHand";
     }
 
     private ActionTrigger.TriggerHandAction currentHandPose = ActionTrigger.TriggerHandAction.None;
@@ -54,24 +54,7 @@ public class HandPresence : MonoBehaviour
     void Start()
     {
         TryInitialize();
-        TryInitializeHandTracking();
         gameUIVR = GameObject.FindObjectOfType<GameUIVR>();
-    }
-
-
-    void TryInitializeHandTracking()
-    {
-        List<InputDevice> devices = new List<InputDevice>();
-        InputDevices.GetDevicesWithCharacteristics(handTrackingCharacteristics, devices);
-        handName = transform.parent.name.Split(" ")[0];
-        foreach (var item in devices)
-        {
-            Debug.Log("@!!!" + handName + ":" + item.name + item.characteristics);
-        }
-        if (devices.Count > 0)
-        {
-            // handTrackingDevice = devices[0];
-        }
     }
 
     void TryInitialize()
@@ -88,9 +71,10 @@ public class HandPresence : MonoBehaviour
             targetDevice = devices[0];
             GameObject prefab = controllerPrefabs.Find(controller => controller.name == targetDevice.name);
             if (prefab)
-            {
                 spawnController = Instantiate(prefab, transform);
-            }
+        }
+        if (spawnHandModel == null)
+        {
             spawnHandModel = Instantiate(handModelPrefab, transform);
             handAnimator = spawnHandModel.transform.Find("Hand").GetComponent<Animator>();
         }
@@ -328,8 +312,33 @@ public class HandPresence : MonoBehaviour
 
     void Update()
     {
-        if (!handTrackingDevice.isValid)
-            TryInitializeHandTracking();
+        HTrackingHand hTrackingHand = null;
+        bool isLeftHand = IsLeftHand();
+        foreach(HTrackingHand h in GameObject.FindObjectsOfType<HTrackingHand>())
+        {
+            if (isLeftHand && h.tag == "LeftHand")
+            {
+                hTrackingHand = h;
+                break;
+            }
+            else if (!isLeftHand && h.tag == "RightHand")
+            {
+                hTrackingHand = h;
+                break;
+            }
+        }
+        if (hTrackingHand != null)
+        {
+            Debug.Log("@" + name + " hTrackingHand : " + hTrackingHand.name + " " + Random.Range(0, 99999).ToString());
+            transform.position = hTrackingHand.controllerHandParentTransform.position;
+            transform.rotation = hTrackingHand.controllerHandParentTransform.rotation;
+        }
+        else
+        {
+            Debug.Log("@" + name + " hTrackingHand : null " + Random.Range(0, 99999).ToString());
+            transform.position = controllerTransform.position;
+            transform.rotation = controllerTransform.rotation;
+        }
 
         if (!targetDevice.isValid)
             TryInitialize();
