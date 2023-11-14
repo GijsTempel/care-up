@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.XR.Hands.Samples.VisualizerSample;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Composites;
 
 public class HandPresence : MonoBehaviour
@@ -314,17 +315,26 @@ public class HandPresence : MonoBehaviour
     {
         HTrackingHand hTrackingHand = null;
         bool isLeftHand = IsLeftHand();
-        foreach(HTrackingHand h in GameObject.FindObjectsOfType<HTrackingHand>())
+        bool isTracking = false;
+        if (isLeftHand)
+            isTracking = HandVisualizer.left_handIsTracked;
+        else
+            isTracking = HandVisualizer.right_handIsTracked;
+
+        if (isTracking)
         {
-            if (isLeftHand && h.tag == "LeftHand")
+            foreach(HTrackingHand h in GameObject.FindObjectsOfType<HTrackingHand>())
             {
-                hTrackingHand = h;
-                break;
-            }
-            else if (!isLeftHand && h.tag == "RightHand")
-            {
-                hTrackingHand = h;
-                break;
+                if (isLeftHand && h.tag == "LeftHand")
+                {
+                    hTrackingHand = h;
+                    break;
+                }
+                else if (!isLeftHand && h.tag == "RightHand")
+                {
+                    hTrackingHand = h;
+                    break;
+                }
             }
         }
         if (hTrackingHand != null)
