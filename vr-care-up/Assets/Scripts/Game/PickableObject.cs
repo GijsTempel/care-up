@@ -242,11 +242,6 @@ public class PickableObject : MonoBehaviour
 
         // start animating disappearance? 
         // emit particles during teleportation time?
-        if (_dParticles == null)
-        {
-            _dParticles = Resources.Load<GameObject>("Prefabs/DroppedObject_Disappearing");
-        }
-
         if (_dParticles != null)
         {
             GameObject dParticles = Instantiate<GameObject>(_dParticles,
@@ -256,11 +251,6 @@ public class PickableObject : MonoBehaviour
 
         // possibly a line between _from_ and _to_
         // for a second for the teleportation time?
-        if (_line == null)
-        {
-            _line = Resources.Load<GameObject>("Prefabs/DroppedObject_Line");
-        }
-
         if (_line != null)
         {
             GameObject line = Instantiate<GameObject>(_line) as GameObject;
@@ -282,11 +272,6 @@ public class PickableObject : MonoBehaviour
 
         // animate appearance ?
         // burst of particles (firework-like) for a frame?
-        if (_aParticles == null)
-        {
-            _aParticles = Resources.Load<GameObject>("Prefabs/DroppedObject_Appear");
-        }
-
         if (_aParticles != null)
         {
             GameObject aParticles = Instantiate<GameObject>(_aParticles,
