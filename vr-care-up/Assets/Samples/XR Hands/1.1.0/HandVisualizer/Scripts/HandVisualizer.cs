@@ -28,6 +28,9 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
 
         [SerializeField]
         Material m_HandMeshMaterial;
+        public static bool left_handIsTracked = false;
+        public static bool right_handIsTracked = false;
+
 
         public bool drawMeshes
         {
@@ -162,8 +165,12 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
             m_Subsystem.updatedHands += OnUpdatedHands;
         }
 
+
         void UpdateRenderingVisibility(HandGameObjects handGameObjects, bool isTracked)
         {
+            left_handIsTracked = m_Subsystem.leftHand.isTracked;
+            right_handIsTracked = m_Subsystem.rightHand.isTracked;
+
             if (handGameObjects == null)
                 return;
 

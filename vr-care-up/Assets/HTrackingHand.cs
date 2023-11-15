@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
-public class DebugTestPrinter : MonoBehaviour
+public class HTrackingHand : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Transform controllerHandParentTransform;
     void Start()
     {
         
@@ -13,6 +14,6 @@ public class DebugTestPrinter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("@!!!!Testttt:" + Random.Range(0, 9999).ToString());
+        
     }
 }
