@@ -266,6 +266,15 @@ public class PickableObject : MonoBehaviour
             line_ref = line.GetComponent<LineRenderer>();
             line_og_position = transform.position;
             line_animating_flag = true;
+
+            // handle bg line quickly
+            LineRenderer bgLine = line.transform.GetChild(0).GetComponent<LineRenderer>();
+            Vector3[] points = {
+                new Vector3(transform.position.x, transform.position.y, transform.position.z),
+                new Vector3(stored_position.x, stored_position.y, stored_position.z)
+            };
+            bgLine.SetPositions(points);
+
             GameObject.Destroy(line, teleport_speed);
         }
 
@@ -281,7 +290,7 @@ public class PickableObject : MonoBehaviour
         if (_aParticles != null)
         {
             GameObject aParticles = Instantiate<GameObject>(_aParticles,
-                transform.position, Quaternion.identity) as GameObject;
+                transform.position, Quaternion.Euler(-90f, 0f, 0f)) as GameObject;
             GameObject.Destroy(aParticles, 3f);
         }
 
@@ -305,14 +314,17 @@ public class PickableObject : MonoBehaviour
         // calculate starting and ending positions of the line
         // use line_timer as the center percentage (p_timer) 
         // and size as an offset from that center to start/end points
+        // upd. addint third middle point for "curve-ish" look of the line
         const float line_size = 0.1f;
         float p_timer = line_timer / teleport_speed;
         float s_timer = p_timer - line_size;
         float e_timer = p_timer + line_size;
         Vector3 sPos = Vector3.Lerp(line_og_position, stored_position, s_timer);
+        Vector3 mPos = Vector3.Lerp(line_og_position, stored_position, p_timer);
         Vector3 ePos = Vector3.Lerp(line_og_position, stored_position, e_timer);
         Vector3[] points = {
                 new Vector3(sPos.x, sPos.y, sPos.z),
+                new Vector3(mPos.x, mPos.y, mPos.z),
                 new Vector3(ePos.x, ePos.y, ePos.z)
             };
         line_ref.SetPositions(points);
