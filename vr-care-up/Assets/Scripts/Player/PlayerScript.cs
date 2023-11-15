@@ -5,7 +5,6 @@ using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.XR;
-
 public class PlayerScript : MonoBehaviour
 {
     const float OBJ_TRANS_DURATION = 0.2f;

@@ -5,11 +5,14 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Hands.Samples.VisualizerSample;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Composites;
+using UnityEngine.XR.Interaction.Toolkit.Samples.Hands;
+
 
 public class HandPresence : MonoBehaviour
 {
     List<PickableObject> pickablesInArea = new List<PickableObject>();
 
+    public PokeGestureDetector gestureDetector;
     private Animator handAnimator;
     public bool showController = false;
     public GameObject handModelPrefab;
@@ -31,6 +34,9 @@ public class HandPresence : MonoBehaviour
     bool allowTriggerDrop = false;
     float maxPickupDistance = 0.05f;
     public Transform controllerTransform;
+    float gripValue = 0f;
+    float triggerValue = 0f;
+    Transform trackingHandTransfom = null;
 
     public HandPoseControl GetHandPoseControl()
     {
@@ -96,7 +102,7 @@ public class HandPresence : MonoBehaviour
     {
         float dist = float.PositiveInfinity;
         PickableObject closest = null;
-        foreach(PickableObject p in pickablesInArea)
+        foreach (PickableObject p in pickablesInArea)
         {
             if (p != null)
             {
@@ -111,7 +117,7 @@ public class HandPresence : MonoBehaviour
                 if (findMounted)
                 {
                     Transform moundetTo = p.transform.parent.transform.parent;
-                    if (moundetTo != null 
+                    if (moundetTo != null
                         && moundetTo.GetComponent<PickableObject>() != null
                         && player.GetHandWithThisObject(moundetTo.gameObject) == null)
                         continue;
@@ -143,7 +149,7 @@ public class HandPresence : MonoBehaviour
                     if (findMounted)
                     {
                         Transform moundetTo = p.transform.parent.transform.parent;
-                        if (moundetTo != null 
+                        if (moundetTo != null
                             && moundetTo.GetComponent<PickableObject>() != null
                             && player.GetHandWithThisObject(moundetTo.gameObject) == null)
                             continue;
@@ -299,7 +305,7 @@ public class HandPresence : MonoBehaviour
 
     private void CastAction(ActionTrigger.TriggerHandAction triggerAction)
     {
-        foreach(ActionTrigger a in GameObject.FindObjectsOfType<ActionTrigger>())
+        foreach (ActionTrigger a in GameObject.FindObjectsOfType<ActionTrigger>())
         {
             a.ReceveTriggerAction(handModelPrefab.GetComponent<HandPoseData>().handType ==
                 HandPoseData.HandModelType.Left, triggerAction);
@@ -311,116 +317,123 @@ public class HandPresence : MonoBehaviour
         return currentHandPose;
     }
 
+    public void FollowTrackingHands()
+    {
+        if (!player.IsInCopyAnimationState() && trackingHandTransfom != null)
+        {
+            transform.position = trackingHandTransfom.position;
+            transform.rotation = trackingHandTransfom.rotation;
+        }
+    }
+
+    Transform FindTrackingTransform(bool _isLeft)
+    {
+        foreach(HTrackingHand h in GameObject.FindObjectsOfType<HTrackingHand>())
+        {
+            if (_isLeft && h.tag == "LeftHand")
+                return h.controllerHandParentTransform;
+            else if (!_isLeft && h.tag == "RightHand")
+                return h.controllerHandParentTransform;
+        }
+        return null;
+    }
+
     void Update()
     {
-        HTrackingHand hTrackingHand = null;
         bool isLeftHand = IsLeftHand();
         bool isTracking = false;
         if (isLeftHand)
             isTracking = HandVisualizer.left_handIsTracked;
         else
             isTracking = HandVisualizer.right_handIsTracked;
+        if (isTracking && trackingHandTransfom == null)
+            trackingHandTransfom = FindTrackingTransform(isLeftHand);
+
 
         if (isTracking)
         {
-            foreach(HTrackingHand h in GameObject.FindObjectsOfType<HTrackingHand>())
-            {
-                if (isLeftHand && h.tag == "LeftHand")
-                {
-                    hTrackingHand = h;
-                    break;
-                }
-                else if (!isLeftHand && h.tag == "RightHand")
-                {
-                    hTrackingHand = h;
-                    break;
-                }
-            }
-        }
-        if (hTrackingHand != null)
-        {
-            Debug.Log("@" + name + " hTrackingHand : " + hTrackingHand.name + " " + Random.Range(0, 99999).ToString());
-            transform.position = hTrackingHand.controllerHandParentTransform.position;
-            transform.rotation = hTrackingHand.controllerHandParentTransform.rotation;
+            gripValue = gestureDetector.gripValue;
+            triggerValue = gestureDetector.triggerValue;
         }
         else
         {
-            Debug.Log("@" + name + " hTrackingHand : null " + Random.Range(0, 99999).ToString());
             transform.position = controllerTransform.position;
             transform.rotation = controllerTransform.rotation;
+            if (!targetDevice.isValid)
+                TryInitialize();
+            else
+            {
+                if (targetDevice.TryGetFeatureValue(CommonUsages.grip, out float newGripValue))
+                    gripValue = newGripValue;
+
+                if (targetDevice.TryGetFeatureValue(CommonUsages.trigger, out float newTriggerValue))
+                    triggerValue = newTriggerValue;
+
+
+                if (spawnController != null)
+                {
+                    spawnController.SetActive(showController);
+                }
+                spawnHandModel.SetActive(!showController);
+            }
         }
 
-        if (!targetDevice.isValid)
-            TryInitialize();
+
+        // Grip value update
+        bool pickedUp = false;
+
+        if (gripValue > ACTION_TRESHOULD_UP && gripSavedValue <= ACTION_TRESHOULD_UP)
+        {
+            if (!TryToPickUp())
+                CastAction(ActionTrigger.TriggerHandAction.Grip);
+            else
+                pickedUp = true;
+        }
+        else if (gripValue < ACTION_TRESHOULD_UP && gripSavedValue >= ACTION_TRESHOULD_UP)
+        {
+            DropObjectFromHand();
+            allowTriggerDrop = false;
+        }
+
+        if (gripValue > ACTION_TRESHOULD_UP)
+            currentHandPose = ActionTrigger.TriggerHandAction.Grip;
+        else
+            currentHandPose = ActionTrigger.TriggerHandAction.None;
+
+        gripSavedValue = gripValue;
+        if (objectInHand != null)
+        {
+            handAnimator.SetFloat("Grip", 1f);
+        }
         else
         {
-            bool pickedUp = false;
-            if (targetDevice.TryGetFeatureValue(CommonUsages.grip, out float gripValue))
-            {
-                if (gripValue > ACTION_TRESHOULD_UP && gripSavedValue <= ACTION_TRESHOULD_UP)
-                {
-                    if (!TryToPickUp())
-                        CastAction(ActionTrigger.TriggerHandAction.Grip);
-                    else
-                        pickedUp = true;
-                }
-                else if (gripValue < ACTION_TRESHOULD_UP && gripSavedValue >= ACTION_TRESHOULD_UP)
-                {
-                    DropObjectFromHand();
-                    allowTriggerDrop = false;
-                }
-
-                if (gripValue > ACTION_TRESHOULD_UP)
-                    currentHandPose = ActionTrigger.TriggerHandAction.Grip;
-                else
-                    currentHandPose = ActionTrigger.TriggerHandAction.None;
-
-                gripSavedValue = gripValue;
-                if (objectInHand != null)
-                {
-                    handAnimator.SetFloat("Grip", 1f);
-                }
-                else
-                {
-                    handAnimator.SetFloat("Grip", gripValue);
-                }
-            }
-
-            if (targetDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue))
-            {
-                handAnimator.SetFloat("Trigger", triggerValue);
-                if (triggerValue > ACTION_TRESHOULD_UP && triggerSavedValue <= ACTION_TRESHOULD_UP)
-                {
-                    CastAction(ActionTrigger.TriggerHandAction.Pinch);
-                    if (TryToPickUp(true))
-                        allowTriggerDrop = true;
-                    else if (!pickedUp)
-                    {
-                        if (TryToPickUp(false, true))
-                            allowTriggerDrop = true;
-                    }
-                }
-                else if (triggerValue < ACTION_TRESHOULD_UP && triggerSavedValue >= ACTION_TRESHOULD_UP)
-                {
-                    if (allowTriggerDrop)
-                        DropObjectFromHand();
-                    allowTriggerDrop = false;
-                }
-
-
-                if (triggerValue > ACTION_TRESHOULD_UP && currentHandPose != ActionTrigger.TriggerHandAction.Grip)
-                {
-                    currentHandPose = ActionTrigger.TriggerHandAction.Pinch;
-                }
-
-               
-                triggerSavedValue = triggerValue;
-            }
-            if (spawnController != null)
-            {
-                spawnController.SetActive(showController);
-            }
-            spawnHandModel.SetActive(!showController);
+            handAnimator.SetFloat("Grip", gripValue);
         }
+
+        // Trigger value update
+        handAnimator.SetFloat("Trigger", triggerValue);
+        if (triggerValue > ACTION_TRESHOULD_UP && triggerSavedValue <= ACTION_TRESHOULD_UP)
+        {
+            CastAction(ActionTrigger.TriggerHandAction.Pinch);
+            if (TryToPickUp(true))
+                allowTriggerDrop = true;
+            else if (!pickedUp)
+            {
+                if (TryToPickUp(false, true))
+                    allowTriggerDrop = true;
+            }
+        }
+        else if (triggerValue < ACTION_TRESHOULD_UP && triggerSavedValue >= ACTION_TRESHOULD_UP)
+        {
+            if (allowTriggerDrop)
+                DropObjectFromHand();
+            allowTriggerDrop = false;
+        }
+
+        if (triggerValue > ACTION_TRESHOULD_UP && currentHandPose != ActionTrigger.TriggerHandAction.Grip)
+        {
+            currentHandPose = ActionTrigger.TriggerHandAction.Pinch;
+        }
+        triggerSavedValue = triggerValue;
     }
 }

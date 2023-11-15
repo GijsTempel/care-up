@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Unity.XR.CoreUtils;
+using UnityEngine.XR.Hands.OpenXR;
+using UnityEngine.Events;
+using JetBrains.Annotations;
+
 
 namespace UnityEngine.XR.Hands.Samples.VisualizerSample
 {
@@ -30,7 +34,6 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
         Material m_HandMeshMaterial;
         public static bool left_handIsTracked = false;
         public static bool right_handIsTracked = false;
-
 
         public bool drawMeshes
         {
@@ -63,6 +66,9 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
             get => m_VelocityType;
             set => m_VelocityType = value;
         }
+
+        public UnityEvent m_UpdateLeftPosition;
+        public UnityEvent m_UpdateRightPosition;
 
         [SerializeField]
         VelocityType m_VelocityType;
@@ -248,7 +254,16 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
                 m_VelocityType);
 
             if ((updateSuccessFlags & XRHandSubsystem.UpdateSuccessFlags.LeftHandRootPose) != 0)
+            {
                 m_LeftHandGameObjects.UpdateRootPose(subsystem.leftHand);
+                m_UpdateLeftPosition.Invoke();
+
+                // if (leftHandPresence != null && m_LeftHandGameObjects.controllerHandTransform != null)
+                // {
+                //     leftHandPresence.position = m_LeftHandGameObjects.controllerHandTransform.position;
+                //     leftHandPresence.rotation = m_LeftHandGameObjects.controllerHandTransform.rotation;
+                // }
+            }
 
             m_RightHandGameObjects.UpdateJoints(
                 m_Origin,
@@ -259,14 +274,23 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
                 m_VelocityType);
             
             if ((updateSuccessFlags & XRHandSubsystem.UpdateSuccessFlags.RightHandRootPose) != 0)
+            {
                 m_RightHandGameObjects.UpdateRootPose(subsystem.rightHand);
+                m_UpdateRightPosition.Invoke();
+
+                // if (rightHandPresence != null && m_RightHandGameObjects.controllerHandTransform != null)
+                // {
+                //     rightHandPresence.position = m_RightHandGameObjects.controllerHandTransform.position;
+                //     rightHandPresence.rotation = m_RightHandGameObjects.controllerHandTransform.rotation;
+                // }
+            }
         }
 
         class HandGameObjects
         {
             GameObject m_HandRoot;
             GameObject m_DrawJointsParent;
-
+            public Transform controllerHandTransform = null;
             Transform[] m_JointXforms = new Transform[XRHandJointID.EndMarker.ToIndex()];
             GameObject[] m_DrawJoints = new GameObject[XRHandJointID.EndMarker.ToIndex()];
             GameObject[] m_VelocityParents = new GameObject[XRHandJointID.EndMarker.ToIndex()];
@@ -275,7 +299,6 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
 
             static Vector3[] s_LinePointsReuse = new Vector3[2];
             const float k_LineWidth = 0.005f;
-
             public HandGameObjects(
                 Handedness handedness,
                 Transform parent,
@@ -308,6 +331,7 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
                 m_HandRoot = Instantiate(meshPrefab, parent);
                 m_HandRoot.transform.localPosition = Vector3.zero;
                 m_HandRoot.transform.localRotation = Quaternion.identity;
+                // if (m_HandRoot.GetComponent<HTrackingHand>())
 
                 Transform wristRootXform = null;
                 if (m_HandRoot.transform.Find("Armature") != null)
@@ -333,6 +357,9 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
                 }
                 else
                 {
+                    if (wristRootXform.Find("ControllerHandTransform") != null)
+                        controllerHandTransform = wristRootXform.Find("ControllerHandTransform");
+
                     AssignJoint(XRHandJointID.Wrist, wristRootXform, m_DrawJointsParent.transform);
                     for (int childIndex = 0; childIndex < wristRootXform.childCount; ++childIndex)
                     {
