@@ -102,7 +102,7 @@ public class HandPresence : MonoBehaviour
 
     void HideHand(bool toHide)
     {
-        foreach(SkinnedMeshRenderer s in transform.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+        foreach (SkinnedMeshRenderer s in transform.GetComponentsInChildren<SkinnedMeshRenderer>(true))
             s.enabled = !toHide;
     }
 
@@ -344,7 +344,9 @@ public class HandPresence : MonoBehaviour
 
     public void FollowTrackingHands()
     {
-        if (!player.IsInCopyAnimationState() && trackingHandTransfom != null)
+        if (trackingHandTransfom == null)
+            return;
+        if (handPoseControl.handPoseMode != HandPoseControl.HandPoseMode.CopyAnimIn)
         {
             transform.position = trackingHandTransfom.position;
             transform.rotation = trackingHandTransfom.rotation;

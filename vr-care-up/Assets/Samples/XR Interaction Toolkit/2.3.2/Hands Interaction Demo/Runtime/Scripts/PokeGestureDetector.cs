@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection.Emit;
 using UnityEngine.Events;
 #if XR_HANDS
 using UnityEngine.XR.Hands;
@@ -19,7 +20,14 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
 #else
         int m_Handedness;
 #endif
+        const float PINCH_WAIT_TIME = 0.15f;
+        float pinch_timeout = 0f;
+
+        const float GRIP_WAIT_TIME = 0.15f;
+        float grip_timeout = 0f;
         const float PINCH_DIST = 0.017f;
+        const float UNPINCH_DIST = 0.04f;
+
         [SerializeField]
         [Tooltip("Called when the hand has started a poke gesture.")]
         UnityEvent m_PokeGestureStarted;
@@ -89,6 +97,15 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
 #endif
         }
 
+        void Update()
+        {
+            if (pinch_timeout > -1f)
+                pinch_timeout -= Time.deltaTime;
+            if (grip_timeout > -1f)
+                grip_timeout -= Time.deltaTime;
+            Debug.Log("@&&Timeout" + name + ":grip " + grip_timeout.ToString() + " | pinch " + pinch_timeout.ToString());
+        }
+
 #if XR_HANDS
         void OnUpdatedHands(XRHandSubsystem subsystem, XRHandSubsystem.UpdateSuccessFlags updateSuccessFlags, XRHandSubsystem.UpdateType updateType)
         {
@@ -104,8 +121,15 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
                     var leftHand = subsystem.leftHand;
                     m_IsPoking = IsIndexExtended(leftHand) && IsMiddleGrabbing(leftHand) && IsRingGrabbing(leftHand) &&
                         IsLittleGrabbing(leftHand);
-                    m_IsGripping = IsMiddleGrabbing(leftHand) && IsRingGrabbing(leftHand) && IsLittleGrabbing(leftHand);
-                    m_IsPinching = IsIndexPinching(leftHand, name);
+                    if (m_IsGripping)
+                        m_IsGripping = IsMiddleGrabbing(leftHand) || IsRingGrabbing(leftHand) || IsLittleGrabbing(leftHand);
+                    else
+                        m_IsGripping = IsMiddleGrabbing(leftHand) && IsRingGrabbing(leftHand) && IsLittleGrabbing(leftHand);
+                    m_IsPinching = IsIndexPinching(leftHand, name, m_IsPinching);
+                    Debug.Log("@Left***:m" + IsMiddleGrabbing(leftHand).ToString() + " r" + IsRingGrabbing(leftHand).ToString() +
+                        " l" + IsLittleGrabbing(leftHand).ToString());
+                    if (pinch_timeout > 0)
+                        m_IsPinching = true;
                     break;
                 case Handedness.Right:
                     if (!HasUpdateSuccessFlag(updateSuccessFlags, XRHandSubsystem.UpdateSuccessFlags.RightHandJoints))
@@ -114,8 +138,18 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
                     var rightHand = subsystem.rightHand;
                     m_IsPoking = IsIndexExtended(rightHand) && IsMiddleGrabbing(rightHand) && IsRingGrabbing(rightHand) &&
                         IsLittleGrabbing(rightHand);
-                    m_IsGripping = IsMiddleGrabbing(rightHand) && IsRingGrabbing(rightHand) && IsLittleGrabbing(rightHand);
-                    m_IsPinching = IsIndexPinching(rightHand, name);
+
+                    Debug.Log("@Right***:m" + IsMiddleGrabbing(rightHand).ToString() + " r" + IsRingGrabbing(rightHand).ToString() +
+                        " l" + IsLittleGrabbing(rightHand).ToString());
+
+                    if (m_IsGripping)
+                        m_IsGripping = IsMiddleGrabbing(rightHand) || IsRingGrabbing(rightHand) || IsLittleGrabbing(rightHand);
+                    else
+                        m_IsGripping = IsMiddleGrabbing(rightHand) && IsRingGrabbing(rightHand) && IsLittleGrabbing(rightHand);
+                        
+                    m_IsPinching = IsIndexPinching(rightHand, name, m_IsPinching);
+                    if (pinch_timeout > 0)
+                        m_IsPinching = true;
                     break;
             }
 
@@ -186,7 +220,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
             return wristToProximal.sqrMagnitude >= wristToTip.sqrMagnitude;
         }
 
-        static bool IsIndexPinching(XRHand hand, string handName = "")
+        static bool IsIndexPinching(XRHand hand, string handName = "", bool isPinching = false)
         {
 //&&&&
             if (!(hand.GetJoint(XRHandJointID.IndexTip).TryGetPose(out var indexTipPose) &&
@@ -195,7 +229,9 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
                 return false;
             }
             Debug.Log("@$$ pinch Dist" + handName + ":" + Vector3.Distance(thumbTipPose.position, indexTipPose.position).ToString());
-            
+            if (isPinching)
+                return Vector3.Distance(thumbTipPose.position, indexTipPose.position) < UNPINCH_DIST;
+
             return Vector3.Distance(thumbTipPose.position, indexTipPose.position) < PINCH_DIST;
         }
 
@@ -255,7 +291,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
             triggerValue = 1f;
             Debug.Log("@!!Pinch " + name + ":Start" + Random.Range(0, 9999).ToString());
             m_PinchGestureStarted.Invoke();
-
+            pinch_timeout = PINCH_WAIT_TIME;
         }
 
         void EndPinchGesture()

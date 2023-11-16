@@ -46,7 +46,6 @@ public class PlayerScript : MonoBehaviour
     Transform nextTeleportationAnchor = null;
     public Animator fadeAnimator;
 
-
     public void ProceedWithTeleportation(bool toFadeOut = true)
     {
         if (nextTeleportationAnchor == null)
@@ -385,7 +384,6 @@ public class PlayerScript : MonoBehaviour
     {
         mainCameraTransform = transform.Find("Camera Offset/Main Camera");
         animHandsAnimator = animHandsTransform.transform.GetComponentInChildren<Animator>();
-
     }
     
     private void Update()
