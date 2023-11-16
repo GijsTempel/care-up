@@ -22,6 +22,7 @@ public class SwerveActionTrigger : MonoBehaviour
     int swervesCounted = 0;
     bool UIOpen = false;
 
+    public ActionTrigger firstContactActionTrigger;
 
     void Start()
     {
@@ -76,6 +77,8 @@ public class SwerveActionTrigger : MonoBehaviour
             UIOpen = true;
             animator.SetTrigger("open");
         }
+        if (swervesCounted == 0)
+            firstContactActionTrigger.AttemptTrigger();
         swervesCounted++;
         int nextSwervColliderIndex = currentSwervColliderIndex + 1;
         if (nextSwervColliderIndex >= swerveColliders.Count)
