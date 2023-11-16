@@ -137,17 +137,23 @@ public class PickableObject : MonoBehaviour
         transformToFallow = trans;
     }
 
+    public void UpdateFallowPos()
+    {
+        if (transformToFallow == null)
+            return;
+        float lerpValue = routineTime / poseTransitionDuration;
+        
+        Vector3 p = Vector3.Lerp(startPos, transformToFallow.position, lerpValue);
+        Quaternion r = Quaternion.Lerp(startRotation, transformToFallow.rotation, lerpValue);
+
+        transform.position = p;
+        transform.rotation = r;
+
+    }
+
     private void Update()
     {
-        float lerpValue = routineTime / poseTransitionDuration;
-        if (transformToFallow != null)
-        {
-            Vector3 p = Vector3.Lerp(startPos, transformToFallow.position, lerpValue);
-            Quaternion r = Quaternion.Lerp(startRotation, transformToFallow.rotation, lerpValue);
-
-            transform.position = p;
-            transform.rotation = r;
-        }
+        UpdateFallowPos();
         routineTime += Time.deltaTime;
 
         // transform storage for dropping

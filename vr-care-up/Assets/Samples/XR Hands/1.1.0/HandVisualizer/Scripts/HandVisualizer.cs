@@ -171,6 +171,20 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
             m_Subsystem.updatedHands += OnUpdatedHands;
         }
 
+        public void HideLeft(bool toHide)
+        {
+            HideHand(m_LeftHandGameObjects, toHide);
+        }
+
+        public void HideRight(bool toHide)
+        {
+            HideHand(m_RightHandGameObjects, toHide);
+        }
+
+        void HideHand(HandGameObjects handGameObjects, bool toHide)
+        {
+            handGameObjects.m_HandRoot.SetActive(!toHide);
+        }
 
         void UpdateRenderingVisibility(HandGameObjects handGameObjects, bool isTracked)
         {
@@ -288,7 +302,7 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
 
         class HandGameObjects
         {
-            GameObject m_HandRoot;
+            public GameObject m_HandRoot;
             GameObject m_DrawJointsParent;
             public Transform controllerHandTransform = null;
             Transform[] m_JointXforms = new Transform[XRHandJointID.EndMarker.ToIndex()];

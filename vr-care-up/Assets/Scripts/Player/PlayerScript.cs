@@ -385,6 +385,7 @@ public class PlayerScript : MonoBehaviour
     {
         mainCameraTransform = transform.Find("Camera Offset/Main Camera");
         animHandsAnimator = animHandsTransform.transform.GetComponentInChildren<Animator>();
+
     }
     
     private void Update()

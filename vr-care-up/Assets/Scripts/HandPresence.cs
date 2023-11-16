@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Hands.Samples.VisualizerSample;
@@ -37,6 +38,7 @@ public class HandPresence : MonoBehaviour
     float gripValue = 0f;
     float triggerValue = 0f;
     Transform trackingHandTransfom = null;
+    public HandVisualizer handVisualizer;
 
     public HandPoseControl GetHandPoseControl()
     {
@@ -96,6 +98,31 @@ public class HandPresence : MonoBehaviour
                 handPoseControl = spawnHandModel.GetComponent<HandPoseControl>();
             }
         }
+    }
+
+    void HideHand(bool toHide)
+    {
+        foreach(SkinnedMeshRenderer s in transform.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+            s.enabled = !toHide;
+    }
+
+
+    void HideTrackingOrControlHand(bool toHideControlHand, bool toForce = false)
+    {
+        if (!toForce)
+        {
+            if (objectInHand == null)
+                toHideControlHand = true;
+            if (player.IsInCopyAnimationState())
+                toHideControlHand = false;
+        }
+        HideHand(toHideControlHand);
+        if (handVisualizer == null)
+            return;
+        if (IsLeftHand())
+            handVisualizer.HideLeft(!toHideControlHand);
+        else
+            handVisualizer.HideRight(!toHideControlHand);
     }
 
     private PickableObject FindClosestPickableInArea(bool findMounted = false, bool pinchPickup = false)
@@ -163,8 +190,6 @@ public class HandPresence : MonoBehaviour
                 }
             }
         }
-
-
         return closest;
     }
 
@@ -323,6 +348,10 @@ public class HandPresence : MonoBehaviour
         {
             transform.position = trackingHandTransfom.position;
             transform.rotation = trackingHandTransfom.rotation;
+            if (objectInHand != null)
+            {
+                objectInHand.UpdateFallowPos();
+            }
         }
     }
 
@@ -354,6 +383,7 @@ public class HandPresence : MonoBehaviour
         {
             gripValue = gestureDetector.gripValue;
             triggerValue = gestureDetector.triggerValue;
+            HideTrackingOrControlHand(gripValue < 1 && triggerValue < 1);
         }
         else
         {
@@ -363,6 +393,7 @@ public class HandPresence : MonoBehaviour
                 TryInitialize();
             else
             {
+                HideTrackingOrControlHand(false, true);
                 if (targetDevice.TryGetFeatureValue(CommonUsages.grip, out float newGripValue))
                     gripValue = newGripValue;
 
