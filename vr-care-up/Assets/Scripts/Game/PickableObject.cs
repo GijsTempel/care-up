@@ -21,7 +21,8 @@ public class PickableObject : MonoBehaviour
     public bool deleteOnDrop = false;
 
 
-    bool isKinematic = false;
+    private bool savedIsKinematic = false;
+    private bool savedUseGravity = true;
     private PlayerScript player;
     private Transform transformToFallow;
     [Header("Pinch pickup and mount")]
@@ -91,8 +92,11 @@ public class PickableObject : MonoBehaviour
 
         ShowViewElements(false);
         transformToFallow = null;
-        if (gameObject.GetComponent<Rigidbody>() != null)
-            gameObject.GetComponent<Rigidbody>().isKinematic = isKinematic;
+        if (rigidbody != null)
+        {
+            rigidbody.isKinematic = savedIsKinematic;
+            rigidbody.useGravity = savedUseGravity;
+        }
 
         MountDetector mountDetector = GetMountInChildren();
         if (mountDetector != null)
@@ -123,8 +127,13 @@ public class PickableObject : MonoBehaviour
         ShowViewElements(true);
         
         FallowTransform(handTransform, transuitionDuration);
-        if (gameObject.GetComponent<Rigidbody>() != null)
-            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+
+        if (rigidbody != null)
+        {
+            rigidbody.isKinematic = true;
+            savedUseGravity = rigidbody.useGravity;
+            rigidbody.useGravity = false;
+        }
         return true;
     }
 
@@ -205,7 +214,7 @@ public class PickableObject : MonoBehaviour
     {
         if (gameObject.GetComponent<Rigidbody>() != null)
         {
-            isKinematic = gameObject.GetComponent<Rigidbody>().isKinematic;
+            savedIsKinematic = gameObject.GetComponent<Rigidbody>().isKinematic;
             if (transform.parent != null && transform.parent.tag == "MountingPoint")
             {
                 gameObject.GetComponent<Rigidbody>().isKinematic = true;
