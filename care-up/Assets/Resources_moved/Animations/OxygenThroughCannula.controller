@@ -761,6 +761,22 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-7146315615795687541
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: OxygenHumidifierSeparated_Rigged
+  unlock_frame: 5
+  lock_frame: 275
+  toActivate: 1
 --- !u!114 &-7126010250986042362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2188,6 +2204,35 @@ MonoBehaviour:
   - Cylinder.003
   toShow: 0
   meshRenderer: 1
+--- !u!114 &-2369010984981077715
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4f7766142ffc1468fdda1d3e3f1781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickFrame: 590
+  objectName: OxygenGoggles_Static
+  hand: 1
+--- !u!114 &-2360226689930385344
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 1
+  dropFrame: 743
 --- !u!1101 &-2340191387763561915
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2239,6 +2284,9 @@ AnimatorState:
   - {fileID: -4139118941299017098}
   - {fileID: -4410795058047848667}
   - {fileID: -1599115766779879209}
+  - {fileID: 5115850965141695324}
+  - {fileID: -7146315615795687541}
+  - {fileID: 6770444133464683199}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -3344,7 +3392,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
   m_Name: 
@@ -3588,6 +3636,24 @@ MonoBehaviour:
   audioFrame: 105
   volume: 0.2
   moveWithCamera: 0
+--- !u!114 &3018135693632038484
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: OxygenCylinderSmall_GR
+  HandToSwitch: 0
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: OxCS_SQ
+  ActionFrame: 4
 --- !u!1102 &3028957106597582559
 AnimatorState:
   serializedVersion: 6
@@ -3684,7 +3750,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39579d8139b58744f99daf988f89bcb1, type: 3}
   m_Name: 
@@ -4345,6 +4411,40 @@ AnimatorTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 1
+--- !u!114 &5115850965141695324
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: OxygenHumidifierSeparated_Rigged
+  HandToSwitch: 0
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: Humidifier_SQ
+  ActionFrame: 4
+--- !u!114 &5193287157444649492
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: OxygenCylinderSmall_GR
+  unlock_frame: 5
+  lock_frame: 2012
+  toActivate: 1
 --- !u!1101 &5255146563245953101
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -4511,6 +4611,10 @@ AnimatorState:
   - {fileID: 6174912455838800391}
   - {fileID: -479099706343329661}
   - {fileID: 1149112789730367675}
+  - {fileID: 3018135693632038484}
+  - {fileID: 5193287157444649492}
+  - {fileID: -2369010984981077715}
+  - {fileID: -2360226689930385344}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -5007,6 +5111,28 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &6770444133464683199
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d3c6416e9db4e6885435c6292ddfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: OxygenHumidifierSeparated_Rigged
+  showFrame: 120
+  ObjNames:
+  - Humidifier_Nut
+  - HumidifierContainer_S
+  - HumidifierTop
+  - HumidifierWater_S
+  - HunudifierFilter_S
+  toShow: 1
+  meshRenderer: 1
 --- !u!114 &6825954982915287532
 MonoBehaviour:
   m_ObjectHideFlags: 1
