@@ -35,6 +35,8 @@ public class HandPresence : MonoBehaviour
     public Transform controllerTransform;
     float gripValue = 0f;
     float triggerValue = 0f;
+    float previousGripValue = 0f;
+    float previousTriggerValue = 0f;
     Transform trackingHandTransfom = null;
     public HandVisualizer handVisualizer;
 
@@ -304,6 +306,12 @@ public class HandPresence : MonoBehaviour
             }
             if (!toForce && gameUIVR != null)
                 gameUIVR.UpdateHelpWitDelay(0.1f);
+
+            // not totally arbitrary
+            // if PickUpObject is called from somewhere outside, we need to set pose (grip = default)
+            // but if it's called from Update() in this script, it's gonna overwrite pose anyways so it's fine
+            currentHandPose = ActionTrigger.TriggerHandAction.Grip;
+
             return true;
         }
         return false;
@@ -331,6 +339,7 @@ public class HandPresence : MonoBehaviour
             objectInHand = null;
             if (gameUIVR != null)
                 gameUIVR.UpdateHelpWitDelay(0.1f);
+            currentHandPose = ActionTrigger.TriggerHandAction.None;
         }
     }
 
@@ -420,8 +429,15 @@ public class HandPresence : MonoBehaviour
 
         // Handling picking/dropping with grip/pinch
 
+        // potato fix: for some reason, currentHandPose can be not-None while objectInHand doesnt exist
+        // no clue how and why, but let's just double check and force state
+        if (objectInHand == null)
+        {
+            currentHandPose = ActionTrigger.TriggerHandAction.None;
+        }
+
         // Grip value update
-        if (gripValue > ACTION_THRESHOLD_UP) // picking
+        if (gripValue > ACTION_THRESHOLD_UP && previousGripValue < ACTION_THRESHOLD_UP) // picking
         {
             // if we didn't have anything in hand
             if (currentHandPose == ActionTrigger.TriggerHandAction.None)
@@ -447,13 +463,16 @@ public class HandPresence : MonoBehaviour
         // dropping from grip
         else if (currentHandPose == ActionTrigger.TriggerHandAction.Grip && gripValue < ACTION_THRESHOLD_DOWN)
         {
-            DropObjectFromHand();
-            currentHandPose = ActionTrigger.TriggerHandAction.None;
+            // you know what, cloth is weird, let's do a lower threshold just for cloth 
+            if (objectInHand.name != "clothIn" || gripValue < 0.5f ) // sorry for using value here
+            {
+                DropObjectFromHand();
+            }
         }
 
 
         // Trigger value update
-        if (triggerValue > ACTION_THRESHOLD_UP) // picking
+        if (triggerValue > ACTION_THRESHOLD_UP && previousTriggerValue < ACTION_THRESHOLD_UP) // picking
         {
             // if we didn't have anything in hand
             if (currentHandPose == ActionTrigger.TriggerHandAction.None)
@@ -480,7 +499,7 @@ public class HandPresence : MonoBehaviour
                 // if we were holding an item in a grip, let's switch to pinch completely
                 // TODO: implement multiple holding poses and switch them here
                 // p.s. not everything can be picked up with pinch, check it here
-                if (objectInHand.pickupWithPinch)
+                if (objectInHand != null && objectInHand.pickupWithPinch)
                 {
                     currentHandPose = ActionTrigger.TriggerHandAction.Pinch;
                 }
@@ -490,7 +509,6 @@ public class HandPresence : MonoBehaviour
         else if (currentHandPose == ActionTrigger.TriggerHandAction.Pinch && triggerValue < ACTION_THRESHOLD_DOWN)
         {
             DropObjectFromHand();
-            currentHandPose = ActionTrigger.TriggerHandAction.None;
         }
 
         // animation snapping i guess?
@@ -510,5 +528,8 @@ public class HandPresence : MonoBehaviour
             handAnimator.SetFloat("Grip", gripValue);
             handAnimator.SetFloat("Trigger", triggerValue);
         }
+
+        previousGripValue = gripValue;
+        previousTriggerValue = triggerValue;
     }
 }

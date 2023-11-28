@@ -20,7 +20,6 @@ public class PickableObject : MonoBehaviour
     private Quaternion startRotation;
     public bool deleteOnDrop = false;
 
-
     private bool savedIsKinematic = false;
     private bool savedUseGravity = true;
     private PlayerScript player;
@@ -117,8 +116,6 @@ public class PickableObject : MonoBehaviour
         return true;
     }
 
-    
-
     public bool PickUp(Transform handTransform, float transuitionDuration = 0.2f)
     {
         VRCollarHolder vRCollarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
@@ -150,23 +147,39 @@ public class PickableObject : MonoBehaviour
     {
         if (transformToFallow == null)
             return;
+ 
+        // before: just lerpValue for pickUp transition, where an objects goes from 
+        // from wherever it was lying at to the hand anchor during transition duration
+        // after: if that transition ended, i'll smooth out the follow to the hand
         float lerpValue = routineTime / poseTransitionDuration;
-        
-        Vector3 p = Vector3.Lerp(startPos, transformToFallow.position, lerpValue);
-        Quaternion r = Quaternion.Lerp(startRotation, transformToFallow.rotation, lerpValue);
 
-        transform.position = p;
-        transform.rotation = r;
+        // we're after the picking transition!
+        if (lerpValue > 1) // && name == "Tablet") // was using for tablet only initially
+        {
+            // calculate new lerp value, the further we are from the hand, the bigger the value
+            // the closer we are to the follow transform - the lower the value
+            float dist = Vector3.Distance(transformToFallow.position, transform.position) * 1000f;
+            // quadratic graph, at 0.02 distance lerp = 1, anything above just snaps as before
+            // at 0.01 value (which is what i was getting while trying to hold still) - lerp = 0.25
+            lerpValue = dist * dist * 0.0025f; 
 
+            // calculate and assign new pos for smoothing - from "currentPosition" to "Follow"
+            transform.position = Vector3.Lerp(transform.position, transformToFallow.position, lerpValue);
+            transform.rotation = Quaternion.Lerp(transform.rotation, transformToFallow.rotation, lerpValue);
+        }
+        else
+        {
+            // calculate and assign new pos for transition - from "Start" to "Follow"
+            transform.position = Vector3.Lerp(startPos, transformToFallow.position, lerpValue);
+            transform.rotation = Quaternion.Lerp(startRotation, transformToFallow.rotation, lerpValue);
+        }
     }
 
     private void Update()
     {
-        UpdateFallowPos();
-        routineTime += Time.deltaTime;
-
         // transform storage for dropping
-        if (!teleport_transition_flag) // flag to avoid storing position during teleport animation
+        if (!teleport_transition_flag && // flag to avoid storing position during teleport animation
+                !player.IsAnimatorPaused) // to avoid storing position during paused animSequence
         {
             stored_current_timer += Time.deltaTime;
 
@@ -195,6 +208,12 @@ public class PickableObject : MonoBehaviour
 
         // handle line animation variables
         HandleLineAnimationStep();
+    }
+
+    private void FixedUpdate()
+    {
+        UpdateFallowPos();
+        routineTime += Time.deltaTime;
     }
 
     bool AttatchToMount(Transform mount)

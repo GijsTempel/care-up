@@ -20,6 +20,10 @@ public class PlayerScript : MonoBehaviour
             return ""; 
         }
     }
+    public bool IsAnimatorPaused
+    {
+        get { return animHandsAnimator.speed == 0f; }
+    }
 
     private WalkToGroupVR currentWTG = null;
     private HandPoseControl leftHandPoseControl;
