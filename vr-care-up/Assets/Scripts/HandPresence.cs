@@ -428,7 +428,16 @@ public class HandPresence : MonoBehaviour
         }
 
         // Handling picking/dropping with grip/pinch
+        HandlePickDrop();
+    }
 
+    void HandleTouchUIControls()
+    {
+
+    }
+
+    void HandlePickDrop()
+    {
         // potato fix: for some reason, currentHandPose can be not-None while objectInHand doesnt exist
         // no clue how and why, but let's just double check and force state
         if (objectInHand == null)
@@ -464,7 +473,7 @@ public class HandPresence : MonoBehaviour
         else if (currentHandPose == ActionTrigger.TriggerHandAction.Grip && gripValue < ACTION_THRESHOLD_DOWN)
         {
             // you know what, cloth is weird, let's do a lower threshold just for cloth 
-            if (objectInHand.name != "clothIn" || gripValue < 0.5f ) // sorry for using value here
+            if (objectInHand.name != "clothIn" || gripValue < 0.5f) // sorry for using value here
             {
                 DropObjectFromHand();
             }
