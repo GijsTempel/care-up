@@ -10,6 +10,8 @@ public class HandsTrackingTouchHandler : MonoBehaviour
 {
     public GameObject linkToFireTo = null;
 
+    private float timer = 0f;
+
     private void Start()
     {
         // if target not specified, consider THIS as target
@@ -20,12 +22,27 @@ public class HandsTrackingTouchHandler : MonoBehaviour
     {
         if (other.name == "RightHandIndex3_end")
         {
-            UnityEngine.UI.Button targetButton = linkToFireTo.GetComponent<UnityEngine.UI.Button>();
-            if (targetButton != null)
+            timer = 0f;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.name == "RightHandIndex3_end")
+        {
+            timer += Time.deltaTime;
+            if (timer > 0.2f)
             {
-                // test later whether exit is "upwards"
-                targetButton.onClick.Invoke();
-                Debug.Log("AYO INVOKE " + linkToFireTo.name + " " + Time.time);
+                UnityEngine.UI.Button targetButton = linkToFireTo.GetComponent<UnityEngine.UI.Button>();
+                if (targetButton != null)
+                {
+                    // later implement proper touch, stick to the position on triggerEnter, unstick and fire function on Exit
+                    // for now, lazy check whether it was an intentional touch: touch needs to be longer then .2f
+                    targetButton.onClick.Invoke();
+                }
+
+                // lazy way of making sure it fires once without new variables
+                timer = Mathf.NegativeInfinity;
             }
         }
     }
