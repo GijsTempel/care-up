@@ -154,7 +154,7 @@ public class PickableObject : MonoBehaviour
         float lerpValue = routineTime / poseTransitionDuration;
 
         // we're after the picking transition!
-        if (lerpValue > 1) // && name == "Tablet") // was using for tablet only initially
+        if (lerpValue > 1 && name == "Tablet") // was using for tablet only initially
         {
             // calculate new lerp value, the further we are from the hand, the bigger the value
             // the closer we are to the follow transform - the lower the value
