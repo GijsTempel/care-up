@@ -75,8 +75,8 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
         VelocityType m_PreviousVelocityType;
 
         XRHandSubsystem m_Subsystem;
-        HandGameObjects m_LeftHandGameObjects;
-        HandGameObjects m_RightHandGameObjects;
+        public HandGameObjects m_LeftHandGameObjects;
+        public HandGameObjects m_RightHandGameObjects;
 
         static readonly List<XRHandSubsystem> s_SubsystemsReuse = new List<XRHandSubsystem>();
 
@@ -300,13 +300,13 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
             }
         }
 
-        class HandGameObjects
+        public class HandGameObjects
         {
             public GameObject m_HandRoot;
             GameObject m_DrawJointsParent;
             public Transform controllerHandTransform = null;
             Transform[] m_JointXforms = new Transform[XRHandJointID.EndMarker.ToIndex()];
-            GameObject[] m_DrawJoints = new GameObject[XRHandJointID.EndMarker.ToIndex()];
+            public GameObject[] m_DrawJoints = new GameObject[XRHandJointID.EndMarker.ToIndex()];
             GameObject[] m_VelocityParents = new GameObject[XRHandJointID.EndMarker.ToIndex()];
             LineRenderer[] m_Lines = new LineRenderer[XRHandJointID.EndMarker.ToIndex()];
             bool m_IsTracked;
@@ -331,7 +331,7 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
 
                     m_DrawJoints[jointIndex] = Instantiate(debugDrawPrefab);
                     m_DrawJoints[jointIndex].transform.parent = drawJointsParent;
-                    m_DrawJoints[jointIndex].name = jointId.ToString();
+                    m_DrawJoints[jointIndex].name = jointId.ToString() + " " + jointIndex.ToString();
 
                     m_VelocityParents[jointIndex] = Instantiate(velocityPrefab);
                     m_VelocityParents[jointIndex].transform.parent = jointXform;
@@ -547,8 +547,8 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
                 if (xform == null || !joint.TryGetPose(out var pose))
                     return;
 
-                m_DrawJoints[jointIndex].transform.localPosition = pose.position;
-                m_DrawJoints[jointIndex].transform.localRotation = pose.rotation;
+                m_DrawJoints[jointIndex].transform.localPosition = pose.position; 
+                m_DrawJoints[jointIndex].transform.localRotation = pose.rotation; 
 
                 if (debugDrawJoints && joint.id != XRHandJointID.Wrist)
                 {
