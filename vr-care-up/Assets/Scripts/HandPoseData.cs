@@ -16,28 +16,22 @@ public class HandPoseData : MonoBehaviour
 
     /*[SerializeField]
     GameObject debugJointPrefab;
-    GameObject[] debugJoints;
+    GameObject[] debugJoints;*/
 
-    public Transform[] fullBoneStructure;
-
-    HandVisualizer.HandGameObjects m_HandGameObjects;*/
+    public Transform[] colliderBones;
+    HandVisualizer.HandGameObjects m_HandGameObjects;
 
     private void Start()
     {
         baseRootBonePosition = rootBone.localPosition;
         baseRootBoneRotation = rootBone.localRotation;
 
-        /*debugJoints = new GameObject[fingerBones.Length];
+        /*debugJoints = new GameObject[colliderBones.Length];
         for (int i = 0; i < debugJoints.Length; i++)
         {
-            debugJoints[i] = Instantiate<GameObject>(debugJointPrefab, fingerBones[i]);
-            debugJoints[i].transform.localScale = Vector3.one * 0.015f;
-        }
-
-        m_HandGameObjects = (handType == HandModelType.Left) ?
-            GameObject.FindAnyObjectByType<HandVisualizer>().m_LeftHandGameObjects :
-            GameObject.FindAnyObjectByType<HandVisualizer>().m_RightHandGameObjects;
-        */
+            debugJoints[i] = Instantiate<GameObject>(debugJointPrefab, colliderBones[i]);
+            debugJoints[i].transform.localScale = Vector3.one * 0.02f;
+        }*/
     }
 
     public Vector3 GetBaseRootBonePosition()
@@ -55,16 +49,27 @@ public class HandPoseData : MonoBehaviour
     {
         return transform.parent.parent.localPosition;
     }
+    public void LateUpdate()
+    {
+        // surely in late update it's initialized properly finally?
+        // confirmed
+        if (m_HandGameObjects == null)
+        {
+            m_HandGameObjects = (handType == HandModelType.Left) ?
+                GameObject.FindAnyObjectByType<HandVisualizer>().m_LeftHandGameObjects :
+                GameObject.FindAnyObjectByType<HandVisualizer>().m_RightHandGameObjects;
+        }
+    }
 
-    /*void Update()
+    void Update()
     {
         if (m_HandGameObjects != null)
         {
-            for (int i = 0; i < fullBoneStructure.Length; i++)
+            for (int i = 0; i < colliderBones.Length; i++)
             {
-                fullBoneStructure[i].position = m_HandGameObjects.m_DrawJoints[i].transform.position;
-                fullBoneStructure[i].rotation = m_HandGameObjects.m_DrawJoints[i].transform.rotation;
+                colliderBones[i].position = m_HandGameObjects.m_DrawJoints[i].transform.position;
+                colliderBones[i].rotation = m_HandGameObjects.m_DrawJoints[i].transform.rotation;
             }
         }
-    }*/
+    }
 }
