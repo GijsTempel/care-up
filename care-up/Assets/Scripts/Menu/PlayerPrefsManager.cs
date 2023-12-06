@@ -529,7 +529,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
 
         QualitySettings.SetQualityLevel(QualityLevel, true);
-        Debug.Log("*The quality level is: " + QualitySettings.names[QualityLevel].ToString());
+        ColoredConsoleOutput.Print(RGBColor.Green, "*The quality level is: " + QualitySettings.names[QualityLevel].ToString());
         //Debug.Log ("PostProcessing is set to saved value: " + postProcessingEnabled);
     }
 
