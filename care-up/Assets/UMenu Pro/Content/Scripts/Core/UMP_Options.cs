@@ -6,6 +6,7 @@ public class UMP_Options : MonoBehaviour
 {
     public Animator Anim;
     public string OptionAnimation;
+    public Toggle postprocessingToggle;
 
     public Animator AnimCN;
     public string CNAnimation;
@@ -228,13 +229,13 @@ public class UMP_Options : MonoBehaviour
     /// </summary>
     public void Apply()
     {
-        Toggle postProcessing = GameObject.Find("PostProcessingToggle").GetComponent<Toggle>();
+        Debug.Log("Apply!!!!!");
         GameObject preferences = GameObject.Find("Preferences");
         if (preferences != null)
         {
             //preferences.GetComponent<PlayerPrefsManager>().postProcessingEnabled = postProcessing.isOn;
-            PlayerPrefs.SetInt("PostProcessing", (postProcessing.isOn ? 1 : 0));
-            Debug.Log("PostProcessing is set to " + postProcessing.isOn);
+            PlayerPrefs.SetInt("PostProcessing", (postprocessingToggle.isOn ? 1 : 0));
+            Debug.Log("PostProcessing is set to " + postprocessingToggle.isOn);
             preferences.GetComponent<PlayerPrefsManager>().SerGraphicsLevel();
             //int QualityLevel = 6;
             //if (postProcessing.isOn)
