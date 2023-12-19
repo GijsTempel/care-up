@@ -103,7 +103,6 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
                 pinch_timeout -= Time.deltaTime;
             if (grip_timeout > -1f)
                 grip_timeout -= Time.deltaTime;
-            Debug.Log("@&&Timeout" + name + ":grip " + grip_timeout.ToString() + " | pinch " + pinch_timeout.ToString());
         }
 
 #if XR_HANDS
