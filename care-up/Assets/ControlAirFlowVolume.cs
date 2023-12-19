@@ -17,7 +17,7 @@ public class ControlAirFlowVolume : MonoBehaviour
     {
         volumeValue = boneToControl.transform.localPosition.y / 0.2f;
         gameObject.GetComponent<AudioSource>().volume = volumeValue;
-        Debug.Log("Bone position value: " + boneToControl.transform.localPosition.y.ToString()) ;
-        Debug.Log("Volume value: " + volumeValue.ToString()); ;
+        /*Debug.Log("Bone position value: " + boneToControl.transform.localPosition.y.ToString()) ;
+        Debug.Log("Volume value: " + volumeValue.ToString()); ;*/
     }
 }
