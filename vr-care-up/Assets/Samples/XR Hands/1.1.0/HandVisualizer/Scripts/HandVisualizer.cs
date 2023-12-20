@@ -188,6 +188,8 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
 
         void UpdateRenderingVisibility(HandGameObjects handGameObjects, bool isTracked)
         {
+            if (m_Subsystem == null)
+                return;
             left_handIsTracked = m_Subsystem.leftHand.isTracked;
             right_handIsTracked = m_Subsystem.rightHand.isTracked;
 
