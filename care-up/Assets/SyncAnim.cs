@@ -31,11 +31,15 @@ public class SyncAnim : MonoBehaviour
     {
         if(IsSyncing)
         {
-            if (SlaveObject)
+            if (MasterObject.IsInTransition(0) == false)
             {
-                float nTime = Mathf.Repeat(MasterObject.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f);
-                SlaveObject.Play(AnimName, -1, nTime);
-                Debug.Log(nTime);
+
+                if (SlaveObject)
+                {
+                    float nTime = Mathf.Repeat(MasterObject.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f);
+                    if (MasterObject.GetAnimatorTransitionInfo(0).normalizedTime == 0f)
+                        SlaveObject.Play(AnimName, -1, nTime);
+                }
             }
         }
         
