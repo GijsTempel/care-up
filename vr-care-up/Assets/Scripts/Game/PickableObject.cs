@@ -177,6 +177,8 @@ public class PickableObject : MonoBehaviour
 
     private void Update()
     {
+        UpdateFallowPos();
+        routineTime += Time.deltaTime;
         // transform storage for dropping
         if (!teleport_transition_flag && // flag to avoid storing position during teleport animation
                 !player.IsAnimatorPaused) // to avoid storing position during paused animSequence
@@ -212,8 +214,7 @@ public class PickableObject : MonoBehaviour
 
     private void FixedUpdate()
     {
-        UpdateFallowPos();
-        routineTime += Time.deltaTime;
+        
     }
 
     bool AttatchToMount(Transform mount)
