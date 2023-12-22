@@ -360,7 +360,7 @@ Inspecteer de wond op:
 	
 	
 
-	<Action
+	<action
     index="27"
     description="Breng nieuw verbandmateriaal aan volgens afspraak"
     type="useOn"
@@ -368,8 +368,9 @@ Inspecteer de wond op:
     item="BedsorePlaster_OnTable"
     points="1"
     buttonText="Breng wondverband aan"
-	blockRequired="WoudIsCleaned"
-    target="" />
+	blockRequired="GlovesTakenOn2"
+    target="" 
+	></action>
 
 	<action
 	 comment="Cut the plaster"
@@ -395,7 +396,7 @@ Inspecteer de wond op:
 	 comment="Attach plaster to patient"
 	 points="1"
 	 description="Plak de pleister over het midden van de wond"
-	 index="27"
+	 index="30"
 	 type="sequenceStep"
 	 value="AttachPlaster"
 	 extra=""
@@ -405,7 +406,7 @@ Inspecteer de wond op:
 	 comment="Remove left side cover"
 	 points="1"
 	 description="Verwijder de linker beschermstrip"
-	 index="30"
+	 index="31"
 	 type="sequenceStep"
 	 value="RemoveLeftCover"
 	 extra=""
@@ -415,7 +416,7 @@ Inspecteer de wond op:
 	 comment="Remove right side cover"
 	 points="1"
 	 description="Verwijder de rechter beschermstrip"
-	 index="31"
+	 index="32"
 	 type="sequenceStep"
 	 value="RemoveRightCover"
 	 blockUnlock="EndOfSq4"
@@ -426,7 +427,7 @@ Inspecteer de wond op:
       comment="Create a clean workfield"
       points="1"
       description="[Maak een schoon werkveld end]"
-      index="32"
+      index="33"
       type="use"
       value="WorkField"
 	  blockRequired="EndOfSq4"
@@ -437,7 +438,7 @@ Inspecteer de wond op:
   ></action>
 	
 	<Action
-    index="33"
+    index="34"
     description="Trek de handschoenen uit."
     type="general"
     item=""
@@ -451,14 +452,14 @@ Inspecteer de wond op:
     points="3"
     description="[Pas handhygiëne]"
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    index="34"
+    index="35"
     type="use"
     value="HandCleaner">
 	</action>
 
   <action
     comment="Record the action and any findings and adjust the wound treatment plan if necessary"
-    index="35"
+    index="36"
     points="1"
     description="Noteer de handeling en eventuele bevindingen. Stel zo nodig het behandelplan bij"
     type="use"
