@@ -325,6 +325,43 @@ Inspecteer de wond op:
 
 	<Action
     index="24"
+    description="Trek de handschoenen uit."
+    type="general"
+    item=""
+    points="1"
+    buttonText="Trek handschoenen uit"
+    action="TakeOffGlovesWithoutThrowing"
+	blockUnlock="glovesRemoved2"
+    blockRequired="WoudIsCleaned" />
+
+	<action
+   comment="(1)Apply handhygiene"
+   points="3"
+   description="[Pas handhygiëne]"
+   fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
+   index="25"
+   type="use"
+   value="HandCleaner"
+   extra="Pas handhygiëne toe. "
+   messageTitle=""
+   messageContent=""
+    ></action>
+
+	<action
+		comment="Put on gloves."
+		points="1"
+		description="[Trek de handschoenen aan]"
+		index="26"
+		type="use"
+		value="gloveBox"
+		extra="Trek de handschoenen aan."
+		blockUnlock="GlovesTakenOn2"
+   ></action>
+	
+	
+
+	<Action
+    index="27"
     description="Breng nieuw verbandmateriaal aan volgens afspraak"
     type="useOn"
     comment="Apply new dressing material as agreed"
@@ -338,7 +375,7 @@ Inspecteer de wond op:
 	 comment="Cut the plaster"
 	 points="1"
 	 description="Knip de pleister"
-	 index="25"
+	 index="28"
 	 type="sequenceStep"
 	 value="CutPlaster"
 	 extra=""
@@ -348,7 +385,7 @@ Inspecteer de wond op:
 	 comment="Remove middle cover"
 	 points="1"
 	 description="Verwijder de middelste beschermstrip"
-	 index="26"
+	 index="29"
 	 type="sequenceStep"
 	 value="RemoveMidCover"
 	 extra=""
@@ -368,7 +405,7 @@ Inspecteer de wond op:
 	 comment="Remove left side cover"
 	 points="1"
 	 description="Verwijder de linker beschermstrip"
-	 index="28"
+	 index="30"
 	 type="sequenceStep"
 	 value="RemoveLeftCover"
 	 extra=""
@@ -378,7 +415,7 @@ Inspecteer de wond op:
 	 comment="Remove right side cover"
 	 points="1"
 	 description="Verwijder de rechter beschermstrip"
-	 index="29"
+	 index="31"
 	 type="sequenceStep"
 	 value="RemoveRightCover"
 	 blockUnlock="EndOfSq4"
@@ -389,7 +426,7 @@ Inspecteer de wond op:
       comment="Create a clean workfield"
       points="1"
       description="[Maak een schoon werkveld end]"
-      index="30"
+      index="32"
       type="use"
       value="WorkField"
 	  blockRequired="EndOfSq4"
@@ -400,7 +437,7 @@ Inspecteer de wond op:
   ></action>
 	
 	<Action
-    index="31"
+    index="33"
     description="Trek de handschoenen uit."
     type="general"
     item=""
@@ -414,14 +451,14 @@ Inspecteer de wond op:
     points="3"
     description="[Pas handhygiëne]"
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    index="32"
+    index="34"
     type="use"
     value="HandCleaner">
 	</action>
 
   <action
     comment="Record the action and any findings and adjust the wound treatment plan if necessary"
-    index="33"
+    index="35"
     points="1"
     description="Noteer de handeling en eventuele bevindingen. Stel zo nodig het behandelplan bij"
     type="use"
