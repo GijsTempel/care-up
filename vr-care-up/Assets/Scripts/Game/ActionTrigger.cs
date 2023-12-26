@@ -122,6 +122,8 @@ public class ActionTrigger : MonoBehaviour
                 transform.GetChild(i).GetComponent<VRTutorialTigger>().Execute();
             if (transform.GetChild(i).GetComponent<ActionTriggerIgniter>() != null)
                 transform.GetChild(i).GetComponent<ActionTriggerIgniter>().Execute();
+            if (transform.GetChild(i).GetComponent<ChangeHandPose>() != null)
+                transform.GetChild(i).GetComponent<ChangeHandPose>().Execute();
         }
     }
 
@@ -145,6 +147,7 @@ public class ActionTrigger : MonoBehaviour
 
     public bool AttemptTrigger()
     {
+        Debug.Log("@AT AttemptTrigger " + name + ":" + Random.Range(0,999).ToString());
         if (triggerDelay > 0)
         {
             enabled = true;

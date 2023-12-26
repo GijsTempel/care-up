@@ -212,11 +212,6 @@ public class PickableObject : MonoBehaviour
         HandleLineAnimationStep();
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
-
     bool AttatchToMount(Transform mount)
     {
         if (pinchMountTrigger != null && pinchMountTrigger.gameObject.activeInHierarchy)

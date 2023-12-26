@@ -35,6 +35,8 @@ public class ActionExpectant : MonoBehaviour
 
     public bool TryExecuteAction()
     {
+        Debug.Log("@AE TryExecuteAction " + name + ":" + UnityEngine.Random.Range(0,999).ToString());
+
         bool result = false;
         for (int i = 0; i < transform.childCount; i++)
         {

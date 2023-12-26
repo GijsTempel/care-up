@@ -53,6 +53,16 @@ public class ShowHideObjects : MonoBehaviour
         gameUIVR = GameObject.FindObjectOfType<GameUIVR>();
     }
 
+    public GameObject GetObjectByName(string _name)
+    {
+        foreach(GameObject o in hidenObjects)
+        {
+            if (o.name == _name)
+                return o;
+        }
+        return null;
+    }
+
     public bool HasNeeded(string str)
     {
         foreach(GameObject o in hidenObjects)
