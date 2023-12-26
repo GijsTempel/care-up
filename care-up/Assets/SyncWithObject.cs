@@ -26,6 +26,10 @@ public class SyncWithObject : StateMachineBehaviour
                 anim.IsSyncing = true;
             }
         }
+        else
+        {
+            Debug.Log("Syncer error!: "+syncer.name + " not found");
+        }
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
