@@ -71,24 +71,28 @@ public class ActionTrigger : MonoBehaviour
                 if (!c.Check())
                     return false;
         }
-        if (actionType == ActionManager.ActionType.None)
-        {
-            TriggerIncludedObjects();
-            return true;
-        }
+        // if (actionType == ActionManager.ActionType.None)
+        // {
+        //     TriggerIncludedObjects();
+        //     return true;
+        // }
+
+
         if (actionNumberLimit == 0)
             return false;
         bool isActionConfirmed = true;
         foreach(ActionCollider c in actionColliders)
         {
-            //Debug.Log(name);
             if (!c.CheckConformity(currentTriggerHand, currentTriggerHandAction))
             {
                 isActionConfirmed = false;
                 break;
             }
         }
-        if (isActionConfirmed && actionHandler != null && actionType != ActionManager.ActionType.None)
+        if (isActionConfirmed)
+            Debug.Log("@ CheckConformity " + name + ":" + currentTriggerHand.ToString() + " " + currentTriggerHandAction.ToString());
+
+        if (isActionConfirmed && actionHandler != null)
         {
             if (checkBeforeAct)
             {
@@ -97,7 +101,10 @@ public class ActionTrigger : MonoBehaviour
             }
             else
             {
-                isActionConfirmed = actionHandler.TryExecuteAction(actionType, LeftActionManagerObject, RightActionManagerObject);
+                if (actionType != ActionManager.ActionType.None)
+                    isActionConfirmed = actionHandler.TryExecuteAction(actionType, LeftActionManagerObject, RightActionManagerObject);
+                else
+                    isActionConfirmed = true;
             }
         }
         if (isActionConfirmed)

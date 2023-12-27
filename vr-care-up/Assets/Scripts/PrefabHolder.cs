@@ -39,6 +39,9 @@ public class PrefabHolder : MonoBehaviour
             newInstance.name = _name;
             newInstance.SetActive(true);
         }
+        if (newInstance != null)
+            Debug.Log("@ SpawnObject " + ":" + _name + Random.Range(0, 9999).ToString());
+
         return newInstance;
     }
 

@@ -4,20 +4,30 @@ using UnityEngine;
 
 public class ActionModule_AddObjectToHand : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    public string objectName;
+    public bool toLeftHand;
+    // Start is called before the first frame update
+
+
+    private void AddObject()
     {
-        
+        Debug.Log("@ AddObject " + name + ":" + objectName);
+        PrefabHolder prefabHolder = GameObject.FindObjectOfType<PrefabHolder>();
+        PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
+
+        if (prefabHolder != null && player != null)
+        {
+            player.PickUpObject(prefabHolder.SpawnObject(objectName).GetComponent<PickableObject>(), toLeftHand);
+        }
+        else
+        {
+            Debug.LogError("!Prefab Holder not found");
+        }
     }
 
     public void Execute()
     {
-        
+        AddObject();
     }
 }

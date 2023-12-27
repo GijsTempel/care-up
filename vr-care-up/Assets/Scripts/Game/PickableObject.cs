@@ -29,8 +29,6 @@ public class PickableObject : MonoBehaviour
     public ActionTrigger pinchPickupTrigger;
     public ActionTrigger pinchMountTrigger;
 
-    private Rigidbody rigidbody = null;
-
     // required time with no movement to store transform
     private static float stored_time_needed = 2f;
     // set to time_needed to store transform immediately
@@ -83,6 +81,8 @@ public class PickableObject : MonoBehaviour
 
     public bool Drop()
     {
+        Debug.Log("@ Drop " + name + ":" + UnityEngine.Random.Range(0, 9999).ToString());
+
         VRCollarHolder vRCollarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
         if (vRCollarHolder != null)
             vRCollarHolder.CloseTutorialShelf();
@@ -91,10 +91,10 @@ public class PickableObject : MonoBehaviour
 
         ShowViewElements(false);
         transformToFallow = null;
-        if (rigidbody != null)
+        if (gameObject.GetComponent<Rigidbody>() != null)
         {
-            rigidbody.isKinematic = savedIsKinematic;
-            rigidbody.useGravity = savedUseGravity;
+            gameObject.GetComponent<Rigidbody>().isKinematic = savedIsKinematic;
+            gameObject.GetComponent<Rigidbody>().useGravity = savedUseGravity;
         }
 
         MountDetector mountDetector = GetMountInChildren();
@@ -118,6 +118,7 @@ public class PickableObject : MonoBehaviour
 
     public bool PickUp(Transform handTransform, float transuitionDuration = 0.2f)
     {
+        Debug.Log("@ PickUp " + name + ":" + UnityEngine.Random.Range(0, 9999).ToString());
         VRCollarHolder vRCollarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
         if (vRCollarHolder != null)
             vRCollarHolder.CloseTutorialShelf();
@@ -125,11 +126,11 @@ public class PickableObject : MonoBehaviour
         
         FallowTransform(handTransform, transuitionDuration);
 
-        if (rigidbody != null)
+        if (gameObject.GetComponent<Rigidbody>() != null)
         {
-            rigidbody.isKinematic = true;
-            savedUseGravity = rigidbody.useGravity;
-            rigidbody.useGravity = false;
+            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            savedUseGravity = gameObject.GetComponent<Rigidbody>().useGravity;
+            gameObject.GetComponent<Rigidbody>().useGravity = false;
         }
         return true;
     }
@@ -243,11 +244,6 @@ public class PickableObject : MonoBehaviour
         ShowViewElements(false);
         if (dropAnchor != null)
             FallowTransform(dropAnchor);
-
-        if (!TryGetComponent<Rigidbody>(out rigidbody))
-        {
-            Debug.LogWarning("Somehow no rigidbody on pickable Object?");
-        }
     }
 
     public IEnumerator OnItemDroppedOnGround(GameObject _dParticles, GameObject _aParticles, GameObject _line)

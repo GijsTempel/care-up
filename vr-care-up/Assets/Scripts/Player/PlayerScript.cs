@@ -201,6 +201,21 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    public void PickUpObject(PickableObject pObject, bool isLeftHand)
+    {
+        if (pObject == null)
+            return;
+        HandPresence currentHand = rightHandPresence;
+        if (isLeftHand)
+            currentHand = leftHandPresence;
+
+        currentHand.PickUpObject(pObject, false);
+        if (leftHandPoseControl.handPoseMode == HandPoseControl.HandPoseMode.CopyAnimIn)
+        {
+            ObjectsInHandsFallowAnimation(true);
+        }
+    }    
+
     public void SwitchHands()
     {
         GameObject leftObject = GetObjectInHand(true);
