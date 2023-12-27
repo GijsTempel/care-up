@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChangeHandPose : MonoBehaviour
+public class ActionModule_ChangeHandPose : MonoBehaviour
 {
     public enum ChangingHand {Left, Right}
     public ChangingHand changingHand = ChangingHand.Left;

@@ -14,7 +14,7 @@ public class SelectDialogue : MonoBehaviour
     public VerticalLayoutGroup answerPanelVerticalLayoutGroup;
 
     [HideInInspector]
-    public ActionTriggerIgniter actionTriggerIgniter;
+    public ActionModule_ActionTriggerIgniter actionTriggerIgniter;
 
     /*public bool tutorial_lock = false;
     public bool cheated = false;*/

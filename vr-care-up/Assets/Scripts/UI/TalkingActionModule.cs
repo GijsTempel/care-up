@@ -24,7 +24,7 @@ public class TalkingActionModule : MonoBehaviour
     private string currentPlayerWTG = "";
     private bool toShowDialogue = false;
     public ActionTrigger notifBubbleActionTrigger;
-    public ActionTriggerIgniter actionTriggerIgniter;
+    public ActionModule_ActionTriggerIgniter actionTriggerIgniter;
     public bool debugElement = false;
 
     void Start()

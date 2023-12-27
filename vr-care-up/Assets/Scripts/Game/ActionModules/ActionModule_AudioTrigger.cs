@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ATAudioTrigger : MonoBehaviour
+public class ActionModule_AudioTrigger : MonoBehaviour
 {
     public string controlObjectName = "";
     public string audioObjectName;

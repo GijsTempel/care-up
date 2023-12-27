@@ -110,20 +110,22 @@ public class ActionTrigger : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            if (transform.GetChild(i).GetComponent<TriggerShowHideDeleteAction>() != null)
-                transform.GetChild(i).GetComponent<TriggerShowHideDeleteAction>().StartTimeout();
+            if (transform.GetChild(i).GetComponent<ActionModule_ShowHideDelete>() != null)
+                transform.GetChild(i).GetComponent<ActionModule_ShowHideDelete>().StartTimeout();
             if (transform.GetChild(i).GetComponent<ActionTrigger>() != null)
                 transform.GetChild(i).GetComponent<ActionTrigger>().AttemptTrigger();
-            if (transform.GetChild(i).GetComponent<ATAnimationTrigger>() != null)
-                transform.GetChild(i).GetComponent<ATAnimationTrigger>().Execute();
-            if (transform.GetChild(i).GetComponent<ATAudioTrigger>() != null)
-                transform.GetChild(i).GetComponent<ATAudioTrigger>().Execute();
-            if (transform.GetChild(i).GetComponent<VRTutorialTigger>() != null)
-                transform.GetChild(i).GetComponent<VRTutorialTigger>().Execute();
-            if (transform.GetChild(i).GetComponent<ActionTriggerIgniter>() != null)
-                transform.GetChild(i).GetComponent<ActionTriggerIgniter>().Execute();
-            if (transform.GetChild(i).GetComponent<ChangeHandPose>() != null)
-                transform.GetChild(i).GetComponent<ChangeHandPose>().Execute();
+            if (transform.GetChild(i).GetComponent<ActionModule_AnimationTrigger>() != null)
+                transform.GetChild(i).GetComponent<ActionModule_AnimationTrigger>().Execute();
+            if (transform.GetChild(i).GetComponent<ActionModule_AudioTrigger>() != null)
+                transform.GetChild(i).GetComponent<ActionModule_AudioTrigger>().Execute();
+            if (transform.GetChild(i).GetComponent<ActionModule_TutorialTigger>() != null)
+                transform.GetChild(i).GetComponent<ActionModule_TutorialTigger>().Execute();
+            if (transform.GetChild(i).GetComponent<ActionModule_ActionTriggerIgniter>() != null)
+                transform.GetChild(i).GetComponent<ActionModule_ActionTriggerIgniter>().Execute();
+            if (transform.GetChild(i).GetComponent<ActionModule_ChangeHandPose>() != null)
+                transform.GetChild(i).GetComponent<ActionModule_ChangeHandPose>().Execute();
+            if (transform.GetChild(i).GetComponent<ActionModule_AddObjectToHand>() != null)
+                transform.GetChild(i).GetComponent<ActionModule_AddObjectToHand>().Execute();
         }
     }
 

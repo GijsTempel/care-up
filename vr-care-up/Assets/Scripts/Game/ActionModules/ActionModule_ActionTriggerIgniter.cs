@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionTriggerIgniter : MonoBehaviour
+public class ActionModule_ActionTriggerIgniter : MonoBehaviour
 {
     public ActionTrigger actionTrigger;
 

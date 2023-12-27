@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TriggerShowHideDeleteAction : MonoBehaviour
+public class ActionModule_ShowHideDelete : MonoBehaviour
 {
     public bool toShow = true;
     public bool toDelete = false;

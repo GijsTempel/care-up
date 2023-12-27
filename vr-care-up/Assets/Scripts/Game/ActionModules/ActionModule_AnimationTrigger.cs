@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ATAnimationTrigger : MonoBehaviour
+public class ActionModule_AnimationTrigger : MonoBehaviour
 {
 
     public String objectName = "";

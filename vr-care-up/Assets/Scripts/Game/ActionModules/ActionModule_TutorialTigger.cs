@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VRTutorialTigger : MonoBehaviour
+public class ActionModule_TutorialTigger : MonoBehaviour
 {
     public string triggerName;
     public float waitTime = 2f;
