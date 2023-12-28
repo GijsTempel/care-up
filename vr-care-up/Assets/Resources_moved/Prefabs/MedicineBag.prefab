@@ -1957,7 +1957,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1813708030970878747
 Transform:
   m_ObjectHideFlags: 0
@@ -2267,6 +2267,8 @@ MonoBehaviour:
   ObjNames:
   - MedicineBagOpenLeft
   - LeftOpenCollider
+  - TabletPickupActionTriggerRight
+  - TabletPickupActionTriggerLeft
   meshRenderer: 0
 --- !u!1 &4198662269803898838
 GameObject:
@@ -2284,7 +2286,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6498922957348651297
 Transform:
   m_ObjectHideFlags: 0
@@ -2300,6 +2302,7 @@ Transform:
   m_Children:
   - {fileID: 5401680511054549528}
   - {fileID: 5649306136640157275}
+  - {fileID: 3376689438712179632}
   m_Father: {fileID: 6950736288708769439}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2888706003286453645
@@ -2531,6 +2534,62 @@ MonoBehaviour:
   ObjNames:
   - MedicineBagOpenRight
   - RightOpenCollider
+  - TabletPickupActionTriggerRight
+  - TabletPickupActionTriggerLeft
+  meshRenderer: 0
+--- !u!1 &4578112911399226017
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3376689438712179632}
+  - component: {fileID: 1583337386475877738}
+  m_Layer: 0
+  m_Name: HideTabletAndAction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3376689438712179632
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4578112911399226017}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6498922957348651297}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1583337386475877738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4578112911399226017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95521c2fff29f2d4c83059ebccf446de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toShow: 0
+  toDelete: 0
+  waitTime: 0
+  ControlObjectName: MedicineBag
+  ObjNames:
+  - TabletPickupActionTriggerRight
+  - TabletPickupActionTriggerLeft
+  - Tablet1L
+  - Tablet1R
   meshRenderer: 0
 --- !u!1 &4657413722447281164
 GameObject:
@@ -3198,7 +3257,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5420221547152878621
 Transform:
   m_ObjectHideFlags: 0
@@ -3214,6 +3273,7 @@ Transform:
   m_Children:
   - {fileID: 6562717299420321361}
   - {fileID: 3087989981952360399}
+  - {fileID: 2955856935564389977}
   m_Father: {fileID: 6950736288708769439}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5336588692941974253
@@ -4566,7 +4626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4009799534173146639
 Transform:
   m_ObjectHideFlags: 0
@@ -4830,6 +4890,11 @@ MonoBehaviour:
   - {fileID: 1743530295396297134}
   - {fileID: 2608514544668108807}
   - {fileID: 1758506704008445384}
+  - {fileID: 7288740203381363275}
+  - {fileID: 5796531042778410710}
+  - {fileID: 4198662269803898838}
+  - {fileID: 5216176417232532105}
+  - {fileID: 523563947077658388}
 --- !u!1 &8953923375148437127
 GameObject:
   m_ObjectHideFlags: 0
@@ -4893,6 +4958,60 @@ Transform:
   - {fileID: 2341439269009286721}
   m_Father: {fileID: 7222518843534792617}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9127767523734517741
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2955856935564389977}
+  - component: {fileID: 5134412315647519318}
+  m_Layer: 0
+  m_Name: HideTabletAndAction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2955856935564389977
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9127767523734517741}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5420221547152878621}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5134412315647519318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9127767523734517741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95521c2fff29f2d4c83059ebccf446de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toShow: 0
+  toDelete: 0
+  waitTime: 0
+  ControlObjectName: MedicineBag
+  ObjNames:
+  - TabletPickupActionTriggerRight
+  - TabletPickupActionTriggerLeft
+  - Tablet1L
+  - Tablet1R
+  meshRenderer: 0
 --- !u!1001 &5216176417232630827
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4908,6 +5027,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 16334609f278345418b6f41a1a9c4668, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 16334609f278345418b6f41a1a9c4668, type: 3}
+      propertyPath: m_Name
+      value: Tablet1R
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 16334609f278345418b6f41a1a9c4668, type: 3}
       propertyPath: m_LocalScale.x
@@ -4973,6 +5096,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8133379993051760509}
   m_SourcePrefab: {fileID: 100100000, guid: 16334609f278345418b6f41a1a9c4668, type: 3}
+--- !u!1 &5216176417232532105 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: 16334609f278345418b6f41a1a9c4668, type: 3}
+  m_PrefabInstance: {fileID: 5216176417232630827}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5216176417232532107 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 16334609f278345418b6f41a1a9c4668, type: 3}
@@ -5092,6 +5220,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: a3f304ee8cd92e149adc9b92210303ca, type: 3}
   m_PrefabInstance: {fileID: 7288740203381265641}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7288740203381363275 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: a3f304ee8cd92e149adc9b92210303ca, type: 3}
+  m_PrefabInstance: {fileID: 7288740203381265641}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8208651310831091560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5160,6 +5293,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 41842ebdc899f4349a0d8138a22bb772, type: 2}
+    - target: {fileID: -671337323138230148, guid: 85d88c571246121c395f4289e9632319, type: 3}
+      propertyPath: m_Name
+      value: Tablet1L
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 85d88c571246121c395f4289e9632319, type: 3}
       propertyPath: m_Name
       value: MedicineBagOpenLeft
@@ -5176,6 +5313,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3971391086539425705}
   m_SourcePrefab: {fileID: 100100000, guid: 85d88c571246121c395f4289e9632319, type: 3}
+--- !u!1 &523563947077658388 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -671337323138230148, guid: 85d88c571246121c395f4289e9632319, type: 3}
+  m_PrefabInstance: {fileID: 8208651310831091560}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8529894236019808387 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 85d88c571246121c395f4289e9632319, type: 3}

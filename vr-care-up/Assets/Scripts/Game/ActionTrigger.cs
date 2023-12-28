@@ -133,6 +133,8 @@ public class ActionTrigger : MonoBehaviour
                 transform.GetChild(i).GetComponent<ActionModule_ChangeHandPose>().Execute();
             if (transform.GetChild(i).GetComponent<ActionModule_AddObjectToHand>() != null)
                 transform.GetChild(i).GetComponent<ActionModule_AddObjectToHand>().Execute();
+            if (transform.GetChild(i).GetComponent<ActionModule_Counter>() != null)
+                transform.GetChild(i).GetComponent<ActionModule_Counter>().Execute();
         }
     }
 
