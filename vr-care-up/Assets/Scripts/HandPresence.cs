@@ -391,6 +391,8 @@ public class HandPresence : MonoBehaviour
         {
             transform.position = controllerTransform.position;
             transform.rotation = controllerTransform.rotation;
+            if (objectInHand != null)
+                objectInHand.UpdateFallowPos();
             if (!targetDevice.isValid)
                 TryInitialize();
             else
@@ -458,7 +460,7 @@ public class HandPresence : MonoBehaviour
         }
         else if (triggerValue < ACTION_TRESHOULD_UP && triggerSavedValue >= ACTION_TRESHOULD_UP)
         {
-            if (allowTriggerDrop)
+            if (objectInHand != null && objectInHand.pickupWithPinch)
                 DropObjectFromHand();
             allowTriggerDrop = false;
         }
