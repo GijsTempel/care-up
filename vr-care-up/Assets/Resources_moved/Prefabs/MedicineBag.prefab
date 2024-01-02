@@ -534,6 +534,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectName: TabletRound1
   toLeftHand: 1
+--- !u!1 &585433224256041788
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 11252039788506882}
+  m_Layer: 3
+  m_Name: examine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &11252039788506882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585433224256041788}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1.1368681e-13, z: 1.1368681e-13, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8670689462326142359}
+  m_Father: {fileID: 4601162649550275809}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &667755353977359555
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,6 +1470,38 @@ Transform:
   - {fileID: 8764182770573234610}
   m_Father: {fileID: 6102507578562102188}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2908224520320116757
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4601162649550275809}
+  m_Layer: 3
+  m_Name: ActionTriggers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4601162649550275809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2908224520320116757}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7069834, y: 0.0000020859045, z: -0.0000020866328, w: 0.7072302}
+  m_LocalPosition: {x: 0, y: -0.0656, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 11252039788506882}
+  m_Father: {fileID: 6950736288708769439}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2966505630802226781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1993,8 +2057,8 @@ MonoBehaviour:
   triggerName: 
   pickable: {fileID: 1165707025027299884}
   mirrorAnimation: 0
-  actionType: 10
-  LeftActionManagerObject: 
+  actionType: 0
+  LeftActionManagerObject: MedicineBag
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 0
@@ -2321,8 +2385,8 @@ MonoBehaviour:
   triggerName: 
   pickable: {fileID: 1165707025027299884}
   mirrorAnimation: 0
-  actionType: 10
-  LeftActionManagerObject: 
+  actionType: 1
+  LeftActionManagerObject: tabletOut
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 0
@@ -2833,6 +2897,79 @@ Transform:
   - {fileID: 8993357668257394025}
   m_Father: {fileID: 2531945383585226507}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5153936599381734397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5944698888507747863}
+  - component: {fileID: 9145552022449587360}
+  - component: {fileID: 6387393906899194047}
+  m_Layer: 6
+  m_Name: InsulinActionCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5944698888507747863
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153936599381734397}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0065, z: -0.0675}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8670689462326142359}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9145552022449587360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153936599381734397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df15f8df556f3a9898e126af677a063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerObjectNames: none
+  triggerHand: 0
+  triggerHandAction: 0
+  requiredHandPose: 0
+  isRayTrigger: 1
+  rayTriggerTime: 1
+  rayTriggerAngle: 38
+--- !u!65 &6387393906899194047
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153936599381734397}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.080143586, y: 0.0124346, z: 0.08251194}
+  m_Center: {x: 1.0133724e-15, y: 0.0005723661, z: -2.5692873e-28}
 --- !u!1 &5280765265457260300
 GameObject:
   m_ObjectHideFlags: 0
@@ -3292,8 +3429,8 @@ MonoBehaviour:
   triggerName: 
   pickable: {fileID: 1165707025027299884}
   mirrorAnimation: 0
-  actionType: 10
-  LeftActionManagerObject: 
+  actionType: 1
+  LeftActionManagerObject: tabletOut
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 0
@@ -3730,6 +3867,60 @@ Transform:
   - {fileID: 5046684549066782868}
   m_Father: {fileID: 8071971697460223823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6772312722819332570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8670689462326142359}
+  - component: {fileID: 5969845310306421446}
+  m_Layer: 0
+  m_Name: ExActionTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8670689462326142359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6772312722819332570}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5944698888507747863}
+  m_Father: {fileID: 11252039788506882}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5969845310306421446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6772312722819332570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7b86b1118ea4582e930aa4cef899841, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionNumberLimit: 1
+  triggerName: 
+  pickable: {fileID: 0}
+  mirrorAnimation: 0
+  actionType: 4
+  LeftActionManagerObject: MedicineBag
+  RightActionManagerObject: 
+  checkBeforeAct: 0
+  triggerDelay: 0
 --- !u!1 &6821665549039267693
 GameObject:
   m_ObjectHideFlags: 0
@@ -4662,8 +4853,8 @@ MonoBehaviour:
   triggerName: 
   pickable: {fileID: 1165707025027299884}
   mirrorAnimation: 0
-  actionType: 10
-  LeftActionManagerObject: 
+  actionType: 0
+  LeftActionManagerObject: MedicineBag
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: 0
@@ -4754,6 +4945,7 @@ GameObject:
   - component: {fileID: 1165707025027299884}
   - component: {fileID: 8764572561371574452}
   - component: {fileID: 3135887917300669108}
+  - component: {fileID: 8977636378681466561}
   m_Layer: 0
   m_Name: MedicineBag
   m_TagString: Untagged
@@ -4774,6 +4966,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4601162649550275809}
   - {fileID: 174427938186836810}
   - {fileID: 7288740203380870761}
   - {fileID: 5216176417232760491}
@@ -4895,6 +5088,22 @@ MonoBehaviour:
   - {fileID: 4198662269803898838}
   - {fileID: 5216176417232532105}
   - {fileID: 523563947077658388}
+--- !u!114 &8977636378681466561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8902962602070965322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0642338543dc4d78ea7cdc97ff928048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectPrefabNames:
+  - MedicineBag
+  description: medicijnzakje
+  nameArticle: het
 --- !u!1 &8953923375148437127
 GameObject:
   m_ObjectHideFlags: 0
