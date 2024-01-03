@@ -12,7 +12,6 @@ public class ActionModule_AddObjectToHand : MonoBehaviour
 
     private void AddObject()
     {
-        Debug.Log("@ AddObject " + name + ":" + objectName);
         PrefabHolder prefabHolder = GameObject.FindObjectOfType<PrefabHolder>();
         PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
 

@@ -220,21 +220,16 @@ public class PlayerScript : MonoBehaviour
     {
         GameObject leftObject = GetObjectInHand(true);
         GameObject rightObject = GetObjectInHand(false);
-        string mess = "@switch hands:";
         if (leftObject != null)
         {
-            mess += leftObject.name + " ";
             leftHandPresence.DropObjectFromHand(true, true);
             ForcePickUpObject(leftObject.GetComponent<PickableObject>(), false);
         }
         if (rightObject != null)
         {
-            mess += rightObject.name;
-
             rightHandPresence.DropObjectFromHand(true, true);
             ForcePickUpObject(rightObject.GetComponent<PickableObject>(), true);
         }
-        Debug.Log(mess);
     }
 
 

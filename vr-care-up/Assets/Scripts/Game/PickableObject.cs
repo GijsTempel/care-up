@@ -81,8 +81,6 @@ public class PickableObject : MonoBehaviour
 
     public bool Drop()
     {
-        Debug.Log("@ Drop " + name + ":" + UnityEngine.Random.Range(0, 9999).ToString());
-
         VRCollarHolder vRCollarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
         if (vRCollarHolder != null)
             vRCollarHolder.CloseTutorialShelf();
@@ -118,7 +116,6 @@ public class PickableObject : MonoBehaviour
 
     public bool PickUp(Transform handTransform, float transuitionDuration = 0.2f)
     {
-        Debug.Log("@ PickUp " + name + ":" + UnityEngine.Random.Range(0, 9999).ToString());
         VRCollarHolder vRCollarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
         if (vRCollarHolder != null)
             vRCollarHolder.CloseTutorialShelf();

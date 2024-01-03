@@ -89,8 +89,8 @@ public class ActionTrigger : MonoBehaviour
                 break;
             }
         }
-        if (isActionConfirmed)
-            Debug.Log("@ CheckConformity " + name + ":" + currentTriggerHand.ToString() + " " + currentTriggerHandAction.ToString());
+        // if (isActionConfirmed)
+        //     Debug.Log("@ CheckConformity " + name + ":" + currentTriggerHand.ToString() + " " + currentTriggerHandAction.ToString());
 
         if (isActionConfirmed && actionHandler != null)
         {
@@ -158,7 +158,6 @@ public class ActionTrigger : MonoBehaviour
 
     public bool AttemptTrigger()
     {
-        Debug.Log("@AT AttemptTrigger " + name + ":" + Random.Range(0,999).ToString());
         if (triggerDelay > 0)
         {
             enabled = true;

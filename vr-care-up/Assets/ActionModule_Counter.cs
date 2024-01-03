@@ -12,7 +12,6 @@ public class ActionModule_Counter : MonoBehaviour
     public void Execute()
     {
         counterValue += 1;
-        Debug.Log("@ New Counted Value:" + counterValue.ToString());
         if (counterValue >= maxCountedValue)
             ExecuteTrigger();
     }

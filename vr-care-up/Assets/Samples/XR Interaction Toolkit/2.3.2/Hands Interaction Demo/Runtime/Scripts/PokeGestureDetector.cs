@@ -125,8 +125,6 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
                     else
                         m_IsGripping = IsMiddleGrabbing(leftHand) && IsRingGrabbing(leftHand) && IsLittleGrabbing(leftHand);
                     m_IsPinching = IsIndexPinching(leftHand, name, m_IsPinching);
-                    Debug.Log("@Left***:m" + IsMiddleGrabbing(leftHand).ToString() + " r" + IsRingGrabbing(leftHand).ToString() +
-                        " l" + IsLittleGrabbing(leftHand).ToString());
                     if (pinch_timeout > 0)
                         m_IsPinching = true;
                     break;
@@ -137,9 +135,6 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
                     var rightHand = subsystem.rightHand;
                     m_IsPoking = IsIndexExtended(rightHand) && IsMiddleGrabbing(rightHand) && IsRingGrabbing(rightHand) &&
                         IsLittleGrabbing(rightHand);
-
-                    Debug.Log("@Right***:m" + IsMiddleGrabbing(rightHand).ToString() + " r" + IsRingGrabbing(rightHand).ToString() +
-                        " l" + IsLittleGrabbing(rightHand).ToString());
 
                     if (m_IsGripping)
                         m_IsGripping = IsMiddleGrabbing(rightHand) || IsRingGrabbing(rightHand) || IsLittleGrabbing(rightHand);
@@ -227,7 +222,6 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
             {
                 return false;
             }
-            Debug.Log("@$$ pinch Dist" + handName + ":" + Vector3.Distance(thumbTipPose.position, indexTipPose.position).ToString());
             if (isPinching)
                 return Vector3.Distance(thumbTipPose.position, indexTipPose.position) < UNPINCH_DIST;
 

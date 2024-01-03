@@ -85,7 +85,6 @@ public class SwerveActionTrigger : MonoBehaviour
             nextSwervColliderIndex = 0;
         currentSwervColliderIndex = nextSwervColliderIndex;
         progressImage.fillAmount = (float)swervesCounted / (float)(numberOfSwerves + 1);
-        Debug.Log("@Swerves:" + swervesCounted.ToString());
         if (swervesCounted > numberOfSwerves)
         {
             if (actionTrigger.AttemptTrigger())
