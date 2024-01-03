@@ -29,31 +29,6 @@
     value="WorkField" />
   <Action
     index="2"
-    description="Neem een medicijn zakje van de baxterrol"
-    type="use"
-    points="1"
-    value="BaxterRoll" />
-  <Action
-    index="3"
-    description="Controleer het medicijn"
-    type="examine"
-    item="MedicineBag"
-    points="2"
-    messageTitle="Dubbele controle van medicijnen."
-    messageContent="Dubbele controle is nodig bij de medicijnen die naar het oordeel van de apotheker een onacceptabel risico vormen bij verkeerde dosering. Bij medicijnen op rol is de apotheker degene die de eerste controle uitvoert, en voert de zorgmedewerker de tweede controle uit. Bepaalde medicijnen die los geleverd worden, moeten bij toediening dubbel gecontroleerd en afgetekend worden met paraaf op de toedieningslijst.&#xD;&#xD;&#xD;
-    Ga altijd met de apotheker na of de medicijnen door de apotheker in een medicijnrol kunnen worden aangeboden. Hiermee voorkom je dat er een dubbele controle op de werkvloer / bij de cliënt plaats moet vinden.&#xD;&#xD;&#xD;
-&#xD;&#xD;&#xD;
-    Wíe de dubbele controle mag uitvoeren, is beleid van de organisatie. Op basis van de afspraken in de organisatie spreekt de zorgmedewerker af per cliënt wie in die situatie de dubbele controle doet en legt dit vast"
-    expected="good" />
-  <Action
-    index="4"
-    description="Controleer cliëntgegevens"
-    type="examine"
-    item="PatientRecords"
-    points="2"
-    expected="good" />
-  <Action
-    index="5"
     description="Controleer de toedienlijst"
     type="examine"
     item="PrescriptionForm"
@@ -79,7 +54,32 @@ hanteer de instructies van de toedienlijst. Je moet bekend zijn met de toedienin
 je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toedienlijst. De verantwoordelijkheid van de juiste dosering ligt bij de arts en de apotheker."
     expected="good" />
   <Action
-    index="6"
+    index="2"
+    description="Controleer cliëntgegevens"
+    type="examine"
+    item="PatientRecords"
+    points="2"
+    expected="good" />
+  <Action
+    index="3"
+    description="Neem een medicijn zakje van de baxterrol"
+    type="use"
+    points="1"
+    value="BaxterRoll" />
+  <Action
+    index="4"
+    description="Controleer het medicijn"
+    type="examine"
+    item="MedicineBag"
+    points="2"
+    messageTitle="Dubbele controle van medicijnen."
+    messageContent="Dubbele controle is nodig bij de medicijnen die naar het oordeel van de apotheker een onacceptabel risico vormen bij verkeerde dosering. Bij medicijnen op rol is de apotheker degene die de eerste controle uitvoert, en voert de zorgmedewerker de tweede controle uit. Bepaalde medicijnen die los geleverd worden, moeten bij toediening dubbel gecontroleerd en afgetekend worden met paraaf op de toedieningslijst.&#xD;&#xD;&#xD;
+    Ga altijd met de apotheker na of de medicijnen door de apotheker in een medicijnrol kunnen worden aangeboden. Hiermee voorkom je dat er een dubbele controle op de werkvloer / bij de cliënt plaats moet vinden.&#xD;&#xD;&#xD;
+&#xD;&#xD;&#xD;
+    Wíe de dubbele controle mag uitvoeren, is beleid van de organisatie. Op basis van de afspraken in de organisatie spreekt de zorgmedewerker af per cliënt wie in die situatie de dubbele controle doet en legt dit vast"
+    expected="good" />
+  <Action
+    index="5"
     description="[Trek de handschoenen aan]"
     type="use"
     comment="Put on gloves."
@@ -87,7 +87,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     value="gloveBox"
     blockUnlock="GlovesTakenOn" />
   <Action
-    index="7"
+    index="6"
     description="Maak het medicijn gereed voor toediening door het medicijn zakje te openen"
     type="combine"
     comment="Open MedicineBag"
@@ -97,13 +97,13 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     left="MedicineBag"
     right="" />
   <Action
-    index="8"
+    index="7"
     description="Haal de pil eruit"
     type="use"
     points="1"
     value="tabletOut" />
   <Action
-    index="9"
+    index="8"
     description="Vraag de cliënt te gaan zitten"
     type="talk"
     comment="Asking patient to sit up straight"
@@ -111,14 +111,14 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     topic="Sitstraight"
     blockUnlock="patient sit" />
   <Action
-    index="10"
+    index="9"
     description="Instrueer de cliënt de medicijnen niet door te slikken"
     type="talk"
     comment="Asking patient not to directly swallow memdicine"
     points="1"
     topic="NoSwallow" />
   <Action
-    index="11"
+    index="10"
     description="Neem het medicijn in de hand en geef het aan de cliënt"
     type="useOn"
     comment="Start sequence by using the pill on the patient"
@@ -131,21 +131,21 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     blockTitle="Handeling nog niet mogelijk"
     blockMessage="Vraag de cliënt eerst om rechtop te gaan zitten." />
   <Action
-    index="12"
+    index="11"
     description="Vraag de cliënt de punt van de tong tegen het verhemelte te brengen"
     type="sequenceStep"
     comment="Patient opens mouth and bring the tip of the tongue against the palate"
     points="2"
     value="open mouth" />
   <Action
-    index="13"
+    index="12"
     description="Leg het medicijn onder de tong van de cliënt"
     type="sequenceStep"
     comment="Player places the pill under the tongue of the patient"
     points="2"
     value="place pill under tongue" />
   <Action
-    index="14"
+    index="13"
     description="Vraag de cliënt onmiddellijk de mond dicht te doen"
     type="sequenceStep"
     comment="Client closes his mouth to swallow pill"
@@ -155,7 +155,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     value="close mouth"
     blockUnlock="SequenceFinished" />
   <Action
-    index="15"
+    index="14"
     description="Ruim de materialen op door met lege handen op het werkveld te klikken"
     type="use"
     points="1"
@@ -164,7 +164,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     value="WorkField"
     blockRequired="SequenceFinished" />
   <Action
-    index="16"
+    index="15"
     description="Trek handschoenen uit en gooi ze in de afvalbak"
     type="general"
     item=""
@@ -173,7 +173,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     action="TakeOffGlovesWithoutThrowing"
     blockRequired="GlovesTakenOn, SequenceFinished" />
   <Action
-    index="17"
+    index="16"
     description="[Pas handhygiëne]"
     type="use"
     comment="1. Apply hand hygiene"
@@ -182,7 +182,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     messageContent="Controleer de voorraad en bestel zo nodig nieuwe medicijnen."
     value="HandCleaner" />
   <Action
-    index="18"
+    index="17"
     description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen."
     type="use"
     points="3"
