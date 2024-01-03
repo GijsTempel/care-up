@@ -283,7 +283,6 @@ public class ActionManager : MonoBehaviour
 //----------------------------------------------------------------------------------------------------------------
     public static void UpdateRequirements(float showDelay = 0f)
     {
-        //Debug.Log("@UpdateRequirements:(float showDelay = 0f)");
         ActionManager actManager = GameObject.FindObjectOfType<ActionManager>();
 
         if (actManager == null)
@@ -372,9 +371,10 @@ public class ActionManager : MonoBehaviour
             if (!string.IsNullOrEmpty(a.secondPlaceRequirement))
             {
                 string placeName = a.secondPlaceRequirement;
-
-                if (GameObject.Find(a.secondPlaceRequirement).GetComponent<WalkToGroupVR>().description != "")
-                    placeName = GameObject.Find(a.secondPlaceRequirement).GetComponent<WalkToGroupVR>().description;
+                GameObject secPlaceObj = GameObject.Find(a.secondPlaceRequirement);
+                if (secPlaceObj != null && secPlaceObj.GetComponent<WalkToGroupVR>() != null)
+                    if (secPlaceObj.GetComponent<WalkToGroupVR>().description != "")
+                        placeName = secPlaceObj.GetComponent<WalkToGroupVR>().description;
 
                 bool completed = false;
                 if (playerScript.currentWTGName != "")

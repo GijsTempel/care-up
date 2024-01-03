@@ -268,21 +268,18 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
         void StartGripGesture()
         {
             gripValue = 1f;
-            Debug.Log("@!!Gripping " + name + ":Start" + Random.Range(0, 9999).ToString());
             m_GrabGestureStarted.Invoke();
         }
 
         void EndGripGesture()
         {
             gripValue = 0f;
-            Debug.Log("@!!Gripping " + name + ":End" + Random.Range(0, 9999).ToString());
             m_GrabGestureEnded.Invoke();
         }
 
         void StartPinchGesture()
         {
             triggerValue = 1f;
-            Debug.Log("@!!Pinch " + name + ":Start" + Random.Range(0, 9999).ToString());
             m_PinchGestureStarted.Invoke();
             pinch_timeout = PINCH_WAIT_TIME;
         }
@@ -290,7 +287,6 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
         void EndPinchGesture()
         {
             triggerValue = 0f;
-            Debug.Log("@!!Pinch " + name + ":End" + Random.Range(0, 9999).ToString());
             m_PinchGestureEnded.Invoke();
         }
 

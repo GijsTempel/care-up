@@ -71,10 +71,10 @@ public class HandPresence : MonoBehaviour
         List<InputDevice> devices = new List<InputDevice>();
         InputDevices.GetDevicesWithCharacteristics(controllerCharacteristics, devices);
         handName = transform.parent.name.Split(" ")[0];
-        foreach (var item in devices)
-        {
-            Debug.Log("@$$" + handName + ":" + item.name + item.characteristics + " " + Random.Range(0, 9999).ToString());
-        }
+        // foreach (var item in devices)
+        // {
+        //     Debug.Log("@$$" + handName + ":" + item.name + item.characteristics + " " + Random.Range(0, 9999).ToString());
+        // }
         if (devices.Count > 0)
         {
             targetDevice = devices[0];

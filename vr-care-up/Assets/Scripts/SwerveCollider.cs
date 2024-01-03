@@ -8,7 +8,6 @@ public class SwerveCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("@SwerveCollision:" + collision.name + " " + Random.Range(0, 9999).ToString());
         swerveActionTrigger.SwerveCollision(this, collision.name);
     }
 
