@@ -15,6 +15,24 @@ MonoBehaviour:
   controlObjectName: m1_B
   audioObjectName: JaHoorAudioSource
   audioFrame: 1
+--- !u!114 &-8693833776649926853
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 499205302ad2f1a678fc71a913692a95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControlObjectName: m1_B
+  showFrame: 422
+  ObjNames:
+  - OpenedBook
+  toShow: 0
+  meshRenderer: 0
 --- !u!1102 &-7599271036563345703
 AnimatorState:
   serializedVersion: 6
@@ -152,6 +170,20 @@ MonoBehaviour:
   audioFrame: 20
   volume: 1
   moveWithCamera: 0
+--- !u!114 &-5155519330477712560
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1dcf39829da7eb7b1151c0592f2122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncObject: LayToSit
+  syncAnimationName: 
 --- !u!114 &-4650721819119779102
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -722,6 +754,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &4787177407266167857
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1dcf39829da7eb7b1151c0592f2122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncObject: ReadingIdle
+  syncAnimationName: 
 --- !u!1102 &5349758639936454517
 AnimatorState:
   serializedVersion: 6
@@ -735,7 +781,8 @@ AnimatorState:
   m_Transitions:
   - {fileID: -7073512640397058889}
   - {fileID: 3546096715761016693}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 4787177407266167857}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -762,7 +809,9 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 8468136341886148151}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -5155519330477712560}
+  - {fileID: -8693833776649926853}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

@@ -1368,6 +1368,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linkToFireTo: {fileID: 1804428562}
+--- !u!1 &224621646
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224621647}
+  - component: {fileID: 224621648}
+  m_Layer: 0
+  m_Name: LayToSit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &224621647
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224621646}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 398778853}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &224621648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224621646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e22f739bd3043b8fdb5a441c9c11ab45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MasterObject: {fileID: 1387325018}
+  SlaveObject: {fileID: 1823579176}
+  AnimName: Book_LayToSit
+  IsSyncing: 0
 --- !u!1 &273293679
 GameObject:
   m_ObjectHideFlags: 0
@@ -2220,6 +2268,39 @@ MonoBehaviour:
   isRayTrigger: 1
   rayTriggerTime: 1
   rayTriggerAngle: 180
+--- !u!1 &398778852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 398778853}
+  m_Layer: 0
+  m_Name: AnimationSyncer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &398778853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398778852}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.069201, y: 1.40947, z: 2.7654674}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 224621647}
+  - {fileID: 1892471703}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &402405084
 GameObject:
   m_ObjectHideFlags: 0
@@ -8710,6 +8791,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1364855377}
   m_CullTransparentMesh: 1
+--- !u!95 &1387325018 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4159812883632137813, guid: 7ed150a525ff49380ac29c7db6664667, type: 3}
+  m_PrefabInstance: {fileID: 1243401212970385191}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1388287991
 GameObject:
   m_ObjectHideFlags: 0
@@ -11778,6 +11864,11 @@ MonoBehaviour:
   isRayTrigger: 1
   rayTriggerTime: 1
   rayTriggerAngle: 180
+--- !u!95 &1823579176 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1217372911908651303, guid: 7ed150a525ff49380ac29c7db6664667, type: 3}
+  m_PrefabInstance: {fileID: 1243401212970385191}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1848004913
 GameObject:
   m_ObjectHideFlags: 0
@@ -11986,6 +12077,54 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8769087803824451494, guid: 11065f2d477d28cc9b15e27ee169e8fe, type: 3}
   m_PrefabInstance: {fileID: 6000183870768818351}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1892471702
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1892471703}
+  - component: {fileID: 1892471704}
+  m_Layer: 0
+  m_Name: ReadingIdle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1892471703
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892471702}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 398778853}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1892471704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892471702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e22f739bd3043b8fdb5a441c9c11ab45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MasterObject: {fileID: 1387325018}
+  SlaveObject: {fileID: 1823579176}
+  AnimName: Book_reading_idle
+  IsSyncing: 0
 --- !u!1001 &1898712439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24871,3 +25010,4 @@ SceneRoots:
   - {fileID: 1106931511}
   - {fileID: 1199344748}
   - {fileID: 2118520472}
+  - {fileID: 398778853}
