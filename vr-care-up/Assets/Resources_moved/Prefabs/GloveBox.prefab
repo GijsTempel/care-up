@@ -1,5 +1,51 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &610881576233575061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3112326080847677441}
+  - component: {fileID: 8138025371117631860}
+  m_Layer: 0
+  m_Name: GlovesOn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3112326080847677441
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610881576233575061}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0000000069210158, y: -0.000000091214794, z: 0.70710707, w: 0.70710665}
+  m_LocalPosition: {x: -0.28514996, y: 0.244, z: 0.043800134}
+  m_LocalScale: {x: 0.8499995, y: 0.84999967, z: 0.84999967}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4228401224120423286}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8138025371117631860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610881576233575061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5fc838c9ee033936bb69470f8d2076e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glovesMaterial: {fileID: 2100000, guid: c4020af01b470b375ba1c12545927975, type: 2}
+  stateIndex: 1
 --- !u!1 &3461595247571621090
 GameObject:
   m_ObjectHideFlags: 0
@@ -31,6 +77,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8431705645252392574}
+  - {fileID: 7097323825024414752}
   m_Father: {fileID: 3922606471763351741}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7758390610680256116
@@ -85,6 +132,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9054786896898254436}
+  - {fileID: 3112326080847677441}
   m_Father: {fileID: 3922606471763351741}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3523143692859919592
@@ -108,6 +156,52 @@ MonoBehaviour:
   RightActionManagerObject: 
   checkBeforeAct: 0
   triggerDelay: -1
+--- !u!1 &4312389834407284529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7097323825024414752}
+  - component: {fileID: 1739676248172635622}
+  m_Layer: 0
+  m_Name: GlovesOn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7097323825024414752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4312389834407284529}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.000000052683554, y: -0.0000000018077939, z: 0.70710707, w: 0.7071066}
+  m_LocalPosition: {x: -0.28514996, y: 0.24399978, z: 0.043800075}
+  m_LocalScale: {x: 0.84999967, y: 0.8499997, z: 0.8499997}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5055019376209915550}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1739676248172635622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4312389834407284529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5fc838c9ee033936bb69470f8d2076e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glovesMaterial: {fileID: 2100000, guid: c4020af01b470b375ba1c12545927975, type: 2}
+  stateIndex: 1
 --- !u!1 &6570349631609218732
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &400318212621117258
 Transform:
   m_ObjectHideFlags: 0
