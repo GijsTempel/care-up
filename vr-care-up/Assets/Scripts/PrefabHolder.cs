@@ -7,11 +7,12 @@ public class PrefabHolder : MonoBehaviour
     Dictionary<string, GameObject> Prefabs = new Dictionary<string, GameObject>();
     public Transform spawnObjectHolder;
 
-    public GameObject SpawnObject(string _name, Transform positionTransform)
+
+    public GameObject SpawnObject(string _name, Vector3 pos, Quaternion rot)
     {
         GameObject newInstance = SpawnObject(_name);
-        newInstance.transform.position = positionTransform.position;
-        newInstance.transform.rotation = positionTransform.rotation;
+        newInstance.transform.position = pos;
+        newInstance.transform.rotation = rot;
         return newInstance;
     }
 
@@ -25,23 +26,22 @@ public class PrefabHolder : MonoBehaviour
         return _objects;
     }
 
-    public GameObject SpawnObject(string _name)
+    public GameObject SpawnObject(string _name, Transform newParent = null)
     {
         GameObject baseObj = null;
         baseObj = GetPrefab(_name);
         GameObject newInstance = null;
         if (baseObj != null)
         {
-            newInstance = Instantiate(baseObj, Vector3.zero, Quaternion.identity) as GameObject;
-            if (spawnObjectHolder != null)
-                newInstance.transform.SetParent(spawnObjectHolder);
-            newInstance.transform.position = spawnObjectHolder.position;
+            if (newParent != null)
+            {
+                newInstance = Instantiate(baseObj, newParent, false) as GameObject;
+            }
+            else if (spawnObjectHolder != null)
+                newInstance = Instantiate(baseObj, spawnObjectHolder, false) as GameObject;
             newInstance.name = _name;
             newInstance.SetActive(true);
         }
-        // if (newInstance != null)
-        //     Debug.Log("@ SpawnObject " + ":" + _name + Random.Range(0, 9999).ToString());
-
         return newInstance;
     }
 

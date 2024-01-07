@@ -51,7 +51,7 @@ public class AddObjectAtFrame : StateMachineBehaviour
 
             GameObject transformPosObj = GameObject.Find(positionTransformName);
             if (transformPosObj != null)
-                prefabHolder.SpawnObject(objectName, transformPosObj.transform);
+                prefabHolder.SpawnObject(objectName, transformPosObj.transform.position, transformPosObj.transform.rotation);
             else
                 prefabHolder.SpawnObject(objectName);
 

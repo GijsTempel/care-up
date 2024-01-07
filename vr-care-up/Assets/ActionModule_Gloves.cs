@@ -8,6 +8,8 @@ public class ActionModule_Gloves : MonoBehaviour
     public Material glovesMaterial;
     [Tooltip("If 0 - remove gloves")]
     public int stateIndex = 0;
+    public string gloveRemovalPrefabNameLeft;
+    public string gloveRemovalPrefabNameRight;
 
     public void Execute()
     {
@@ -22,6 +24,7 @@ public class ActionModule_Gloves : MonoBehaviour
             else
             {
                 glovesControl.SetGlovesMaterial(glovesMaterial);
+                glovesControl.SetGloveRemovalPrefabsNames(gloveRemovalPrefabNameLeft, gloveRemovalPrefabNameRight);
                 glovesControl.PutOnGloves(stateIndex);
             }
         }
