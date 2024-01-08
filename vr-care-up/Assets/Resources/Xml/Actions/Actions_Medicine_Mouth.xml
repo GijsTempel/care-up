@@ -165,15 +165,21 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     blockRequired="SequenceFinished" />
   <Action
     index="15"
-    description="Trek handschoenen uit en gooi ze in de afvalbak"
-    type="general"
-    item=""
+    description="Trek handschoenen uit"
+    type="use"
     points="1"
     buttonText="Trek handschoenen uit"
-    action="TakeOffGlovesWithoutThrowing"
+    value="TakeOffGlovesWithoutThrowing"
     blockRequired="GlovesTakenOn, SequenceFinished" />
   <Action
     index="16"
+    description="Gooi handschoenen in de afvalbak"
+    type="combine"
+    points="1"
+    left="GlovesFolded"
+    right="Trashbucket" />
+  <Action
+    index="17"
     description="[Pas handhygiëne]"
     type="use"
     comment="1. Apply hand hygiene"
@@ -182,7 +188,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     messageContent="Controleer de voorraad en bestel zo nodig nieuwe medicijnen."
     value="HandCleaner" />
   <Action
-    index="17"
+    index="18"
     description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen."
     type="use"
     points="3"
