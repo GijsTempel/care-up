@@ -112,6 +112,8 @@ namespace CareUp.ActionEditor
         public string hidden = null;
         [XmlAttribute]
         public string ignorePosition = null;
+        [XmlAttribute]
+        public string hideHint = null;
         public string ui_timeout = null;
 
         /// <summary>
@@ -156,6 +158,7 @@ namespace CareUp.ActionEditor
             newCopy.hidden = this.hidden;
             newCopy.ignorePosition = this.ignorePosition;
             newCopy.ui_timeout = this.ui_timeout;
+            newCopy.hideHint = this.hideHint;
             return newCopy;
         }
 
@@ -226,6 +229,8 @@ namespace CareUp.ActionEditor
                     return ignorePosition;
                 case "ui_timeout":
                     return ui_timeout;
+                case "hideHint":
+                    return hideHint;
             }
             return null;
         }
@@ -325,6 +330,9 @@ namespace CareUp.ActionEditor
                 case "ignorePosition":
                     ignorePosition = _value;
                     break;
+                case "hideHint":
+                    hideHint = _value;
+                    break;
             }
         }
     }                
@@ -392,7 +400,8 @@ namespace CareUp.ActionEditor
             "audioHint",
             "hidden",
             "ignorePosition",
-            "ui_timeout"
+            "ui_timeout",
+            "hideHint"
         };
 
         public Object actionsFile;
@@ -610,6 +619,8 @@ namespace CareUp.ActionEditor
                             action.ignorePosition = xmlAction.Attributes["ignorePosition"].Value;
                         if (xmlAction.Attributes["ui_timeout"] != null)
                             action.ui_timeout = xmlAction.Attributes["ui_timeout"].Value;
+                        if (xmlAction.Attributes["hideHint"] != null)
+                            action.hideHint = xmlAction.Attributes["hideHint"].Value;
                         actions.Add(action);
                     }
                     loadedActionFilePath = actionFilePath;
