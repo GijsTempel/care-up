@@ -111,6 +111,10 @@ public class PickableObject : MonoBehaviour
             transform.rotation = dropAnchor.rotation;
             FallowTransform(dropAnchor);
         }
+
+        //Trigger an object detector module, to check, if needed object is out of hand now
+        foreach (ActionModule_ObjectDetector objectDetector in GameObject.FindObjectsOfType<ActionModule_ObjectDetector>())
+            objectDetector.AttemptTrigger();
         return true;
     }
 

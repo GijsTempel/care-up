@@ -66,9 +66,11 @@ public class ActionTrigger : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i ++)
         {
-            ItemInHandCheck c = transform.GetChild(i).GetComponent<ItemInHandCheck>();
-            if (c != null)
-                if (!c.Check())
+            if (transform.GetChild(i).GetComponent<ItemInHandCheck>() != null)
+                if (!transform.GetChild(i).GetComponent<ItemInHandCheck>().Check())
+                    return false;
+            if (transform.GetChild(i).GetComponent<ActionModule_ObjectDetector>() != null)
+                if (!transform.GetChild(i).GetComponent<ActionModule_ObjectDetector>().Check())
                     return false;
         }
         // if (actionType == ActionManager.ActionType.None)
