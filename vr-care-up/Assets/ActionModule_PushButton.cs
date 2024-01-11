@@ -29,8 +29,13 @@ public class ActionModule_PushButton : MonoBehaviour
     void Update()
     {
         bool wasPressed = pressed;
+        Color c = Color.green;
+        // Vector3 topRayPosition = 
+        
         if (Physics.Raycast(transform.position, rayDirection, out RaycastHit hit, maxRayDist, layerMask))
         {
+            c = Color.red;
+
             if (!pressed)
             {
                 if (!pushRestarted && hit.distance / maxRayDist > 0.85f)
@@ -56,6 +61,7 @@ public class ActionModule_PushButton : MonoBehaviour
                 pressed = false;
             buttonTop.transform.position = Vector3.Lerp(buttonTop.transform.position, originalPosition, Time.deltaTime * 10f);
         }
+        Debug.DrawRay(transform.position, rayDirection * maxRayDist, c, 0.0f, false); 
         if(pressed && !wasPressed)
         {
             pushRestarted = false;
