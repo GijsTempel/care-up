@@ -8,6 +8,7 @@ public class ActionModule_PushButton : MonoBehaviour
     public Transform rayPointerTransform;
     public GameObject buttonTop;
     public Transform maxPushTransform;
+    bool pushRestarted = false;
     float maxPushDist;
     public ActionTrigger actionTrigger;
 
@@ -27,24 +28,33 @@ public class ActionModule_PushButton : MonoBehaviour
     void Update()
     {
         bool wasPressed = pressed;
-        if (Physics.Raycast(transform.position, rayDirection, out RaycastHit hit, maxRayDist, layerMask))
+        bool moveDown = false;
+        if (!pressed && Physics.Raycast(transform.position, rayDirection, out RaycastHit hit, maxRayDist, layerMask))
         {
-            Vector3 nextPosition = originalPosition - rayDirection.normalized * (maxRayDist - hit.distance);
-            float pushDot = Vector3.Dot((nextPosition - maxPushTransform.position).normalized, rayDirection);
-            if (pushDot < 0)
+            if (!pushRestarted && hit.distance / maxRayDist > 0.9f)
+                pushRestarted = true;
+            if (pushRestarted)
             {
-                nextPosition = originalPosition - rayDirection.normalized * maxPushDist;
-                pressed = true;
+                moveDown = true;
+                Vector3 nextPosition = originalPosition - rayDirection.normalized * (maxRayDist - hit.distance);
+                float pushDot = Vector3.Dot((nextPosition - maxPushTransform.position).normalized, rayDirection);
+                if (pushDot < 0)
+                {
+                    nextPosition = originalPosition - rayDirection.normalized * maxPushDist;
+                    pressed = true;
+                }
+                buttonTop.transform.position = nextPosition;
             }
-            buttonTop.transform.position = nextPosition;
         }
-        else
+        if (!moveDown)
         {
             buttonTop.transform.position = Vector3.Lerp(buttonTop.transform.position, originalPosition, Time.deltaTime * 10f);
-            pressed = false;
+            if (Vector3.Distance(originalPosition, buttonTop.transform.position) < 0.00001f)
+                pressed = false;
         }
         if(pressed && !wasPressed)
         {
+            pushRestarted = false;
             actionTrigger.AttemptTrigger();
             Debug.Log("pressed");
         }
