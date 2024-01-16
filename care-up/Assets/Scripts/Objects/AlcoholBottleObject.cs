@@ -8,7 +8,7 @@ public class AlcoholBottleObject : PickableObject
     public Mesh basic;
     public Mesh inHand;
 
-    public override bool Drop(bool force = false)
+    public override bool Drop(bool force = false, Transform forcedTransform = null)
     {
         if (basic)
         {

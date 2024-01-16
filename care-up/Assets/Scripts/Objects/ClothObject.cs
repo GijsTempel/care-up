@@ -24,7 +24,7 @@ public class ClothObject : PickableObject {
         ChangeState(state);
     }
 
-    public override bool Drop(bool force = false)
+    public override bool Drop(bool force = false, Transform forcedTransform = null)
     {
         if (GameObject.Find("ClothPackage") == null
             || name != "Cloth")

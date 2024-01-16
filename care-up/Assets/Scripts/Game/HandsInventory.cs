@@ -650,17 +650,31 @@ public class HandsInventory : MonoBehaviour {
         ActionManager.UpdateRequirements();
     }
 
-    public void DropLeftObject()
+    public void DropLeftObject(string toObject = "", bool asChild = false)
     {
         if (leftHandObject)
         {
             leftHandObject.DeleteGhostObject();
-            Transform originalParent = leftHandObject.GetOriginalParent();
-            if (originalParent != null)
-                leftHandObject.transform.parent = originalParent;
+
+            GameObject foundToObject = null;
+            if (!string.IsNullOrEmpty(toObject))
+            {
+                foundToObject = GameObject.Find(toObject);
+                if (foundToObject != null && asChild)
+                {
+                    leftHandObject.transform.parent = foundToObject.transform;
+                }
+            }
             else
-                leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
-            leftHandObject.Drop(true);
+            {
+                Transform originalParent = leftHandObject.GetOriginalParent();
+                if (originalParent != null)
+                    leftHandObject.transform.parent = originalParent;
+                else
+                    leftHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+            }
+
+            leftHandObject.Drop(true, foundToObject != null ? foundToObject.transform : null);
             leftHandObject = null;
             leftHold = false;
             PlayerAnimationManager.SetHandItem(true, null);
@@ -668,17 +682,31 @@ public class HandsInventory : MonoBehaviour {
         }
     }
 
-    public void DropRightObject()
+    public void DropRightObject(string toObject = "", bool asChild = false)
     {
         if (rightHandObject)
         {
             rightHandObject.DeleteGhostObject();
-            Transform originalParent = rightHandObject.GetOriginalParent();
-            if (originalParent != null)
-                rightHandObject.transform.parent = originalParent;
+
+            GameObject foundToObject = null;
+            if (!string.IsNullOrEmpty(toObject))
+            {
+                foundToObject = GameObject.Find(toObject);
+                if (foundToObject != null && asChild)
+                {
+                    rightHandObject.transform.parent = foundToObject.transform;
+                }
+            }
             else
-                rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
-            rightHandObject.Drop(true);
+            {
+                Transform originalParent = rightHandObject.GetOriginalParent();
+                if (originalParent != null)
+                    rightHandObject.transform.parent = originalParent;
+                else
+                    rightHandObject.transform.parent = GameObject.Find("Interactable Objects").transform;
+            }
+
+            rightHandObject.Drop(true, foundToObject != null ? foundToObject.transform : null);
             rightHandObject = null;
             rightHold = false;
             PlayerAnimationManager.SetHandItem(false, null);

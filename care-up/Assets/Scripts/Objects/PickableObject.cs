@@ -86,7 +86,7 @@ public class PickableObject : InteractableObject
     /// Drops and object
     /// </summary>
     /// <param name="force">If true - forces load position instead of free dropping</param>
-    public virtual bool Drop(bool force = false)
+    public virtual bool Drop(bool force = false, Transform forcedTransform = null)
     {
         SetShadowOn(true);
         if (destroyOnDrop)
@@ -113,7 +113,15 @@ public class PickableObject : InteractableObject
             rigidBody.isKinematic = true;
             rigidBody.constraints = RigidbodyConstraints.FreezeAll;
 
-            LoadPosition();
+            if (force && forcedTransform != null)
+            {
+                transform.position = forcedTransform.position;
+                transform.rotation = forcedTransform.rotation;
+            }
+            else
+            {
+                LoadPosition();
+            }
             return true;
         }
         
