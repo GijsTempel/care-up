@@ -55,7 +55,7 @@ public class DropFromHandOnFrame : StateMachineBehaviour
         }
         if (dropRightFrame / 60f > frame)
         {
-            inv.DropLeftObject();
+            inv.DropRightObject();
         }
     }
 }
