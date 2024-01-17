@@ -12,7 +12,7 @@ public class DropFromHandOnFrameV2 : StateMachineBehaviour
     public int dropFrame;
 
     public string dropToObject;
-    public bool dropObjectAsChild;
+    public bool asChild;
 
     protected HandsInventory inv;
 
@@ -28,11 +28,11 @@ public class DropFromHandOnFrameV2 : StateMachineBehaviour
         {
             if (hand == Hand.Left)
             {
-                inv.DropLeftObject();
+                inv.DropLeftObject(dropToObject, asChild);
             }
             else
             {
-                inv.DropRightObject();
+                inv.DropRightObject(dropToObject, asChild);
             }
         }
     }
@@ -54,11 +54,11 @@ public class DropFromHandOnFrameV2 : StateMachineBehaviour
             {
                 if (hand == Hand.Left)
                 {
-                    inv.DropLeftObject();
+                    inv.DropLeftObject(dropToObject, asChild);
                 }
                 else
                 {
-                    inv.DropRightObject();
+                    inv.DropRightObject(dropToObject, asChild);
                 }
             }  
         }
@@ -70,11 +70,11 @@ public class DropFromHandOnFrameV2 : StateMachineBehaviour
         {
             if (hand == Hand.Left)
             {
-                inv.DropLeftObject();
+                inv.DropLeftObject(dropToObject, asChild);
             }
             else
             {
-                inv.DropRightObject();
+                inv.DropRightObject(dropToObject, asChild);
             }
         }
     }

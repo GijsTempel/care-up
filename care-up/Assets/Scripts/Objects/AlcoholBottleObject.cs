@@ -8,14 +8,14 @@ public class AlcoholBottleObject : PickableObject
     public Mesh basic;
     public Mesh inHand;
 
-    public override bool Drop(bool force = false, Transform forcedTransform = null)
+    public override bool Drop(bool force = false, Transform forcedTransform = null, bool forceParent = false)
     {
         if (basic)
         {
             GetComponent<MeshFilter>().mesh = basic;
         }
 
-        return base.Drop(force);
+        return base.Drop(force, forcedTransform, forceParent);
     }
 
     public override void Pick()
