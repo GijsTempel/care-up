@@ -15,7 +15,7 @@ public class DropFromHandOnFrameEditor : Editor
         gui.dropToObject = EditorGUILayout.TextField("Drop to object", gui.dropToObject);
         if (!string.IsNullOrEmpty(gui.dropToObject))
         {
-            gui.dropObjectAsChild = EditorGUILayout.Toggle("Drop object as child", gui.dropObjectAsChild);
+            gui.asChild = EditorGUILayout.Toggle("Drop object as child", gui.asChild);
         }
     }
 }

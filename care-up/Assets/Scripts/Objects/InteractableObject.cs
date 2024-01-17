@@ -197,14 +197,17 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    public virtual void LoadPosition()
+    public virtual void LoadPosition(Transform overridePos = null, bool forceParent = false)
     {
-        transform.position = savedPosition;
-        transform.rotation = savedRotation;
+        transform.position = overridePos == null ? savedPosition : overridePos.position;
+        transform.rotation = overridePos == null ? savedRotation : overridePos.rotation;
         Transform p = transform.parent;
         transform.parent = null;
         transform.localScale = savedScale;
-        transform.parent = p;
+        //for some reason, if you forcePick it doesnt remember it's proper parent
+        //to avoid item staying in hand after force drop - parent is set to null
+        //(only supposed to affect forcedDrops with override position)
+        transform.parent = forceParent ? overridePos : (overridePos == null ? p : null);
     }
 
     public void BaseLoadPosition()
