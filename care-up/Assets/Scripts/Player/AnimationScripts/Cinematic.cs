@@ -6,8 +6,15 @@ public class Cinematic : StateMachineBehaviour
 {
     public string target;
     public string resetToTarget = "";
-
+    
     public bool resetCamera = false;
+
+    public bool forceCloseEyes = false;
+    // default value was always 0.5f, setting to 0 will have the same effect
+    // this is the time taken by the transition from starting point to ending point
+    // affects both position in rotation equally
+    public float customTransitionTime = 0.5f; 
+
     protected CameraMode mode;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -19,7 +26,7 @@ public class Cinematic : StateMachineBehaviour
         }
         else
         {
-            mode.SetCinematicMode(GameObject.Find(target).transform);
+            mode.SetCinematicMode(GameObject.Find(target).transform, forceCloseEyes, customTransitionTime);
         }
         if (resetCamera)
         {
