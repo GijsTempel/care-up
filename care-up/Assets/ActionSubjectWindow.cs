@@ -28,9 +28,8 @@ public class ActionSubjectWindow : MonoBehaviour
 
     public void RefrashWindow()
     {
-        if (actionManager != null)
+        if (actionManager != null && manager != null)
         {
-            
             int currentActionIndex = actionManager.CurrentActionIndex;
             foreach (Action a in actionManager.actionList)
             {
