@@ -26,7 +26,8 @@ namespace CareUp.Actions
         public bool sceneDoneTrigger; // for test version, when all steps are optional
         public float quizTriggerTime; 
         public string messageTitle; 
-        public string messageContent; 
+        public string messageContent;
+        public float messageDelay;
         public List<string> blockRequired; 
         public List<string> blockUnlock; 
         public List<string> blockLock; 
@@ -66,6 +67,7 @@ namespace CareUp.Actions
             this.quizTriggerTime = i.quizTriggerTime;
             this.messageTitle = i.messageTitle;
             this.messageContent = i.messageContent;
+            this.messageDelay = i.messageDelay;
             this.blockRequired = i.blockRequired;
             this.blockUnlock = i.blockUnlock;
             this.blockLock = i.blockLock;

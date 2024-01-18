@@ -102,6 +102,7 @@ public class ActionManager : MonoBehaviour
 
     public string Message { get; set; } = null;
     public string MessageTitle { get; set; } = null;
+    public float MessageDelay { get; set; }
     public bool ShowTheory { get; set; } = false;
     public bool ShowRandomEvent { get; set; } = false;
     public List<int> currentRandomEventIndices = new List<int>();
@@ -1171,7 +1172,13 @@ public class ActionManager : MonoBehaviour
                 info.messageContent = LocalizationManager.GetValueIfKey(action.Attributes["messageContent"].Value);
             }
 
-            /// INSERT MESSAGE DELAY HERE
+            info.messageDelay = 0f;
+            if (action.Attributes["messageDelay"] != null)
+            {
+                int delayMS = 0;
+                int.TryParse(action.Attributes["messageDelay"].Value, out delayMS);
+                info.messageDelay = delayMS / 1000f; // milliseconds to seconds
+            }
 
             if (action.Attributes["blockUnlock"] != null)
             {
@@ -1603,6 +1610,7 @@ public class ActionManager : MonoBehaviour
                             ShowTheory = true;
                             Message = action.info.messageContent;
                             MessageTitle = action.info.messageTitle;
+                            MessageDelay = action.info.messageDelay;
                         }
                     }
 
