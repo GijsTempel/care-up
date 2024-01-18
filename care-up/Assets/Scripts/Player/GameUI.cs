@@ -723,12 +723,12 @@ public class GameUI : MonoBehaviour
 
             if (PlayerPrefsManager.simulatePlayerActions && ps.away)
             {
-                if (a.placeRequirement != "")
+                if (a.info.placeRequirement != "")
                 {
                     if (AutoMoveTo == "")
-                        AutoMoveTo = a.placeRequirement;
+                        AutoMoveTo = a.info.placeRequirement;
                     else if (a.Type == ActionManager.ActionType.PersonTalk)
-                        AutoMoveTo = a.placeRequirement;
+                        AutoMoveTo = a.info.placeRequirement;
                     
                 }
             }
@@ -745,7 +745,7 @@ public class GameUI : MonoBehaviour
                     {
                         foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
                         {
-                            if (po.hasTopic(a._topic))
+                            if (po.hasTopic(a.info.topic))
                             {
                                 AutoActionObject = po.gameObject.GetComponentInChildren<PersonObjectPart>().gameObject;
                                 autoObjectSelected = true;
