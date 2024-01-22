@@ -6,9 +6,9 @@ import json
 from lxml import etree as ET
 import io
 
-xml_directories = ["Xml/PersonDialogues0/"]
-dump_folder = "PersonDialogues/"
-work_dict_name = "dialogue_dict"
+xml_directories = ["Xml/Actions1/"]
+dump_folder = "Actions2/"
+work_dict_name = "actions_dict"
 
 res_path = "../../../care-up/Assets/Resources/"
 dict_root_path =  res_path + "Dictionaries/Dutch/"
@@ -104,7 +104,7 @@ if not(work_dict_name in dict_names):
     work_dict = {}
     set_of_dictionaries.append(work_dict)
 
-needed_attr = ["extra", "name", "description", "fullDescription", "messageTitle", "descr", "messageContent", "text", "title"]
+needed_attr = ["extra", "name", "description", "fullDescription", "messageTitle", "descr", "messageContent", "text", "title", "blockMessage"]
 node_names = ["Action", "action", "Scene", "scene", "Option", "option", 
               "Info", "info", "Answer", "answer", "question", "Question"]
 
