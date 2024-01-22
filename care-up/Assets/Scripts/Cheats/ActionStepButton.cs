@@ -33,7 +33,7 @@ public class ActionStepButton : MonoBehaviour
     {
         action = a;
         if (main_text != null)
-            main_text.text = "[" + action.sequentialNumber.ToString() + "] " +  action.SubIndex.ToString() + " " + action.shortDescr;
+            main_text.text = "[" + action.info.sequentialNumber.ToString() + "] " +  action.SubIndex.ToString() + " " + action.info.shortDescr;
     }
 
     public Action getAction()
@@ -59,7 +59,7 @@ public class ActionStepButton : MonoBehaviour
                 lastMode = actionsPanel.mode;
                 if (lastMode == ActionsPanel.Mode.ShortDescr)
                 {
-                    main_text.text = "[" + action.sequentialNumber.ToString() + "] " + action.SubIndex.ToString() + " " + action.shortDescr;
+                    main_text.text = "[" + action.info.sequentialNumber.ToString() + "] " + action.SubIndex.ToString() + " " + action.info.shortDescr;
                 }
                 else if (lastMode == ActionsPanel.Mode.Type)
                 {
@@ -72,20 +72,20 @@ public class ActionStepButton : MonoBehaviour
                     {
                         ss += s + "  ";
                     }
-                    ss += " sp: " + action.secondPlaceRequirement;
-                    main_text.text = "[" + action.sequentialNumber.ToString() + "] " + ss;
+                    ss += " sp: " + action.info.secondPlaceRequirement;
+                    main_text.text = "[" + action.info.sequentialNumber.ToString() + "] " + ss;
                 }
                 else if (lastMode == ActionsPanel.Mode.Comment)
                 {
-                    main_text.text = "[" + action.sequentialNumber.ToString() + "] " + action.comment;
+                    main_text.text = "[" + action.info.sequentialNumber.ToString() + "] " + action.info.comment;
                 }
                 else if (lastMode == ActionsPanel.Mode.CommentUA)
                 {
-                    main_text.text = "[" + action.sequentialNumber.ToString() + "] " + action.commentUA;
+                    main_text.text = "[" + action.info.sequentialNumber.ToString() + "] " + action.info.commentUA;
                 }
                 else if (lastMode == ActionsPanel.Mode.Icons)
                 {
-                    main_text.text = "[" + action.sequentialNumber.ToString() + "] " + action.Type.ToString();
+                    main_text.text = "[" + action.info.sequentialNumber.ToString() + "] " + action.Type.ToString();
                     icons.SetActive(true);
                     string[] ObjectNames = new string[0];
                     action.ObjectNames(out ObjectNames);
@@ -120,7 +120,7 @@ public class ActionStepButton : MonoBehaviour
 
             if (actionsPanel.mode == ActionsPanel.Mode.Requirements)
             {
-                main_text.text = "[" + action.sequentialNumber.ToString() + "] " + "l:" + action.leftHandRequirement + " r:" + action.rightHandRequirement + " p:" + action.placeRequirement;
+                main_text.text = "[" + action.info.sequentialNumber.ToString() + "] " + "l:" + action.info.leftHandRequirement + " r:" + action.info.rightHandRequirement + " p:" + action.info.placeRequirement;
             }
 
             int index = action.SubIndex;

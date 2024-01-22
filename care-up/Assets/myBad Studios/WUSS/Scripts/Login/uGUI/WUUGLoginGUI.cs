@@ -424,6 +424,11 @@ namespace MBS
             bool value = panels.debug_options.transform.Find("Panel/TestServer/Toggle").GetComponent<Toggle>().isOn;
             GameObject.FindObjectOfType<WPServer>().setUseOnlineURL(!value);
         }
+        public void ShowUpdatesChanged()
+        {
+            bool value = panels.debug_options.transform.Find("Panel/ShowUpdatePanel/Toggle").GetComponent<Toggle>().isOn;
+            PlayerPrefsManager.forceShowUpdatesPanel = value;
+        }
 
         public void EditCharacterChanged()
         {

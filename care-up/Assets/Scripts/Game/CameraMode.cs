@@ -49,6 +49,7 @@ public class CameraMode : MonoBehaviour
     public bool cinematicToggle = false;
     private int cinematicDirection = 1;
     public float cinematicLerp = 0.0f;
+    private float cinematicSpeedCoefficient = 2f;
     private Vector3 cinematicPos;
     private Quaternion cinematicRot;
 
@@ -515,7 +516,7 @@ public class CameraMode : MonoBehaviour
     {
         if (cinematicDirection == 1 || animationEnded)
         {
-            cinematicLerp = Mathf.Clamp01(cinematicLerp + 2 * Time.deltaTime * cinematicDirection);
+            cinematicLerp = Mathf.Clamp01(cinematicLerp + cinematicSpeedCoefficient * Time.deltaTime * cinematicDirection);
         }
         
         // set the lerp breakpoint value accordingly to closing eyes animation length
@@ -534,12 +535,18 @@ public class CameraMode : MonoBehaviour
         }
         else
         {
+            // implementing very slight smoothing
+            // by transforming linear progression into a sin wave
+            float value = cinematicLerp * 180f - 90f;
+            value = Mathf.Sin(value * Mathf.Deg2Rad);
+            value = (value + 1f) / 2;
+
             cinematicControl.transform.localRotation = new Quaternion();
             cinematicControl.transform.position =
-                Vector3.Lerp(cinematicPos, cinematicTargetPos, cinematicLerp);
+                Vector3.Lerp(cinematicPos, cinematicTargetPos, value);
             if (animationEnded || cinematicDirection == 1)
                 cinematicControl.Find("Arms").transform.rotation =
-                    Quaternion.Lerp(cinematicRot, cinematicTargetRot, cinematicLerp);
+                    Quaternion.Lerp(cinematicRot, cinematicTargetRot, value);
             //GameObject.FindObjectOfType<GameUI>().UpdateWalkToGtoupUI(true);
         }
 
@@ -581,7 +588,7 @@ public class CameraMode : MonoBehaviour
         {
             if (cinematicDirection == 1 || animationEnded)
             {
-                cinematicLerp = Mathf.Clamp01(cinematicLerp + 2 * Time.deltaTime * cinematicDirection);
+                cinematicLerp = Mathf.Clamp01(cinematicLerp + cinematicSpeedCoefficient * Time.deltaTime * cinematicDirection);
             }
         }
 
@@ -640,8 +647,13 @@ public class CameraMode : MonoBehaviour
         cinematicControl.transform.localRotation = new Quaternion();
         cinematicControl.Find("Arms").transform.rotation = cinematicTargetRot;
     }
-        
-    public void SetCinematicMode(Transform target)
+
+    /// <summary>
+    /// Turns on a cinematic mode, moving camera from current position to target position
+    /// </summary>
+    /// <param name="target">Desired camera position, position where camera will be moved to</param>
+    /// <param name="cinematicTime">Desired time taken of the movement from current position to target position</param>
+    public void SetCinematicMode(Transform target, bool forceCloseEyes = false, float cinematicTime = 0.5f)
     {
         if (target.Find("CinematicTarget") == null)
         {
@@ -655,6 +667,7 @@ public class CameraMode : MonoBehaviour
         }
 
         cinematicLerp = 0.0f;
+        cinematicSpeedCoefficient = 1 / cinematicTime;
         cinematicDirection = 1;
         cinematicControl = playerScript.transform.GetChild(0);
         cinematicPos = cinematicControl.transform.position;
@@ -671,6 +684,8 @@ public class CameraMode : MonoBehaviour
         // in order to know if need to close eyes
         float distance = Vector3.Distance(cinematicPos, cinematicTargetPos);
         closingEyes = distance > 1.8f; // set distance breakpoint here
+        //closingEyes = closingEyes || (Quaternion.Angle(cinematicRot, cinematicTargetRot) > 90f);
+        closingEyes = closingEyes || forceCloseEyes;
         if (PlayerAnimationManager.EyesAreClosed())
             closingEyes = false;
 

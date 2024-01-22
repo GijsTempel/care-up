@@ -22,18 +22,24 @@ public class SyncAnim : MonoBehaviour
         {
             MasterObject = PlayerAnimator;
         }    
-        //SlaveObject.GetComponent<Animator>();
-        
     }
+
+
 
     // Update is called once per frame
     void Update()
     {
         if(IsSyncing)
         {
-            if (SlaveObject)
+            if (MasterObject.IsInTransition(0) == false)
             {
-                SlaveObject.Play(AnimName, -1, MasterObject.GetCurrentAnimatorStateInfo(0).normalizedTime);
+
+                if (SlaveObject)
+                {
+                    float nTime = Mathf.Repeat(MasterObject.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f);
+                    if (MasterObject.GetAnimatorTransitionInfo(0).normalizedTime == 0f)
+                        SlaveObject.Play(AnimName, -1, nTime);
+                }
             }
         }
         

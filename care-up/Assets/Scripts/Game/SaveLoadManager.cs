@@ -213,7 +213,7 @@ public class SaveLoadManager : MonoBehaviour {
                 scenario.AppendChild(actionNode);
 
                 XmlAttribute actionStatus = doc.CreateAttribute("status");
-                actionStatus.Value = item.matched.ToString();
+                actionStatus.Value = item.info.matched.ToString();
                 actionNode.Attributes.Append(actionStatus);
             }
         } //end actions

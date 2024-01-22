@@ -229,6 +229,13 @@ public class bl_SceneLoader : MonoBehaviour
         if (LoadingBarAlpha != null && FadeLoadingBarOnFinish) { StartCoroutine(FadeOutCanvas(LoadingBarAlpha, 1)); }
     }
 
+
+    public void ReloadScene()
+    {
+        PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        LoadLevel(pp.currentSceneName, pp.currentSceneBundleName);
+    }
+
     public void LoadLevel(string level, string bundle = "")
     {
         if (level == "LoginMenu")
@@ -237,6 +244,9 @@ public class bl_SceneLoader : MonoBehaviour
             return;
         }
         
+        PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
+        pp.currentSceneName = level;
+        pp.currentSceneBundleName = bundle;
         sceneToLoad = level;
         bundleToLoad = bundle;
         ShowLoadingScreen();
@@ -247,7 +257,6 @@ public class bl_SceneLoader : MonoBehaviour
         data.Seti("limit", 0);
         data.Seti("gid", -1);
 
-        PlayerPrefsManager pp = GameObject.FindObjectOfType<PlayerPrefsManager>();
         if (pp != null && pp.demoVersion)
         {
             ActualLoadLevel(null);

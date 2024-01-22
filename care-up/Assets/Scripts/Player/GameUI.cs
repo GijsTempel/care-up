@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using CareUp.Actions;
@@ -8,6 +9,8 @@ using CareUp.Localize;
 
 public class GameUI : MonoBehaviour
 {
+
+    public GameObject subjectWindow;
     string autoPlayMoveWTGName = "";
     public AnimatedFingerHint animatedFinger;
     GameObject Player;
@@ -344,11 +347,13 @@ public class GameUI : MonoBehaviour
 
     public void CloseGameLevelSelection()
     {
+        closeDialog.SetActive(false);
         GameObject.FindObjectOfType<MainMenuAutomationData>().toAutomate = true;
         bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }
     public void CloseGame()
     {
+        closeDialog.SetActive(false);
         GameObject.FindObjectOfType<MainMenuAutomationData>().toAutomate = false;
         bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
     }
@@ -506,6 +511,15 @@ public class GameUI : MonoBehaviour
         GameObject.Find("theoryPanel/panel/quizElements/Continue").gameObject.GetComponent<Button>().onClick.AddListener(
             () => GameObject.FindObjectOfType<PlayerScript>().CloseRobotUI());
         theoryTab.Show(false);
+    }
+
+    public void ShowSubjectWindow(bool toShow = true)
+    {
+        subjectWindow.SetActive(toShow);
+        if (toShow)
+        {
+            subjectWindow.transform.parent.GetComponent<ActionSubjectWindow>().RefrashWindow();
+        }
     }
 
     // Use this for initialization
@@ -711,12 +725,12 @@ public class GameUI : MonoBehaviour
 
             if (PlayerPrefsManager.simulatePlayerActions && ps.away)
             {
-                if (a.placeRequirement != "")
+                if (a.info.placeRequirement != "")
                 {
                     if (AutoMoveTo == "")
-                        AutoMoveTo = a.placeRequirement;
+                        AutoMoveTo = a.info.placeRequirement;
                     else if (a.Type == ActionManager.ActionType.PersonTalk)
-                        AutoMoveTo = a.placeRequirement;
+                        AutoMoveTo = a.info.placeRequirement;
                     
                 }
             }
@@ -733,7 +747,7 @@ public class GameUI : MonoBehaviour
                     {
                         foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
                         {
-                            if (po.hasTopic(a._topic))
+                            if (po.hasTopic(a.info.topic))
                             {
                                 AutoActionObject = po.gameObject.GetComponentInChildren<PersonObjectPart>().gameObject;
                                 autoObjectSelected = true;
@@ -904,24 +918,31 @@ public class GameUI : MonoBehaviour
         donePanel.SetActive(false);
     }
 
+    public void RestartScene()
+    {
+        closeDialog.SetActive(false);
+        bl_SceneLoaderUtils.GetLoader.ReloadScene();
+        //bl_SceneLoaderUtils.GetLoader.LoadLevel("MainMenu");
+    }
+
     void OnGUI()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-        GUIStyle style = new GUIStyle();
-        style.normal.textColor = new Color(1f, 0f, 0f);
-        style.fontSize = 30;
-        // ****Show FPS 
-        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
-        if (objectsIDsController != null)
-        {
-            if (objectsIDsController.cheat)
-                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
-        }
-        //****Show FPS end.
+//#if UNITY_EDITOR || DEVELOPMENT_BUILD
+//        GUIStyle style = new GUIStyle();
+//        style.normal.textColor = new Color(1f, 0f, 0f);
+//        style.fontSize = 30;
+//        // ****Show FPS 
+//        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
+//        if (objectsIDsController != null)
+//        {
+//            if (objectsIDsController.cheat)
+//                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
+//        }
+//        //****Show FPS end.
 
-        //debugSS = PlayerAnimationManager.animTimeout.ToString();
-        GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
-#endif
+//        //debugSS = PlayerAnimationManager.animTimeout.ToString();
+//        GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
+//#endif
    }
     
     public void DropFromHand(bool leftHand = true)
@@ -1039,6 +1060,7 @@ public class GameUI : MonoBehaviour
         
         void ShowTheoryTab()
         {
+            PlayerScript.actionsLocked = false;
             if (PlayerPrefsManager.videoRecordingMode)
                 return;
             if (!GameObject.FindObjectOfType<QuizTab>())
@@ -1112,7 +1134,7 @@ public class GameUI : MonoBehaviour
             }
             else if (actionManager.Message != null)
             {
-                ShowTheoryTab();
+                StartCoroutine(MessageCoroutine(actionManager.MessageDelay));
                 SetTargetTime(0.4f);
             }
             else if (RandomQuiz.showQuestion)
@@ -1132,14 +1154,22 @@ public class GameUI : MonoBehaviour
         }
         else if (isSequence && actionManager.ShowTheory)
         {
-            ShowTheoryTab();
+            StartCoroutine(MessageCoroutine(actionManager.MessageDelay));
             actionManager.Message = null;
         }
         else if (isSequence && RandomQuiz.showQuestion)
         {
             ShowRandomQuizTab();
         }
+
+        IEnumerator MessageCoroutine(float delay)
+        {
+            PlayerScript.actionsLocked = true;
+            yield return new WaitForSeconds(delay);
+            ShowTheoryTab();
+        }
     }
+
 
     public RectTransform GetActiveTalkBubblePoint()
     {

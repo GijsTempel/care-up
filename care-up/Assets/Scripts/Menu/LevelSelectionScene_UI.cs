@@ -11,6 +11,7 @@ using CareUp.Localize;
 public class SceneInfo
 {
     public string sceneID = "";
+    public string courseID = "";
     public string sceneType = "";
     public bool activated = true;
     public bool demoLock = false;
@@ -258,6 +259,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
             if (xmlSceneNode.Attributes["id"] != null)
                 sceneInfo.sceneID = xmlSceneNode.Attributes["id"].Value;
 
+            if (xmlSceneNode.Attributes["courseID"] != null)
+                sceneInfo.courseID = xmlSceneNode.Attributes["courseID"].Value;
+
             if (xmlSceneNode.Attributes["type"] != null)
                 sceneInfo.sceneType = xmlSceneNode.Attributes["type"].Value;
 
@@ -455,7 +459,9 @@ public class LevelSelectionScene_UI : MonoBehaviour
             ppManager.currentSceneVisualName = sceneUnit.displayName;
             // setting id next to manager visual name
             sceneUnit.sceneID = sceneInfo.sceneID; // yes, duping value is important
+            sceneUnit.courseID = sceneInfo.courseID;
             ppManager.currentPEcourseID = sceneUnit.sceneID;
+            ppManager.currentPEAccreditationCourseID = sceneUnit.courseID;
 
             ppManager.CreateBlankHighscore(); // has a check inside for no DB info already
 

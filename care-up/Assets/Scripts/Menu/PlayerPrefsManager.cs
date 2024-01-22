@@ -74,6 +74,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public int currentPracticePlays = -1;
     public static bool CAKeyboardVisible = false;
     List<string> scenesWithFreeCert = new List<string>();
+    public static bool forceShowUpdatesPanel = false;
 
     public bool VR = true;
     public bool practiceMode = true;
@@ -93,9 +94,13 @@ public class PlayerPrefsManager : MonoBehaviour
     // sets up after selecting scene in "scene selection"
     public string currentSceneVisualName;
     public string currentPEcourseID;
+    public string currentPEAccreditationCourseID;
     public string currentSceneXPoints;
     public int currentDifficultyLevel;
     public bool validatedScene;
+    public string currentSceneName;
+    public string currentSceneBundleName;
+
 
     // post processing on camera
     public bool postProcessingEnabled = false;
@@ -328,6 +333,7 @@ public class PlayerPrefsManager : MonoBehaviour
                     {
                         Camera.main.GetComponent<PostProcessingBehaviour>().profile = Resources.Load("PostProcessing/Care_Up_PPS") as PostProcessingProfile;
                     }
+                    Debug.Log("*Curred PPS: " + Camera.main.GetComponent<PostProcessingBehaviour>().profile.ToString());
                 }
             }
             GameObject panoFlyCamera = GameObject.Find("PanoFlyCamera");
@@ -511,11 +517,18 @@ public class PlayerPrefsManager : MonoBehaviour
         postProcessingEnabled = PlayerPrefs.GetInt("PostProcessing") == 1;
         int QualityLevel = 0;
         if (postProcessingEnabled && Application.platform == RuntimePlatform.WebGLPlayer)
+        {
             QualityLevel = 5;//Set High Quality for WebGl 
+        }
+
         else if (postProcessingEnabled)
+        {
             QualityLevel = 7;//Set High Quality for mobile devices
+        }
+
 
         QualitySettings.SetQualityLevel(QualityLevel, true);
+        ColoredConsoleOutput.Print(RGBColor.Green, "*The quality level is: " + QualitySettings.names[QualityLevel].ToString());
         //Debug.Log ("PostProcessing is set to saved value: " + postProcessingEnabled);
     }
 
@@ -1288,7 +1301,7 @@ public class PlayerPrefsManager : MonoBehaviour
         OpenUrl_NewWindow(link.Replace(" ", "%20"));
     }
 
-    public static string GenerateAttendanceSXML(string BIG, string course)
+    public static string GenerateAttendanceSXML(string BIG, string course, string id)
     {
         XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", "yes");
@@ -1338,7 +1351,7 @@ public class PlayerPrefsManager : MonoBehaviour
         root.AppendChild(attendance);
         
         XmlElement PECourseID = xmlDoc.CreateElement("PECourseID");
-        PECourseID.InnerText = GetCourseIDbyModuleID(course);
+        PECourseID.InnerText = id;
         attendance.AppendChild(PECourseID);
 
         XmlElement externalModuleID = xmlDoc.CreateElement("externalmoduleID");
@@ -1358,64 +1371,6 @@ public class PlayerPrefsManager : MonoBehaviour
         return xmlDoc.OuterXml;
     }
 
-    static public string GetCourseIDbyModuleID(string module)
-    {
-        switch(module)
-        {
-            case "THD":
-            case "THR":
-                return "426062";
-
-            case "SCAED":
-                return "451003";
-
-            case "SMPA":
-            case "SMPD":
-            case "SMPF":
-                return "409087";
-
-            case "OSTMOPS":
-            case "SOC":
-            case "BCTCR":
-                return "481520";
-
-            case "INSIG":
-            case "IILTGF":
-            case "ISHTGF":
-            case "FRAXI":
-                return "479264";
-
-            case "VSV":
-            case "VVSO":
-            case "BMVS":
-            case "CATMSO":
-                return "481516";
-
-            case "TMOT":
-            case "TMMW":
-            case "AMVP":
-            case "MSSI":
-                return "485190";
-
-            case "SCII":
-            case "ISSI":
-                return "485220";
-
-            case "TVNM":
-            case "GFTP":
-                return "485238";
-
-            case "BGM":
-                return "483837";
-
-            case "ZOKR":
-                return "485312";
-        }
-
-        // if nothing fits, GL
-        return "-1";
-    }
-    
     public void HandleLoginToken()
     {
         // get login token

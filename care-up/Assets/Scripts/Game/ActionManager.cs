@@ -102,6 +102,7 @@ public class ActionManager : MonoBehaviour
 
     public string Message { get; set; } = null;
     public string MessageTitle { get; set; } = null;
+    public float MessageDelay { get; set; }
     public bool ShowTheory { get; set; } = false;
     public bool ShowRandomEvent { get; set; } = false;
     public List<int> currentRandomEventIndices = new List<int>();
@@ -188,7 +189,7 @@ public class ActionManager : MonoBehaviour
     {
         get
         {
-            incompletedActions = actionList.Where(action => action.SubIndex == currentActionIndex && action.matched == false).ToList();
+            incompletedActions = actionList.Where(action => action.SubIndex == currentActionIndex && action.info.matched == false).ToList();
             return incompletedActions;
         }
         set
@@ -201,7 +202,7 @@ public class ActionManager : MonoBehaviour
     {
         get
         {
-            completedActions = actionList.Where(action => action.matched == true).ToList();
+            completedActions = actionList.Where(action => action.info.matched == true).ToList();
             return completedActions;
         }
         set
@@ -217,7 +218,7 @@ public class ActionManager : MonoBehaviour
         get
         {
             unlockedIncompletedActions = IncompletedActions.Where(action =>
-            action.blockRequired.Count == 0 || unlockedBlocks.Intersect(action.blockRequired).Count() == action.blockRequired.Count()).ToList();
+            action.info.blockRequired.Count == 0 || unlockedBlocks.Intersect(action.info.blockRequired).Count() == action.info.blockRequired.Count()).ToList();
 
             return unlockedIncompletedActions;
         }
@@ -301,19 +302,19 @@ public class ActionManager : MonoBehaviour
 
             bool dialog = false;
 
-            if (a.placeRequirement == "PatientPos" || a.placeRequirement == "DoctorPos" || a.secondPlaceRequirement == "PatientPos" || a.secondPlaceRequirement == "DoctorPos")
+            if (a.info.placeRequirement == "PatientPos" || a.info.placeRequirement == "DoctorPos" || a.info.secondPlaceRequirement == "PatientPos" || a.info.secondPlaceRequirement == "DoctorPos")
                 dialog = true;
 
-            if (!string.IsNullOrEmpty(a.placeRequirement))
+            if (!string.IsNullOrEmpty(a.info.placeRequirement))
             {
-                string placeName = a.placeRequirement;
+                string placeName = a.info.placeRequirement;
 
-                if (GameObject.Find(a.placeRequirement).GetComponent<WalkToGroup>().description != "")
-                    placeName = GameObject.Find(a.placeRequirement).GetComponent<WalkToGroup>().description;
+                if (GameObject.Find(a.info.placeRequirement).GetComponent<WalkToGroup>().description != "")
+                    placeName = GameObject.Find(a.info.placeRequirement).GetComponent<WalkToGroup>().description;
 
                 bool completed = false;
                 if (playerScript.currentWalkPosition != null)
-                    completed = playerScript.currentWalkPosition.name == a.placeRequirement;
+                    completed = playerScript.currentWalkPosition.name == a.info.placeRequirement;
 
 
                 placeData = new StepData(completed, 
@@ -326,7 +327,7 @@ public class ActionManager : MonoBehaviour
                 {
                     foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
                     {
-                        if (po.hasTopic(a._topic))
+                        if (po.hasTopic(a.info.topic))
                         {
                             gameUI.PlaceTalkBubble(po.gameObject);
                         }
@@ -342,16 +343,16 @@ public class ActionManager : MonoBehaviour
                 }
             }
 
-            if (!string.IsNullOrEmpty(a.secondPlaceRequirement))
+            if (!string.IsNullOrEmpty(a.info.secondPlaceRequirement))
             {
-                string placeName = a.secondPlaceRequirement;
+                string placeName = a.info.secondPlaceRequirement;
 
-                if (GameObject.Find(a.secondPlaceRequirement).GetComponent<WalkToGroup>().description != "")
-                    placeName = GameObject.Find(a.secondPlaceRequirement).GetComponent<WalkToGroup>().description;
+                if (GameObject.Find(a.info.secondPlaceRequirement).GetComponent<WalkToGroup>().description != "")
+                    placeName = GameObject.Find(a.info.secondPlaceRequirement).GetComponent<WalkToGroup>().description;
 
                 bool completed = false;
                 if (playerScript.currentWalkPosition != null)
-                    completed = playerScript.currentWalkPosition.name == a.secondPlaceRequirement;
+                    completed = playerScript.currentWalkPosition.name == a.info.secondPlaceRequirement;
 
                 secondPlaceData = new StepData(completed, 
                     LocalizationManager.GetValueIfKey("[-Ga naar]") + 
@@ -361,7 +362,7 @@ public class ActionManager : MonoBehaviour
                 {
                     foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
                     {
-                        if (po.hasTopic(a._topic))
+                        if (po.hasTopic(a.info.topic))
                         {
                             gameUI.PlaceTalkBubble(po.gameObject);
                         }
@@ -388,7 +389,7 @@ public class ActionManager : MonoBehaviour
                 foundComplitedAction = true;
             }
 
-            string[] actionHand = { a.leftHandRequirement, a.rightHandRequirement };
+            string[] actionHand = { a.info.leftHandRequirement, a.info.rightHandRequirement };
             GameObject leftR = null;
             GameObject rightR = null;
             string article = null;
@@ -396,22 +397,22 @@ public class ActionManager : MonoBehaviour
             string currentRightObject = null;
             bool objectCombinationCheck = false;
 
-            bool iPad = a.leftHandRequirement == "PatientRecords" || a.leftHandRequirement == "PrescriptionForm" || a.leftHandRequirement == "PaperAndPen";
+            bool iPad = a.info.leftHandRequirement == "PatientRecords" || a.info.leftHandRequirement == "PrescriptionForm" || a.info.leftHandRequirement == "PaperAndPen";
 
             if (iPad)
             {
                 objectsData.Add(new StepData(false, 
                     LocalizationManager.GetValueIfKey("[-Klik op het informatie]"), i));
 
-                if (a.leftHandRequirement == "PatientRecords")
+                if (a.info.leftHandRequirement == "PatientRecords")
                 {
                     gameUI.recordsButtonBlink = true;
                 }
-                else if (a.leftHandRequirement == "PrescriptionForm")
+                else if (a.info.leftHandRequirement == "PrescriptionForm")
                 {
                     gameUI.prescriptionButtonBlink = true;
                 }
-                else if (a.leftHandRequirement == "PaperAndPen")
+                else if (a.info.leftHandRequirement == "PaperAndPen")
                 {
                     gameUI.paperAndPenButtonblink = true;
                 }
@@ -571,7 +572,7 @@ public class ActionManager : MonoBehaviour
 
                         if (leftR != null && rightR != null)
                         {
-                            objectCombinationCheck = ((leftR.name == a.leftHandRequirement) && (rightR.name == a.rightHandRequirement)) || ((rightR.name == a.leftHandRequirement) && (leftR.name == a.rightHandRequirement));
+                            objectCombinationCheck = ((leftR.name == a.info.leftHandRequirement) && (rightR.name == a.info.rightHandRequirement)) || ((rightR.name == a.info.leftHandRequirement) && (leftR.name == a.info.rightHandRequirement));
                         }
 
                         if (objectCombinationCheck && a.Type == ActionType.ObjectCombine)
@@ -602,7 +603,7 @@ public class ActionManager : MonoBehaviour
                                     gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetLeft;
                                 }
                             }
-                            else if (a.Type == ActionType.ObjectDrop && a.leftHandRequirement == inventory.leftHandObject.name)
+                            else if (a.Type == ActionType.ObjectDrop && a.info.leftHandRequirement == inventory.leftHandObject.name)
                             {
                                 if (!foundComplitedAction)
                                 {
@@ -629,7 +630,7 @@ public class ActionManager : MonoBehaviour
                                         LocalizationManager.GetValueIfKey("[neer.]"), i));
                                 }
                             }
-                            else if (a.Type == ActionType.ObjectExamine && inventory.leftHandObject.name == a.leftHandRequirement)
+                            else if (a.Type == ActionType.ObjectExamine && inventory.leftHandObject.name == a.info.leftHandRequirement)
                             {
                                 objectsData.Add(new StepData(false, 
                                     LocalizationManager.GetValueIfKey("[-Klik op de Controleren]"), i));
@@ -703,7 +704,7 @@ public class ActionManager : MonoBehaviour
                                         LocalizationManager.GetValueIfKey("[neer.]"), i));
                                 }    
                             }
-                            else if (a.Type == ActionType.ObjectExamine && inventory.rightHandObject.name == a.leftHandRequirement)
+                            else if (a.Type == ActionType.ObjectExamine && inventory.rightHandObject.name == a.info.leftHandRequirement)
                             {
                                 objectsData.Add(new StepData(false, 
                                     LocalizationManager.GetValueIfKey("[-Klik op de Controleren]"), i));
@@ -762,12 +763,12 @@ public class ActionManager : MonoBehaviour
                     stepsList.Add(secondPlaceData);
                     //placesReqList.Add(a.secondPlaceRequirement);
                     if (!secondPlaceData.completed)
-                        uncomplitedSecondPlace = a.secondPlaceRequirement;
+                        uncomplitedSecondPlace = a.info.secondPlaceRequirement;
                 }
                 else
                 {
                     stepsList.Add(placeData);
-                    placesReqList.Add(a.placeRequirement);
+                    placesReqList.Add(a.info.placeRequirement);
                 }
             }
 
@@ -864,18 +865,18 @@ public class ActionManager : MonoBehaviour
 
             if (manager != null && !manager.practiceMode && currentAction != null)
             {
-                result = currentAction.shortDescr;
-                if (Ua && currentAction.commentUA != "")
-                    result = currentAction.commentUA;
+                result = currentAction.info.shortDescr;
+                if (Ua && currentAction.info.commentUA != "")
+                    result = currentAction.info.commentUA;
             }
             else
             {
                 foreach (Action a in IncompletedActions)
                 {
-                    if (!Ua || a.commentUA == "")
-                        actionsDescription.Add(a.shortDescr);
+                    if (!Ua || a.info.commentUA == "")
+                        actionsDescription.Add(a.info.shortDescr);
                     if (Ua)
-                        actionsDescription.Add(a.commentUA);
+                        actionsDescription.Add(a.info.commentUA);
                 }
             }
             return actionsDescription;
@@ -1071,7 +1072,7 @@ public class ActionManager : MonoBehaviour
             Action firstGeneral = generalList[0];
             foreach (Action a in generalList)
             {
-                if (a.storedIndex < firstGeneral.storedIndex)
+                if (a.info.storedIndex < firstGeneral.info.storedIndex)
                     firstGeneral = a;
             }
             action = (GeneralAction)firstGeneral;
@@ -1123,44 +1124,52 @@ public class ActionManager : MonoBehaviour
         {
             if (action.Attributes["hidden"] != null)
                 continue;
-            int index;
-            int.TryParse(action.Attributes["index"].Value, out index);
+
+            ActionInfo info = new ActionInfo();
+
+            int.TryParse(action.Attributes["index"].Value, out info.subindex);
             string type = action.Attributes["type"].Value;
 
-            string descr = LocalizationManager.GetValueIfKey(action.Attributes["description"].Value);
+            info.shortDescr = LocalizationManager.GetValueIfKey(action.Attributes["description"].Value);
 
-            string comment = "";
+            info.comment = "";
             if (action.Attributes["comment"] != null)
             {
-                comment = action.Attributes["comment"].Value;
+                info.comment = action.Attributes["comment"].Value;
             }
 
-            bool ignorePosition = action.Attributes["ignorePosition"] != null;
+            info.ignorePosition = action.Attributes["ignorePosition"] != null;
 
-            string secondPlace = "";
+            info.secondPlaceRequirement = "";
             if (action.Attributes["secondPlace"] != null)
             {
-                secondPlace = action.Attributes["secondPlace"].Value;
+                info.secondPlaceRequirement = action.Attributes["secondPlace"].Value;
             }
 
-            string place = "";
+            info.placeRequirement = "";
             if (action.Attributes["place"] != null)
             {
-                place = action.Attributes["place"].Value;
+                info.placeRequirement = action.Attributes["place"].Value;
             }
 
-            string commentUA = "";
+            info.commentUA = "";
             if (action.Attributes["commentUA"] != null)
             {
-                commentUA = action.Attributes["commentUA"].Value;
+                info.commentUA = action.Attributes["commentUA"].Value;
             }
 
+            info.subjectTitle = "";
+            if (action.Attributes["subjectTitle"] != null)
+            {
+                info.subjectTitle = action.Attributes["subjectTitle"].Value;
+            }
+           
             string item = "";
             if (action.Attributes["item"] != null)
             {
                 item = action.Attributes["item"].Value;
             }
-
+            
             string buttonText = "";
             if (action.Attributes["buttonText"] != null)
             {
@@ -1168,65 +1177,69 @@ public class ActionManager : MonoBehaviour
             }
             else
             {
-                buttonText = descr;
+                buttonText = info.shortDescr;
             }
 
-            int pointsValue = 1;
+            info.pointValue = 1;
             if (action.Attributes["points"] != null)
             {
-                int.TryParse(action.Attributes["points"].Value, out pointsValue);
+                int.TryParse(action.Attributes["points"].Value, out info.pointValue);
             }
 
-            float UITimeout = 0f;
+            info.UITimeout = 0f;
             if (action.Attributes["ui_timeout"] != null)
             {
                 int intUITimeout = 0;
                 int.TryParse(action.Attributes["ui_timeout"].Value, out intUITimeout);
-                UITimeout = intUITimeout;
+                info.UITimeout = intUITimeout;
             }
 
-            bool notNeeded = action.Attributes["optional"] != null;
+            info.notMandatory = action.Attributes["optional"] != null;
 
             // try making all steps optional for test
-            int storedIndex = index;
+            info.storedIndex = info.subindex;
             if (manager != null && !manager.practiceMode)
             {
-                notNeeded = true;
-                index = 0;
+                info.notMandatory = true;
+                info.subindex = 0;
             }
 
             // quiz triggers
-            float quizTime = -1.0f;
+            info.quizTriggerTime = -1.0f;
             if (action.Attributes["quiz"] != null)
             {
-                float.TryParse(action.Attributes["quiz"].Value, out quizTime);
-                if (quizTime < 0.1f)
-                    quizTime = 2.0f;
+                float.TryParse(action.Attributes["quiz"].Value, out info.quizTriggerTime);
+                if (info.quizTriggerTime < 0.1f)
+                    info.quizTriggerTime = 2.0f;
             }
 
-            float encounterTime = -1.0f;
+            info.encounter = -1.0f;
             if (action.Attributes["encounter"] != null)
             {
-                float.TryParse(action.Attributes["encounter"].Value, out encounterTime);
-                if (encounterTime < 0.1f)
-                    encounterTime = 2.0f;
+                float.TryParse(action.Attributes["encounter"].Value, out info.encounter);
+                if (info.encounter < 0.1f)
+                    info.encounter = 2.0f;
             }
 
-            string messageTitle = "";
+            info.messageTitle = "";
             if (action.Attributes["messageTitle"] != null)
             {
-                messageTitle = LocalizationManager.GetValueIfKey(action.Attributes["messageTitle"].Value);
+                info.messageTitle = LocalizationManager.GetValueIfKey(action.Attributes["messageTitle"].Value);
             }
 
-            string messageContent = "";
+            info.messageContent = "";
             if (action.Attributes["messageContent"] != null)
             {
-                messageContent = LocalizationManager.GetValueIfKey(action.Attributes["messageContent"].Value);
+                info.messageContent = LocalizationManager.GetValueIfKey(action.Attributes["messageContent"].Value);
             }
 
-            List<string> blockUnlock = new List<string>();
-            List<string> blockRequire = new List<string>();
-            List<string> blockLock = new List<string>();
+            info.messageDelay = 0f;
+            if (action.Attributes["messageDelay"] != null)
+            {
+                int delayMS = 0;
+                int.TryParse(action.Attributes["messageDelay"].Value, out delayMS);
+                info.messageDelay = delayMS / 1000f; // milliseconds to seconds
+            }
 
             if (action.Attributes["blockUnlock"] != null)
             {
@@ -1234,7 +1247,7 @@ public class ActionManager : MonoBehaviour
 
                 foreach (string word in sentence)
                 {
-                    blockUnlock.Add(word);
+                    info.blockUnlock.Add(word);
                 }
             }
 
@@ -1244,7 +1257,7 @@ public class ActionManager : MonoBehaviour
 
                 foreach (string word in sentence)
                 {
-                    blockRequire.Add(word);
+                    info.blockRequired.Add(word);
                 }
             }
 
@@ -1254,106 +1267,86 @@ public class ActionManager : MonoBehaviour
 
                 foreach (string word in sentence)
                 {
-                    blockLock.Add(word);
+                    info.blockLock.Add(word);
                 }
             }
 
-            string blockTitle = "";
-            string blockMsg = "";
+            info.blockTitle = "";
+            info.blockMessage = "";
             if (action.Attributes["blockTitle"] != null)
             {
-                blockTitle = LocalizationManager.GetValueIfKey(action.Attributes["blockTitle"].Value);
+                info.blockTitle = LocalizationManager.GetValueIfKey(action.Attributes["blockTitle"].Value);
             }
 
             if (action.Attributes["blockMessage"] != null)
             {
-                blockMsg = LocalizationManager.GetValueIfKey(action.Attributes["blockMessage"].Value);
-            }
-
-            string decombineText = "Openen";
-            if (action.Attributes["decombineText"] != null)
-            {
-                decombineText = LocalizationManager.GetValueIfKey(action.Attributes["decombineText"].Value);
+                info.blockMessage = LocalizationManager.GetValueIfKey(action.Attributes["blockMessage"].Value);
             }
 
             switch (type)
             {
                 case "combine":
                     string left = action.Attributes["left"].Value;
-                    string right = action.Attributes["right"].Value;
-                    actionList.Add(new CombineAction(left, right, index, descr,
-                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg, decombineText, encounterTime));
+                    string right = action.Attributes["right"].Value; 
+                    string decombineText = "Openen";
+                    if (action.Attributes["decombineText"] != null)
+                    {
+                        decombineText = LocalizationManager.GetValueIfKey(action.Attributes["decombineText"].Value);
+                    }
+                    actionList.Add(new CombineAction(left, right, decombineText, info));
                     break;
                 case "use":
                     string use = action.Attributes["value"].Value;
-                    actionList.Add(new UseAction(use, index, descr, buttonText,
-                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
+                    actionList.Add(new UseAction(use, buttonText, info));
                     break;
                 case "talk":
                     string topic = action.Attributes["topic"].Value;
-                    actionList.Add(new TalkAction(topic, index, descr, pointsValue,
-                        notNeeded, quizTime, messageTitle, messageContent, blockRequire, blockUnlock,
-                        blockLock, blockTitle, blockMsg, encounterTime));
+                    actionList.Add(new TalkAction(topic, info));
                     break;
                 case "useOn":
                     string target = action.Attributes["target"].Value;
-                    actionList.Add(new UseOnAction(item, target, index, descr,
-                        buttonText, pointsValue, notNeeded, quizTime, messageTitle, messageContent,
-                        blockRequire, blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
+                    actionList.Add(new UseOnAction(item, target, buttonText, info));
                     break;
                 case "examine":
                     string expected = action.Attributes["expected"].Value;
-                    actionList.Add(new ExamineAction(item, expected, index, descr,
-                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
+                    actionList.Add(new ExamineAction(item, expected, info));
                     break;
                 case "pickUp":
-                    actionList.Add(new PickUpAction(item, index, descr,
-                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
+                    actionList.Add(new PickUpAction(item, info));
                     break;
                 case "sequenceStep":
                     string stepName = action.Attributes["value"].Value;
-                    actionList.Add(new SequenceStepAction(stepName, index, descr,
-                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
+                    actionList.Add(new SequenceStepAction(stepName, info));
                     break;
                 case "drop":
                     string dropID = (action.Attributes["posID"] != null) ? action.Attributes["posID"].Value : "0";
-                    actionList.Add(new ObjectDropAction(item, dropID, index, descr,
-                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
+                    actionList.Add(new ObjectDropAction(item, dropID, info));
                     break;
                 case "movement":
                     string movement = action.Attributes["value"].Value;
-                    actionList.Add(new MovementAction(movement, index, descr,
-                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
+                    actionList.Add(new MovementAction(movement, info));
                     break;
                 case "general":
                     string actionValue = action.Attributes["action"].Value;
-                    actionList.Add(new GeneralAction(item, actionValue, index, storedIndex, descr, buttonText,
-                        pointsValue, notNeeded, quizTime, messageTitle, messageContent, blockRequire,
-                        blockUnlock, blockLock, blockTitle, blockMsg, encounterTime));
+                    actionList.Add(new GeneralAction(item, actionValue, buttonText, info));
 
                     break;
                 default:
                     Debug.LogError("No action type found: " + type);
                     break;
             }
-            actionList[actionList.Count - 1].comment = comment;
-            actionList[actionList.Count - 1].commentUA = commentUA;
-            actionList[actionList.Count - 1].secondPlaceRequirement = secondPlace;
-            actionList[actionList.Count - 1].placeRequirement = place;
-            actionList[actionList.Count - 1].ignorePosition = ignorePosition;
-            actionList[actionList.Count - 1].UITimeout = UITimeout;
-            actionList[actionList.Count - 1].sequentialNumber = actionList.Count - 1;
-
+            actionList[actionList.Count - 1].info.comment = info.comment;
+            actionList[actionList.Count - 1].info.commentUA = info.commentUA;
+            actionList[actionList.Count - 1].info.secondPlaceRequirement = info.secondPlaceRequirement;
+            actionList[actionList.Count - 1].info.placeRequirement = info.placeRequirement;
+            actionList[actionList.Count - 1].info.ignorePosition = info.ignorePosition;
+            actionList[actionList.Count - 1].info.UITimeout = info.UITimeout;
+            actionList[actionList.Count - 1].info.sequentialNumber = actionList.Count - 1;
+            actionList[actionList.Count - 1].info.subjectTitle = LocalizationManager.GetValueIfKey(
+                info.subjectTitle);
         }
 
-        actionList.Last<Action>().sceneDoneTrigger = true;
+        actionList.Last<Action>().info.sceneDoneTrigger = true;
 
         if (xmlFile.FirstChild.NextSibling.Attributes["points"] != null)
         {
@@ -1364,13 +1357,13 @@ public class ActionManager : MonoBehaviour
             totalPoints = 0;
             foreach (Action a in actionList)
             {
-                totalPoints += a.pointValue;
+                totalPoints += a.info.pointValue;
             }
         }
 
         foreach (Action a in actionList)
         {
-            stepsList.Add(a.shortDescr);
+            stepsList.Add(a.info.shortDescr);
         }
 
         currentAction = actionList.First();
@@ -1582,6 +1575,14 @@ public class ActionManager : MonoBehaviour
             gameUI.buttonToBlink = GameUI.ItemControlButtonType.NoTargetRight;
     }
 
+    public bool IsActionDoneWrong(Action action)
+    {
+        int actionIndex = actionList.IndexOf(action);
+        if (wrongStepIndexes.Contains(actionIndex))
+            return true;
+        return false;
+    }
+
     /// <summary>
     /// Checks if triggered action is correct ( expected to be done in action list ).
     /// Plays WrongAction sound from Narrator if wrong.
@@ -1622,54 +1623,55 @@ public class ActionManager : MonoBehaviour
                 if (action.Compare(info) || (action.Type == ActionType.General))
                 {
                     matched = true;
-                    action.matched = true;
-                    if (action.UITimeout > 0f)
+                    action.info.matched = true;
+                    if (action.info.UITimeout > 0f)
                     {
-                        GameObject.FindObjectOfType<GameUI>().UITimeout(action.UITimeout);
+                        GameObject.FindObjectOfType<GameUI>().UITimeout(action.info.UITimeout);
                     }
                     int index = actionList.IndexOf(action);
 
-                    if (action.blockUnlock.Count() > 0)
+                    if (action.info.blockUnlock.Count() > 0)
                     {
-                        foreach (string item in action.blockUnlock)
+                        foreach (string item in action.info.blockUnlock)
                         {
                             if (!unlockedBlocks.Contains(item))
                                 unlockedBlocks.Add(item);
                         }
                     }
 
-                    if (action.blockLock.Count > 0)
+                    if (action.info.blockLock.Count > 0)
                     {
-                        foreach (string item in action.blockLock)
+                        foreach (string item in action.info.blockLock)
                         {
                             unlockedBlocks.Remove(item);
                         }
                     }
 
-                    if (action.quizTriggerTime >= 0.0f)
+                    if (action.info.quizTriggerTime >= 0.0f)
                     {
-                        PlayerScript.TriggerQuizQuestion(action.quizTriggerTime);
+                        PlayerScript.TriggerQuizQuestion(action.info.quizTriggerTime);
                     }
 
                     //if (action.SubIndex == 1)
                     //{
                     //    ShowRandomEvent = true;
                     //}
-                    BuildRandomEventList(action.sequentialNumber);
+                    BuildRandomEventList(action.info.sequentialNumber);
                     //--------------------------------------------------------------
 
-                    if (action.encounter >= 0.0f)
+                    if (action.info.encounter >= 0.0f)
                     {
-                        QuizTab.encounterDelay = action.encounter;
+                        QuizTab.encounterDelay = action.info.encounter;
                     }
 
-                    if (action.messageContent != "" || action.messageTitle != "")
+                    if (action.info.messageContent != "" || action.info.messageTitle != "")
                     {
                         if (practiceMode)
                         {
                             ShowTheory = true;
-                            Message = action.messageContent;
-                            MessageTitle = action.messageTitle;
+                            Message = action.info.messageContent;
+                            MessageTitle = action.info.messageTitle;
+                            MessageDelay = action.info.messageDelay;
                         }
                     }
 
@@ -1720,10 +1722,10 @@ public class ActionManager : MonoBehaviour
                 string title, message;
 
                 // found action will be assigned if foundBlockedStep == true
-                if (foundAction.blockTitle != "" && foundAction.blockMessage != "")
+                if (foundAction.info.blockTitle != "" && foundAction.info.blockMessage != "")
                 {
-                    title = foundAction.blockTitle;
-                    message = foundAction.blockMessage;
+                    title = foundAction.info.blockTitle;
+                    message = foundAction.info.blockMessage;
                 }
                 else
                 {
@@ -1758,7 +1760,7 @@ public class ActionManager : MonoBehaviour
                     RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
 
                     if (type != ActionType.SequenceStep)
-                        GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("Verkeerde handeling!", IncompletedActions[0].shortDescr);
+                        GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("Verkeerde handeling!", IncompletedActions[0].info.shortDescr);
                 }
             }
 
@@ -1769,14 +1771,14 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
-            currentPointAward = currentAction.pointValue;
+            currentPointAward = currentAction.info.pointValue;
 
             currentAction = IncompletedActions.Count > 0 ? IncompletedActions.First() : null;
 
             if ((manager == null || manager.practiceMode) && type != ActionType.Movement)
             {
                 //now we have not mandatory actions, let's skip them and add to mistakes
-                List<Action> skippableActions = IncompletedActions.Where(action => action.notMandatory == true).ToList();
+                List<Action> skippableActions = IncompletedActions.Where(action => action.info.notMandatory == true).ToList();
 
                 if (IncompletedActions.Count == skippableActions.Count) // all of them are skippable
                 {
@@ -1786,7 +1788,7 @@ public class ActionManager : MonoBehaviour
                     // get next actions with new index
                     IncompletedActions = actionList.Where(action =>
                         action.SubIndex == currentActionIndex &&
-                        action.matched == false).ToList();
+                        action.info.matched == false).ToList();
 
                     currentAction = IncompletedActions.Count > 0 ? IncompletedActions.First() : null;
                 }
@@ -1857,7 +1859,7 @@ public class ActionManager : MonoBehaviour
 
         if (manager != null && !manager.practiceMode)
         {
-            if (actionList.Find(action => action.matched == true && action.sceneDoneTrigger == true) != null)
+            if (actionList.Find(action => action.info.matched == true && action.info.sceneDoneTrigger == true) != null)
             {
                 SceneCompletedRoutine();
                 return true;
@@ -1866,7 +1868,7 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
-            if (actionList.Find(action => action.matched == false && action.notMandatory == false) == null)
+            if (actionList.Find(action => action.info.matched == false && action.info.notMandatory == false) == null)
             {
                 SceneCompletedRoutine();
                 return true;
@@ -1891,7 +1893,7 @@ public class ActionManager : MonoBehaviour
         {
             for (int i = 0; i < actionList.Count; ++i)
             {
-                actionList[i].matched = items[i];
+                actionList[i].info.matched = items[i];
             }
         }
     }
@@ -1901,13 +1903,13 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     public void RollSequenceBack()
     {
-        Action lastAction = actionList.Last(x => x.matched == true);
+        Action lastAction = actionList.Last(x => x.info.matched == true);
         while (lastAction.Type == ActionType.SequenceStep)
         {
-            lastAction.matched = false;
-            lastAction = actionList.Last(x => x.matched == true);
+            lastAction.info.matched = false;
+            lastAction = actionList.Last(x => x.info.matched == true);
         }
-        lastAction.matched = false;
+        lastAction.info.matched = false;
         currentActionIndex = lastAction.SubIndex;
         currentAction = lastAction;
         GameObject.FindObjectOfType<Cheat_CurrentAction>().UpdateAction();
@@ -1983,7 +1985,7 @@ public class ActionManager : MonoBehaviour
             string[] ObjectNames = new string[0];
             a.ObjectNames(out ObjectNames);
 
-            if (a.ignorePosition)
+            if (a.info.ignorePosition)
                 print("DDDDD");
 
             switch (a.Type)
@@ -1991,46 +1993,46 @@ public class ActionManager : MonoBehaviour
                 case ActionType.PersonTalk:
                     foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
                     {
-                        if (po.hasTopic(a._topic))
+                        if (po.hasTopic(a.info.topic))
                         {
-                            a.placeRequirement = ActionManager.FindNearest(new string[] { po.name });
+                            a.info.placeRequirement = ActionManager.FindNearest(new string[] { po.name });
                         }
                     }
                     break;
                 case ActionType.ObjectCombine:
-                    a.leftHandRequirement = ObjectNames[0];
-                    a.rightHandRequirement = ObjectNames[1];
-                    if (a.placeRequirement == "")
-                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0], ObjectNames[1] });
+                    a.info.leftHandRequirement = ObjectNames[0];
+                    a.info.rightHandRequirement = ObjectNames[1];
+                    if (a.info.placeRequirement == "")
+                        a.info.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0], ObjectNames[1] });
                     break;
                 case ActionType.ObjectUseOn:
-                    a.leftHandRequirement = ObjectNames[0];
-                    if (a.placeRequirement == "")
-                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    a.info.leftHandRequirement = ObjectNames[0];
+                    if (a.info.placeRequirement == "")
+                        a.info.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.ObjectExamine:
-                    a.leftHandRequirement = ObjectNames[0];
-                    if (a.placeRequirement == "")
-                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    a.info.leftHandRequirement = ObjectNames[0];
+                    if (a.info.placeRequirement == "")
+                        a.info.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.PickUp:
-                    a.leftHandRequirement = ObjectNames[0];
-                    if (a.placeRequirement == "")
-                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    a.info.leftHandRequirement = ObjectNames[0];
+                    if (a.info.placeRequirement == "")
+                        a.info.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.ObjectDrop:
-                    a.leftHandRequirement = ObjectNames[0];
-                    if (a.placeRequirement == "")
-                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    a.info.leftHandRequirement = ObjectNames[0];
+                    if (a.info.placeRequirement == "")
+                        a.info.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
                 case ActionType.ObjectUse:
-                    a.leftHandRequirement = ObjectNames[0];
-                    if (a.placeRequirement == "")
-                        a.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
+                    a.info.leftHandRequirement = ObjectNames[0];
+                    if (a.info.placeRequirement == "")
+                        a.info.placeRequirement = ActionManager.FindNearest(new string[] { ObjectNames[0] });
                     break;
             }
-            if (a.ignorePosition)
-                a.placeRequirement = "";
+            if (a.info.ignorePosition)
+                a.info.placeRequirement = "";
         }
 
 #if (UNITY_EDITOR || DEVELOPMENT_BUILD)

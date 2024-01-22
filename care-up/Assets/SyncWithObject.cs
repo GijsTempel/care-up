@@ -5,6 +5,7 @@ using UnityEngine;
 public class SyncWithObject : StateMachineBehaviour
 {
     public string SyncObject;
+    public string syncAnimationName = "";
     SyncAnim[] syncAnimations;
     GameObject syncer;
 
@@ -17,31 +18,23 @@ public class SyncWithObject : StateMachineBehaviour
         {
             syncAnimations = syncer.GetComponents<SyncAnim>();
 
-            foreach (var anim in syncAnimations)
-                anim.IsSyncing = true;
-        }
-
-
-
-        /*if (GameObject.Find(Syncer))
-        {
-            foreach (GameObject.Find(Syncer).GetComponent<SyncAnim>() in GameObject.Find(Syncer))
+            foreach (SyncAnim anim in syncAnimations)
             {
-                GameObject.Find(Syncer).GetComponent<SyncAnim>().IsSyncing = true;
+
+                if (syncAnimationName != "")
+                    anim.AnimName = syncAnimationName;
+                anim.IsSyncing = true;
             }
-
-        }*/
-
+        }
+        else
+        {
+            Debug.Log("Syncer error!: "+syncer.name + " not found");
+        }
+    }
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
 
     }
-
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
-
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (syncer != null)
@@ -53,15 +46,4 @@ public class SyncWithObject : StateMachineBehaviour
         }
     }
 
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }
