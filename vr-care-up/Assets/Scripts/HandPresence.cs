@@ -104,6 +104,8 @@ public class HandPresence : MonoBehaviour
     {
         foreach (SkinnedMeshRenderer s in transform.GetComponentsInChildren<SkinnedMeshRenderer>(true))
             s.enabled = !toHide;
+        foreach (BoxCollider b in transform.GetComponentsInChildren<BoxCollider>(true))
+            b.enabled = !toHide;
     }
 
 
