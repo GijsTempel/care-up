@@ -29,11 +29,11 @@ public class ActionModule_PushButton : MonoBehaviour
     void FixedUpdate()
     {
         bool wasPressed = pressed;
-        var topRayPos = buttonTop.transform.position - buttonOffset - rayDirection * 0.01f;
+        var topRayPos = buttonTop.transform.position - buttonOffset - rayDirection * 0.03f;
         
         Color mainRayColor = Color.green;
         Color topRayColor = Color.blue;
-        bool isTopRayColliding = Physics.Raycast(topRayPos, rayDirection, maxRayDist * 0.3f, layerMask);
+        bool isTopRayColliding = Physics.Raycast(topRayPos, rayDirection, maxRayDist * 0.5f, layerMask);
         if (isTopRayColliding)
             topRayColor = Color.yellow;
         if (Physics.Raycast(transform.position, rayDirection, out RaycastHit hit, maxRayDist, layerMask))
@@ -60,7 +60,7 @@ public class ActionModule_PushButton : MonoBehaviour
             buttonTop.transform.position = Vector3.Lerp(buttonTop.transform.position, buttonOriginalPosition, Time.deltaTime * 10f);
         }
         Debug.DrawRay(transform.position, rayDirection * maxRayDist, mainRayColor, 0.0f, false);
-        Debug.DrawRay(topRayPos + new Vector3(0.001f, 0, 0.001f), rayDirection * maxRayDist * 0.3f, topRayColor, 0.0f, false);
+        Debug.DrawRay(topRayPos + new Vector3(0.001f, 0, 0.001f), rayDirection * maxRayDist * 0.5f, topRayColor, 0.0f, false);
         if(pressed && !wasPressed)
         {
             if (actionTrigger != null)
