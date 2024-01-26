@@ -12,6 +12,7 @@ using UnityEngine.XR.Interaction.Toolkit.Samples.Hands;
 public class HandPresence : MonoBehaviour
 {
     List<PickableObject> pickablesInArea = new List<PickableObject>();
+    public List<GameObject> triggerColliderObjects = new List<GameObject>();
 
     public PokeGestureDetector gestureDetector;
     private Animator handAnimator;
@@ -105,7 +106,10 @@ public class HandPresence : MonoBehaviour
         foreach (SkinnedMeshRenderer s in transform.GetComponentsInChildren<SkinnedMeshRenderer>(true))
             s.enabled = !toHide;
         foreach (BoxCollider b in transform.GetComponentsInChildren<BoxCollider>(true))
-            b.enabled = !toHide;
+        {
+            if (!triggerColliderObjects.Contains(b.gameObject))
+                b.enabled = !toHide;
+        }
     }
 
 
