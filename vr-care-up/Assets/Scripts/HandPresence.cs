@@ -135,7 +135,14 @@ public class HandPresence : MonoBehaviour
     {
         float dist = float.PositiveInfinity;
         PickableObject closest = null;
-        foreach (PickableObject p in pickablesInArea)
+        List<PickableObject> pInArea = pickablesInArea;
+        if (trackingHandTransfom != null
+                && trackingHandTransfom.gameObject.activeSelf
+                && trackingHandTransfom.parent.parent.GetComponent<TrackingHandPickupControl>() != null)
+            pInArea = trackingHandTransfom.parent.parent.GetComponent<TrackingHandPickupControl>().pickablesInArea;
+
+
+        foreach (PickableObject p in pInArea)
         {
             if (p != null)
             {
