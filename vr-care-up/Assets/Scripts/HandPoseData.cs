@@ -18,7 +18,6 @@ public class HandPoseData : MonoBehaviour
     GameObject debugJointPrefab;
     GameObject[] debugJoints;*/
 
-    public Transform[] colliderBones;
     HandVisualizer.HandGameObjects m_HandGameObjects;
 
     private void Start()
@@ -63,13 +62,6 @@ public class HandPoseData : MonoBehaviour
 
     void Update()
     {
-        if (m_HandGameObjects != null)
-        {
-            for (int i = 0; i < colliderBones.Length; i++)
-            {
-                colliderBones[i].position = m_HandGameObjects.m_DrawJoints[i].transform.position;
-                colliderBones[i].rotation = m_HandGameObjects.m_DrawJoints[i].transform.rotation;
-            }
-        }
+        
     }
 }
