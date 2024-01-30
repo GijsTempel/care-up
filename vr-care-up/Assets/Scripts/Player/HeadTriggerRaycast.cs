@@ -163,6 +163,8 @@ public class HeadTriggerRaycast : MonoBehaviour
                 {
                     justTeleported = false;
                     teleportationTimeValue = tTimeStartValue;
+                    Transform a = currentTeleportAnchor.GetTeleportationAnchor();
+
                     player.TriggerTeleportation(currentTeleportAnchor.GetTeleportationAnchor(),
                         currentTeleportAnchor);
                 }
