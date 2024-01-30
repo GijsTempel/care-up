@@ -48,17 +48,6 @@ public class HandPoseData : MonoBehaviour
     {
         return transform.parent.parent.localPosition;
     }
-    public void LateUpdate()
-    {
-        // surely in late update it's initialized properly finally?
-        // confirmed
-        if (m_HandGameObjects == null)
-        {
-            m_HandGameObjects = (handType == HandModelType.Left) ?
-                GameObject.FindAnyObjectByType<HandVisualizer>().m_LeftHandGameObjects :
-                GameObject.FindAnyObjectByType<HandVisualizer>().m_RightHandGameObjects;
-        }
-    }
 
     void Update()
     {
