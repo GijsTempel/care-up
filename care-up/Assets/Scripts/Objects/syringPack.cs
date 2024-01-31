@@ -30,9 +30,9 @@ public class syringPack : PickableObject
         }
     }
 
-    public override bool Drop(bool force = false)
+    public override bool Drop(bool force = false, Transform forcedTransform = null, bool forceParent = false)
     {
-        base.Drop(force);
+        base.Drop(force, forcedTransform, forceParent);
         UpdateOpeningState = false;
 
         return false;
