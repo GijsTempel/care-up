@@ -23,7 +23,9 @@ public class ActionExpectant : MonoBehaviour
         UpdateAction();
         for (int i = 0; i < transform.childCount; i ++)
         {
-            if (transform.GetChild(i).GetComponent<ItemInHandCheck>() != null)
+
+            if (transform.GetChild(i).GetComponent<ItemInHandCheck>() != null ||
+                transform.GetChild(i).GetComponent<ActionModule_IsHandsTrackingMode>() != null )
             {
                 noExtraConditions = false;
                 break;
@@ -98,13 +100,17 @@ public class ActionExpectant : MonoBehaviour
         if (!noExtraConditions)
             for (int i = 0; i < transform.childCount; i++)
             {
-                if (transform.GetChild(i).GetComponent<ItemInHandCheck>() != null)
+                if (transform.GetChild(i).GetComponent<ItemInHandCheck>() != null &&
+                    !transform.GetChild(i).GetComponent<ItemInHandCheck>().Check())
                 {
-                    if (!transform.GetChild(i).GetComponent<ItemInHandCheck>().Check())
-                    {
-                        isCurrentAction = false;
-                        return;
-                    }
+                    isCurrentAction = false;
+                    return;
+                }
+                if (transform.GetChild(i).GetComponent<ActionModule_IsHandsTrackingMode>() != null &&
+                    !transform.GetChild(i).GetComponent<ActionModule_IsHandsTrackingMode>().Check())
+                {
+                    isCurrentAction = false;
+                    return;
                 }
             }
         isCurrentAction = true;

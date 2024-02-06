@@ -72,6 +72,10 @@ public class ActionTrigger : MonoBehaviour
             if (transform.GetChild(i).GetComponent<ActionModule_ObjectDetector>() != null)
                 if (!transform.GetChild(i).GetComponent<ActionModule_ObjectDetector>().Check())
                     return false;
+            if (transform.GetChild(i).GetComponent<ActionModule_IsHandsTrackingMode>() != null)
+                if (!transform.GetChild(i).GetComponent<ActionModule_IsHandsTrackingMode>().Check())
+                    return false;
+                
         }
         // if (actionType == ActionManager.ActionType.None)
         // {
