@@ -8664,6 +8664,69 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.9388704, y: 0.66522044, z: 6.270994}
   m_Center: {x: 0, y: -0.16739097, z: 0.22817765}
+--- !u!1 &1681019866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1681019867}
+  - component: {fileID: 1681019868}
+  - component: {fileID: 1681019869}
+  m_Layer: 3
+  m_Name: DropCondition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1681019867
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681019866}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2185873403148785054}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1681019868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681019866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac7d1ea62c1f07600aebc266456be864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invertResult: 0
+--- !u!114 &1681019869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681019866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d825d90b0b868c2ab9175f65cf60a64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCurrentAction: 0
+  actionType: 10
+  leftActionManagerObject: 
+  rightActionManagerObject: 
+  walkToGroupName: 
 --- !u!1 &1687725332
 GameObject:
   m_ObjectHideFlags: 0
@@ -12999,6 +13062,7 @@ Transform:
   - {fileID: 6597092470723572961}
   - {fileID: 691142840}
   - {fileID: 1136605352}
+  - {fileID: 1681019867}
   m_Father: {fileID: 628393742}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &2185873403216663985

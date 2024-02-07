@@ -49,13 +49,13 @@ public class ActionModule_TutorialTigger : MonoBehaviour
                 if (!e.isCurrentAction)
                     return false;
             }
-            ItemInHandCheck itemInHandCheck = transform.GetChild(i).GetComponent<ItemInHandCheck>();
-            if (itemInHandCheck != null)
-            {
-                conditionElements++;
-                if (!itemInHandCheck.Check())
-                    return false;
-            }
+            // ActionCondition_ItemInHand itemInHandCheck = transform.GetChild(i).GetComponent<ActionCondition_ItemInHand>();
+            // if (itemInHandCheck != null)
+            // {
+            //     conditionElements++;
+            //     if (!itemInHandCheck.Check())
+            //         return false;
+            // }
             if (conditionElements == 0)
             {
                 noConditions = true;

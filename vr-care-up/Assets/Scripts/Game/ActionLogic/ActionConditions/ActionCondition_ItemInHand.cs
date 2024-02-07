@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
-public class ItemInHandCheck : MonoBehaviour
+public class ActionCondition_ItemInHand : MonoBehaviour
 {
     public ActionTrigger.TriggerHand handSide;
     [Tooltip("If empty check if hand is empty")]

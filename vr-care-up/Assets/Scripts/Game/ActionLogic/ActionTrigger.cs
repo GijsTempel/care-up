@@ -66,14 +66,14 @@ public class ActionTrigger : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i ++)
         {
-            if (transform.GetChild(i).GetComponent<ItemInHandCheck>() != null)
-                if (!transform.GetChild(i).GetComponent<ItemInHandCheck>().Check())
+            if (transform.GetChild(i).GetComponent<ActionCondition_ItemInHand>() != null)
+                if (!transform.GetChild(i).GetComponent<ActionCondition_ItemInHand>().Check())
                     return false;
             if (transform.GetChild(i).GetComponent<ActionModule_ObjectDetector>() != null)
                 if (!transform.GetChild(i).GetComponent<ActionModule_ObjectDetector>().Check())
                     return false;
-            if (transform.GetChild(i).GetComponent<ActionModule_IsHandsTrackingMode>() != null)
-                if (!transform.GetChild(i).GetComponent<ActionModule_IsHandsTrackingMode>().Check())
+            if (transform.GetChild(i).GetComponent<ActionCondition_IsHandsTrackingMode>() != null)
+                if (!transform.GetChild(i).GetComponent<ActionCondition_IsHandsTrackingMode>().Check())
                     return false;
                 
         }

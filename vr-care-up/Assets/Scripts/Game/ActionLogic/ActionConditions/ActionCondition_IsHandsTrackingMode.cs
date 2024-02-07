@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionModule_IsHandsTrackingMode : MonoBehaviour
+public class ActionCondition_IsHandsTrackingMode : MonoBehaviour
 {
     public enum CheckingForMode
     {

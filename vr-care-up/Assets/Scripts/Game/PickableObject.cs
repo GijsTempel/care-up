@@ -81,6 +81,14 @@ public class PickableObject : MonoBehaviour
 
     public bool Drop()
     {
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).GetComponent<ActionModule_DropCondition>()) 
+            {
+                if (!transform.GetChild(i).GetComponent<ActionModule_DropCondition>().Check())
+                    return false;
+            }
+        }
         VRCollarHolder vRCollarHolder = GameObject.FindObjectOfType<VRCollarHolder>();
         if (vRCollarHolder != null)
             vRCollarHolder.CloseTutorialShelf();

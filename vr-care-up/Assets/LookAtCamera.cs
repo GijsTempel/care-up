@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LoocAtCamera : MonoBehaviour
+public class LookAtCamera : MonoBehaviour
 {
     Transform mainCamera;
 
