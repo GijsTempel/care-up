@@ -9,7 +9,7 @@ public class ActionModule_PushButton : MonoBehaviour
     public GameObject buttonTop;
     public Transform maxPushTransform;
     float maxPushDist;
-    public ActionTrigger actionTrigger;
+    public ActionModule_ActionTrigger actionTrigger;
 
     Vector3 rayDirection;
     Vector3 buttonOriginalPosition;

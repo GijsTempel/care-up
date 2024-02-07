@@ -177,13 +177,13 @@ public class PlayerScript : MonoBehaviour
             rightHandPresence = hp;
     }
 
-    public ActionTrigger.TriggerHandAction GetCurrentHandPose(bool isLeftHand)
+    public ActionModule_ActionTrigger.TriggerHandAction GetCurrentHandPose(bool isLeftHand)
     {
         if (isLeftHand && leftHandPresence != null)
             return leftHandPresence.GetCurrentHandPose();
         if (!isLeftHand && rightHandPresence != null)
             return rightHandPresence.GetCurrentHandPose();
-        return ActionTrigger.TriggerHandAction.None;
+        return ActionModule_ActionTrigger.TriggerHandAction.None;
     }
 
     public void ForcePickUpObject(PickableObject pObject, bool isLeftHand)

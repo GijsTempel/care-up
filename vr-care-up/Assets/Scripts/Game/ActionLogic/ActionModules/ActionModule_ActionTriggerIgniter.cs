@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ActionModule_ActionTriggerIgniter : MonoBehaviour
 {
-    public ActionTrigger actionTrigger;
+    public ActionModule_ActionTrigger actionTrigger;
 
     public void Execute()
     {

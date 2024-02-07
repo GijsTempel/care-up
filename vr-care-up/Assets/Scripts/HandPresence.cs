@@ -59,7 +59,7 @@ public class HandPresence : MonoBehaviour
         return tag == "LeftHand";
     }
 
-    private ActionTrigger.TriggerHandAction currentHandPose = ActionTrigger.TriggerHandAction.None;
+    private ActionModule_ActionTrigger.TriggerHandAction currentHandPose = ActionModule_ActionTrigger.TriggerHandAction.None;
     // Start is called before the first frame update
     void Start()
     {
@@ -341,16 +341,16 @@ public class HandPresence : MonoBehaviour
     }
 
 
-    private void CastAction(ActionTrigger.TriggerHandAction triggerAction)
+    private void CastAction(ActionModule_ActionTrigger.TriggerHandAction triggerAction)
     {
-        foreach (ActionTrigger a in GameObject.FindObjectsOfType<ActionTrigger>())
+        foreach (ActionModule_ActionTrigger a in GameObject.FindObjectsOfType<ActionModule_ActionTrigger>())
         {
             a.ReceveTriggerAction(handModelPrefab.GetComponent<HandPoseData>().handType ==
                 HandPoseData.HandModelType.Left, triggerAction);
         }
     }
 
-    public ActionTrigger.TriggerHandAction GetCurrentHandPose()
+    public ActionModule_ActionTrigger.TriggerHandAction GetCurrentHandPose()
     {
         return currentHandPose;
     }
@@ -433,7 +433,7 @@ public class HandPresence : MonoBehaviour
         if (gripValue > ACTION_TRESHOULD_UP && gripSavedValue <= ACTION_TRESHOULD_UP)
         {
             if (!TryToPickUp())
-                CastAction(ActionTrigger.TriggerHandAction.Grip);
+                CastAction(ActionModule_ActionTrigger.TriggerHandAction.Grip);
             else
                 pickedUp = true;
         }
@@ -444,9 +444,9 @@ public class HandPresence : MonoBehaviour
         }
 
         if (gripValue > ACTION_TRESHOULD_UP)
-            currentHandPose = ActionTrigger.TriggerHandAction.Grip;
+            currentHandPose = ActionModule_ActionTrigger.TriggerHandAction.Grip;
         else
-            currentHandPose = ActionTrigger.TriggerHandAction.None;
+            currentHandPose = ActionModule_ActionTrigger.TriggerHandAction.None;
 
         gripSavedValue = gripValue;
         if (objectInHand != null)
@@ -462,7 +462,7 @@ public class HandPresence : MonoBehaviour
         handAnimator.SetFloat("Trigger", triggerValue);
         if (triggerValue > ACTION_TRESHOULD_UP && triggerSavedValue <= ACTION_TRESHOULD_UP)
         {
-            CastAction(ActionTrigger.TriggerHandAction.Pinch);
+            CastAction(ActionModule_ActionTrigger.TriggerHandAction.Pinch);
             if (TryToPickUp(true))
                 allowTriggerDrop = true;
             else if (!pickedUp)
@@ -478,9 +478,9 @@ public class HandPresence : MonoBehaviour
             allowTriggerDrop = false;
         }
 
-        if (triggerValue > ACTION_TRESHOULD_UP && currentHandPose != ActionTrigger.TriggerHandAction.Grip)
+        if (triggerValue > ACTION_TRESHOULD_UP && currentHandPose != ActionModule_ActionTrigger.TriggerHandAction.Grip)
         {
-            currentHandPose = ActionTrigger.TriggerHandAction.Pinch;
+            currentHandPose = ActionModule_ActionTrigger.TriggerHandAction.Pinch;
         }
         triggerSavedValue = triggerValue;
     }

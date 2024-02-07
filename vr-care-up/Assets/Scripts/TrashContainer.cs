@@ -6,7 +6,7 @@ using UnityEngine;
 public class TrashContainer : MonoBehaviour
 {
     Transform actionTriggerHolder;
-    private Dictionary<string, ActionTrigger> objectsAllowed = new Dictionary<string, ActionTrigger>();
+    private Dictionary<string, ActionModule_ActionTrigger> objectsAllowed = new Dictionary<string, ActionModule_ActionTrigger>();
 
     public List<string> testList = new List<string>();
     // Start is called before the first frame update
@@ -43,7 +43,7 @@ public class TrashContainer : MonoBehaviour
         testList.Clear();
         for (int i = 0; i < actionTriggerHolder.childCount; i++)
         {
-            ActionTrigger a = actionTriggerHolder.GetChild(i).GetComponent<ActionTrigger>();
+            ActionModule_ActionTrigger a = actionTriggerHolder.GetChild(i).GetComponent<ActionModule_ActionTrigger>();
             if (a != null)
             {
                 foreach (string n in new string[] {a.LeftActionManagerObject, a.RightActionManagerObject})

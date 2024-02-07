@@ -51,7 +51,7 @@ public class ActionModule_ObjectDetector : MonoBehaviour
         if (!isObjectIn)
             return false;
 
-        ActionTrigger actionTrigger = transform.parent.gameObject.GetComponent<ActionTrigger>();
+        ActionModule_ActionTrigger actionTrigger = transform.parent.gameObject.GetComponent<ActionModule_ActionTrigger>();
         if (actionTrigger != null)
         {
             isTiggered = true;

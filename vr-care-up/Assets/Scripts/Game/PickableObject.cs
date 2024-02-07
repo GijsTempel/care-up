@@ -26,8 +26,8 @@ public class PickableObject : MonoBehaviour
     private Transform transformToFallow;
     [Header("Pinch pickup and mount")]
     public bool pickupWithPinch = false;
-    public ActionTrigger pinchPickupTrigger;
-    public ActionTrigger pinchMountTrigger;
+    public ActionModule_ActionTrigger pinchPickupTrigger;
+    public ActionModule_ActionTrigger pinchMountTrigger;
 
     // required time with no movement to store transform
     private static float stored_time_needed = 2f;

@@ -7,16 +7,16 @@ using UnityEngine.UI;
 public class TalkSelectionOptions : MonoBehaviour
 {
     public List<Button> optionButtons = new List<Button>();
-    public ActionExpectant actionExpectant;
+    public ActionModule_ActionExpectant actionExpectant;
     public GameObject line2;
     public VerticalLayoutGroup answerPanelVerticalLayoutGroup;
 
     public void TalkActionButtonClicked(int buttonIndex)
     {
         Button currentButton = optionButtons[buttonIndex];
-        if (currentButton.GetComponent<ActionTrigger>() != null)
+        if (currentButton.GetComponent<ActionModule_ActionTrigger>() != null)
         {
-            currentButton.GetComponent<ActionTrigger>().GetComponentInChildren<ActionCollider>().RayTriggerAction();
+            currentButton.GetComponent<ActionModule_ActionTrigger>().GetComponentInChildren<ActionCondition_ActionCollider>().RayTriggerAction();
         }
     }
 
@@ -34,7 +34,7 @@ public class TalkSelectionOptions : MonoBehaviour
             {
                 optionButtons[i].gameObject.SetActive(true);
                 optionButtons[i].transform.Find("Text").GetComponent<Text>().text = optionList[i].text;
-                optionButtons[i].GetComponent<ActionTrigger>().LeftActionManagerObject = optionList[i].attribute;
+                optionButtons[i].GetComponent<ActionModule_ActionTrigger>().LeftActionManagerObject = optionList[i].attribute;
                 if (optionList[i].attribute != "")
                     optionButtons[i].onClick.AddListener(TriggerExpectant);
             }

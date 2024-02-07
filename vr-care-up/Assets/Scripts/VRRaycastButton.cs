@@ -70,9 +70,9 @@ public class VRRaycastButton : MonoBehaviour
             progressImage.fillAmount = Mathf.Clamp01(progressCounter / MAX_PROGRESS_COUNTER);
             if (progressCounter < 0 && progressCounter > -1f)
             {
-                if (progressTarget.GetComponent<ActionTrigger>() != null)
+                if (progressTarget.GetComponent<ActionModule_ActionTrigger>() != null)
                 {
-                    progressTarget.GetComponent<ActionTrigger>().GetComponentInChildren<ActionCollider>().RayTriggerAction();
+                    progressTarget.GetComponent<ActionModule_ActionTrigger>().GetComponentInChildren<ActionCondition_ActionCollider>().RayTriggerAction();
                 }
                 progressCounter = -2f;
             }

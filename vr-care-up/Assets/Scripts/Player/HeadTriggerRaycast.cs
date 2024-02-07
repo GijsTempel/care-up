@@ -24,7 +24,7 @@ public class HeadTriggerRaycast : MonoBehaviour
 
     PlayerScript player;
     public RaycastProgressBar progressBar;
-    private List<ActionCollider> actionColliders = new List<ActionCollider>();
+    private List<ActionCondition_ActionCollider> actionColliders = new List<ActionCondition_ActionCollider>();
 
     private ActionManager actionManager = null;
     public GameObject teleportProgressCanvas;
@@ -33,7 +33,7 @@ public class HeadTriggerRaycast : MonoBehaviour
     float teleportationTimeValue = tTimeStartValue;
     bool justTeleported = false;
     public UnityEngine.UI.Image teleportationProgressImage;
-    public void RegisterActionCollider(ActionCollider col)
+    public void RegisterActionCollider(ActionCondition_ActionCollider col)
     {
         if (!actionColliders.Contains(col))
         {
@@ -205,7 +205,7 @@ public class HeadTriggerRaycast : MonoBehaviour
         if (actionType == ActionManager.ActionType.None)
             return;
         bool collisionOccured = false;
-        foreach (ActionCollider ac in actionColliders)
+        foreach (ActionCondition_ActionCollider ac in actionColliders)
         {
             // skip this object if it doesn't exist or inactive
             if (ac == null || !ac.gameObject.activeInHierarchy) 
@@ -254,7 +254,7 @@ public class HeadTriggerRaycast : MonoBehaviour
 
             if (collisionOccured)
             {
-                ActionCollider targetObj = ac;
+                ActionCondition_ActionCollider targetObj = ac;
                 if (targetObj == progressBar.target)
                 {
                     progressBar.currentProgress += Time.deltaTime;

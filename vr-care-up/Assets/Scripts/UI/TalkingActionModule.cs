@@ -18,18 +18,18 @@ public class TalkingActionModule : MonoBehaviour
 
     public string dialogueXml;
     private List<SelectDialogue.DialogueOption> optionsList;
-    private ActionExpectant actionExpectant;
+    private ActionModule_ActionExpectant actionExpectant;
     public static TalkingActionModule latestCaller = null;
     private PlayerScript player;
     private string currentPlayerWTG = "";
     private bool toShowDialogue = false;
-    public ActionTrigger notifBubbleActionTrigger;
+    public ActionModule_ActionTrigger notifBubbleActionTrigger;
     public ActionModule_ActionTriggerIgniter actionTriggerIgniter;
     public bool debugElement = false;
 
     void Start()
     {
-        actionExpectant = GetComponent<ActionExpectant>();
+        actionExpectant = GetComponent<ActionModule_ActionExpectant>();
         player = GameObject.FindObjectOfType<PlayerScript>();
         actionManager = GameObject.FindAnyObjectByType<ActionManager>();
         optionsList = new List<SelectDialogue.DialogueOption>();

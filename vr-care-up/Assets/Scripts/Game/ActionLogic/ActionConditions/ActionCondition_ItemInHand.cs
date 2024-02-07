@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ActionCondition_ItemInHand : MonoBehaviour
 {
-    public ActionTrigger.TriggerHand handSide;
+    public ActionModule_ActionTrigger.TriggerHand handSide;
     [Tooltip("If empty check if hand is empty")]
     public string objectInHand = "";
     public bool invert = false;
@@ -13,12 +13,12 @@ public class ActionCondition_ItemInHand : MonoBehaviour
     public bool Check()
     {
         PlayerScript player = GameObject.FindObjectOfType<PlayerScript>();
-        if (handSide == ActionTrigger.TriggerHand.None)
+        if (handSide == ActionModule_ActionTrigger.TriggerHand.None)
         {
             if (player.GetObjectInHand(true) != null && player.GetObjectInHand(false) == true)
                 return true;
         }
-        if (handSide == ActionTrigger.TriggerHand.Any)
+        if (handSide == ActionModule_ActionTrigger.TriggerHand.Any)
         {
             if (!invert && objectInHand == "" &&
                 player.GetObjectInHand(true) == null &&
@@ -35,7 +35,7 @@ public class ActionCondition_ItemInHand : MonoBehaviour
                 return true;
             }
         }
-        if (handSide == ActionTrigger.TriggerHand.Left)
+        if (handSide == ActionModule_ActionTrigger.TriggerHand.Left)
         {
             if (!invert && objectInHand == "" &&
                 player.GetObjectInHand(true) == null)
@@ -48,7 +48,7 @@ public class ActionCondition_ItemInHand : MonoBehaviour
                     return true;
                 }
         }
-        if (handSide == ActionTrigger.TriggerHand.Right)
+        if (handSide == ActionModule_ActionTrigger.TriggerHand.Right)
         {
             if (!invert && objectInHand == "" &&
                 player.GetObjectInHand(false) == null)

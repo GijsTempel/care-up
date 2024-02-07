@@ -11,8 +11,8 @@ public class ButtonActionTriggerModule : MonoBehaviour
     private GameObject buttonInstance = null;
 
     public Transform buttonAnchor;
-    public ActionTrigger actionTrigger;
-    public ActionExpectant actionExpectant;
+    public ActionModule_ActionTrigger actionTrigger;
+    public ActionModule_ActionExpectant actionExpectant;
 
     // Start is called before the first frame update
     void Start()

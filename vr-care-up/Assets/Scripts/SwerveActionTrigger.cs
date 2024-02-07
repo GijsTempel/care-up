@@ -8,9 +8,9 @@ using UnityEngine.UI;
 public class SwerveActionTrigger : MonoBehaviour
 {
     public Image progressImage;
-    public ActionTrigger actionTrigger;
+    public ActionModule_ActionTrigger actionTrigger;
     public int numberOfSwerves = 10;
-    public ActionExpectant actionExpectant;
+    public ActionModule_ActionExpectant actionExpectant;
     public AudioSource smallBell;
     public float waitTime = 2;
     bool actionStarted = false;
@@ -22,7 +22,7 @@ public class SwerveActionTrigger : MonoBehaviour
     int swervesCounted = 0;
     bool UIOpen = false;
 
-    public ActionTrigger firstContactActionTrigger;
+    public ActionModule_ActionTrigger firstContactActionTrigger;
 
     void Start()
     {

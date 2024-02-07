@@ -5,7 +5,7 @@ using UnityEngine;
 public class ConditionalShow : MonoBehaviour
 {
     // Show objects if expected step in ActionExpectant is correct
-    ActionExpectant actionExpectant;
+    ActionModule_ActionExpectant actionExpectant;
     PlayerScript player;
     bool savedIsCurrentAction = false;
     public bool hideOnPlayerAction = false;
@@ -14,7 +14,7 @@ public class ConditionalShow : MonoBehaviour
     void Start()
     {
         player = GameObject.FindObjectOfType<PlayerScript>();
-        actionExpectant = GetComponent<ActionExpectant>();
+        actionExpectant = GetComponent<ActionModule_ActionExpectant>();
         ShowObjects(actionExpectant.isCurrentAction);
     }
 

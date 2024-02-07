@@ -5,7 +5,7 @@ using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
-public class ActionExpectant : MonoBehaviour
+public class ActionModule_ActionExpectant : MonoBehaviour
 {
     private ActionHandler actionHandler;
     public bool isCurrentAction = false;
@@ -40,9 +40,9 @@ public class ActionExpectant : MonoBehaviour
         bool result = false;
         for (int i = 0; i < transform.childCount; i++)
         {
-            if (transform.GetChild(i).GetComponent<ActionTrigger>() != null)
+            if (transform.GetChild(i).GetComponent<ActionModule_ActionTrigger>() != null)
             {
-                transform.GetChild(i).GetComponent<ActionTrigger>().AttemptTrigger();
+                transform.GetChild(i).GetComponent<ActionModule_ActionTrigger>().AttemptTrigger();
                 result = true;
             }
         }

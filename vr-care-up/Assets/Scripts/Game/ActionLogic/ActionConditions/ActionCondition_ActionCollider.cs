@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionCollider : MonoBehaviour
+public class ActionCondition_ActionCollider : MonoBehaviour
 {
     [Tooltip("Comma separated names. Use 'none' if empty hand required")]
     public string triggerObjectNames = "";
     private PlayerScript player;
-    public ActionTrigger.TriggerHand triggerHand;
-    public ActionTrigger.TriggerHandAction triggerHandAction;
-    public ActionTrigger.TriggerHandAction requiredHandPose = ActionTrigger.TriggerHandAction.None;
+    public ActionModule_ActionTrigger.TriggerHand triggerHand;
+    public ActionModule_ActionTrigger.TriggerHandAction triggerHandAction;
+    public ActionModule_ActionTrigger.TriggerHandAction requiredHandPose = ActionModule_ActionTrigger.TriggerHandAction.None;
     List<GameObject> handsInArea = new List<GameObject>();
-    private ActionTrigger actionTrigger;
+    private ActionModule_ActionTrigger actionTrigger;
     public bool isRayTrigger = false;
     bool isRayTriggered = false;
     [Range(0f, 10f)]
@@ -70,17 +70,17 @@ public class ActionCollider : MonoBehaviour
     private bool CheckIfPoseFromHandInArea()
     {
         CleanUpHandsInArea();
-        if (requiredHandPose == ActionTrigger.TriggerHandAction.None)
+        if (requiredHandPose == ActionModule_ActionTrigger.TriggerHandAction.None)
             return true;
         if (player == null)
             return false;
-        ActionTrigger.TriggerHandAction lPose = player.GetCurrentHandPose(true);
-        ActionTrigger.TriggerHandAction rPose = player.GetCurrentHandPose(false);
+        ActionModule_ActionTrigger.TriggerHandAction lPose = player.GetCurrentHandPose(true);
+        ActionModule_ActionTrigger.TriggerHandAction rPose = player.GetCurrentHandPose(false);
         if (!(lPose == requiredHandPose || rPose == requiredHandPose))
             return false;
         foreach(GameObject h in handsInArea)
         {
-            if (triggerHand == ActionTrigger.TriggerHand.None || triggerHand == ActionTrigger.TriggerHand.Any)
+            if (triggerHand == ActionModule_ActionTrigger.TriggerHand.None || triggerHand == ActionModule_ActionTrigger.TriggerHand.Any)
             {
                 if (h.tag == "LeftHand" || lPose == requiredHandPose)
                     return true;
@@ -89,10 +89,10 @@ public class ActionCollider : MonoBehaviour
             }
             else
             {
-                if (triggerHand == ActionTrigger.TriggerHand.Left &&
+                if (triggerHand == ActionModule_ActionTrigger.TriggerHand.Left &&
                     h.tag == "LeftHand" || lPose == requiredHandPose)
                     return true;
-                else if (triggerHand == ActionTrigger.TriggerHand.Right &&
+                else if (triggerHand == ActionModule_ActionTrigger.TriggerHand.Right &&
                     h.tag == "RightHand" || rPose == requiredHandPose)
                     return true;
             }
@@ -100,8 +100,8 @@ public class ActionCollider : MonoBehaviour
         return false;
     }
 
-    public bool CheckConformity(ActionTrigger.TriggerHand currentTriggerHand = ActionTrigger.TriggerHand.None,
-            ActionTrigger.TriggerHandAction currentTriggerHandAction = ActionTrigger.TriggerHandAction.None)
+    public bool CheckConformity(ActionModule_ActionTrigger.TriggerHand currentTriggerHand = ActionModule_ActionTrigger.TriggerHand.None,
+            ActionModule_ActionTrigger.TriggerHandAction currentTriggerHandAction = ActionModule_ActionTrigger.TriggerHandAction.None)
     {
         if (isRayTrigger)
         {
@@ -109,19 +109,19 @@ public class ActionCollider : MonoBehaviour
         }
         if (handsInArea.Count == 0)
             return false;
-        if (triggerHandAction != ActionTrigger.TriggerHandAction.None)
+        if (triggerHandAction != ActionModule_ActionTrigger.TriggerHandAction.None)
         {
-            if (currentTriggerHand == ActionTrigger.TriggerHand.None || 
-                currentTriggerHandAction == ActionTrigger.TriggerHandAction.None)
+            if (currentTriggerHand == ActionModule_ActionTrigger.TriggerHand.None || 
+                currentTriggerHandAction == ActionModule_ActionTrigger.TriggerHandAction.None)
                 return false;
             
             if (currentTriggerHandAction != triggerHandAction)
                 return false;
             
-            if (!CheckIfActionFromHandInArea(currentTriggerHand == ActionTrigger.TriggerHand.Left))
+            if (!CheckIfActionFromHandInArea(currentTriggerHand == ActionModule_ActionTrigger.TriggerHand.Left))
                 return false;
         }
-        if (requiredHandPose != ActionTrigger.TriggerHandAction.None)
+        if (requiredHandPose != ActionModule_ActionTrigger.TriggerHandAction.None)
         {
             if (!CheckIfPoseFromHandInArea())
                 return false;
@@ -137,7 +137,7 @@ public class ActionCollider : MonoBehaviour
     void Start()
     {
         player = GameObject.FindObjectOfType<PlayerScript>();
-        actionTrigger = transform.parent.GetComponent<ActionTrigger>();
+        actionTrigger = transform.parent.GetComponent<ActionModule_ActionTrigger>();
 
         if (isRayTrigger)
         {
@@ -224,9 +224,9 @@ public class ActionCollider : MonoBehaviour
             }
         }
 
-        if (triggerHand == ActionTrigger.TriggerHand.Left && collision.gameObject.tag != "LeftHand")
+        if (triggerHand == ActionModule_ActionTrigger.TriggerHand.Left && collision.gameObject.tag != "LeftHand")
             return;
-        if (triggerHand == ActionTrigger.TriggerHand.Right && collision.gameObject.tag != "RightHand")
+        if (triggerHand == ActionModule_ActionTrigger.TriggerHand.Right && collision.gameObject.tag != "RightHand")
             return;
         AddHandToArea(collision.gameObject);
         CleanUpHandsInArea();

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RaycastProgressBar : MonoBehaviour
 {
-    public ActionCollider target;
+    public ActionCondition_ActionCollider target;
     [Range(0f, 1f)]
     public float progressOffset = .3f;
     [Min(0f)]

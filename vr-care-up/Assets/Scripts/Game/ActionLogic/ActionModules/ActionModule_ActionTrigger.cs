@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionTrigger : MonoBehaviour
+public class ActionModule_ActionTrigger : MonoBehaviour
 {
     private ActionHandler actionHandler;
     public int actionNumberLimit = -1;
@@ -20,7 +20,7 @@ public class ActionTrigger : MonoBehaviour
     public string RightActionManagerObject = "";
     [Tooltip("Check if action is correct, before executing")]
     public bool checkBeforeAct = false;
-    List<ActionCollider> actionColliders = new List<ActionCollider>();
+    List<ActionCondition_ActionCollider> actionColliders = new List<ActionCondition_ActionCollider>();
     public float triggerDelay = -1f;
     private bool triggered = false;
 
@@ -28,7 +28,7 @@ public class ActionTrigger : MonoBehaviour
     {
         actionHandler = GameObject.FindObjectOfType<ActionHandler>();
         player = GameObject.FindObjectOfType<PlayerScript>();
-        foreach(ActionCollider a in transform.GetComponentsInChildren<ActionCollider>())
+        foreach(ActionCondition_ActionCollider a in transform.GetComponentsInChildren<ActionCondition_ActionCollider>())
         {
             actionColliders.Add(a);
         }
@@ -87,7 +87,7 @@ public class ActionTrigger : MonoBehaviour
         if (actionNumberLimit == 0)
             return false;
         bool isActionConfirmed = true;
-        foreach(ActionCollider c in actionColliders)
+        foreach(ActionCondition_ActionCollider c in actionColliders)
         {
             if (!c.CheckConformity(currentTriggerHand, currentTriggerHandAction))
             {
@@ -125,8 +125,8 @@ public class ActionTrigger : MonoBehaviour
         {
             if (transform.GetChild(i).GetComponent<ActionModule_ShowHideDelete>() != null)
                 transform.GetChild(i).GetComponent<ActionModule_ShowHideDelete>().StartTimeout();
-            if (transform.GetChild(i).GetComponent<ActionTrigger>() != null)
-                transform.GetChild(i).GetComponent<ActionTrigger>().AttemptTrigger();
+            if (transform.GetChild(i).GetComponent<ActionModule_ActionTrigger>() != null)
+                transform.GetChild(i).GetComponent<ActionModule_ActionTrigger>().AttemptTrigger();
             if (transform.GetChild(i).GetComponent<ActionModule_AnimationTrigger>() != null)
                 transform.GetChild(i).GetComponent<ActionModule_AnimationTrigger>().Execute();
             if (transform.GetChild(i).GetComponent<ActionModule_AudioTrigger>() != null)

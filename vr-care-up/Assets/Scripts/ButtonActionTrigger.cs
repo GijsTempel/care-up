@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ButtonActionTrigger : MonoBehaviour
 {
 
-    public ActionTrigger actionTrigger;
+    public ActionModule_ActionTrigger actionTrigger;
     public TextMeshProUGUI textMeshProUGUI;
 
     public void SetText(string text)

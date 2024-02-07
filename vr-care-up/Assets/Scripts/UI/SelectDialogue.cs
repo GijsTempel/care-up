@@ -112,8 +112,8 @@ public class SelectDialogue : MonoBehaviour
             progressImage.fillAmount = 1f - Mathf.Clamp01(progressCounter / MAX_PROGRESS_COUNTER);
             if (progressCounter < 0 && progressCounter > -1f)
             {
-                if (progressTarget.GetComponent<ActionTrigger>() != null)
-                    progressTarget.GetComponent<ActionTrigger>().AttemptTrigger();
+                if (progressTarget.GetComponent<ActionModule_ActionTrigger>() != null)
+                    progressTarget.GetComponent<ActionModule_ActionTrigger>().AttemptTrigger();
                 progressCounter = -2f;
             }
         }
@@ -212,8 +212,8 @@ public class SelectDialogue : MonoBehaviour
 
                 sqButtons[i].transform.Find("Text").GetComponent<Text>().text = /*cheatSimbol +*/ options[i].text;
 
-                sqButtons[i].GetComponent<ActionTrigger>().actionType = actionType;
-                sqButtons[i].GetComponent<ActionTrigger>().LeftActionManagerObject = options[i].attribute;
+                sqButtons[i].GetComponent<ActionModule_ActionTrigger>().actionType = actionType;
+                sqButtons[i].GetComponent<ActionModule_ActionTrigger>().LeftActionManagerObject = options[i].attribute;
                 if (actionTriggerIgniter != null && options[i].attribute != "")
                     actionTriggerIgniter.transform.parent = sqButtons[i].transform;
             }

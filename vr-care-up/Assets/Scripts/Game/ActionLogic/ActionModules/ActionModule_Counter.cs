@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ActionModule_Counter : MonoBehaviour
 {
-    public ActionTrigger actionTrigger;
+    public ActionModule_ActionTrigger actionTrigger;
     public int maxCountedValue = 1;
     public bool oneShot = true;
     private int counterValue = 0;

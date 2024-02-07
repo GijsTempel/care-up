@@ -8,8 +8,8 @@ public class ButtonToTriggerAction : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            if (transform.GetChild(i).GetComponent<ActionTrigger>())
-                transform.GetChild(i).GetComponent<ActionTrigger>().AttemptTrigger();
+            if (transform.GetChild(i).GetComponent<ActionModule_ActionTrigger>())
+                transform.GetChild(i).GetComponent<ActionModule_ActionTrigger>().AttemptTrigger();
         }
     }
 

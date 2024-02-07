@@ -42,7 +42,7 @@ public class ActionModule_TutorialTigger : MonoBehaviour
         int conditionElements = 0;
         for(int i = 0; i < transform.childCount; i++)
         {
-            ActionExpectant e = transform.GetChild(i).GetComponent<ActionExpectant>();
+            ActionModule_ActionExpectant e = transform.GetChild(i).GetComponent<ActionModule_ActionExpectant>();
             if (e != null)
             {
                 conditionElements++;
@@ -79,10 +79,10 @@ public class ActionModule_TutorialTigger : MonoBehaviour
         
         for(int i = 0; i < transform.childCount; i++)
         {
-            ActionExpectant e = transform.GetChild(i).GetComponent<ActionExpectant>();
+            ActionModule_ActionExpectant e = transform.GetChild(i).GetComponent<ActionModule_ActionExpectant>();
             if (e != null)
                 e.TryExecuteAction();
-            ActionTrigger a = transform.GetChild(i).GetComponent<ActionTrigger>();
+            ActionModule_ActionTrigger a = transform.GetChild(i).GetComponent<ActionModule_ActionTrigger>();
             if (a != null)
                 a.AttemptTrigger();
         }

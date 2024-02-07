@@ -16,7 +16,7 @@ public class TableCleaningAction : MonoBehaviour
     public GameObject StartPoint;
     private Vector3 startPos;
     private GameObject colliderHolder;
-    ActionExpectant actionExpectant;
+    ActionModule_ActionExpectant actionExpectant;
     private bool isTriggered = false;
 
     private bool locakedAction = true;
@@ -53,7 +53,7 @@ public class TableCleaningAction : MonoBehaviour
         if (locakedAction)
         {
             if (actionExpectant == null)
-                actionExpectant = transform.GetComponentInChildren<ActionExpectant>();
+                actionExpectant = transform.GetComponentInChildren<ActionModule_ActionExpectant>();
 
             if (actionExpectant != null)
             {
