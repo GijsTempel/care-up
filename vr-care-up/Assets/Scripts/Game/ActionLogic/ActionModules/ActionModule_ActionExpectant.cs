@@ -25,7 +25,8 @@ public class ActionModule_ActionExpectant : MonoBehaviour
         {
 
             if (transform.GetChild(i).GetComponent<ActionCondition_ItemInHand>() != null ||
-                transform.GetChild(i).GetComponent<ActionCondition_IsHandsTrackingMode>() != null )
+                transform.GetChild(i).GetComponent<ActionCondition_IsHandsTrackingMode>() != null ||
+                transform.GetChild(i).GetComponent<ActionCondition_PlayerWTG>() != null )
             {
                 noExtraConditions = false;
                 break;
@@ -108,6 +109,12 @@ public class ActionModule_ActionExpectant : MonoBehaviour
                 }
                 if (transform.GetChild(i).GetComponent<ActionCondition_IsHandsTrackingMode>() != null &&
                     !transform.GetChild(i).GetComponent<ActionCondition_IsHandsTrackingMode>().Check())
+                {
+                    isCurrentAction = false;
+                    return;
+                }
+                if (transform.GetChild(i).GetComponent<ActionCondition_PlayerWTG>() != null &&
+                    !transform.GetChild(i).GetComponent<ActionCondition_PlayerWTG>().Check())
                 {
                     isCurrentAction = false;
                     return;

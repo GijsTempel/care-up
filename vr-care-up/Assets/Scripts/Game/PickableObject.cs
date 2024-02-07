@@ -255,6 +255,34 @@ public class PickableObject : MonoBehaviour
             FallowTransform(dropAnchor);
     }
 
+    bool TeleportationRayTest(Vector3 pos)
+    {
+        const int layerMask = 0b100000001001;
+        if (Physics.Raycast(pos, Vector3.down, out RaycastHit phit, 5f, layerMask))
+        {
+            if (phit.collider.GetComponent<DropControl>() != null)
+                return true;
+        }
+        return false;
+    }
+
+    Vector3 FindTeleportationPosition(Vector3 dropPos)
+    {
+        dropPos.y += 0.1f;
+        if (!TeleportationRayTest(dropPos))
+        {
+            foreach(DropControl dropControl in GameObject.FindObjectsOfType<DropControl>())
+            {
+                foreach(Vector3 point in dropControl.GetPoints())
+                {
+                    if (TeleportationRayTest(point))
+                        return point;
+                }
+            }
+        }
+        return dropPos;
+    }
+
     public IEnumerator OnItemDroppedOnGround(GameObject _dParticles, GameObject _aParticles, GameObject _line)
     {
         if (teleport_transition_flag)
@@ -269,6 +297,7 @@ public class PickableObject : MonoBehaviour
         // trigger tutorial to explain item teleportation?
         //
 
+        Vector3 newPos = FindTeleportationPosition(stored_position);
         Rigidbody rigidbody = transform.GetComponent<Rigidbody>();
         RigidbodyConstraints constraints = rigidbody.constraints;
         if (rigidbody == null)
@@ -298,15 +327,15 @@ public class PickableObject : MonoBehaviour
         if (_line != null)
         {
             GameObject line = Instantiate<GameObject>(_line) as GameObject;
-            line_ref = line.GetComponent<LineRenderer>();
-            line_og_position = transform.position;
-            line_animating_flag = true;
+            // line_ref = line.GetComponent<LineRenderer>();
+            // line_og_position = transform.position;
+            // line_animating_flag = true;
 
             // handle bg line quickly
             LineRenderer bgLine = line.transform.GetChild(0).GetComponent<LineRenderer>();
             Vector3[] points = {
                 new Vector3(transform.position.x, transform.position.y, transform.position.z),
-                new Vector3(stored_position.x, stored_position.y, stored_position.z)
+                new Vector3(newPos.x, newPos.y, newPos.z)
             };
             bgLine.SetPositions(points);
 
@@ -316,7 +345,7 @@ public class PickableObject : MonoBehaviour
         yield return new WaitForSeconds(teleport_speed);
 
         // finally teleport an object
-        transform.position = stored_position;
+        transform.position = newPos;
         transform.rotation = stored_rotation;
         rigidbody.constraints = constraints;
 

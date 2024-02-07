@@ -15,4 +15,8 @@ public class StartScene_UI : MonoBehaviour
             player.fadeAnimator.SetTrigger("in");
         }
     }
+    public void RestartCurrentScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }

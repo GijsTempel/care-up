@@ -12,14 +12,14 @@ public class ItemDroppedTrigger : MonoBehaviour
     [SerializeField]
     public GameObject path_line_from_a_to_b;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
         PickableObject o = null;
-        if (other.TryGetComponent<PickableObject>(out o))
+        if (collider.TryGetComponent<PickableObject>(out o))
         {
             // it's not rare for an object to be a child of another pickable object
             // for this case, let's go through parents, looking for the actual parent instead
-            Transform p = other.transform.parent;
+            Transform p = collider.transform.parent;
             PickableObject po = null;
             while (p != null)
             {
