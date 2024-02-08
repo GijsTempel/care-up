@@ -8,13 +8,11 @@ using UnityEngine;
 public class ActionModule_ActionExpectant : MonoBehaviour
 {
     private ActionHandler actionHandler;
-    public GameObject testObject;
     public bool isCurrentAction = false;
     private bool savedIsCurrentAction = false;
     public ActionManager.ActionType actionType = ActionManager.ActionType.None;
     public string leftActionManagerObject = "";
     public string rightActionManagerObject = "";
-    public string walkToGroupName = "";
     bool noExtraConditions = true;
     private PlayerScript player;
 
@@ -72,23 +70,18 @@ public class ActionModule_ActionExpectant : MonoBehaviour
         }
 
         savedIsCurrentAction = actionHandler.CheckAction(actionType, leftActionManagerObject, rightActionManagerObject);
-        if (noExtraConditions && walkToGroupName != "")
+        if (noExtraConditions)
             UpdateIsCurrentActionValue(savedIsCurrentAction);
     }
 
     void UpdateIsCurrentActionValue(bool value)
     {
-        if(testObject != null)
-            testObject.SetActive(value);
         isCurrentAction = value;
     }
 
     private void Update()
     {
-        if (noExtraConditions && 
-            actionType == ActionManager.ActionType.None && 
-            walkToGroupName == "-" &&
-            player.currentWTGName == "")
+        if (noExtraConditions && actionType == ActionManager.ActionType.None)
         {
             UpdateIsCurrentActionValue(true);
             return;
@@ -99,13 +92,6 @@ public class ActionModule_ActionExpectant : MonoBehaviour
             return;
         }
         
-        if (walkToGroupName != "-")
-            if (walkToGroupName != "" && player.currentWTGName != walkToGroupName)
-            {
-                UpdateIsCurrentActionValue(false);
-                return;
-            }
-            
         if (!noExtraConditions)
             for (int i = 0; i < transform.childCount; i++)
             {

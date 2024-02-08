@@ -21,8 +21,9 @@ public class ActionCondition_PlayerWTG : MonoBehaviour
             result =  true;
         else if (walkToGroupName == "-" && player.currentWTGName == "")
             result = true;
-        
-        else if (walkToGroupName == player.currentWTGName);
+        else if (walkToGroupName == player.currentWTGName)
+            result = true;
+
         if (invert)
             return !result;
         return result;
