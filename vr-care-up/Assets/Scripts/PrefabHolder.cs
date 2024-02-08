@@ -38,7 +38,7 @@ public class PrefabHolder : MonoBehaviour
                 newInstance = Instantiate(baseObj, newParent, false) as GameObject;
             }
             else if (spawnObjectHolder != null)
-                newInstance = Instantiate(baseObj, spawnObjectHolder, false) as GameObject;
+                newInstance = Instantiate(baseObj, transform.position, Quaternion.identity, spawnObjectHolder) as GameObject;
             newInstance.name = _name;
             newInstance.SetActive(true);
         }
