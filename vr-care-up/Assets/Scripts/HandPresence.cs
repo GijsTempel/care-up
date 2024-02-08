@@ -325,18 +325,17 @@ public class HandPresence : MonoBehaviour
             return;
         if (!toForce && handPoseControl.handPoseMode == HandPoseControl.HandPoseMode.CopyAnimIn)
             return;
-        if (!noPoseChange)
-        {
-            GrabHandPose grabHandPose = objectInHand.GetComponent<GrabHandPose>();
-            if (grabHandPose != null && spawnHandModel != null)
-                grabHandPose.UnSetPose(spawnHandModel.GetComponent<HandPoseData>());
-        }
-        //RemoveObjectFromArea(objectInHand);
         if (objectInHand.Drop())
         {
             objectInHand = null;
             if (gameUIVR != null)
                 gameUIVR.UpdateHelpWitDelay(0.1f);
+            if (!noPoseChange)
+            {
+                GrabHandPose grabHandPose = objectInHand.GetComponent<GrabHandPose>();
+                if (grabHandPose != null && spawnHandModel != null)
+                    grabHandPose.UnSetPose(spawnHandModel.GetComponent<HandPoseData>());
+            }
         }
     }
 

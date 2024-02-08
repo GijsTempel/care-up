@@ -8,6 +8,7 @@ using UnityEngine;
 public class ActionModule_ActionExpectant : MonoBehaviour
 {
     private ActionHandler actionHandler;
+    public GameObject testObject;
     public bool isCurrentAction = false;
     private bool savedIsCurrentAction = false;
     public ActionManager.ActionType actionType = ActionManager.ActionType.None;
@@ -56,7 +57,7 @@ public class ActionModule_ActionExpectant : MonoBehaviour
         if (actionType == ActionManager.ActionType.None)
         {
             savedIsCurrentAction = true;
-            isCurrentAction = savedIsCurrentAction;
+            UpdateIsCurrentActionValue(savedIsCurrentAction);
             return;
         }
 
@@ -72,7 +73,14 @@ public class ActionModule_ActionExpectant : MonoBehaviour
 
         savedIsCurrentAction = actionHandler.CheckAction(actionType, leftActionManagerObject, rightActionManagerObject);
         if (noExtraConditions && walkToGroupName != "")
-            isCurrentAction = savedIsCurrentAction;
+            UpdateIsCurrentActionValue(savedIsCurrentAction);
+    }
+
+    void UpdateIsCurrentActionValue(bool value)
+    {
+        if(testObject != null)
+            testObject.SetActive(value);
+        isCurrentAction = value;
     }
 
     private void Update()
@@ -82,19 +90,19 @@ public class ActionModule_ActionExpectant : MonoBehaviour
             walkToGroupName == "-" &&
             player.currentWTGName == "")
         {
-            isCurrentAction = true;
+            UpdateIsCurrentActionValue(true);
             return;
         }
         if (!savedIsCurrentAction)
         {
-            isCurrentAction = false;
+            UpdateIsCurrentActionValue(false);
             return;
         }
         
         if (walkToGroupName != "-")
             if (walkToGroupName != "" && player.currentWTGName != walkToGroupName)
             {
-                isCurrentAction = false;
+                UpdateIsCurrentActionValue(false);
                 return;
             }
             
@@ -104,22 +112,22 @@ public class ActionModule_ActionExpectant : MonoBehaviour
                 if (transform.GetChild(i).GetComponent<ActionCondition_ItemInHand>() != null &&
                     !transform.GetChild(i).GetComponent<ActionCondition_ItemInHand>().Check())
                 {
-                    isCurrentAction = false;
+                    UpdateIsCurrentActionValue(false);
                     return;
                 }
                 if (transform.GetChild(i).GetComponent<ActionCondition_IsHandsTrackingMode>() != null &&
                     !transform.GetChild(i).GetComponent<ActionCondition_IsHandsTrackingMode>().Check())
                 {
-                    isCurrentAction = false;
+                    UpdateIsCurrentActionValue(false);
                     return;
                 }
                 if (transform.GetChild(i).GetComponent<ActionCondition_PlayerWTG>() != null &&
                     !transform.GetChild(i).GetComponent<ActionCondition_PlayerWTG>().Check())
                 {
-                    isCurrentAction = false;
+                    UpdateIsCurrentActionValue(false);
                     return;
                 }
             }
-        isCurrentAction = true;
+        UpdateIsCurrentActionValue(true);
     }
 }
