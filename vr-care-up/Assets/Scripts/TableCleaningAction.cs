@@ -75,7 +75,7 @@ public class TableCleaningAction : MonoBehaviour
                 cleaned++;
         }
 
-        float currentCleanRatio = Remap((float)cleaned / (float)numberOfColliders, 0, rationToClean, 0f, 1f);
+        float currentCleanRatio = ActionManager.Remap((float)cleaned / (float)numberOfColliders, 0, rationToClean, 0f, 1f);
         progressImage.fillAmount = currentCleanRatio;
         if (currentCleanRatio >= 1)
         {
@@ -89,11 +89,4 @@ public class TableCleaningAction : MonoBehaviour
             }
         }
     }
-
-
-    float Remap(float source, float sourceFrom, float sourceTo, float targetFrom, float targetTo)
-    {
-        return targetFrom + (source-sourceFrom)*(targetTo-targetFrom)/(sourceTo-sourceFrom);
-    }
-
 }

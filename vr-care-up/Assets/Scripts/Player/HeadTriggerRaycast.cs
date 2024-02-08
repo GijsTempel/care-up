@@ -157,7 +157,7 @@ public class HeadTriggerRaycast : MonoBehaviour
                 {
                     teleportProgressCanvas.SetActive(true);
                     teleportationProgressImage.fillAmount =
-                        Remap(teleportationTimeValue, 0f, teleportationWaitTime, 0f, 1f);
+                        ActionManager.Remap(teleportationTimeValue, 0f, teleportationWaitTime, 0f, 1f);
                 }
                 if (teleportationTimeValue > teleportationWaitTime)
                 {
@@ -283,8 +283,4 @@ public class HeadTriggerRaycast : MonoBehaviour
         }
     }
 
-    float Remap(float source, float sourceFrom, float sourceTo, float targetFrom, float targetTo)
-    {
-        return targetFrom + (source-sourceFrom)*(targetTo-targetFrom)/(sourceTo-sourceFrom);
-    }
 }

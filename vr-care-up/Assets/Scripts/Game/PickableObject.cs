@@ -333,13 +333,29 @@ public class PickableObject : MonoBehaviour
 
             // handle bg line quickly
             LineRenderer bgLine = line.transform.GetChild(0).GetComponent<LineRenderer>();
-            Vector3[] points = {
-                new Vector3(transform.position.x, transform.position.y, transform.position.z),
-                new Vector3(newPos.x, newPos.y, newPos.z)
-            };
+            float teleportDist = Vector3.Distance(transform.position, newPos);
+            float stepBaseDist = 0.1f;
+            int steps = (int)((float)teleportDist / stepBaseDist);
+            // float topOffset = Mathf.Abs(newPos.y - transform.position.y) + 0.5f;
+            List<Vector3> pointsList = new List<Vector3>();
+            for(int i = 0; i < steps; i++)
+            {
+                float factor = (float)i / (float)steps;
+                float wideFactor = ActionManager.Remap(factor, 0f, 1f, -1f, 1f);
+                Vector3 currentPoint = Vector3.Lerp(transform.position, newPos, factor);
+                currentPoint.y += 1f * (1f - wideFactor * wideFactor);
+                pointsList.Add(currentPoint);
+            }
+            pointsList.Add(newPos);
+            Vector3[] points = pointsList.ToArray();
+            // {
+            //     new Vector3(transform.position.x, transform.position.y, transform.position.z),
+            //     new Vector3(newPos.x, newPos.y, newPos.z)
+            // };
+            bgLine.positionCount = pointsList.Count;
             bgLine.SetPositions(points);
 
-            GameObject.Destroy(line, teleport_speed);
+            GameObject.Destroy(line, teleport_speed * 1.5f);
         }
 
         yield return new WaitForSeconds(teleport_speed);
