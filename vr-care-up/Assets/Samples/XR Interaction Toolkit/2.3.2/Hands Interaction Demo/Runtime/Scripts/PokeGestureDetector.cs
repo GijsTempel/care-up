@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection.Emit;
-using Unity.VisualScripting.YamlDotNet.Serialization;
+// using Unity.VisualScripting.YamlDotNet.Serialization;
 using UnityEngine.Events;
 #if XR_HANDS
 using UnityEngine.XR.Hands;
@@ -14,6 +14,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
     /// </summary>
     public class PokeGestureDetector : MonoBehaviour
     {
+        public bool isHolding = false;
         [SerializeField]
         [Tooltip("Which hand to check for the poke gesture.")]
 #if XR_HANDS
@@ -126,17 +127,12 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
                     return;
 
 
-            string ss = "$ point " + name + ":";
             float[] pointValues = new float[4];
             pointValues[0] = GetIndexPointingValue(currentHand);
             pointValues[1] = GetMiddlePointingValue(currentHand); 
             pointValues[2] = GetRingPointingValue(currentHand); 
             pointValues[3] = GetLittlePointingValue(currentHand); 
 
-            for (int i = 0; i < pointValues.Length; i++)
-                ss += pointValues[i].ToString() + " ";
-
-            Debug.Log(ss);
             if (m_IsGripping)
             {
                 m_IsGripping = pointValues[1] < pointingTreshould ||
@@ -147,53 +143,10 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
                 m_IsGripping = IsMiddleGrabbing(currentHand) &&
                                 IsRingGrabbing(currentHand) &&
                                 IsLittleGrabbing(currentHand);
-            bool isHolding = false;
-            if (wasPinching)
-            {
-                
-            }
-            m_IsPinching = IsIndexPinching(currentHand, name, wasPinching);
-            Debug.Log("@ inPinching%%% " + name + ":" + m_IsPinching.ToString());
+            m_IsPinching = IsIndexPinching(currentHand, name, wasPinching, isHolding);
             
             if (pinch_timeout > 0)
                 m_IsPinching = true;
-
-
-            // switch (m_Handedness)
-            // {
-            //     case Handedness.Left:
-            //         if (!HasUpdateSuccessFlag(updateSuccessFlags, XRHandSubsystem.UpdateSuccessFlags.LeftHandJoints))
-            //             return;
-
-            //         var leftHand = subsystem.leftHand;
-            //         m_IsPoking = IsIndexExtended(leftHand) && IsMiddleGrabbing(leftHand) && IsRingGrabbing(leftHand) &&
-            //             IsLittleGrabbing(leftHand);
-            //         if (m_IsGripping)
-            //             m_IsGripping = IsMiddleGrabbing(leftHand) || IsRingGrabbing(leftHand) || IsLittleGrabbing(leftHand);
-            //         else
-            //             m_IsGripping = IsMiddleGrabbing(leftHand) && IsRingGrabbing(leftHand) && IsLittleGrabbing(leftHand);
-            //         m_IsPinching = IsIndexPinching(leftHand, name, m_IsPinching);
-            //         if (pinch_timeout > 0)
-            //             m_IsPinching = true;
-            //         break;
-            //     case Handedness.Right:
-            //         if (!HasUpdateSuccessFlag(updateSuccessFlags, XRHandSubsystem.UpdateSuccessFlags.RightHandJoints))
-            //             return;
-
-            //         var rightHand = subsystem.rightHand;
-            //         m_IsPoking = IsIndexExtended(rightHand) && IsMiddleGrabbing(rightHand) && IsRingGrabbing(rightHand) &&
-            //             IsLittleGrabbing(rightHand);
-
-            //         if (m_IsGripping)
-            //             m_IsGripping = IsMiddleGrabbing(rightHand) || IsRingGrabbing(rightHand) || IsLittleGrabbing(rightHand);
-            //         else
-            //             m_IsGripping = IsMiddleGrabbing(rightHand) && IsRingGrabbing(rightHand) && IsLittleGrabbing(rightHand);
-                        
-            //         m_IsPinching = IsIndexPinching(rightHand, name, m_IsPinching);
-            //         if (pinch_timeout > 0)
-            //             m_IsPinching = true;
-            //         break;
-            // }
 
             if (m_IsPoking && !wasPoking)
                 StartPokeGesture();

@@ -397,7 +397,9 @@ public class HandPresence : MonoBehaviour
         {
             gripValue = gestureDetector.gripValue;
             triggerValue = gestureDetector.triggerValue;
-            if (GetObjectInHand() != null)
+            bool isHoldingObject = GetObjectInHand() != null;
+            gestureDetector.isHolding = isHoldingObject;
+            if (isHoldingObject)
                 HideTrackingOrControlHand(false, true);
             else
                 HideTrackingOrControlHand(gripValue < 1 && triggerValue < 1);
