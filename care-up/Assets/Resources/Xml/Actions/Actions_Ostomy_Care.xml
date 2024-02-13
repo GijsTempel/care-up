@@ -216,7 +216,7 @@ zo nodig:
         type="sequenceStep"
         value="CheckTheSkin"
         extra=""
-		blockunlock="SkinIsChecked"
+		blockUnlock="SkinIsChecked"
         messageTitle="Beschermingsmiddelen en opvulmateriaal."
         messageContent="Breng zo nodig huidbeschermingsmiddelen en/of opvulmateriaal aan. Wanneer de niet goed aan huidplaat sluit op de huid vanwege huidplooien, vul je de huidplooien op met opvulmateriaal (ring, pasta, strip) op voorschrift van de stomaverpleegkundige."
     ></action>
@@ -229,7 +229,7 @@ zo nodig:
             points="1"
             buttonText="Trek handschoenen uit"
             action="TakeOffGlovesWithoutThrowing"
-			blockunlock="GlovesTakenOff1"
+		    blockUnlock="GlovesTakenOff1"
             blockRequired="SkinIsChecked" />
 	
 	<Action
@@ -239,7 +239,7 @@ zo nodig:
         comment="1. Apply hand hygiene"
         points="3"
 		blockRequired="GlovesTakenOff1"
-		blockunlock="HandsWashed2time"
+		blockUnlock="HandsWashed2time"
         value="HandCleaner" />
 
 	<action
