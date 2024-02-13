@@ -61,7 +61,10 @@ public class ActionManagerStepTest : MonoBehaviour
     public void SetAction(Action a)
     {
         action = a;
-        descrText.text = "[" + action.sequentialNumber.ToString() + "] " +  action.SubIndex.ToString() + " " + action.shortDescr;
+        action.ObjectNames(out string[] objectNames);
+        descrText.text = "[" + action.sequentialNumber.ToString() + "] " + 
+            action.SubIndex.ToString() + " " +
+            objectNames[0] + " " + "\n" + action.shortDescr;
         typeText.text = action.Type.ToString();
         actionType = action.Type;
 
@@ -71,8 +74,7 @@ public class ActionManagerStepTest : MonoBehaviour
         }
         else
         {
-            string[] objectNames = new string[0];
-            action.ObjectNames(out objectNames);
+
             leftObj = objectNames[0];
             if (objectNames.Length > 1)
                 rightObj = objectNames[1];  
