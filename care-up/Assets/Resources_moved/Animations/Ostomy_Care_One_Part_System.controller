@@ -958,7 +958,7 @@ AnimatorStateMachine:
     m_Position: {x: 1000, y: 580, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8830719608309456046}
-    m_Position: {x: 840, y: 700, z: 0}
+    m_Position: {x: 1000, y: 660, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1029813290773789983}
     m_Position: {x: 870, y: -250, z: 0}
@@ -1027,6 +1027,24 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-6034258305777873628
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: OstomyBagSingleSystemSQ_3
+  HandToSwitch: 0
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: OstomyBag_OPS_SQ4
+  ActionFrame: 5
 --- !u!114 &-5868324047247859740
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1534,6 +1552,10 @@ AnimatorState:
   - {fileID: -92941935034570070}
   - {fileID: 3922700998151242503}
   - {fileID: 4010601874967245771}
+  - {fileID: -3735135003917084642}
+  - {fileID: -3678469418772862351}
+  - {fileID: -6034258305777873628}
+  - {fileID: 501389602812608143}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1713,6 +1735,40 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-3735135003917084642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a536a9682af347488b2cfd1a613bf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: m1_B_OstomyCare
+  HandToSwitch: 0
+  AnimationToChange: 1
+  ToFollowHoldingHand: 0
+  NewAnimationName: P3_Ostomy_OPS_SQ_4
+  ActionFrame: 5
+--- !u!114 &-3678469418772862351
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: m1_B_OstomyCare
+  unlock_frame: 6
+  lock_frame: 1465
+  toActivate: 1
 --- !u!1101 &-3658956507604736292
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3549,6 +3605,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: 0
   dropFrame: 751
+--- !u!114 &501389602812608143
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839bcc7f24a9c47f8af28e853187bfa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: OstomyBagSingleSystemSQ_3
+  unlock_frame: 6
+  lock_frame: 1465
+  toActivate: 1
 --- !u!1102 &551219282752176602
 AnimatorState:
   serializedVersion: 6
@@ -6737,7 +6809,7 @@ AnimatorStateMachine:
     m_Position: {x: 960, y: 510, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2717355472741379376}
-    m_Position: {x: 790, y: 680, z: 0}
+    m_Position: {x: 960, y: 690, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3758147863212691492}
     m_Position: {x: 780, y: -200, z: 0}
