@@ -18,6 +18,8 @@ public class TableCleaningAction : MonoBehaviour
     private GameObject colliderHolder;
     ActionModule_ActionExpectant actionExpectant;
     private bool isTriggered = false;
+    public ActionModule_ActionTrigger startActionTrigger;
+    bool cleaningStarted = false;
 
     private bool locakedAction = true;
     // Start is called before the first frame update
@@ -68,13 +70,15 @@ public class TableCleaningAction : MonoBehaviour
 
     public void CleanActionCount()
     {
+        if (!cleaningStarted && startActionTrigger != null)
+            startActionTrigger.AttemptTrigger();
         int cleaned = 0;
         foreach(CleaningCollider c in transform.GetComponentsInChildren<CleaningCollider>())
         {
             if (c.isCleaned)
                 cleaned++;
         }
-
+        cleaningStarted = true;
         float currentCleanRatio = ActionManager.Remap((float)cleaned / (float)numberOfColliders, 0, rationToClean, 0f, 1f);
         progressImage.fillAmount = currentCleanRatio;
         if (currentCleanRatio >= 1)

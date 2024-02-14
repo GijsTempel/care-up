@@ -1,5 +1,56 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &164867171966369420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5750370097656483436}
+  - component: {fileID: 6494043564122535463}
+  m_Layer: 0
+  m_Name: DeleteTutorialHint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5750370097656483436
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164867171966369420}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7824061872445795761}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6494043564122535463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164867171966369420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95521c2fff29f2d4c83059ebccf446de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toShow: 0
+  toDelete: 1
+  waitTime: 0
+  ControlObjectName: 
+  ObjNames:
+  - 042CleanTable
+  meshRenderer: 0
 --- !u!1 &338866192577261007
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,6 +163,60 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &570187363988891466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7824061872445795761}
+  - component: {fileID: 8457696931091725402}
+  m_Layer: 0
+  m_Name: DeleteTutorialHintActionTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7824061872445795761
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570187363988891466}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5750370097656483436}
+  m_Father: {fileID: 4215460281611899870}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8457696931091725402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570187363988891466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7b86b1118ea4582e930aa4cef899841, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionNumberLimit: -1
+  triggerName: 
+  pickable: {fileID: 0}
+  mirrorAnimation: 0
+  actionType: 10
+  LeftActionManagerObject: 
+  RightActionManagerObject: 
+  checkBeforeAct: 0
+  triggerDelay: -1
 --- !u!1 &840017453306602499
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,6 +283,7 @@ Transform:
   - {fileID: 6926909534578249742}
   - {fileID: 5537278582017948157}
   - {fileID: 7080145159902781635}
+  - {fileID: 7824061872445795761}
   m_Father: {fileID: 3391560670137001538}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2784780727065891586
@@ -198,6 +304,7 @@ MonoBehaviour:
   xNum: 24
   yNum: 9
   StartPoint: {fileID: 8718916302007897284}
+  startActionTrigger: {fileID: 8457696931091725402}
 --- !u!95 &2752759342247658290
 Animator:
   serializedVersion: 5
@@ -930,7 +1037,6 @@ MonoBehaviour:
   actionType: 1
   leftActionManagerObject: WorkField
   rightActionManagerObject: 
-  walkToGroupName: 
 --- !u!1 &4037571865796981684
 GameObject:
   m_ObjectHideFlags: 0
@@ -1143,6 +1249,7 @@ MonoBehaviour:
   xNum: 24
   yNum: 9
   StartPoint: {fileID: 3046180351105218122}
+  startActionTrigger: {fileID: 0}
 --- !u!95 &2044936414996474217
 Animator:
   serializedVersion: 5
@@ -1831,7 +1938,6 @@ MonoBehaviour:
   actionType: 1
   leftActionManagerObject: WorkField
   rightActionManagerObject: 
-  walkToGroupName: 
 --- !u!1 &8641944971654368286
 GameObject:
   m_ObjectHideFlags: 0
