@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MountDetector : MonoBehaviour
 {
-    public string ghostObjectName = "";
     public enum upEnum
     {
         X, mX, Y, mY, Z, mZ
@@ -76,41 +75,34 @@ public class MountDetector : MonoBehaviour
     void RemoveGhostHighlite()
     {
         if (currentGhostHighlite != null)
-            currentGhostHighlite.HideGhost(ghostObjectName);
+            currentGhostHighlite.HideGhost();
         currentGhostHighlite = null;
     }
 
     void Update()
     {
-        if (ghostObjectName != null)
+        Transform currentClosestMount = FindClosestMount();
+        if (currentClosestMount != null)
         {
-            Transform currentClosestMount = FindClosestMount();
-            if (currentClosestMount != null)
+            MountGhostHighlit closestGhostHighlite = currentClosestMount.GetComponent<MountGhostHighlit>();
+            if (closestGhostHighlite != null)
             {
-                MountGhostHighlit closestGhostHighlite = currentClosestMount.GetComponent<MountGhostHighlit>();
-                if (closestGhostHighlite != null)
+                if (currentGhostHighlite != closestGhostHighlite)
                 {
-                    Debug.Log("@ClosestGhost " + name + ":" + closestGhostHighlite.name +
-                        UnityEngine.Random.Range(0, 9999).ToString());
-
-                    if (currentGhostHighlite != closestGhostHighlite)
-                    {
-                        RemoveGhostHighlite();
-                        currentGhostHighlite = closestGhostHighlite;
-                        currentGhostHighlite.ShowGhost(ghostObjectName);
-                    }
-                    else
-                        currentGhostHighlite.ShowGhost(ghostObjectName);
-                }
-                else if (currentGhostHighlite != null)
                     RemoveGhostHighlite();
-
+                    currentGhostHighlite = closestGhostHighlite;
+                    currentGhostHighlite.ShowGhost(transform.parent.gameObject);
+                }
+                else
+                    currentGhostHighlite.ShowGhost(transform.parent.gameObject);
             }
             else if (currentGhostHighlite != null)
-            {
-                Debug.Log("@ClosestGhost " + name + ": ");
                 RemoveGhostHighlite();
-            }
+
+        }
+        else if (currentGhostHighlite != null)
+        {
+            RemoveGhostHighlite();
         }
     }
 
