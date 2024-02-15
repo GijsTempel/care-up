@@ -1,13 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MountDetector : MonoBehaviour
 {
+    public string ghostObjectName = "";
     public enum upEnum
     {
         X, mX, Y, mY, Z, mZ
@@ -16,10 +13,15 @@ public class MountDetector : MonoBehaviour
     public float dotLimit = 0f;
     List<Transform> mountsDetected = new List<Transform>();
     public List<String> mountNames = new List<string>();
+    MountGhostHighlit currentGhostHighlite;
+
 
     public Transform FindClosestMount()
     {
-        
+        if (transform.parent != null && 
+                transform.parent.GetComponent<PickableObject>() != null && 
+                transform.parent.GetComponent<PickableObject>().IsMounted())
+            return null;
         float dist = float.PositiveInfinity;
         Transform closest = null;
         foreach(Transform p in mountsDetected)
@@ -71,8 +73,53 @@ public class MountDetector : MonoBehaviour
         return closest;
     }
 
+    void RemoveGhostHighlite()
+    {
+        if (currentGhostHighlite != null)
+            currentGhostHighlite.HideGhost(ghostObjectName);
+        currentGhostHighlite = null;
+    }
+
+    void Update()
+    {
+        if (ghostObjectName != null)
+        {
+            Transform currentClosestMount = FindClosestMount();
+            if (currentClosestMount != null)
+            {
+                MountGhostHighlit closestGhostHighlite = currentClosestMount.GetComponent<MountGhostHighlit>();
+                if (closestGhostHighlite != null)
+                {
+                    Debug.Log("@ClosestGhost " + name + ":" + closestGhostHighlite.name +
+                        UnityEngine.Random.Range(0, 9999).ToString());
+
+                    if (currentGhostHighlite != closestGhostHighlite)
+                    {
+                        RemoveGhostHighlite();
+                        currentGhostHighlite = closestGhostHighlite;
+                        currentGhostHighlite.ShowGhost(ghostObjectName);
+                    }
+                    else
+                        currentGhostHighlite.ShowGhost(ghostObjectName);
+                }
+                else if (currentGhostHighlite != null)
+                    RemoveGhostHighlite();
+
+            }
+            else if (currentGhostHighlite != null)
+            {
+                Debug.Log("@ClosestGhost " + name + ": ");
+                RemoveGhostHighlite();
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider collision)
     {
+        if (transform.parent != null && 
+                transform.parent.GetComponent<PickableObject>() != null && 
+                transform.parent.GetComponent<PickableObject>().IsMounted())
+            return;
         if (mountNames.Count != 0)
         {
             if (!(mountNames.Contains(collision.name)))

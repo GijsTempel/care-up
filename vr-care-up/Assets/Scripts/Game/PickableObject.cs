@@ -61,10 +61,10 @@ public class PickableObject : MonoBehaviour
 
     private MountDetector GetMountInChildren()
     {
-        foreach(MountDetector m in gameObject.GetComponentsInChildren<MountDetector>())
+        for(int i = 0; i < transform.childCount; i++)
         {
-            if (m.transform.parent == transform)
-                return m;
+            if (transform.GetChild(i).GetComponent<MountDetector>() != null)
+                return transform.GetChild(i).GetComponent<MountDetector>();
         }
         return null;
     }
@@ -110,7 +110,7 @@ public class PickableObject : MonoBehaviour
             if (closestMount != null)
             {
                 if (!AttatchToMount(closestMount))
-                    return false;
+                    return true;
             }
         }
         if (dropAnchor != null)
