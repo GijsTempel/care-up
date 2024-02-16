@@ -13,14 +13,23 @@ public class MountDetector : MonoBehaviour
     List<Transform> mountsDetected = new List<Transform>();
     public List<String> mountNames = new List<string>();
     MountGhostHighlit currentGhostHighlite;
+    PlayerScript player;
 
+    void Start()
+    {
+        player = GameObject.FindObjectOfType<PlayerScript>();
+    }
 
     public Transform FindClosestMount()
     {
         if (transform.parent != null && 
-                transform.parent.GetComponent<PickableObject>() != null && 
-                transform.parent.GetComponent<PickableObject>().IsMounted())
-            return null;
+                transform.parent.GetComponent<PickableObject>() != null)
+        {
+            if (transform.parent.GetComponent<PickableObject>().GetComponent<PickableObject>().IsMounted())
+                return null;
+            if (player != null && player.GetHandWithThisObject(transform.parent.gameObject) == null)
+                return null;
+        }
         float dist = float.PositiveInfinity;
         Transform closest = null;
         foreach(Transform p in mountsDetected)
@@ -81,6 +90,7 @@ public class MountDetector : MonoBehaviour
 
     void Update()
     {
+        
         Transform currentClosestMount = FindClosestMount();
         if (currentClosestMount != null)
         {
