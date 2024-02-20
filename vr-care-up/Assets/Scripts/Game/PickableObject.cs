@@ -190,7 +190,7 @@ public class PickableObject : MonoBehaviour
         UpdateFallowPos();
         routineTime += Time.deltaTime;
         // transform storage for dropping
-        if (!teleport_transition_flag && // flag to avoid storing position during teleport animation
+        if (player != null && !teleport_transition_flag && // flag to avoid storing position during teleport animation
                 !player.IsAnimatorPaused) // to avoid storing position during paused animSequence
         {
             stored_current_timer += Time.deltaTime;

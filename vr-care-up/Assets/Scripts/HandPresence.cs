@@ -11,7 +11,6 @@ using UnityEngine.XR.Interaction.Toolkit.Samples.Hands;
 
 public class HandPresence : MonoBehaviour
 {
-    List<PickableObject> pickablesInArea = new List<PickableObject>();
     public List<GameObject> triggerColliderObjects = new List<GameObject>();
 
     public PokeGestureDetector gestureDetector;
@@ -40,6 +39,7 @@ public class HandPresence : MonoBehaviour
     float triggerValue = 0f;
     Transform trackingHandTransfom = null;
     public HandVisualizer handVisualizer;
+    public OutilneControl currentOutline;
 
     public HandPoseControl GetHandPoseControl()
     {
@@ -135,11 +135,11 @@ public class HandPresence : MonoBehaviour
     {
         float dist = float.PositiveInfinity;
         PickableObject closest = null;
-        List<PickableObject> pInArea = pickablesInArea;
+        List<PickableObject> pInArea = GetComponent<HandContactControl>().GetObjectsInArea();
         if (trackingHandTransfom != null
                 && trackingHandTransfom.gameObject.activeSelf
-                && trackingHandTransfom.parent.parent.GetComponent<TrackingHandPickupControl>() != null)
-            pInArea = trackingHandTransfom.parent.parent.GetComponent<TrackingHandPickupControl>().pickablesInArea;
+                && trackingHandTransfom.parent.parent.GetComponent<HandContactControl>() != null)
+            pInArea = trackingHandTransfom.parent.parent.GetComponent<HandContactControl>().GetObjectsInArea();
 
 
         foreach (PickableObject p in pInArea)
@@ -170,62 +170,34 @@ public class HandPresence : MonoBehaviour
                 }
             }
         }
-        if (closest == null)
-        {
-            foreach (PickableObject p in GameObject.FindObjectsOfType<PickableObject>())
-            {
-                if (p != null)
-                {
-                    if (pinchPickup && !p.pickupWithPinch)
-                        continue;
-                    if (!p.gameObject.activeInHierarchy)
-                        continue;
-                    if (Vector3.Distance(transform.position, p.transform.position) > maxPickupDistance)
-                        continue;
-                    if (!findMounted && p.transform.parent.tag == "MountingPoint")
-                        continue;
-                    if (findMounted && p.transform.parent.tag != "MountingPoint")
-                        continue;
-                    if (findMounted)
-                    {
-                        Transform moundetTo = p.transform.parent.transform.parent;
-                        if (moundetTo != null
-                            && moundetTo.GetComponent<PickableObject>() != null
-                            && player.GetHandWithThisObject(moundetTo.gameObject) == null)
-                            continue;
-                    }
-                    float nextDist = Vector3.Distance(transform.position, p.transform.position);
-                    if (nextDist < dist)
-                    {
-                        dist = nextDist;
-                        closest = p;
-                    }
-                }
-            }
-        }
         return closest;
     }
 
-    private void OnTriggerEnter(Collider collision)
+    void UpdatePickableOutline()
     {
-        PickableObject pickableObject = collision.GetComponent<PickableObject>();
-        if (pickableObject != null && !(pickablesInArea.Contains(pickableObject)))
+        string ss = "";
+        PickableObject currentPickable = FindClosestPickableInArea();
+        OutilneControl nextOutline = null;
+        if (currentPickable != null)
+            nextOutline = currentPickable.GetComponent<OutilneControl>();
+        if (nextOutline != null)
         {
-            pickablesInArea.Add(pickableObject);
+            ss = currentPickable.name;
+            if (nextOutline != currentOutline)
+            {
+                if (currentOutline != null)
+                    currentOutline.ShowOutline(false);
+                currentOutline = nextOutline;
+                currentOutline.ShowOutline(true);
+            }
         }
-    }
+        else if (currentOutline != null)
+        {
+            currentOutline.ShowOutline(false);
+            currentOutline = null;
+        }
 
-    private void OnTriggerExit(Collider collision)
-    {
-        PickableObject pickableObject = collision.GetComponent<PickableObject>();
-        RemoveObjectFromArea(pickableObject);
-    }
-
-
-    private void RemoveObjectFromArea(PickableObject pickableObject)
-    {
-        if (pickableObject != null && (pickablesInArea.Contains(pickableObject)))
-            pickablesInArea.Remove(pickableObject);
+        Debug.Log("@CurrentPic " + name + ":" + ss);
     }
 
     private bool TryToPickUp(bool findMounted = false, bool pinchPickup = false)
@@ -260,7 +232,6 @@ public class HandPresence : MonoBehaviour
         else
             return PickUpObject(closestPickable);
     }
-
 
     public bool PickUpObject()
     {
@@ -338,7 +309,6 @@ public class HandPresence : MonoBehaviour
             }
         }
     }
-
 
     private void CastAction(ActionModule_ActionTrigger.TriggerHandAction triggerAction)
     {
