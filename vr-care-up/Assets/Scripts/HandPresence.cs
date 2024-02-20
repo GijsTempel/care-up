@@ -136,11 +136,11 @@ public class HandPresence : MonoBehaviour
         float dist = float.PositiveInfinity;
         PickableObject closest = null;
         List<PickableObject> pInArea = GetComponent<HandContactControl>().GetObjectsInArea();
-        if (trackingHandTransfom != null
+        if (IsTrackingMode() 
+                && trackingHandTransfom != null
                 && trackingHandTransfom.gameObject.activeSelf
                 && trackingHandTransfom.parent.parent.GetComponent<HandContactControl>() != null)
             pInArea = trackingHandTransfom.parent.parent.GetComponent<HandContactControl>().GetObjectsInArea();
-
 
         foreach (PickableObject p in pInArea)
         {
@@ -298,15 +298,15 @@ public class HandPresence : MonoBehaviour
             return;
         if (objectInHand.Drop())
         {
-            objectInHand = null;
-            if (gameUIVR != null)
-                gameUIVR.UpdateHelpWitDelay(0.1f);
             if (!noPoseChange)
             {
                 GrabHandPose grabHandPose = objectInHand.GetComponent<GrabHandPose>();
                 if (grabHandPose != null && spawnHandModel != null)
                     grabHandPose.UnSetPose(spawnHandModel.GetComponent<HandPoseData>());
             }
+            objectInHand = null;
+            if (gameUIVR != null)
+                gameUIVR.UpdateHelpWitDelay(0.1f);
         }
     }
 
@@ -351,17 +351,24 @@ public class HandPresence : MonoBehaviour
         return null;
     }
 
+    bool IsTrackingMode()
+    {
+        bool result = false;
+
+        bool isLeftHand = IsLeftHand();
+        if (isLeftHand)
+            result = HandVisualizer.left_handIsTracked;
+        else
+            result = HandVisualizer.right_handIsTracked;
+        return result;
+    }
+
     void Update()
     {
         bool isLeftHand = IsLeftHand();
-        bool isTracking = false;
-        if (isLeftHand)
-            isTracking = HandVisualizer.left_handIsTracked;
-        else
-            isTracking = HandVisualizer.right_handIsTracked;
+        bool isTracking = IsTrackingMode();
         if (isTracking && trackingHandTransfom == null)
             trackingHandTransfom = FindTrackingTransform(isLeftHand);
-
 
         if (isTracking)
         {
