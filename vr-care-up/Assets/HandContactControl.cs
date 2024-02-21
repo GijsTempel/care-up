@@ -21,14 +21,16 @@ public class HandContactControl : MonoBehaviour
     {
         PickableObject pickableObject = collision.GetComponent<PickableObject>();
         AddObjectToArea(pickableObject);
-        pickupHighliteControl.InitUpdateHighlite();
+        if (pickupHighliteControl != null)
+            pickupHighliteControl.InitUpdateHighlite();
     }
 
     private void OnTriggerExit(Collider collision)
     {
         PickableObject pickableObject = collision.GetComponent<PickableObject>();
         RemoveObjectFromArea(pickableObject);
-        pickupHighliteControl.InitUpdateHighlite();
+        if (pickupHighliteControl != null)
+            pickupHighliteControl.InitUpdateHighlite();
     }
 
     public List<PickableObject> GetObjectsInArea()
@@ -66,8 +68,16 @@ public class HandContactControl : MonoBehaviour
         //     pickablesInArea.Remove(pickableObject);
     }
 
-    private void ClearObjectsFromArea()
+    public void ClearObjectsFromArea()
     {
         pickableInAreaCounters.Clear();
+        if (pickupHighliteControl != null)
+            pickupHighliteControl.InitUpdateHighlite();
+    }
+
+    protected void OnDisable()
+    {
+        Debug.Log("@ ____" + name + ":Disabled");
+        ClearObjectsFromArea();
     }
 }

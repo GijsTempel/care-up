@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Hands.Samples.VisualizerSample;
@@ -122,6 +123,8 @@ public class HandPresence : MonoBehaviour
                 toHideControlHand = false;
         }
         HideHand(toHideControlHand);
+        if (toHideControlHand)
+            GetComponent<HandContactControl>().ClearObjectsFromArea();
         if (handVisualizer == null)
             return;
         if (IsLeftHand())
@@ -202,7 +205,14 @@ public class HandPresence : MonoBehaviour
                 return false;
         }
         else
-            return PickUpObject(closestPickable);
+            {
+                if (PickUpObject(closestPickable))
+                {
+                    GetComponent<HandContactControl>().ClearObjectsFromArea();
+                    return true;
+                }
+                return false;
+            }
     }
 
     public bool PickUpObject()
