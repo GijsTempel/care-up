@@ -39,7 +39,6 @@ public class HandPresence : MonoBehaviour
     float triggerValue = 0f;
     Transform trackingHandTransfom = null;
     public HandVisualizer handVisualizer;
-    public OutilneControl currentOutline;
 
     public HandPoseControl GetHandPoseControl()
     {
@@ -131,7 +130,7 @@ public class HandPresence : MonoBehaviour
             handVisualizer.HideRight(!toHideControlHand);
     }
 
-    private PickableObject FindClosestPickableInArea(bool findMounted = false, bool pinchPickup = false)
+    public PickableObject FindClosestPickableInArea(bool findMounted = false, bool pinchPickup = false)
     {
         float dist = float.PositiveInfinity;
         PickableObject closest = null;
@@ -171,33 +170,6 @@ public class HandPresence : MonoBehaviour
             }
         }
         return closest;
-    }
-
-    void UpdatePickableOutline()
-    {
-        string ss = "";
-        PickableObject currentPickable = FindClosestPickableInArea();
-        OutilneControl nextOutline = null;
-        if (currentPickable != null)
-            nextOutline = currentPickable.GetComponent<OutilneControl>();
-        if (nextOutline != null)
-        {
-            ss = currentPickable.name;
-            if (nextOutline != currentOutline)
-            {
-                if (currentOutline != null)
-                    currentOutline.ShowOutline(false);
-                currentOutline = nextOutline;
-                currentOutline.ShowOutline(true);
-            }
-        }
-        else if (currentOutline != null)
-        {
-            currentOutline.ShowOutline(false);
-            currentOutline = null;
-        }
-
-        Debug.Log("@CurrentPic " + name + ":" + ss);
     }
 
     private bool TryToPickUp(bool findMounted = false, bool pinchPickup = false)

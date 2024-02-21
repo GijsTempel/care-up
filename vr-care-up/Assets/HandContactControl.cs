@@ -6,38 +6,29 @@ using UnityEngine;
 public class HandContactControl : MonoBehaviour
 {
     Dictionary<PickableObject, int> pickableInAreaCounters = new Dictionary<PickableObject, int>();
-    // public List<PickableObject> pickablesInArea = new List<PickableObject>();
+    PickupHighliteControl pickupHighliteControl;
     private void OnEnable()
     {
         ClearObjectsFromArea();
     }
 
-    private void Update()
+    void Start()
     {
-        // string ss = "@ ta " + name + ":\n";
-        // foreach(PickableObject p in pickablesInArea)
-        // {
-        //     if (p != null)
-        //         ss += p.name + "\n";
-        // }
-        // Debug.Log(ss);
+        pickupHighliteControl = GameObject.FindObjectOfType<PickupHighliteControl>();
     }
 
     private void OnTriggerEnter(Collider collision)
     {
         PickableObject pickableObject = collision.GetComponent<PickableObject>();
         AddObjectToArea(pickableObject);
-
-        // if (pickableObject != null && !(pickablesInArea.Contains(pickableObject)))
-        // {
-        //     pickablesInArea.Add(pickableObject);
-        // }
+        pickupHighliteControl.InitUpdateHighlite();
     }
 
     private void OnTriggerExit(Collider collision)
     {
         PickableObject pickableObject = collision.GetComponent<PickableObject>();
         RemoveObjectFromArea(pickableObject);
+        pickupHighliteControl.InitUpdateHighlite();
     }
 
     public List<PickableObject> GetObjectsInArea()
