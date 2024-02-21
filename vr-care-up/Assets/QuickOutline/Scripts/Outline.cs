@@ -99,6 +99,11 @@ public class Outline : MonoBehaviour {
     needsUpdate = true;
   }
 
+  public void ComputeOutline()
+  {
+    
+  }
+
   void OnEnable() {
     foreach (var renderer in renderers) {
 
@@ -168,7 +173,8 @@ public class Outline : MonoBehaviour {
       if (!bakedMeshes.Add(meshFilter.sharedMesh)) {
         continue;
       }
-
+      if (!meshFilter.sharedMesh.isReadable)
+        continue;
       // Serialize smooth normals
       var smoothNormals = SmoothNormals(meshFilter.sharedMesh);
 
@@ -186,6 +192,8 @@ public class Outline : MonoBehaviour {
       if (!registeredMeshes.Add(meshFilter.sharedMesh)) {
         continue;
       }
+      if (!meshFilter.sharedMesh.isReadable)
+        continue;
 
       // Retrieve or generate smooth normals
       var index = bakeKeys.IndexOf(meshFilter.sharedMesh);
@@ -221,6 +229,7 @@ public class Outline : MonoBehaviour {
   List<Vector3> SmoothNormals(Mesh mesh) {
 
     // Group vertices by location
+
     var groups = mesh.vertices.Select((vertex, index) => new KeyValuePair<Vector3, int>(vertex, index)).GroupBy(pair => pair.Key);
 
     // Copy normals to a new list

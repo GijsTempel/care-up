@@ -7,6 +7,7 @@ public class HandContactControl : MonoBehaviour
 {
     Dictionary<PickableObject, int> pickableInAreaCounters = new Dictionary<PickableObject, int>();
     PickupHighliteControl pickupHighliteControl;
+    PlayerScript player;
     private void OnEnable()
     {
         ClearObjectsFromArea();
@@ -15,11 +16,17 @@ public class HandContactControl : MonoBehaviour
     void Start()
     {
         pickupHighliteControl = GameObject.FindObjectOfType<PickupHighliteControl>();
+        player = GameObject.FindObjectOfType<PlayerScript>();
     }
 
     private void OnTriggerEnter(Collider collision)
     {
         PickableObject pickableObject = collision.GetComponent<PickableObject>();
+        if (pickableObject == null)
+            return;
+        if (player.GetHandWithThisObject(pickableObject.gameObject) != null)
+            return;
+        
         AddObjectToArea(pickableObject);
         if (pickupHighliteControl != null)
             pickupHighliteControl.InitUpdateHighlite();
@@ -28,6 +35,8 @@ public class HandContactControl : MonoBehaviour
     private void OnTriggerExit(Collider collision)
     {
         PickableObject pickableObject = collision.GetComponent<PickableObject>();
+        if (pickableObject == null)
+            return;
         RemoveObjectFromArea(pickableObject);
         if (pickupHighliteControl != null)
             pickupHighliteControl.InitUpdateHighlite();
@@ -77,7 +86,6 @@ public class HandContactControl : MonoBehaviour
 
     protected void OnDisable()
     {
-        Debug.Log("@ ____" + name + ":Disabled");
         ClearObjectsFromArea();
     }
 }

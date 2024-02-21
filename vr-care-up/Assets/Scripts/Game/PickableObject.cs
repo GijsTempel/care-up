@@ -51,6 +51,7 @@ public class PickableObject : MonoBehaviour
     private float line_timer = 0f;
     private Vector3 line_og_position = Vector3.zero;
     private LineRenderer line_ref = null;
+    public bool noOutline = false;
 
     public bool IsMounted()
     {
@@ -253,6 +254,24 @@ public class PickableObject : MonoBehaviour
         ShowViewElements(false);
         if (dropAnchor != null)
             FallowTransform(dropAnchor);
+        if (!noOutline)
+        {
+            Outline outline = GetComponent<Outline>();
+            if (outline == null)
+            {
+                outline = gameObject.AddComponent(typeof(Outline)) as Outline;
+                outline.OutlineWidth = 3f;
+                if (pickupWithPinch)
+                    outline.OutlineColor = Color.yellow;
+                outline.enabled = false;
+            }
+            if (GetComponent<OutilneControl>() == null)
+            {
+                OutilneControl outilneControl = gameObject.AddComponent(typeof(OutilneControl)) as OutilneControl;
+                outilneControl.outlines = new List<Outline>();
+                outilneControl.outlines.Add(outline);
+            }
+        }
     }
 
     bool TeleportationRayTest(Vector3 pos)
