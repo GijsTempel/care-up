@@ -240,11 +240,9 @@ public class HandPresence : MonoBehaviour
         PickableObject parentPickable = objToPickup.GetParentPickable();
         Transform holder = GameObject.FindWithTag("ItemHolder").transform;
         objToPickup.transform.SetParent(holder);
-        if (parentPickable != null && parentPickable.GetComponent<Outline>() != null)
-            parentPickable.GetComponent<Outline>().ComputeOutline();
-        if (objToPickup.GetComponent<Outline>() != null)
-            objToPickup.GetComponent<Outline>().ComputeOutline();
-        
+        if (parentPickable != null)
+            parentPickable.InitiateOutlineUpdate(0.1f);
+        objToPickup.InitiateOutlineUpdate(0.1f);
         return PickUpObject(objToPickup);
     }
     

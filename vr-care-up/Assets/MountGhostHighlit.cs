@@ -51,6 +51,7 @@ public class MountGhostHighlit : MonoBehaviour
                 Destroy(component);
             }
         }
+        parent.gameObject.AddComponent<GhostGroup>();
         MeshRenderer parentRenderer = parent.GetComponent<MeshRenderer>();
         if (parentRenderer != null)
         {

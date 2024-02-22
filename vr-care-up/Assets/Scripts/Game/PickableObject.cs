@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Video;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -28,6 +29,8 @@ public class PickableObject : MonoBehaviour
     public bool pickupWithPinch = false;
     public ActionModule_ActionTrigger pinchPickupTrigger;
     public ActionModule_ActionTrigger pinchMountTrigger;
+    float outlineUpdateTimeout = 0f;
+    bool toUpdateOutline = false;
 
     // required time with no movement to store transform
     private static float stored_time_needed = 2f;
@@ -195,8 +198,23 @@ public class PickableObject : MonoBehaviour
         }
     }
 
+    public void InitiateOutlineUpdate(float timeout)
+    {
+        outlineUpdateTimeout = timeout;
+        toUpdateOutline = true;
+    }
+
     private void Update()
     {
+        if (toUpdateOutline)
+        {
+            outlineUpdateTimeout -= Time.deltaTime;
+            if (outlineUpdateTimeout <= 0)
+            {
+                UpdateOutline();
+                toUpdateOutline = false;
+            }
+        }
         UpdateFallowPos();
         routineTime += Time.deltaTime;
         // transform storage for dropping
@@ -232,6 +250,12 @@ public class PickableObject : MonoBehaviour
         HandleLineAnimationStep();
     }
 
+    private void UpdateOutline()
+    {
+        if (GetComponent<Outline>() != null)
+            GetComponent<Outline>().ComputeOutline();
+    }
+
     bool AttatchToMount(Transform mount)
     {
         if (pinchMountTrigger != null && pinchMountTrigger.gameObject.activeInHierarchy)
@@ -242,9 +266,15 @@ public class PickableObject : MonoBehaviour
         transform.rotation = mount.rotation;
         if (gameObject.GetComponent<Rigidbody>() != null)
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        // PickableObject newParentPickable = mount.GetComponentInParent<PickableObject>();
-        // if (newParentPickable != null && newParentPickable.GetComponent<Outline>() != null)
-        //     newParentPickable.GetComponent<Outline>().ComputeOutline();
+        PickableObject newParentPickable = mount.GetComponentInParent<PickableObject>();
+        string ss = ("@ mount " + name + ": ");
+
+        if (newParentPickable != null)
+        {
+            ss += newParentPickable.name;
+            newParentPickable.InitiateOutlineUpdate(0.1f);
+        }
+        Debug.Log(ss);
 
         // if (GetComponent<Outline>() != null)
         //     GetComponent<Outline>().ComputeOutline();

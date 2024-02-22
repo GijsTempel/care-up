@@ -107,7 +107,8 @@ public class Outline : MonoBehaviour {
   void OnEnable() 
   {
     foreach (var renderer in renderers) {
-
+      if (renderer.GetComponent<GhostGroup>() != null)
+        continue;
       // Append outline shaders
       var materials = renderer.sharedMaterials.ToList();
 
@@ -145,7 +146,8 @@ public class Outline : MonoBehaviour {
 
   void OnDisable() {
     foreach (var renderer in renderers) {
-
+      if (renderer.GetComponent<GhostGroup>() != null)
+        continue;
       // Remove outline shaders
       var materials = renderer.sharedMaterials.ToList();
 
@@ -188,7 +190,8 @@ public class Outline : MonoBehaviour {
 
     // Retrieve or generate smooth normals
     foreach (var meshFilter in GetComponentsInChildren<MeshFilter>()) {
-
+      if (meshFilter.GetComponent<GhostGroup>() != null)
+        continue;
       // Skip if smooth normals have already been adopted
       if (!registeredMeshes.Add(meshFilter.sharedMesh)) {
         continue;
@@ -213,7 +216,8 @@ public class Outline : MonoBehaviour {
 
     // Clear UV3 on skinned mesh renderers
     foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>()) {
-
+      if (skinnedMeshRenderer.GetComponent<GhostGroup>() != null)
+        continue;
       // Skip if UV3 has already been reset
       if (!registeredMeshes.Add(skinnedMeshRenderer.sharedMesh)) {
         continue;
