@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.XR;
 using UnityEngine.XR.Hands.Samples.VisualizerSample;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Composites;
@@ -236,11 +237,17 @@ public class HandPresence : MonoBehaviour
 
     public bool PickupMountedObject(PickableObject objToPickup)
     {
+        PickableObject parentPickable = objToPickup.GetParentPickable();
         Transform holder = GameObject.FindWithTag("ItemHolder").transform;
         objToPickup.transform.SetParent(holder);
-
+        if (parentPickable != null && parentPickable.GetComponent<Outline>() != null)
+            parentPickable.GetComponent<Outline>().ComputeOutline();
+        if (objToPickup.GetComponent<Outline>() != null)
+            objToPickup.GetComponent<Outline>().ComputeOutline();
+        
         return PickUpObject(objToPickup);
     }
+    
     public bool PickUpObject(PickableObject objToPickup, bool toForce = false)
     {
         if (spawnHandModel == null)

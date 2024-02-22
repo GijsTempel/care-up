@@ -14,7 +14,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 
 public class Outline : MonoBehaviour {
-  private static HashSet<Mesh> registeredMeshes = new HashSet<Mesh>();
+  public static HashSet<Mesh> registeredMeshes = new HashSet<Mesh>();
 
   public enum Mode {
     OutlineAll,
@@ -80,8 +80,13 @@ public class Outline : MonoBehaviour {
 
   private bool needsUpdate;
 
-  void Awake() {
+  void Awake() 
+  {
+    ComputeOutline();
+  }
 
+  public void ComputeOutline()
+  {
     // Cache renderers
     renderers = GetComponentsInChildren<Renderer>();
 
@@ -99,12 +104,8 @@ public class Outline : MonoBehaviour {
     needsUpdate = true;
   }
 
-  public void ComputeOutline()
+  void OnEnable() 
   {
-    
-  }
-
-  void OnEnable() {
     foreach (var renderer in renderers) {
 
       // Append outline shaders

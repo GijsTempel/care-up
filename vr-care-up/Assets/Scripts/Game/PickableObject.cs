@@ -53,6 +53,15 @@ public class PickableObject : MonoBehaviour
     private LineRenderer line_ref = null;
     public bool noOutline = false;
 
+
+    public PickableObject GetParentPickable()
+    {
+        PickableObject result = null;
+        if (transform.parent != null)
+            result = transform.parent.gameObject.GetComponentInParent<PickableObject>();
+        return result;
+    }
+
     public bool IsMounted()
     {
         if (transform.parent.tag == "MountingPoint")
@@ -233,6 +242,13 @@ public class PickableObject : MonoBehaviour
         transform.rotation = mount.rotation;
         if (gameObject.GetComponent<Rigidbody>() != null)
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        // PickableObject newParentPickable = mount.GetComponentInParent<PickableObject>();
+        // if (newParentPickable != null && newParentPickable.GetComponent<Outline>() != null)
+        //     newParentPickable.GetComponent<Outline>().ComputeOutline();
+
+        // if (GetComponent<Outline>() != null)
+        //     GetComponent<Outline>().ComputeOutline();
+
         return true;
     }
 
@@ -248,30 +264,32 @@ public class PickableObject : MonoBehaviour
         }
     }
 
+    public void GenerateOutline() 
+    {
+        Outline outline = GetComponent<Outline>();
+        if (outline == null)
+        {
+            outline = gameObject.AddComponent(typeof(Outline)) as Outline;
+            outline.OutlineWidth = 3f;
+            if (pickupWithPinch)
+                outline.OutlineColor = Color.yellow;
+            outline.enabled = false;
+        }
+        if (GetComponent<OutilneControl>() == null)
+        {
+            OutilneControl outilneControl = gameObject.AddComponent(typeof(OutilneControl)) as OutilneControl;
+            outilneControl.outlines = new List<Outline>();
+            outilneControl.outlines.Add(outline);
+        }
+    }
+
     private void Start()
     {
         player = GameObject.FindObjectOfType<PlayerScript>();
         ShowViewElements(false);
         if (dropAnchor != null)
             FallowTransform(dropAnchor);
-        if (!noOutline)
-        {
-            Outline outline = GetComponent<Outline>();
-            if (outline == null)
-            {
-                outline = gameObject.AddComponent(typeof(Outline)) as Outline;
-                outline.OutlineWidth = 3f;
-                if (pickupWithPinch)
-                    outline.OutlineColor = Color.yellow;
-                outline.enabled = false;
-            }
-            if (GetComponent<OutilneControl>() == null)
-            {
-                OutilneControl outilneControl = gameObject.AddComponent(typeof(OutilneControl)) as OutilneControl;
-                outilneControl.outlines = new List<Outline>();
-                outilneControl.outlines.Add(outline);
-            }
-        }
+        GenerateOutline();
     }
 
     bool TeleportationRayTest(Vector3 pos)
