@@ -56,7 +56,6 @@ public class PickableObject : MonoBehaviour
     private LineRenderer line_ref = null;
     public bool noOutline = false;
 
-
     public PickableObject GetParentPickable()
     {
         PickableObject result = null;
@@ -252,6 +251,7 @@ public class PickableObject : MonoBehaviour
 
     private void UpdateOutline()
     {
+
         if (GetComponent<Outline>() != null)
             GetComponent<Outline>().ComputeOutline();
     }
@@ -267,17 +267,9 @@ public class PickableObject : MonoBehaviour
         if (gameObject.GetComponent<Rigidbody>() != null)
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
         PickableObject newParentPickable = mount.GetComponentInParent<PickableObject>();
-        string ss = ("@ mount " + name + ": ");
 
         if (newParentPickable != null)
-        {
-            ss += newParentPickable.name;
             newParentPickable.InitiateOutlineUpdate(0.1f);
-        }
-        Debug.Log(ss);
-
-        // if (GetComponent<Outline>() != null)
-        //     GetComponent<Outline>().ComputeOutline();
 
         return true;
     }
@@ -296,6 +288,8 @@ public class PickableObject : MonoBehaviour
 
     public void GenerateOutline() 
     {
+        if (noOutline)
+            return;
         Outline outline = GetComponent<Outline>();
         if (outline == null)
         {
