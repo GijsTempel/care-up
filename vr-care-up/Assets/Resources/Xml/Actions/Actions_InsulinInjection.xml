@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-16"?>
 <ActionList>
   <Action
     index="0"
@@ -35,14 +35,14 @@
     value="WorkField"
     hideHint="true" />
   <Action
-    index="3"
+    index="2"
     description="[Controleer cliëntgegevens]"
     type="examine"
     item="PatientRecords"
     points="2"
     expected="good" />
   <Action
-    index="3"
+    index="2"
     description="Controleer de toedienlijst"
     type="examine"
     item="PrescriptionForm"
@@ -68,6 +68,16 @@ hanteer de instructies van de toedienlijst. Je moet bekend zijn met de toedienin
 je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toedienlijst. De verantwoordelijkheid van de juiste dosering ligt bij de arts en de apotheker."
     expected="good" />
   <Action
+    index="3"
+    description="Verwijder de beschermdop van de insulinepen"
+    type="combine"
+    points="1"
+    quiz="2"
+    messageTitle="Insulinepennen"
+    messageContent="Lees altijd de gebruiksinstructie van de insulinepen. Er zijn namelijk veel verschillende merken insulinepennen. "
+    left="InsulinPenWithCap"
+    right="" />
+  <Action
     index="4"
     description="Controleer of er voldoende insuline in de pen aanwezig is. Neem, zo nodig, een nieuwe insulinepen of plaats een nieuw insulinepatroon in de pen"
     type="examine"
@@ -84,16 +94,6 @@ Wanneer er een nieuwe insulinepatroon in de pen geplaatst moet worden. Plaats de
 3. Plaats de nieuwe insulinepatroon met het smalle uiteinde in de patroonhouder.
 4. Draai de patroonhouder met de insulinepatroon vast op de insulinepen."
     expected="good" />
-  <Action
-    index="2"
-    description="Verwijder de beschermdop van de insulinepen"
-    type="combine"
-    points="1"
-    quiz="2"
-    messageTitle="Insulinepennen"
-    messageContent="Lees altijd de gebruiksinstructie van de insulinepen. Er zijn namelijk veel verschillende merken insulinepennen. "
-    left="InsulinPenWithCap"
-    right="" />
   <Action
     index="5"
     description="Meng troebele insuline door de pen voor gebruik minimaal 10x te zwenken, niet schudden"
