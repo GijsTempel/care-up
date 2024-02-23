@@ -67,10 +67,10 @@ public class HighlightObject : MonoBehaviour
             targetPickable = target.GetComponent<PickableObject>();
 
         currentType = _type;
-        foreach (GameObject b in BallElements)
-            b.SetActive(currentType == HighlightObject.type.Ball);
-        foreach (GameObject q in QubeElements)
-            q.SetActive(currentType == HighlightObject.type.Qube);
+        // foreach (GameObject b in BallElements)
+        //     b.SetActive(currentType == HighlightObject.type.Ball);
+        // foreach (GameObject q in QubeElements)
+        //     q.SetActive(currentType == HighlightObject.type.Qube);
         foreach (GameObject a in ArrowElements)
             a.SetActive(isEyeCatcher);//currentType == HighlightObject.type.Arrow || isEyeCatcher);
         if (_type == HighlightObject.type.Hand)

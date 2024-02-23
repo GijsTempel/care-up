@@ -205,15 +205,12 @@ public class HandPresence : MonoBehaviour
             else
                 return false;
         }
-        else
-            {
-                if (PickUpObject(closestPickable))
-                {
-                    GetComponent<HandContactControl>().ClearObjectsFromArea();
-                    return true;
-                }
-                return false;
-            }
+        else if (PickUpObject(closestPickable))
+        {
+            GetComponent<HandContactControl>().ClearObjectsFromArea();
+            return true;
+        }
+        return false;
     }
 
     public bool PickUpObject()
@@ -253,7 +250,7 @@ public class HandPresence : MonoBehaviour
 
         if (objToPickup.gameObject == player.GetObjectInHand(!IsLeftHand()))
         {
-            player.DropFromHand(!IsLeftHand());
+            player.DropFromHand(!IsLeftHand(), false, true);
         }
         bool isPickedUp = objToPickup.PickUp(handPoseControl.objectHolder, 0.02f);
 
@@ -283,7 +280,7 @@ public class HandPresence : MonoBehaviour
             return;
         if (!toForce && handPoseControl.handPoseMode == HandPoseControl.HandPoseMode.CopyAnimIn)
             return;
-        if (objectInHand.Drop())
+        if (objectInHand.Drop(toForce))
         {
             if (!noPoseChange)
             {

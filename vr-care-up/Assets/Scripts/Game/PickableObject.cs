@@ -91,13 +91,15 @@ public class PickableObject : MonoBehaviour
     }
 
 
-    public bool Drop()
+    public bool Drop(bool toForce = false)
     {
-        for(int i = 0; i < transform.childCount; i++)
+        if (!toForce)
         {
-            if (transform.GetChild(i).GetComponent<ActionModule_DropCondition>()) 
+            for(int i = 0; i < transform.childCount; i++)
             {
-                if (!transform.GetChild(i).GetComponent<ActionModule_DropCondition>().Check())
+                if (transform.GetChild(i).GetComponent<ActionModule_DropCondition>() &&
+                    !transform.GetChild(i).GetComponent<ActionModule_DropCondition>().Check()) 
+                    
                     return false;
             }
         }
