@@ -8,6 +8,7 @@ public class HandContactControl : MonoBehaviour
     Dictionary<PickableObject, int> pickableInAreaCounters = new Dictionary<PickableObject, int>();
     PickupHighliteControl pickupHighliteControl;
     PlayerScript player;
+    public bool isLeftHand = true;
     private void OnEnable()
     {
         ClearObjectsFromArea();
@@ -24,8 +25,12 @@ public class HandContactControl : MonoBehaviour
         PickableObject pickableObject = collision.GetComponent<PickableObject>();
         if (pickableObject == null)
             return;
-        if (player.GetHandWithThisObject(pickableObject.gameObject) != null)
-            return;
+        HandPresence handWithThisObject = player.GetHandWithThisObject(pickableObject.gameObject);
+        if (handWithThisObject != null)
+        {
+            if (isLeftHand == handWithThisObject.IsLeftHand())
+                return;
+        }
         
         AddObjectToArea(pickableObject);
         if (pickupHighliteControl != null)
