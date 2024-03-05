@@ -60,8 +60,25 @@ public class InsulinSequence : AnimationSequenceState
 
         if (keyFrame >= keyFrames.Count && !inv.sequenceAborted)
         {
-            GameObject.FindObjectOfType<InjectionPatient>().AfterSequenceDialogue();
-            GameObject.FindObjectOfType<InjectionPatient>().GetComponent<Animator>().SetTrigger("ShirtDown");
+            InjectionPatient patient_v1 = GameObject.FindObjectOfType<InjectionPatient>();
+            if (patient_v1 != null)
+            {
+                patient_v1.AfterSequenceDialogue();
+                patient_v1.GetComponent<Animator>().SetTrigger("ShirtDown");
+            }
+            else
+            {
+                InjectionPatient_v2 patient_v2 = GameObject.FindObjectOfType<InjectionPatient_v2>();
+                if (patient_v2 != null)
+                {
+                    patient_v2.AfterSequenceDialogue();
+                    patient_v2.GetComponent<Animator>().SetTrigger("ShirtDown");
+                }
+                else
+                {
+                    Debug.LogWarning("Attempted to use InjectionPatient, but none found");
+                }
+            }
         }
     }
 }

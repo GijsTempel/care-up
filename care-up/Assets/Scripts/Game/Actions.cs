@@ -16,59 +16,106 @@ namespace CareUp.Actions
         }
     }
 
-
-        /// <summary>
-        /// Abstract class Action. Inherit every time of action from this one.
-        /// </summary>
-        public abstract class Action
+    public class ActionInfo
     {
         public int sequentialNumber = -1;
         public bool matched = false;
-        public string shortDescr;
-        public int pointValue;
+        public string shortDescr; 
+        public int pointValue; 
         public bool notMandatory;
         public bool sceneDoneTrigger; // for test version, when all steps are optional
-        public float quizTriggerTime;
-        public string messageTitle;
+        public float quizTriggerTime; 
+        public string messageTitle; 
         public string messageContent;
-        public List<string> blockRequired;
-        public List<string> blockUnlock;
-        public List<string> blockLock;
-        public string blockTitle;
-        public string blockMessage;
-        public string comment;
-        public string commentUA;
+        public float messageDelay;
+        public List<string> blockRequired; 
+        public List<string> blockUnlock; 
+        public List<string> blockLock; 
+        public string blockTitle; 
+        public string blockMessage; 
+        public string comment; 
+        public string commentUA; 
         public string leftHandRequirement;
         public string rightHandRequirement;
-        public string placeRequirement;
-        public string secondPlaceRequirement;
-        public string _topic;
-        public float encounter;
-        public int storedIndex;
-        public bool ignorePosition = false;
-        public float UITimeout = 0f;
-        public string subjectTitle = "";
+        public string placeRequirement; 
+        public string secondPlaceRequirement; 
+        public string topic;
+        public float encounter; 
+        public int storedIndex; 
+        public bool ignorePosition = false; 
+        public float UITimeout = 0f; 
+        public string subjectTitle = ""; 
 
-        protected ActionManager.ActionType type;
+        public ActionManager.ActionType type;
 
-        private int subindex = 0;
+        public int subindex = 0; 
+
+        public ActionInfo() 
+        {
+            blockUnlock = new List<string>();
+            blockRequired = new List<string>();
+            blockLock = new List<string>();
+        }
+
+        public ActionInfo(ActionInfo i)
+        {
+            this.sequentialNumber = i.sequentialNumber;
+            this.matched = i.matched;
+            this.shortDescr = i.shortDescr;
+            this.pointValue = i.pointValue;
+            this.notMandatory = i.notMandatory;
+            this.quizTriggerTime = i.quizTriggerTime;
+            this.messageTitle = i.messageTitle;
+            this.messageContent = i.messageContent;
+            this.messageDelay = i.messageDelay;
+            this.blockRequired = i.blockRequired;
+            this.blockUnlock = i.blockUnlock;
+            this.blockLock = i.blockLock;
+            this.blockTitle = i.blockTitle;
+            this.blockMessage = i.blockMessage;
+            this.comment = i.comment;
+            this.commentUA = i.commentUA;
+            this.leftHandRequirement = i.leftHandRequirement;
+            this.rightHandRequirement = i.rightHandRequirement;
+            this.placeRequirement = i.placeRequirement;
+            this.secondPlaceRequirement = i.secondPlaceRequirement;
+            this.topic = i.topic;
+            this.encounter = i.encounter;
+            this.storedIndex = i.storedIndex;
+            this.ignorePosition = i.ignorePosition;
+            this.UITimeout = i.UITimeout;
+            this.subjectTitle = i.subjectTitle;
+            this.type = i.type;
+            this.subindex = i.subindex;
+
+            this.sceneDoneTrigger = false;
+        }
+    }
+
+    /// <summary>
+    /// Abstract class Action. Inherit every time of action from this one.
+    /// </summary>
+    public abstract class Action
+    {
+        public ActionInfo info;
+
         public bool compareActions(Action actionB)
         {
             bool result = false;
-            if (type == actionB.type && shortDescr == actionB.shortDescr && messageTitle == actionB.messageTitle
-                && messageContent == actionB.messageContent && storedIndex == actionB.storedIndex)
+            if (info.type == actionB.info.type && info.shortDescr == actionB.info.shortDescr && info.messageTitle == actionB.info.messageTitle
+                && info.messageContent == actionB.info.messageContent && info.storedIndex == actionB.info.storedIndex)
                 result = true;
             return result;
         }
+
         public ActionManager.ActionType Type
         {
-            get { return type; }
+            get { return info.type; }
         }
-
 
         public int SubIndex
         {
-            get { return subindex; }
+            get { return info.subindex; }
         }
 
         /// <summary>
@@ -78,25 +125,9 @@ namespace CareUp.Actions
         /// <param name="index">Index of action (see xml)</param>
         /// <param name="descr">Sentence from xml, describing action</param>
         /// <param name="audio">Name of audiofile, that will be played when hint used</param>
-        public Action(ActionManager.ActionType t, int index, string sdescr,
-            int points, bool notNeeded, float quizTime, string title, string content,
-            List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
+        public Action(ActionInfo externalInfo)
         {
-            type = t;
-            subindex = index;
-            shortDescr = sdescr;
-            pointValue = points;
-            notMandatory = notNeeded;
-            sceneDoneTrigger = false;
-            quizTriggerTime = quizTime;
-            messageTitle = title;
-            messageContent = content;
-            blockRequired = blockReq;
-            blockUnlock = blockUnl;
-            blockLock = blockL;
-            blockTitle = blockTitl;
-            blockMessage = blockMsg;
-            encounter = encounterValue;
+            info = new ActionInfo(externalInfo);
         }
 
         /// <summary>
@@ -119,13 +150,11 @@ namespace CareUp.Actions
 
         public string decombineText;
 
-        public CombineAction(string left, string right, int index, string sdescr,
-            int points, bool notNeeded, float quizTime, string title, string content,
-            List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg,
-            string decombineBtnText, float encounterValue)
-            : base(ActionManager.ActionType.ObjectCombine, index, sdescr, points,
-                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
+        public CombineAction(string left, string right, string decombineBtnText, 
+            ActionInfo externalInfo) : base(externalInfo)
         {
+            info.type = ActionManager.ActionType.ObjectCombine;
+
             leftInput = left;
             rightInput = right;
 
@@ -175,12 +204,11 @@ namespace CareUp.Actions
 
         public string buttonText;
 
-        public UseAction(string use, int index, string sdescr,
-            string button, int points, bool notNeeded, float quizTime, string title, string content,
-            List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
-            : base(ActionManager.ActionType.ObjectUse, index, sdescr, points, notNeeded,
-                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
+        public UseAction(string use, string button, 
+            ActionInfo externalInfo) : base(externalInfo)
         {
+            info.type = ActionManager.ActionType.ObjectUse;
+
             useInput = use;
             buttonText = button;
         }
@@ -220,14 +248,13 @@ namespace CareUp.Actions
         private string topicInput;
         private string person = "Patient"; // TODO
 
-        public TalkAction(string topic, int index, string sdescr,
-            int points, bool notNeeded, float quizTime, string title, string content, List<string> blockReq,
-            List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
-            : base(ActionManager.ActionType.PersonTalk, index, sdescr, points, notNeeded,
-                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
+        public TalkAction(string topic, 
+            ActionInfo externalInfo) : base(externalInfo)
         {
+            info.type = ActionManager.ActionType.PersonTalk;
+
             topicInput = topic;
-            _topic = topic;
+            info.topic = topic;
         }
 
         public override bool Compare(string[] info)
@@ -267,12 +294,11 @@ namespace CareUp.Actions
 
         public string buttonText;
 
-        public UseOnAction(string i, string t, int index, string sdescr,
-            string button, int points, bool notNeeded, float quizTime, string title,
-            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
-            : base(ActionManager.ActionType.ObjectUseOn, index, sdescr, points, notNeeded,
-                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
+        public UseOnAction(string i, string t, string button, 
+            ActionInfo externalInfo) : base(externalInfo)
         {
+            info.type = ActionManager.ActionType.ObjectUseOn;
+
             item = i;
             target = t;
             buttonText = button;
@@ -319,12 +345,11 @@ namespace CareUp.Actions
         private string item;
         private string expected;
 
-        public ExamineAction(string i, string exp, int index, string sdescr,
-            int points, bool notNeeded, float quizTime, string title, string content,
-           List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
-            : base(ActionManager.ActionType.ObjectExamine, index, sdescr, points,
-                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
+        public ExamineAction(string i, string exp, 
+            ActionInfo externalInfo) : base(externalInfo)
         {
+            info.type = ActionManager.ActionType.ObjectExamine;
+
             item = i;
             expected = exp;
         }
@@ -363,12 +388,11 @@ namespace CareUp.Actions
     {
         private string item;
 
-        public PickUpAction(string i, int index, string sdescr,
-            int points, bool notNeeded, float quizTime, string title, string content, List<string> blockReq,
-           List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
-            : base(ActionManager.ActionType.PickUp, index, sdescr, points, notNeeded,
-                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
+        public PickUpAction(string i, 
+            ActionInfo externalInfo) : base(externalInfo)
         {
+            info.type = ActionManager.ActionType.PickUp;
+
             item = i;
         }
 
@@ -398,12 +422,11 @@ namespace CareUp.Actions
     {
         private string stepName;
 
-        public SequenceStepAction(string name, int index, string sdescr,
-            int points, bool notNeeded, float quizTime, string title, string content,
-            List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
-            : base(ActionManager.ActionType.SequenceStep, index, sdescr, points,
-                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
+        public SequenceStepAction(string name, 
+            ActionInfo externalInfo) : base(externalInfo)
         {
+            info.type = ActionManager.ActionType.SequenceStep;
+
             stepName = name;
         }
 
@@ -431,12 +454,11 @@ namespace CareUp.Actions
         private string objectName;
         private string dropPositionID;
 
-        public ObjectDropAction(string name, string posId, int index, string sdescr,
-            int points, bool notNeeded, float quizTime, string title,
-            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
-            : base(ActionManager.ActionType.ObjectDrop, index, sdescr, points,
-                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
+        public ObjectDropAction(string name, string posId, 
+            ActionInfo externalInfo) : base(externalInfo)
         {
+            info.type = ActionManager.ActionType.ObjectDrop;
+
             objectName = name;
             dropPositionID = posId;
         }
@@ -464,12 +486,11 @@ namespace CareUp.Actions
     {
         private string positionInput;
 
-        public MovementAction(string position, int index, string sdescr,
-            int points, bool notNeeded, float quizTime, string title,
-            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
-            : base(ActionManager.ActionType.Movement, index, sdescr, points,
-                  notNeeded, quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
+        public MovementAction(string position, 
+            ActionInfo externalInfo) : base(externalInfo)
         {
+            info.type = ActionManager.ActionType.Movement;
+
             positionInput = position;
         }
 
@@ -505,13 +526,11 @@ namespace CareUp.Actions
         public string Action { get; }
         public string Item { get; }
 
-        public GeneralAction(string itemValue, string actionValue, int index, int storedIndex, string sdescr,
-            string buttonTextValue, int points, bool notNeeded, float quizTime, string title,
-            string content, List<string> blockReq, List<string> blockUnl, List<string> blockL, string blockTitl, string blockMsg, float encounterValue)
-            : base(ActionManager.ActionType.General, index, sdescr, points, notNeeded,
-                  quizTime, title, content, blockReq, blockUnl, blockL, blockTitl, blockMsg, encounterValue)
+        public GeneralAction(string itemValue, string actionValue, string buttonTextValue, 
+            ActionInfo externalInfo) : base(externalInfo)
         {
-            this.storedIndex = storedIndex;
+            info.type = ActionManager.ActionType.General;
+
             Item = itemValue;
             Action = actionValue;
             ButtonText = buttonTextValue;

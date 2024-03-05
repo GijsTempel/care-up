@@ -86,7 +86,7 @@ public class PickableObject : InteractableObject
     /// Drops and object
     /// </summary>
     /// <param name="force">If true - forces load position instead of free dropping</param>
-    public virtual bool Drop(bool force = false)
+    public virtual bool Drop(bool force = false, Transform forcedTransform = null, bool forceParent = false)
     {
         SetShadowOn(true);
         if (destroyOnDrop)
@@ -113,22 +113,23 @@ public class PickableObject : InteractableObject
             rigidBody.isKinematic = true;
             rigidBody.constraints = RigidbodyConstraints.FreezeAll;
 
-            LoadPosition();
+            LoadPosition(force ? forcedTransform : null, forceParent);
             return true;
         }
         
         return false;
     }
 
-    public override void LoadPosition()
+    public override void LoadPosition(Transform overridePos = null, bool forceParent = false)
     {
-        if (useOriginalParent)
+        if (useOriginalParent && overridePos == null)
         {
             transform.localPosition = originalPosition;
             transform.localRotation = originalRotation;
             transform.localScale = originalScale;
             return;
         }
+
         if (prefabOutOfHands != "")
         {
             GameObject replaced = null;
@@ -142,7 +143,7 @@ public class PickableObject : InteractableObject
         }
         else
         {
-            base.LoadPosition();
+            base.LoadPosition(overridePos, forceParent);
         }
     }
 

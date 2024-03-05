@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using CareUp.Actions;
@@ -723,12 +724,12 @@ public class GameUI : MonoBehaviour
 
             if (PlayerPrefsManager.simulatePlayerActions && ps.away)
             {
-                if (a.placeRequirement != "")
+                if (a.info.placeRequirement != "")
                 {
                     if (AutoMoveTo == "")
-                        AutoMoveTo = a.placeRequirement;
+                        AutoMoveTo = a.info.placeRequirement;
                     else if (a.Type == ActionManager.ActionType.PersonTalk)
-                        AutoMoveTo = a.placeRequirement;
+                        AutoMoveTo = a.info.placeRequirement;
                     
                 }
             }
@@ -745,7 +746,7 @@ public class GameUI : MonoBehaviour
                     {
                         foreach (PersonObject po in GameObject.FindObjectsOfType<PersonObject>())
                         {
-                            if (po.hasTopic(a._topic))
+                            if (po.hasTopic(a.info.topic))
                             {
                                 AutoActionObject = po.gameObject.GetComponentInChildren<PersonObjectPart>().gameObject;
                                 autoObjectSelected = true;
@@ -1058,6 +1059,7 @@ public class GameUI : MonoBehaviour
         
         void ShowTheoryTab()
         {
+            PlayerScript.actionsLocked = false;
             if (PlayerPrefsManager.videoRecordingMode)
                 return;
             if (!GameObject.FindObjectOfType<QuizTab>())
@@ -1131,7 +1133,7 @@ public class GameUI : MonoBehaviour
             }
             else if (actionManager.Message != null)
             {
-                ShowTheoryTab();
+                StartCoroutine(MessageCoroutine(actionManager.MessageDelay));
                 SetTargetTime(0.4f);
             }
             else if (RandomQuiz.showQuestion)
@@ -1151,14 +1153,22 @@ public class GameUI : MonoBehaviour
         }
         else if (isSequence && actionManager.ShowTheory)
         {
-            ShowTheoryTab();
+            StartCoroutine(MessageCoroutine(actionManager.MessageDelay));
             actionManager.Message = null;
         }
         else if (isSequence && RandomQuiz.showQuestion)
         {
             ShowRandomQuizTab();
         }
+
+        IEnumerator MessageCoroutine(float delay)
+        {
+            PlayerScript.actionsLocked = true;
+            yield return new WaitForSeconds(delay);
+            ShowTheoryTab();
+        }
     }
+
 
     public RectTransform GetActiveTalkBubblePoint()
     {

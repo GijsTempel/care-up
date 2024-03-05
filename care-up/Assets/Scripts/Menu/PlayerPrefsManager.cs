@@ -334,6 +334,7 @@ public class PlayerPrefsManager : MonoBehaviour
                     {
                         Camera.main.GetComponent<PostProcessingBehaviour>().profile = Resources.Load("PostProcessing/Care_Up_PPS") as PostProcessingProfile;
                     }
+                    Debug.Log("*Curred PPS: " + Camera.main.GetComponent<PostProcessingBehaviour>().profile.ToString());
                 }
             }
             GameObject panoFlyCamera = GameObject.Find("PanoFlyCamera");
@@ -517,11 +518,18 @@ public class PlayerPrefsManager : MonoBehaviour
         postProcessingEnabled = PlayerPrefs.GetInt("PostProcessing") == 1;
         int QualityLevel = 0;
         if (postProcessingEnabled && Application.platform == RuntimePlatform.WebGLPlayer)
+        {
             QualityLevel = 5;//Set High Quality for WebGl 
+        }
+
         else if (postProcessingEnabled)
+        {
             QualityLevel = 7;//Set High Quality for mobile devices
+        }
+
 
         QualitySettings.SetQualityLevel(QualityLevel, true);
+        ColoredConsoleOutput.Print(RGBColor.Green, "*The quality level is: " + QualitySettings.names[QualityLevel].ToString());
         //Debug.Log ("PostProcessing is set to saved value: " + postProcessingEnabled);
     }
 

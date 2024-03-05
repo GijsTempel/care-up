@@ -11,6 +11,23 @@ public class TheoryTab : MonoBehaviour
 
     public void Show(bool value)
     {
+        // force scroll to the top 
+        Transform rectT = transform.Find("panel/quizElements/answerPanel/Panel/" +
+            "w_descriptionPanel/ScrollViewDescription");
+        ScrollRect rect = rectT != null ? rectT.GetComponent<ScrollRect>() : null;
+        Transform scrollbarT = rectT != null ? rectT.Find("Scrollbar Vertical") : null;
+        Scrollbar scrollbar = scrollbarT != null ? scrollbarT.GetComponent<Scrollbar>() : null;
+
+        if (rect != null && scrollbar != null)
+        {
+            rect.normalizedPosition = new Vector2(0, 1);
+            scrollbar.value = 1f;
+        }
+        else
+        {
+            Debug.LogError("TheoryTab scrollRect or scrollBar not found!");
+        }
+
         gameObject.SetActive(value);
 
         //autoplay action

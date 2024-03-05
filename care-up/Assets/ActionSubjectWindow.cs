@@ -28,16 +28,15 @@ public class ActionSubjectWindow : MonoBehaviour
 
     public void RefrashWindow()
     {
-        if (actionManager != null)
+        if (actionManager != null && manager != null)
         {
-            
             int currentActionIndex = actionManager.CurrentActionIndex;
             foreach (Action a in actionManager.actionList)
             {
-                if (ActionStepElements.ContainsKey(a.sequentialNumber))
+                if (ActionStepElements.ContainsKey(a.info.sequentialNumber))
                 {
                     int index = a.SubIndex;
-                    foreach(GameObject g in ActionStepElements[a.sequentialNumber])
+                    foreach(GameObject g in ActionStepElements[a.info.sequentialNumber])
                     {
                         Image img = g.transform.GetChild(0).GetComponent<Image>();
 
@@ -67,7 +66,7 @@ public class ActionSubjectWindow : MonoBehaviour
                                 img.color = new Color(.6f, .6f, .6f, 0.4f);
                         }
                         //Complited correctly step
-                        if (a.matched)
+                        if (a.info.matched)
                         {
                             if (!manager.practiceMode)
                                 g.SetActive(true);
@@ -99,20 +98,20 @@ public class ActionSubjectWindow : MonoBehaviour
             foreach (Action a in actionManager.actionList)
             {   
                 List<GameObject> currentActionElements = new List<GameObject>();
-                if (a.subjectTitle != "")
+                if (a.info.subjectTitle != "")
                 {
                     GameObject subjectTitleObj = GameObject.Instantiate(Resources.Load<GameObject>(
                         "NecessaryPrefabs/UI/SubjectTitle"), scrollContent);
                     subjectTitleObj.transform.Find("Panel/Text").GetComponent<TextMeshProUGUI>().text =
-                        a.subjectTitle;
+                        a.info.subjectTitle;
                     currentActionElements.Add(subjectTitleObj);
                 }
                 GameObject actionStep = GameObject.Instantiate(Resources.Load<GameObject>(
                     "NecessaryPrefabs/UI/SubjectStep"), scrollContent);
                 actionStep.transform.Find("Panel/Text").GetComponent<TextMeshProUGUI>().text =
-                    a.shortDescr;
+                    a.info.shortDescr;
                 currentActionElements.Add(actionStep);
-                ActionStepElements.Add(a.sequentialNumber, currentActionElements);
+                ActionStepElements.Add(a.info.sequentialNumber, currentActionElements);
             }
             GameObject.Instantiate(Resources.Load<GameObject>(
                 "NecessaryPrefabs/UI/SubjectEmpty"), scrollContent);

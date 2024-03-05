@@ -19,6 +19,7 @@ public class PlayerAnimationManager : MonoBehaviour
     public float leftModifier02 = 0f;
     public float rightModifier02 = 0f;
     public static Quaternion SavedCameraOrientation = new Quaternion();
+    public static float SavedCameraFOV = 0f;
     public Transform propL;
     Transform propR;
     float syncSpeed = 0.01f;
@@ -48,6 +49,19 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         SavedCameraOrientation = value;
     }
+
+    public static float GetSavedCameraFOV()
+    {
+        return SavedCameraFOV;
+    }
+
+    public static void SetSavedCameraFOV(float value)
+    {
+        SavedCameraFOV = value;
+    }
+
+    
+
 
     public static bool IsLongAnimation()
     {

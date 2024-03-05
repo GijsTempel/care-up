@@ -24,7 +24,7 @@ public class ClothObject : PickableObject {
         ChangeState(state);
     }
 
-    public override bool Drop(bool force = false)
+    public override bool Drop(bool force = false, Transform forcedTransform = null, bool forceParent = false)
     {
         if (GameObject.Find("ClothPackage") == null
             || name != "Cloth")
@@ -34,7 +34,7 @@ public class ClothObject : PickableObject {
                 GetComponent<MeshFilter>().mesh = basic;
             }
 
-            return base.Drop(force);
+            return base.Drop(force, forcedTransform, forceParent);
         }
         else
         {

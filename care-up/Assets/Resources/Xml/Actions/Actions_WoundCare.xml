@@ -38,12 +38,13 @@
     
 Benodigdheden:
     
-- 2 paar handschoenen
+- 3 paar handschoenen
 - onderlegger
 - bij kans op spatten: plastic schort, bril
 - 4 gazen voor reinigen wondomgeving
 - verbandmateriaal passend bij soort wond
 - zo nodig zalf of crème om wondrand mee te beschermen
+- zo nodig een spatel om zalf of crème aan te brengen
 - afvalbak
 
 bij gebruik schaar en pincet:
@@ -164,15 +165,25 @@ bij gebruik schaar en pincet:
    ui_timeout="2"
    ></action>
 
-	
 	<Action
     index="12"
+    description="Zorg dat  er geen andere activiteiten in de omgeving plaatsvinden, om stofvorming te voorkomen"
+    type="general"
+    item=""
+    points="1"
+    buttonText="Controleer de omgeving"
+	blockRequired="HorClient"
+    action="EnsureSafety"
+	blockUnlock="SafeArea"/>
+	
+	<Action
+    index="13"
     description="Help de cliënt met het uittrekken van de onderbroek"
     type="general"
     item=""
     points="1"
     buttonText="Onderbroek uittrekken"
-	blockRequired="HorClient"
+	blockRequired="SafeArea"
     action="HelpPatientToRemoveUnderwear"
 	blockUnlock="UnderwearIsOff"/>	
 	
@@ -180,7 +191,7 @@ bij gebruik schaar en pincet:
  comment="Place a mat around the work area."
  points="1"
  description="[Leg een onderlegger rond het werkterrein]"
- index="13"
+ index="14"
  type="useOn"
  item="cloth_02_folded"
  target=""
@@ -196,43 +207,29 @@ bij gebruik schaar en pincet:
 	 comment="Remove old plaster"
 	 points="1"
 	 description="Verwijder het verbandmateriaal en gooi het in de afvalbak"
-	 index="14"
+	 index="15"
 	 type="sequenceStep"
 	 value="RemoveOldPlaster"
 	 extra=""
+	 messageTitle="Verbandmateriaal inspecteren"
+	 messageContent="Bekijk het verbandmateriaal aandachtig. Let op de kleur, geur, beoordeel de hoeveelheid exsudaat en controleer of het juiste absorberende materiaal wordt gebruikt"
    ></action>
 
 	<action
 	 comment="Inspect the wound"
 	 points="1"
-	 description="Inspecteer de wond"
-	 index="15"
+	 description="Inspecteer de wond op grootte, diepte, geur, kleur, wondranden en exsudaat"
+	 index="16"
 	 type="sequenceStep"
 	 value="InspectTheWound"
 	 extra=""
-   messageTitle="Inspecteer de wond"
-   messageContent="
-Tijdens deze handeling wordt er een gele vochtige wond behandeld. Omdat elke wond weer anders is is het belangrijk dat je zelf de wond goed inspecteert en hier naar handelt!
-Het lukt bij deze wond NIET om het debris te verwijderen met spoelen. Daarom wordt dit verwijderd met een vochtig gaasje. 
-
-Weet je niet zeker hoe je de wond moet verzorgen? Raadpleeg dan het WCS Classificatiemodel.
-   
-Inspecteer de wond op:
-
- - grootte
- - diepte
- - geur
- - kleur
- - wondranden
- - exsudaat (wondvocht)
-"
    ></action>
 
 	<action
 	 comment="Remove gloves"
 	 points="1"
 	 description="Trek de handschoenen uit en gooi ze in de afvalbak"
-	 index="16"
+	 index="17"
 	 type="sequenceStep"
 	 value="TakeGlovesOff"
 	 blockUnlock="EndOf2SQ"
@@ -244,7 +241,7 @@ Inspecteer de wond op:
    points="3"
    description="[Pas handhygiëne]"
    fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-   index="17"
+   index="18"
    type="use"
    value="HandCleaner"
    blockRequired="EndOf2SQ"
@@ -261,7 +258,7 @@ Inspecteer de wond op:
     comment="Put on gloves."
     points="1"
     description="[Trek de handschoenen aan]"
-    index="18"
+    index="19"
     type="use"
     value="gloveBox"
     extra="Trek de handschoenen aan."
@@ -270,7 +267,7 @@ Inspecteer de wond op:
    ></action>
 
 	<Action
-    index="19"
+    index="20"
     description="Maak de gaasjes nat"
     type="useOn"
     comment="Make gauzes wet"
@@ -285,7 +282,7 @@ Inspecteer de wond op:
 	 comment="Clean the wound with a wet gauze in a clockwise direction"
 	 points="1"
 	 description="Neem een nat gaasje en maak de wond met de klok mee schoon"
-	 index="20"
+	 index="21"
 	 type="sequenceStep"
 	 value="CleanClocjwise"
 	 extra=""
@@ -295,7 +292,7 @@ Inspecteer de wond op:
 	 comment="Clean the wound with a wet gauze in a counter clockwise direction"
 	 points="1"
 	 description="Neem een nat gaasje en maak de wond tegen de klok in schoon"
-	 index="21"
+	 index="22"
 	 type="sequenceStep"
 	 value="CleanCounterClockwise"
 	 extra=""
@@ -305,7 +302,7 @@ Inspecteer de wond op:
 	 comment="Clean the wound with a wet gauze through the middle part of the wound"
 	 points="1"
 	 description="Neem een nat gaasje en maak de wond door het midden schoon"
-	 index="22"
+	 index="23"
 	 type="sequenceStep"
 	 value="CleanMiddle"
 	 extra=""
@@ -315,7 +312,7 @@ Inspecteer de wond op:
 	 comment="Dry wound with dry gauze"
 	 points="1"
 	 description="Droog de wond met een droog gaasje"
-	 index="23"
+	 index="24"
 	 type="sequenceStep"
 	 value="DryWound"
 	 blockUnlock="WoudIsCleaned"
@@ -323,21 +320,59 @@ Inspecteer de wond op:
    ></action>
 
 	<Action
-    index="24"
+    index="25"
+    description="Trek de handschoenen uit."
+    type="general"
+    item=""
+    points="1"
+    buttonText="Trek handschoenen uit"
+    action="TakeOffGlovesWithoutThrowing"
+	blockUnlock="glovesRemoved2"
+    blockRequired="WoudIsCleaned" />
+
+	<action
+   comment="(1)Apply handhygiene"
+   points="3"
+   description="[Pas handhygiëne]"
+   fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
+   index="26"
+   type="use"
+   value="HandCleaner"
+   extra="Pas handhygiëne toe. "
+   messageTitle=""
+   messageContent=""
+    ></action>
+
+	<action
+		comment="Put on gloves."
+		points="1"
+		description="[Trek de handschoenen aan]"
+		index="27"
+		type="use"
+		value="gloveBox"
+		extra="Trek de handschoenen aan."
+		blockUnlock="GlovesTakenOn2"
+   ></action>
+	
+	
+
+	<action
+    index="28"
     description="Breng nieuw verbandmateriaal aan volgens afspraak"
     type="useOn"
     comment="Apply new dressing material as agreed"
     item="BedsorePlaster_OnTable"
     points="1"
     buttonText="Breng wondverband aan"
-	blockRequired="WoudIsCleaned"
-    target="" />
+	blockRequired="GlovesTakenOn2"
+    target="" 
+	></action>
 
 	<action
 	 comment="Cut the plaster"
 	 points="1"
 	 description="Knip de pleister"
-	 index="25"
+	 index="29"
 	 type="sequenceStep"
 	 value="CutPlaster"
 	 extra=""
@@ -347,7 +382,7 @@ Inspecteer de wond op:
 	 comment="Remove middle cover"
 	 points="1"
 	 description="Verwijder de middelste beschermstrip"
-	 index="26"
+	 index="30"
 	 type="sequenceStep"
 	 value="RemoveMidCover"
 	 extra=""
@@ -357,7 +392,7 @@ Inspecteer de wond op:
 	 comment="Attach plaster to patient"
 	 points="1"
 	 description="Plak de pleister over het midden van de wond"
-	 index="27"
+	 index="31"
 	 type="sequenceStep"
 	 value="AttachPlaster"
 	 extra=""
@@ -367,7 +402,7 @@ Inspecteer de wond op:
 	 comment="Remove left side cover"
 	 points="1"
 	 description="Verwijder de linker beschermstrip"
-	 index="28"
+	 index="32"
 	 type="sequenceStep"
 	 value="RemoveLeftCover"
 	 extra=""
@@ -377,7 +412,7 @@ Inspecteer de wond op:
 	 comment="Remove right side cover"
 	 points="1"
 	 description="Verwijder de rechter beschermstrip"
-	 index="29"
+	 index="33"
 	 type="sequenceStep"
 	 value="RemoveRightCover"
 	 blockUnlock="EndOfSq4"
@@ -388,7 +423,7 @@ Inspecteer de wond op:
       comment="Create a clean workfield"
       points="1"
       description="[Maak een schoon werkveld end]"
-      index="30"
+      index="34"
       type="use"
       value="WorkField"
 	  blockRequired="EndOfSq4"
@@ -399,7 +434,7 @@ Inspecteer de wond op:
   ></action>
 	
 	<Action
-    index="31"
+    index="35"
     description="Trek de handschoenen uit."
     type="general"
     item=""
@@ -413,16 +448,16 @@ Inspecteer de wond op:
     points="3"
     description="[Pas handhygiëne]"
     fullDescription="Klik op het werkveld om in te zoomen. Klik daarna op de handhygiënepomp."
-    index="32"
+    index="36"
     type="use"
     value="HandCleaner">
 	</action>
 
   <action
-    comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."
-    index="33"
+    comment="Record the action and any findings and adjust the wound treatment plan if necessary"
+    index="37"
     points="1"
-    description="[Noteer de handeling]"
+    description="Noteer de handeling en eventuele bevindingen. Stel zo nodig het behandelplan bij"
     type="use"
     value="PaperAndPen"
     extra=""></action>
