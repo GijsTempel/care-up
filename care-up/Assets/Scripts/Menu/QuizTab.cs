@@ -174,8 +174,8 @@ public class QuizTab : MonoBehaviour
         for (int i = 0; i < current.answers.Count; i++)
         {
             string cheatSimbol = "";
-#if UNITY_EDITOR
-                ObjectsIDsController objectsIDsController = GameObject.FindAnyObjectByType<ObjectsIDsController>();
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            ObjectsIDsController objectsIDsController = GameObject.FindAnyObjectByType<ObjectsIDsController>();
                 if (objectsIDsController != null && objectsIDsController.cheat)
                 {
                     if (current.answers[randomIndexList[i]].isCorrect)
