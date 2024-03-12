@@ -992,7 +992,11 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public static bool CheckMasterPassword(string pass)
     {
-        if (pass == "707616828")
+        string correctPassHash = "jte8s/U2EidHtKjq50lk3w==";
+        var bytes = System.Text.Encoding.UTF8.GetBytes(pass);
+        string passHash = Convert.ToBase64String(UnityEngine.Windows.Crypto.ComputeMD5Hash(bytes));
+        Debug.Log(passHash);
+        if (passHash == correctPassHash)
             return true;
         return false;
     }
