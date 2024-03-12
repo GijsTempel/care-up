@@ -154,9 +154,9 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         if (GetMasterMode())
             return true;
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-        return true;
-#endif
+// #if UNITY_EDITOR || DEVELOPMENT_BUILD
+//         return true;
+// #endif
         return false;
     }
 

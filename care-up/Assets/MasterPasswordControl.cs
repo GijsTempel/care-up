@@ -36,11 +36,11 @@ public class MasterPasswordControl : MonoBehaviour
     public void EnterPass()
     {
         string passEntered = passInput.text;
-        Debug.Log(passEntered);
         if (PlayerPrefsManager.CheckMasterPassword(passEntered))
         {
             PlayerPrefsManager.EnableMasterMode(true);
             GetComponent<Animator>().SetTrigger("correct");
+            UpdateDebugElements();
         }
         else
         {
