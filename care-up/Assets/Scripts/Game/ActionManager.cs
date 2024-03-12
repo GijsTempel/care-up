@@ -1885,12 +1885,13 @@ public class ActionManager : MonoBehaviour
         {
             PlayerAnimationManager.PlayAnimation("no");
         }
-#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
 
-        EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
-        if (endScoreManager != null)
-            endScoreManager.CalculatePercentage();
-#endif
+        if (PlayerPrefsManager.GetDevMode())
+        {
+            EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+            if (endScoreManager != null)
+                endScoreManager.CalculatePercentage();
+        }
     }
 
 
@@ -1903,12 +1904,12 @@ public class ActionManager : MonoBehaviour
         ActionManager.BuildRequirements();
         ActionManager.UpdateRequirements(1.5f);
         GameObject.FindObjectOfType<ActionManager>().randomQuiz.NextRandomQuiz();
-#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
-
-        EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
-        if (endScoreManager != null)
-            endScoreManager.CalculatePercentage();
-#endif
+        if (PlayerPrefsManager.GetDevMode())
+        {
+            EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+            if (endScoreManager != null)
+                endScoreManager.CalculatePercentage();
+        }
     }
 
     public static void BuildRequirements()
@@ -1974,11 +1975,10 @@ public class ActionManager : MonoBehaviour
                 a.info.placeRequirement = "";
         }
 
-#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
-        if (GameObject.FindObjectOfType<ActionsPanel>() != null)
+        if (PlayerPrefsManager.GetDevMode() && GameObject.FindObjectOfType<ActionsPanel>() != null)
+        {
             GameObject.FindObjectOfType<ActionsPanel>().UpdatePanel();
-#endif
-
+        }
     }
 
     public static List<GameObject> FindAnchers(string[] objectNames)

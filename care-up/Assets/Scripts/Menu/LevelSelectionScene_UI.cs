@@ -188,12 +188,13 @@ public class LevelSelectionScene_UI : MonoBehaviour
 
     void OnGUI()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD 
-        GUIStyle style = new GUIStyle();
-        style.normal.textColor = new Color(0.3f, 1f, 0.3f);
-        style.fontSize = 20;
-        GUI.Label(new Rect(30, 10, 1000, 100), debugSS, style);
-#endif
+        if (PlayerPrefsManager.GetDevMode())
+        {
+            GUIStyle style = new GUIStyle();
+            style.normal.textColor = new Color(0.3f, 1f, 0.3f);
+            style.fontSize = 20;
+            GUI.Label(new Rect(30, 10, 1000, 100), debugSS, style);
+        }
     }
 
     public void ReinitializeUI()

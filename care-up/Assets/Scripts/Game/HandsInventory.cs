@@ -556,11 +556,12 @@ public class HandsInventory : MonoBehaviour {
 
     void RefrashAssetDict()
     {
-#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
-        AssetDebugPanel adp = GameObject.FindObjectOfType<AssetDebugPanel>();
-        if(adp != null)
-            adp.RefrashAssetDict();
-#endif 
+        if (PlayerPrefsManager.GetDevMode())
+        {
+            AssetDebugPanel adp = GameObject.FindObjectOfType<AssetDebugPanel>();
+            if(adp != null)
+                adp.RefrashAssetDict();
+        }
     }
     
 

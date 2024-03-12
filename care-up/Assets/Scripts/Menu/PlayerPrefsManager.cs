@@ -80,6 +80,8 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool VR = true;
     public bool practiceMode = true;
     public bool TextDebug = false;
+
+    static bool masterModeEnabled = false;
     static List<string> purchasedScenes = new List<string>();
     static List<SceneInfo> ScenesInfo = new List<SceneInfo>();
     // store value here after getting from server
@@ -148,12 +150,31 @@ public class PlayerPrefsManager : MonoBehaviour
         return null;
     }
 
+    public static bool GetDevMode()
+    {
+        if (GetMasterMode())
+            return true;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        return true;
+#endif
+        return false;
+    }
+
     [System.Serializable]
     public class PurchasedScetesData
     {
         public string product_name;
     }
 
+    public static void EnableMasterMode(bool toEnable)
+    {
+        masterModeEnabled = toEnable;
+    }
+
+    public static bool GetMasterMode()
+    {
+        return masterModeEnabled;
+    }
 
     public void AddFreeCertScene(string sceneName)
     {
@@ -968,6 +989,14 @@ public class PlayerPrefsManager : MonoBehaviour
                 versionUpdatePanel.SetActive(false);
         }
     }
+
+    public static bool CheckMasterPassword(string pass)
+    {
+        if (pass == "707616828")
+            return true;
+        return false;
+    }
+
 
     static void GetLatestVersionError(CMLData response)
     {
