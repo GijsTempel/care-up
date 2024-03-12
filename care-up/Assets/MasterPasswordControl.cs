@@ -11,10 +11,17 @@ public class MasterPasswordControl : MonoBehaviour
     public GameObject passwordPopup;
     public Image passPanelImage;
     public InputField passInput;
+
+    long buttonPressTime = 0;
     
 
     public void OpenPassButtonClicked(bool forceClose = false)
     {
+        long currentTimeMil = new System.DateTimeOffset(System.DateTime.UtcNow).ToUnixTimeMilliseconds();
+        if ((currentTimeMil - buttonPressTime) > 3000)
+            openPassPanelClickCount = 0;
+        buttonPressTime = currentTimeMil;
+        
         if (passwordPopup.activeSelf || forceClose)
         {
             openPassPanelClickCount = 0;
