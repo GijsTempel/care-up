@@ -990,11 +990,18 @@ public class PlayerPrefsManager : MonoBehaviour
         }
     }
 
+    public static string MD5 (string str)
+    {
+        System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding ();
+        byte[] bytes = encoding.GetBytes (str);      
+        var sha = new System.Security.Cryptography.MD5CryptoServiceProvider();
+        return Convert.ToBase64String(sha.ComputeHash(bytes));
+    }
+
     public static bool CheckMasterPassword(string pass)
     {
         string correctPassHash = "jte8s/U2EidHtKjq50lk3w==";
-        var bytes = System.Text.Encoding.UTF8.GetBytes(pass);
-        string passHash = Convert.ToBase64String(UnityEngine.Windows.Crypto.ComputeMD5Hash(bytes));
+        string passHash = MD5(pass);
         Debug.Log(passHash);
         if (passHash == correctPassHash)
             return true;
