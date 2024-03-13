@@ -174,14 +174,15 @@ public class QuizTab : MonoBehaviour
         for (int i = 0; i < current.answers.Count; i++)
         {
             string cheatSimbol = "";
-#if UNITY_EDITOR
+            if (PlayerPrefsManager.GetDevMode())
+            {
                 ObjectsIDsController objectsIDsController = GameObject.FindAnyObjectByType<ObjectsIDsController>();
-                if (objectsIDsController != null && objectsIDsController.cheat)
-                {
-                    if (current.answers[randomIndexList[i]].isCorrect)
-                        cheatSimbol = "@";
+                    if (objectsIDsController != null && objectsIDsController.cheat)
+                    {
+                        if (current.answers[randomIndexList[i]].isCorrect)
+                            cheatSimbol = "@";
                 }
-#endif
+            }
             buttons[i].transform.GetChild(0).GetComponent<Text>().text = cheatSimbol + current.answers[randomIndexList[i]].text;
             if (gameUI.AllowAutoPlay(false))
             if (current.answers[randomIndexList[i]].isCorrect)

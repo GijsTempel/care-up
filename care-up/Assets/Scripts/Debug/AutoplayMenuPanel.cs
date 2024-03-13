@@ -104,8 +104,8 @@ public class AutoplayMenuPanel : MonoBehaviour
                 PauseButtonPressed();
         }
         panel.SetActive(PlayerPrefsManager.simulatePlayerActions);
-#if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
-        panel.SetActive(false);
-#endif
+
+        if (!PlayerPrefsManager.GetDevMode())
+            panel.SetActive(false);
     }
 }

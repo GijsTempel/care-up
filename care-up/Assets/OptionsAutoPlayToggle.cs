@@ -14,11 +14,15 @@ public class OptionsAutoPlayToggle : MonoBehaviour
         toggle.isOn = PlayerPrefsManager.simulatePlayerActions;
         recordingToggle.isOn = PlayerPrefsManager.videoRecordingMode;
 
+        UpdateVisability();
+    }
 
-#if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
-        recordingToggle.transform.parent.gameObject.SetActive(false);
-        gameObject.SetActive(false);
-#endif
+    public void UpdateVisability()
+    {
+        bool devMode = PlayerPrefsManager.GetDevMode();
+
+        recordingToggle.transform.parent.gameObject.SetActive(devMode);
+        gameObject.SetActive(devMode);
     }
 
     public void ValueChanged()
