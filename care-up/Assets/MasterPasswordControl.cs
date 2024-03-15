@@ -18,7 +18,7 @@ public class MasterPasswordControl : MonoBehaviour
     public void OpenPassButtonClicked(bool forceClose = false)
     {
         long currentTimeMil = new System.DateTimeOffset(System.DateTime.UtcNow).ToUnixTimeMilliseconds();
-        if ((currentTimeMil - buttonPressTime) > 3000)
+        if ((currentTimeMil - buttonPressTime) > 1000)
             openPassPanelClickCount = 0;
         buttonPressTime = currentTimeMil;
         

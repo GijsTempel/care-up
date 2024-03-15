@@ -127,7 +127,7 @@ public class ActionStepButton : MonoBehaviour
 
             if (currentIndex == index)
             {
-                GetComponent<Image>().color = new Color(0f, 1f, 0f, 0.4f);
+                GetComponent<Image>().color = new Color(0.4f, 0.9f, 0.4f, 0.4f);
             }
             else if (index < currentIndex)
             {
@@ -135,7 +135,7 @@ public class ActionStepButton : MonoBehaviour
             }
             else
             {
-                GetComponent<Image>().color = new Color(1f, .6f, 0f, 0.4f);
+                GetComponent<Image>().color = new Color(1f, .7f, 0.3f, 0.4f);
             }
         }
     }
