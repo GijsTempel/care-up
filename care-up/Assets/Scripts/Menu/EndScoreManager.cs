@@ -499,11 +499,12 @@ public class EndScoreManager : MonoBehaviour
         bool subscribed = manager.subscribed;
         if (manager.IsScenePurchasedByName(completedSceneName))
             subscribed = true;
-        if (!(subscribed || HasFreeCert()))
-        {
-            GameObject.Find("Interactable Objects/Canvas/CertificateDemoPopOp").SetActive(true);
-        }
-        else if (emailsSent) // if not demo and email sent, special panel
+        //if (!(subscribed || HasFreeCert()))
+        //{
+        //    GameObject.Find("Interactable Objects/Canvas/CertificateDemoPopOp").SetActive(true);
+        //}
+        //else 
+        if (emailsSent) // if not demo and email sent, special panel
         {
             GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
             if (manager.validatedScene == false)
