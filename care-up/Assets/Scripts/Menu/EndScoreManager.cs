@@ -14,8 +14,6 @@ public class EndScoreManager : MonoBehaviour
 {
     private int points;
     private int score;
-
-    public int forcedScore = -1;
     private float time;
 
     private PlayerPrefsManager manager;
@@ -371,11 +369,6 @@ public class EndScoreManager : MonoBehaviour
         float result = (float)(correctSteps + (quizQuestionsTexts.Count - quizWrongIndexes.Count) 
             + (randQuestionsTexts.Count - randomWrongIndexes.Count))
             / (totalSteps + QuizTab.totalQuizesCount + randomEventQuestionsCount);
-        if (forcedScore >= 0)
-        {
-            result = (float)forcedScore / 100f;
-        }
-
         if (actionsPanel != null)
         {
             if (actionsPanel.mode == ActionsPanel.Mode.Score)
@@ -506,11 +499,12 @@ public class EndScoreManager : MonoBehaviour
         bool subscribed = manager.subscribed;
         if (manager.IsScenePurchasedByName(completedSceneName))
             subscribed = true;
-        if (!(subscribed || HasFreeCert()))
-        {
-            GameObject.Find("Interactable Objects/Canvas/CertificateDemoPopOp").SetActive(true);
-        }
-        else if (emailsSent) // if not demo and email sent, special panel
+        //if (!(subscribed || HasFreeCert()))
+        //{
+        //    GameObject.Find("Interactable Objects/Canvas/CertificateDemoPopOp").SetActive(true);
+        //}
+        //else 
+        if (emailsSent) // if not demo and email sent, special panel
         {
             GameObject.Find("Interactable Objects/Canvas/CertificatePopOp").SetActive(true);
             if (manager.validatedScene == false)
