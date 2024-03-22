@@ -453,7 +453,11 @@ public class DatabaseManager : MonoBehaviour
             array[5] = failureStrike.ToString();
             toUpdate = true;
         }
-        if (score > currentScore) {
+        bool forceScore = false;
+        EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+        forceScore = (endScoreManager != null && endScoreManager.forcedScore >= 0);
+             
+        if (score > currentScore || forceScore) {
             array[difficulty] = score.ToString();
             toUpdate = true;
         }

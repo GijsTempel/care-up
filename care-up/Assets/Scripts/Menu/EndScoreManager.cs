@@ -12,6 +12,7 @@ using MBS;
 /// </summary>
 public class EndScoreManager : MonoBehaviour
 {
+    public int forcedScore = -1;
     private int points;
     private int score;
     private float time;
@@ -369,6 +370,10 @@ public class EndScoreManager : MonoBehaviour
         float result = (float)(correctSteps + (quizQuestionsTexts.Count - quizWrongIndexes.Count) 
             + (randQuestionsTexts.Count - randomWrongIndexes.Count))
             / (totalSteps + QuizTab.totalQuizesCount + randomEventQuestionsCount);
+        if (forcedScore >= 0)
+        {
+            result = (float)forcedScore / 100f;
+        }
         if (actionsPanel != null)
         {
             if (actionsPanel.mode == ActionsPanel.Mode.Score)
