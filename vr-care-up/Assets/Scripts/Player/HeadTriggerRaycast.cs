@@ -91,8 +91,12 @@ public class HeadTriggerRaycast : MonoBehaviour
             WalkToGroupVR currentTeleportAnchor = null;
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit thit, 10f, teleportLayerMask))
             {
-                if (thit.collider.tag == "ScreenCollider")
+                float point3DScale = Mathf.Clamp(thit.distance * 0.02f, 0.01f, 0.05f);
+
+                if (thit.collider.tag == "ScreenCollider" || thit.collider.tag == "Teleport" )
                 {
+                    pointer3DObject.transform.localScale = new Vector3(point3DScale, point3DScale, point3DScale);
+
                     pointer3DObject.transform.position = thit.point;
                     set3DPointerVisible = true;
                 }
@@ -115,6 +119,7 @@ public class HeadTriggerRaycast : MonoBehaviour
                     }
                     else
                     {
+                        pointer3DObject.transform.localScale = new Vector3(point3DScale, point3DScale, point3DScale);
                         pointer3DObject.transform.position = thit.point;
                         set3DPointerVisible = true;
                     }
