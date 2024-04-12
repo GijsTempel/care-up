@@ -35,7 +35,7 @@
         extra="Maak een schoon werkveld. "
         messageTitle="Je het volgende nodig hebt."
         messageContent="
-- Handschoenen
+- 2 paar handschoenen
 - Schort
 - Toilet, zo nodig po
 - Onderlegger
@@ -84,10 +84,7 @@ zo nodig:
         index="4"
         type="use"
         value="gloveBox"
-        extra="Trek de handschoenen aan."
-        messageTitle="Gebruik handschoenen en schort"
-        messageContent="Bij aanbrengen van stomamateriaal hoeven volgens de LCHV-richtlijn geen handschoenen te worden gedragen als deze blijven kleven aan huidplaat of plakranden. Beoordeel per situatie in hoeverre er risico is op contact met excreta en overweeg als alternatief een strak passende maat handschoenen. Hetzelfde geldt voor een schort."
-    ></action>
+        extra="Trek de handschoenen aan."></action>
 
 
     <action
@@ -219,25 +216,60 @@ zo nodig:
         type="sequenceStep"
         value="CheckTheSkin"
         extra=""
+		blockUnlock="SkinIsChecked"
         messageTitle="Beschermingsmiddelen en opvulmateriaal."
         messageContent="Breng zo nodig huidbeschermingsmiddelen en/of opvulmateriaal aan. Wanneer de niet goed aan huidplaat sluit op de huid vanwege huidplooien, vul je de huidplooien op met opvulmateriaal (ring, pasta, strip) op voorschrift van de stomaverpleegkundige."
     ></action>
 
+	    <action
+            index="16"
+            description="Trek de handschoenen uit."
+            type="general"
+            item=""
+            points="1"
+            buttonText="Trek handschoenen uit"
+            action="TakeOffGlovesWithoutThrowing"
+		    blockUnlock="GlovesTakenOff1"
+            blockRequired="SkinIsChecked"
+	></action>
+	
+	<Action
+        index="17"
+        description="[Pas handhygiëne]"
+        type="use"
+        comment="1. Apply hand hygiene"
+        points="3"
+		blockRequired="GlovesTakenOff1"
+		blockUnlock="HandsWashed2time"
+        value="HandCleaner" />
+
+	<action
+	   comment="Put on gloves."
+	   points="1"
+	   description="[Trek de handschoenen aan]"
+	   index="18"
+	   type="use"
+	   value="gloveBox"
+	   blockRequired="HandsWashed2time"
+	   extra="Trek de handschoenen aan."></action>
+	
     <action
         comment=""
         points="1"
         description="[Verwijder de papieren beschermlaag van de huidplaat]"
-        index="16"
+        index="19"
         type="sequenceStep"
         value="RemoveThePaper"
         extra="Verwijder de papieren beschermlaag van de huidplaat"
+		messageTitle="Let op"
+		messageContent="Zorg ervoor dat de onderkant van het opvang- of stomazakje volledig gesloten is voordat je de papieren beschermingslaag verwijdert. Dit is bij bepaalde systemen een belangrijke stap"
     ></action>
 
     <action
         comment=""
         points="1"
         description="[Vouw het systeem]"
-        index="17"
+        index="20"
         type="sequenceStep"
         value="FoldTheSystem"
         extra="Vouw de huidplaat dubbel met de plakrand naar buiten"
@@ -247,7 +279,7 @@ zo nodig:
         comment=""
         points="1"
         description="[Leg de opening van de huidplaat langs de onderkant]"
-        index="18"
+        index="21"
         type="sequenceStep"
         value="LayTheOpening"
         extra="Leg de opening van de huidplaat langs de onderkant van de stoma. Plak de huidplaat van beneden naar boven op de huid rondom de stoma. Houd ondertussen de huid rondom de stoma strak"
@@ -259,7 +291,7 @@ zo nodig:
         comment=""
         points="1"
         description="[Druk de huidplaat rondom de stoma gedurende 30 seconden aan]"
-        index="19"
+        index="22"
         type="sequenceStep"
         value="PressTheSkinPlate"
         extra="Druk de huidplaat rondom de stoma gedurende 30 seconden aan"
@@ -271,7 +303,7 @@ zo nodig:
         comment=""
         points="1"
         description="[Vraag de cliënt nog één minuut]"
-        index="20"
+        index="23"
         type="sequenceStep"
         value="AskTheClient"
         extra="Vraag de cliënt nog één minuut de hand op de huidplaat te leggen, zodat deze goed plakt"
@@ -283,7 +315,7 @@ zo nodig:
         comment=""
         points="1"
         description="[Bevestig het opvang- of stomazakje]"
-        index="21"
+        index="24"
         type="sequenceStep"
         encounter="1"
         value="AttachTheCollection"
@@ -294,47 +326,51 @@ zo nodig:
         comment=""
         points="1"
         description="[Controleer de bevestiging]"
-        index="22"
+        index="25"
         type="sequenceStep"
         value="CheckTheAttachment"
+		blockUnlock="Sq4Done"
         extra="Controleer de bevestiging van het opvang- of stomazakje door er voorzichtig aan te trekken"
     ></action>
 
-    <action
-        comment=""
-        points="1"
-        description="[Trek handschoenen uit en gooi ze in de afvalbak]"
-        index="23"
-        type="sequenceStep"
-        value="RemoveGloves"
-        extra="Trek je handschoenen en je schort uit. Gooi ze daarna in de afvalbak"
-    ></action>
+	<action
+		comment="Create a clean workfield"
+		points="1"
+		description="[Maak een schoon werkveld end]"
+		index="26"
+		type="use"
+		value="WorkField"
+		extra="[Maak een schoon werkveld end]"
+		blockRequired="Sq4Done"
+		messegeTitle="Materialen opruimen"
+		MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen."
+    />
 
-    <action
+	<Action
+            index="27"
+            description="Trek de handschoenen uit."
+            type="general"
+            item=""
+            points="1"
+            buttonText="Trek handschoenen uit"
+            action="TakeOffGlovesWithoutThrowing"
+            blockRequired="Sq4Done" />
+
+	<action
         comment="Apply hand hygiene."
         points="1"
         description="[Pas handhygiëne]"
         fullDescription=""
-        index="24"
+        index="28"
         type="use"
         value="HandCleaner"
         extra="[Pas handhygiëne]" />
 
-    <action
-        comment="Create a clean workfield"
-        points="1"
-        description="[Maak een schoon werkveld end]"
-        index="25"
-        type="use"
-        value="WorkField"
-        extra="[Maak een schoon werkveld end]"
-        messegeTitle="Materialen opruimen"
-        MessegeContent="Ruim de materialen op. Hygiënisch werken is niet alleen een kwestie van goede persoonlijke hygiëne, handen wassen en gebruik van handschoenen, maar ook van goede schoonmaak van ruimtes en materialen. Zorg dus voor een schoon werkveld om besmetting van ziektekiemen te voorkomen"
-    />
 
-    <action
+
+	<action
         comment="Write down the size and length of the inserted probe, pH determination, date of inserting the probe and any findings on the ipad."
-        index="26"
+        index="29"
         points="1"
         description="[Noteer de handeling]"
         type="use"

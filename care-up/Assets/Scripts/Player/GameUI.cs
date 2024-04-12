@@ -592,13 +592,14 @@ public class GameUI : MonoBehaviour
         {
             ActionManager.practiceMode = prefs.practiceMode;
         }
-#if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
-        if(GameObject.Find("ActionsPanel") != null)
-            GameObject.Find("ActionsPanel").SetActive(false);
-        if(GameObject.Find("AssetDebugPanel") != null)
-            GameObject.Find("AssetDebugPanel").SetActive(false);
-        autoplayPanel.SetActive(false);
-#endif
+        if (!PlayerPrefsManager.GetDevMode())
+        {
+            if(GameObject.Find("ActionsPanel") != null)
+                GameObject.Find("ActionsPanel").SetActive(false);
+            if(GameObject.Find("AssetDebugPanel") != null)
+                GameObject.Find("AssetDebugPanel").SetActive(false);
+            autoplayPanel.SetActive(false);
+        }
 
         WalkToGroupPanel = GameObject.Find("MovementButtons");
         Player = GameObject.Find("Player");
@@ -1215,30 +1216,32 @@ public class GameUI : MonoBehaviour
     {
         if (!PlayerPrefsManager.videoRecordingWithTextMode)
             DetailedHintPanel.SetActive(true);      //to remove
-#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
-        if (PlayerPrefsManager.simulatePlayerActions)
+        
+        if (PlayerPrefsManager.GetDevMode())
         {
-            if (autoPlayer != null)
+            if (PlayerPrefsManager.simulatePlayerActions)
             {
-                if (autoPlayer.toStartAutoplaySession)
+                if (autoPlayer != null)
                 {
-                    autoExitTime -= Time.deltaTime;
-                    if (autoExitTime < 0 && autoExitTime > -15f)
+                    if (autoPlayer.toStartAutoplaySession)
                     {
-                        autoExitTime = -30;
-                        Debug.LogError("!! Exited from the scene before completion !!");
-                        CloseGame();
+                        autoExitTime -= Time.deltaTime;
+                        if (autoExitTime < 0 && autoExitTime > -15f)
+                        {
+                            autoExitTime = -30;
+                            Debug.LogError("!! Exited from the scene before completion !!");
+                            CloseGame();
+                        }
+                        float t = autoExitTime;
+                        if (autoExitTime < 0)
+                            t = 0;
+                        System.TimeSpan interval = System.TimeSpan.FromSeconds(t);
+                        autoExitLabeb.text = "Automatic exit in: " + string.Format("{0:D2}:{1:D2}", interval.Minutes, interval.Seconds);
                     }
-                    float t = autoExitTime;
-                    if (autoExitTime < 0)
-                        t = 0;
-                    System.TimeSpan interval = System.TimeSpan.FromSeconds(t);
-                    autoExitLabeb.text = "Automatic exit in: " + string.Format("{0:D2}:{1:D2}", interval.Minutes, interval.Seconds);
                 }
             }
         }
 
-#endif
         if (!timeOutEnded)
         {
             startTimeOut -= Time.deltaTime;
