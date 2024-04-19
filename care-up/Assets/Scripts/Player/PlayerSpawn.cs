@@ -47,6 +47,8 @@ public class PlayerSpawn : MonoBehaviour
             
             UIPrefab.name = "UI";
         }
+        GameUI gameUI = UIPrefab.GetComponent<GameUI>();
+        
         Vector3 r = transform.rotation.eulerAngles;
 
         GameObject player = Instantiate(playerPrefab, transform.position, Quaternion.Euler(0, r.y, r.z));

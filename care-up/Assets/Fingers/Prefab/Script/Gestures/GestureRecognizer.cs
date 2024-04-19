@@ -701,7 +701,6 @@ namespace DigitalRubyShared
         /// </summary>
         protected virtual void StateChanged()
         {
-            // TODO: Remove Updated property
 #pragma warning disable 0618
 
             if (Updated != null)

@@ -224,7 +224,6 @@ namespace DigitalRubyShared
             p.clickCount = 1;
             EventSystem.current.RaycastAll(p, captureRaycastResults);
 
-            // HACK: Unity doesn't get collider2d on UI element, get those now
             int hackCount = Physics2D.OverlapPointNonAlloc(p.position, hackResults);
             for (int i = 0; i < hackCount; i++)
             {
@@ -666,7 +665,6 @@ namespace DigitalRubyShared
             GameObject platformSpecificView = r.PlatformSpecificView as GameObject;
 
             if ((platformSpecificView == null && EventSystem.current == null) ||
-                // HACK: If the platform specific view is a Canvas, always match
                 (platformSpecificView != null && platformSpecificView.GetComponent<Canvas>() != null))
             {
                 return true;

@@ -392,13 +392,11 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         else if (String.Equals(args.purchasedProduct.definition.id, kProductIDNonConsumable, StringComparison.Ordinal))
         {
             Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
-            // TODO: The non-consumable item has been successfully purchased, grant this item to the player.
         }
         // Or ... a subscription product has been purchased by this user.
         else if (String.Equals(args.purchasedProduct.definition.id, kProductIDSubscription, StringComparison.Ordinal))
         {
             Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
-            // TODO: The subscription item has been successfully purchased, grant this to the player.
         }
         // Or ... an unknown product has been purchased by this user. Fill in additional products here....
         else

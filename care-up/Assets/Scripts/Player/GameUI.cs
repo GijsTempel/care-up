@@ -198,7 +198,6 @@ public class GameUI : MonoBehaviour
     public void TestOutput()
     {
         Debug.LogWarning("removed due to new asset bundle manager");
-        // TODO - new asset bundle
         //AssetBundleManager.PrintLoadedBundles();
     }
 

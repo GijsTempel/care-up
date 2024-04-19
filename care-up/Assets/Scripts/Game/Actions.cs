@@ -246,7 +246,7 @@ namespace CareUp.Actions
     public class TalkAction : Action
     {
         private string topicInput;
-        private string person = "Patient"; // TODO
+        private string person = "Patient";
 
         public TalkAction(string topic, 
             ActionInfo externalInfo) : base(externalInfo)
