@@ -88,6 +88,8 @@ public class PlayerSpawn : MonoBehaviour
         {
             itemDescription.GetComponent<CanvasGroup>().alpha = 0f;
         }
+        gameUI.SetItemDescriptionGroup(itemDescription.transform.GetChild(0));
+
         GameObject iPad = UIPrefab.transform.Find("IpadPanel/PatientInfoTabs").gameObject;
         IpadLoadXmlInfo(iPad.transform);
 

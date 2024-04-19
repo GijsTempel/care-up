@@ -54,7 +54,6 @@ namespace DigitalRubyShared
                     Debug.Log("No match found!");
                 }
 
-                // TODO: Do something with the match
                 // You could get a texture from it:
                 // Texture2D texture = FingersImageAutomationScript.CreateTextureFromImageGestureImage(match);
             }

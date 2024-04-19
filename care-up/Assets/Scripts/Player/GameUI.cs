@@ -119,6 +119,14 @@ public class GameUI : MonoBehaviour
     public static bool encounterStarted = false;
     InputField AutoplayStopInput;
     public GameObject PointToObject = null;
+
+    private Transform itemDescriptionGroup;
+
+    public void SetItemDescriptionGroup(Transform itemDescriptionValue)
+    {
+        itemDescriptionGroup = itemDescriptionValue;
+    }
+    
     public void ChangeAutoStopValue(int value)
     {
         stopAutoPlayOnStep += value;
@@ -1213,6 +1221,10 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
+        if (itemDescriptionGroup != null)
+        {
+            itemDescriptionGroup.position = Input.mousePosition;
+        }
         if (!PlayerPrefsManager.videoRecordingWithTextMode)
             DetailedHintPanel.SetActive(true);      //to remove
         
