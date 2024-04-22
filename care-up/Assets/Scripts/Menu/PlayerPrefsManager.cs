@@ -545,7 +545,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
         else if (postProcessingEnabled)
         {
-            QualityLevel = 7;//Set High Quality for mobile devices
+            QualityLevel = 6;//Set High Quality for mobile devices
         }
 
 
