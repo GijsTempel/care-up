@@ -1460,7 +1460,8 @@ public class GameUI : MonoBehaviour
             patientInfo.SetActive(showItemControlPanel);
             //MovementSideButtons.SetActive(showItemControlPanel);
             WalkToGroupPanel.SetActive(showItemControlPanel);
-            animatedFinger.gameObject.SetActive(showItemControlPanel && !theoryTab.gameObject.activeSelf);
+            animatedFinger.gameObject.SetActive(showItemControlPanel && !theoryTab.gameObject.activeSelf && 
+                !quiz_tab.gameObject.activeSelf);
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
 
