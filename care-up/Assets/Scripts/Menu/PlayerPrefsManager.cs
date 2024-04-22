@@ -538,14 +538,15 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         postProcessingEnabled = PlayerPrefs.GetInt("PostProcessing") == 1;
         int QualityLevel = 0;
-        if (postProcessingEnabled && Application.platform == RuntimePlatform.WebGLPlayer)
-        {
-            QualityLevel = 5;//Set High Quality for WebGl 
-        }
 
-        else if (postProcessingEnabled)
+
+        if (postProcessingEnabled)
         {
-            QualityLevel = 6;//Set High Quality for mobile devices
+            QualityLevel = 7;//Set High Quality for mobile devices
+#if UNITY_WEBGL
+
+            QualityLevel = 5;//Set High Quality for WebGl 
+#endif
         }
 
 
