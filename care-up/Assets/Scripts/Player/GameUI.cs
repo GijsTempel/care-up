@@ -1162,7 +1162,7 @@ public class GameUI : MonoBehaviour
         else if (isSequence && actionManager.ShowTheory)
         {
             StartCoroutine(MessageCoroutine(actionManager.MessageDelay));
-            actionManager.Message = null;
+            // actionManager.Message = null;
         }
         else if (isSequence && RandomQuiz.showQuestion)
         {
