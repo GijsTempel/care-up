@@ -310,6 +310,8 @@ MonoBehaviour:
   target: Sterile_workpad
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!1102 &-8549553581928814730
 AnimatorState:
   serializedVersion: 6
@@ -1793,8 +1795,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleFrame: 0
   angle: {x: 0, y: 0, z: 0}
+  FOV: -1
   saveCameraOrientation: 1
   restoreCameraOrientation: 1
+  restoreCameraFOV: 1
 --- !u!1102 &-7061587626182686837
 AnimatorState:
   serializedVersion: 6
@@ -2213,6 +2217,8 @@ MonoBehaviour:
   target: Sink
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!1101 &-6487126039422832398
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2415,7 +2421,7 @@ AnimatorStateMachine:
     m_Position: {x: 270, y: -510, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -539597119090130314}
-    m_Position: {x: 80, y: -500, z: 0}
+    m_Position: {x: 20, y: -530, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8801531901206505014}
     m_Position: {x: -30, y: 700, z: 0}
@@ -3432,6 +3438,8 @@ MonoBehaviour:
   target: _curtainstarget
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!114 &-5220415578762013495
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3446,8 +3454,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleFrame: 1
   angle: {x: 31.11, y: 0, z: 0}
+  FOV: -1
   saveCameraOrientation: 1
   restoreCameraOrientation: 1
+  restoreCameraFOV: 1
 --- !u!1101 &-5164260104948614339
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3745,7 +3755,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1d577ba52e334ef39dfa878ef5c62b5, type: 3}
   m_Name: 
@@ -5117,8 +5127,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleFrame: 0
   angle: {x: 31.11, y: 0, z: 0}
+  FOV: -1
   saveCameraOrientation: 1
   restoreCameraOrientation: 1
+  restoreCameraFOV: 1
 --- !u!114 &-3135627939246132992
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5672,6 +5684,18 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-2387792351948929683
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a4f315e4e11d941865fa624024a887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-2358913571539094942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5853,6 +5877,8 @@ MonoBehaviour:
   target: _closeKochertarget
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!114 &-2041317804356493525
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6784,6 +6810,8 @@ MonoBehaviour:
   target: Sink
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!114 &-684561133730473811
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6999,6 +7027,8 @@ MonoBehaviour:
   target: _clothPlaceTarget
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!1102 &-539597119090130314
 AnimatorState:
   serializedVersion: 6
@@ -7277,8 +7307,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleFrame: 0
   angle: {x: 30, y: 0, z: 0}
+  FOV: -1
   saveCameraOrientation: 1
   restoreCameraOrientation: 1
+  restoreCameraFOV: 1
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -8229,6 +8261,8 @@ MonoBehaviour:
   target: _clothPlaceTarget
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!1102 &780633448505672731
 AnimatorState:
   serializedVersion: 6
@@ -8484,6 +8518,8 @@ MonoBehaviour:
   target: _closeKochertarget
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!1102 &1116178760661449749
 AnimatorState:
   serializedVersion: 6
@@ -9591,8 +9627,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleFrame: 35
   angle: {x: 0, y: 0, z: 0}
+  FOV: -1
   saveCameraOrientation: 1
   restoreCameraOrientation: 1
+  restoreCameraFOV: 1
 --- !u!114 &2573180743065373656
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9872,6 +9910,7 @@ AnimatorState:
   - {fileID: -2995335378374628598}
   - {fileID: 6986449850263230776}
   - {fileID: 7510943637719901835}
+  - {fileID: -2387792351948929683}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -10108,6 +10147,8 @@ MonoBehaviour:
   target: target_001
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!1109 &3085358508333719730
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -10140,6 +10181,8 @@ MonoBehaviour:
   target: target_001
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!1101 &3171295322293865375
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -10535,7 +10578,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 490a370bc18ec46d3befc7fdf2400c36, type: 3}
   m_Name: 
@@ -10583,7 +10626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SequenceName: AnimSeq_Catherisation_Supertubular
   TuggleFromCinematic: 1
-  keyFrames: 4b000000900100007d02000049030000100400003e050000fd05000006060000840600003d070000980800007709000086090000c80a0000e71300008f1500003d16000092180000261d0000
+  keyFrames: 4b000000900100007d02000049030000100400003e050000fd05000006060000840600003d070000980800007709000086090000c80a0000e7130000121600001a180000261d0000
 --- !u!114 &3856237170682080222
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10997,6 +11040,8 @@ MonoBehaviour:
   target: _curtainstarget
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!1101 &4318389250792083937
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -11042,8 +11087,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleFrame: 0
   angle: {x: 30, y: 0, z: 0}
+  FOV: -1
   saveCameraOrientation: 1
   restoreCameraOrientation: 1
+  restoreCameraFOV: 1
 --- !u!1102 &4365794799406086666
 AnimatorState:
   serializedVersion: 6
@@ -11232,8 +11279,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleFrame: 0
   angle: {x: 14.363, y: 0, z: 0}
+  FOV: -1
   saveCameraOrientation: 1
   restoreCameraOrientation: 1
+  restoreCameraFOV: 1
 --- !u!1101 &4542930046970369362
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -11467,8 +11516,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleFrame: 1
   angle: {x: 31.11, y: 0, z: 0}
+  FOV: -1
   saveCameraOrientation: 1
   restoreCameraOrientation: 1
+  restoreCameraFOV: 1
 --- !u!114 &4789972236892231331
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12215,8 +12266,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleFrame: 0
   angle: {x: 31.11, y: 0, z: 0}
+  FOV: -1
   saveCameraOrientation: 1
   restoreCameraOrientation: 1
+  restoreCameraFOV: 1
 --- !u!1102 &5734785268882152517
 AnimatorState:
   serializedVersion: 6
@@ -12671,6 +12724,8 @@ MonoBehaviour:
   target: _closeKochertarget
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!114 &6393366294192740253
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13458,6 +13513,8 @@ MonoBehaviour:
   target: Sterile_workpad
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!1101 &7352896291809166770
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -13772,8 +13829,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleFrame: 0
   angle: {x: 31.11, y: 0, z: 0}
+  FOV: -1
   saveCameraOrientation: 1
   restoreCameraOrientation: 1
+  restoreCameraFOV: 1
 --- !u!1102 &7534037407195057995
 AnimatorState:
   serializedVersion: 6
@@ -13845,7 +13904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 0
-  dropFrame: 6207
+  dropFrame: 5826
 --- !u!1101 &7603679963247994176
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -13970,6 +14029,8 @@ MonoBehaviour:
   target: _closeKochertarget
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!1101 &7811794085945800248
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -14181,6 +14242,8 @@ MonoBehaviour:
   target: _targetRemoveCathBag
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!1102 &8066790601890717453
 AnimatorState:
   serializedVersion: 6
@@ -14938,6 +15001,8 @@ MonoBehaviour:
   target: _targetRemoveCathBag
   resetToTarget: 
   resetCamera: 0
+  forceCloseEyes: 0
+  customTransitionTime: 0.5
 --- !u!1109 &8719905702495702323
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -15473,8 +15538,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleFrame: 0
   angle: {x: 31.11, y: 0, z: 0}
+  FOV: -1
   saveCameraOrientation: 1
   restoreCameraOrientation: 1
+  restoreCameraFOV: 1
 --- !u!1101 &9068558939003711957
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -15628,8 +15695,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleFrame: 0
   angle: {x: 0, y: 0, z: 0}
+  FOV: -1
   saveCameraOrientation: 1
   restoreCameraOrientation: 1
+  restoreCameraFOV: 1
 --- !u!114 &9202043529530566484
 MonoBehaviour:
   m_ObjectHideFlags: 1
