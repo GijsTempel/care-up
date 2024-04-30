@@ -22,7 +22,7 @@ bl_info = {
     "name": "Care Up Tools",
     "description": "A small set of tools created during for on a CareUp project",
     "author": "Vitalii Shmorhun",
-    "version": (0, 0, 2),
+    "version": (0, 0, 3),
     "blender": (3, 6, 0),
     "location": "View3D",
     "warning": "This addon is still in development.",
@@ -98,6 +98,22 @@ class ListActionsToFile(bpy.types.Operator):
 
 
 
+class ListObjectsToFile(bpy.types.Operator):
+    bl_idname = "catools.list_objects_to_file"
+    bl_label = "Care Up List Objects To File"
+
+    def execute(self, contex):
+        blend_path = pathlib.Path(bpy.data.filepath)
+        folder_path = str(blend_path.parent)
+        blend_filename = str(blend_path.name)
+        object_file_name = blend_filename + '.objectlist'
+        list_file = open(folder_path + '/' + object_file_name, 'w')
+        for o in bpy.data.objects:
+            list_file.write(o.name + '\n')
+        list_file.close()
+        return {'FINISHED'}
+
+
 def menu_func(self, context):
     self.layout.operator(InvertQuaternion.bl_idname)
     self.layout.operator(CopyBoneTransform.bl_idname)
@@ -105,12 +121,14 @@ def menu_func(self, context):
 
 def obj_menu_func(self, context):
     self.layout.operator(ListActionsToFile.bl_idname)
+    self.layout.operator(ListObjectsToFile.bl_idname)
 
 
 def register():
     bpy.utils.register_class(InvertQuaternion)
     bpy.utils.register_class(CopyBoneTransform)
     bpy.utils.register_class(ListActionsToFile)
+    bpy.utils.register_class(ListObjectsToFile)
 
     bpy.types.VIEW3D_MT_pose.append(menu_func)
     bpy.types.VIEW3D_MT_object.append(obj_menu_func)
@@ -120,6 +138,7 @@ def unregister():
     bpy.utils.unregister_class(InvertQuaternion)
     bpy.utils.unregister_class(CopyBoneTransform)
     bpy.utils.unregister_class(ListActionsToFile)
+    bpy.utils.unregister_class(ListObjectsToFile)
 
 
 if __name__ == "__main__":
