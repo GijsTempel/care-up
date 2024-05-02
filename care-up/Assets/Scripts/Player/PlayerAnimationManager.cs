@@ -39,6 +39,8 @@ public class PlayerAnimationManager : MonoBehaviour
 
     private static AnimationSequence animationSequence;
     public static float animTimeout = 0;
+    private static float baseAnimSpeed = 1.0f;
+    private static float theoryAnimSpeed = 1.0f;
 
     public static Quaternion GetSavedCameraOrientation()
     {
@@ -297,6 +299,16 @@ public class PlayerAnimationManager : MonoBehaviour
         {
             animationSequence.TutorialLock(value);
         }
+    }
+
+    public static void PauseAnimation(bool toPause = true)
+    {
+        if (animationController == null)
+            return;
+        if (toPause)
+            animationController.speed = 0f;
+        else
+            animationController.speed = 1f;
     }
 
     public static bool SequenceCompleted
