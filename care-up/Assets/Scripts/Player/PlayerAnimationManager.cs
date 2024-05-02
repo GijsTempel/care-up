@@ -39,7 +39,7 @@ public class PlayerAnimationManager : MonoBehaviour
 
     private static AnimationSequence animationSequence;
     public static float animTimeout = 0;
-    private static float baseAnimSpeed = 1.0f;
+    public static float baseAnimSpeed = 1.0f;
     private static float theoryAnimSpeed = 1.0f;
 
     public static Quaternion GetSavedCameraOrientation()
@@ -141,8 +141,13 @@ public class PlayerAnimationManager : MonoBehaviour
             animTimeout -= Time.deltaTime;
 
         if (animationController != null)
-            animationController.speed = baseAnimSpeed * theoryAnimSpeed;
+        {
 
+            animationController.speed = baseAnimSpeed * theoryAnimSpeed;
+            Debug.Log(animationController.speed.ToString() + " " +
+                baseAnimSpeed.ToString() + " " +
+                theoryAnimSpeed.ToString());
+        }
         leftModifier02 = propL.localPosition.y;
         rightModifier02 = propR.localPosition.y;
 
