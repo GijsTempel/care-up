@@ -62,9 +62,6 @@ public class PlayerAnimationManager : MonoBehaviour
         SavedCameraFOV = value;
     }
 
-    
-
-
     public static bool IsLongAnimation()
     {
         bool isLognAnim = false;
@@ -142,6 +139,9 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         if (animTimeout > 0)
             animTimeout -= Time.deltaTime;
+
+        if (animationController != null)
+            animationController.speed = baseAnimSpeed * theoryAnimSpeed;
 
         leftModifier02 = propL.localPosition.y;
         rightModifier02 = propR.localPosition.y;
@@ -276,19 +276,21 @@ public class PlayerAnimationManager : MonoBehaviour
         }
         else
         {
-            animationController.speed = 1f;
+            baseAnimSpeed = 1f;
+            // animationController.speed = 1f;
         }
     }
 
     public static void ToggleAnimationSpeed()
     {
-        animationController.speed = (animationController.speed == 0) ? 1f : 0f;
+        baseAnimSpeed = (baseAnimSpeed == 0) ? 1f : 0f;
     }
 
     public static void AbortSequence()
     {
         animationController.SetTrigger("AbortSequence");
-        animationController.speed = 1f;
+        baseAnimSpeed = 1f;
+        // animationController.speed = 1f;
         handsInventory.DeleteAnimationObject();
         handsInventory.sequenceAborted = true;
     }
@@ -303,12 +305,10 @@ public class PlayerAnimationManager : MonoBehaviour
 
     public static void PauseAnimation(bool toPause = true)
     {
-        if (animationController == null)
-            return;
         if (toPause)
-            animationController.speed = 0f;
+            theoryAnimSpeed = 0f;
         else
-            animationController.speed = 1f;
+            theoryAnimSpeed = 1f;
     }
 
     public static bool SequenceCompleted

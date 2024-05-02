@@ -1289,13 +1289,13 @@ public class GameUI : MonoBehaviour
 
         //Don't show object control panel if animation is playing
         //if animation is longer than 0.2 (is not hold animation)
-        bool animationUiBlock = true;
+        bool animationUINotBlocke = true;
 
         if (allowObjectControlUI)
         {
-            animationUiBlock = !PlayerAnimationManager.IsLongAnimation();
+            animationUINotBlocke = !PlayerAnimationManager.IsLongAnimation();
             if (Camera.main == null)
-                animationUiBlock = false;
+                animationUINotBlocke = false;
         }
 
         if (donePanelYesNo.activeSelf)
@@ -1305,7 +1305,7 @@ public class GameUI : MonoBehaviour
             return;
         }
         //to show object control panel if no animation block and action block
-        bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
+        bool showItemControlPanel = allowObjectControlUI && animationUINotBlocke;
 
         //if some object was added or removed to hands
         if (showItemControlPanel)
@@ -1465,7 +1465,7 @@ public class GameUI : MonoBehaviour
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
 
-        currentAnimLock = animationUiBlock;
+        currentAnimLock = animationUINotBlocke;
         if (!showItemControlPanel)
             currentAnimLock = false;
     }
