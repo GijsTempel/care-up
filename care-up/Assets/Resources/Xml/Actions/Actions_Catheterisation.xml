@@ -419,4 +419,101 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     blockRequired="pull off gloves"
     blockTitle="Deze handeling is nog niet mogelijk"
     blockMessage="Zorg ervoor dat de katheter is ingebracht bij de cliënt" />
+    
+
+
+<action
+    comment="help patient to get up"
+    index="48"
+    point="1"
+    description="Help de cliënt in een comfortabele houding"
+    type="talk"
+    topic="HelpGetUp"
+    extra="Help de cliënt in een comfortabele houding"
+    blockRequired="fixate catheter"
+    blockUnlock="patient get up"
+    blockLock="patient lay down"
+    blockTitle="Deze handeling is niet mogelijk"
+    blockMessage="De katheter is ingebracht bij de cliënt 
+
+De cliënt hoeft niet opnieuw te gaan liggen"
+></action>
+
+
+<action
+    comment="Check the cloth pad"
+    index="49"
+    points="1"
+    description="Controleer of de cliënt en het bed droog zijn gebleven"
+    type="use"
+    value="cloth_02"
+    extra="Controleer of de cliënt en het bed droog zijn gebleven"
+    blockRequired="patient get up"
+    blockTitle="Deze handeling is nog niet mogelijk"
+    blockMessage="Help eerst de cliënt in een comfortabele positie zodat je goed het bed kunt controleren"
+></action>
+
+
+    <action
+    index="50"
+    comment=""
+    points="3"
+    description="Bevestig de urineopvangzak aan het been of ophangrekje"
+    type="useOn"
+    target=""
+    item="fixation_folded_buttons"
+    buttonText="Bevestig urineopvangzak"
+    extra="Bevestig de urineopvangzak aan het been of ophangrekje."
+    blockRequired="patient get up"
+    secondPlace="PatientPos"
+    blockTitle="Deze handeling is nog niet mogelijk"
+    blockMessage="Zorg ervoor dat de katheter is ingebracht bij de cliënt en help de cliënt in een comfortabele positie"
+    blockUnlock="catheter fixed"
+   ></action>
+
+
+  <action
+    comment="Check the catheter bag"
+    index="51"
+    points="3"
+    description="Controleer of de urineopvangzak onder het niveau van de blaas hangt en de grond of voeten van de zorgverleners niet raakt."
+    fullDescription="Klik op de urineopvangzak om te controleren of deze onder het niveau van de blaas hangt."
+    type="use"
+    value="CWB_inner_open_in2"
+    extra="Controleer of de urineopvangzak onder het niveau van de blaas hangt en de grond of voeten van de cliënt niet raakt">
+  </action>
+
+<action
+      comment="46. Apply hand hygiene."
+      index="52"
+      points="3"
+      description="[Pas handhygiëne]"
+      type="use"
+      value="HandCleaner"
+      extra="[Pas handhygiëne]"
+></action>
+  
+<action
+   points="1"
+   description="Ruim de materialen op door met lege handen op het werkveld te klikken"
+   index="53"
+   type="use"
+   value="WorkField"
+   extra="Ruim de materialen op door met lege handen op het werkveld te klikken"
+   blockRequired="catheter fixed"
+   blockTitle="Deze handeling is nog niet mogelijk"
+   blockMessage="Zorg ervoor dat de katheter is ingebracht bij de cliënt en bevestig de urineopvangzak aan het been of ophangrekje"
+   messageTitle="Materialen opruimen"
+   messageContent="[MaterialenOpruimen]"
+></action>
+  
+<action
+    comment="last step"
+    index="54"
+    points="1"
+    description="Noteer datum en tijdstip, reden voor katheterisatie, soort, maat en merk katheter, hoeveelheid ingebrachte vloeistof in ballon en andere bevindingen"
+    type="use"
+    value="PaperAndPen"
+    extra="Noteer datum en tijdstip, reden voor katheterisatie, soort, maat en merk katheter, hoeveelheid ingebrachte vloeistof in ballon en andere bevindingen."
+></action>
 </ActionList>

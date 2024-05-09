@@ -144,9 +144,9 @@ public class PlayerAnimationManager : MonoBehaviour
         {
 
             animationController.speed = baseAnimSpeed * theoryAnimSpeed;
-            Debug.Log(animationController.speed.ToString() + " " +
-                baseAnimSpeed.ToString() + " " +
-                theoryAnimSpeed.ToString());
+            // Debug.Log(animationController.speed.ToString() + " " +
+            //     baseAnimSpeed.ToString() + " " +
+            //     theoryAnimSpeed.ToString());
         }
         leftModifier02 = propL.localPosition.y;
         rightModifier02 = propR.localPosition.y;
