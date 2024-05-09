@@ -75,13 +75,20 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     target="" />
   <Action
     index="4"
+    description="Plaats het bakje met gaasjes op het werkveld"
+    type="drop"
+    secondPlace="WorkFieldPos"
+    item="TrayOfWetGauzes"
+    points="1" />
+  <Action
+    index="5"
     description="[Trek de handschoenen aan]"
     type="use"
     comment="Put on gloves."
     points="1"
     value="gloveBox" />
   <Action
-    index="5"
+    index="6"
     description="Open de buitenverpakking van de katheter en laat de katheter in de binnenverpakking op het steriele werkveld vallen, zonder de binnenverpakking aan te raken"
     type="combine"
     comment="Open the outer package of the catheter a few centimeters, fold the ends. Leave the inner package in the outer package and hold the outer package with the non-dominant hand on the folded ends."
@@ -89,7 +96,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     left="catheter_Supertubular_Preparation_packed_Outer"
     right="" />
   <Action
-    index="6"
+    index="7"
     description="Open de binnenverpakking van de katheter. De katheter blijft in de binnenverpakking zitten"
     type="combine"
     comment="Remove the end of the inner package from the catheter so that the connection point for the urine collection bag is accessible. The catheter remains in the inner package."
@@ -98,7 +105,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     right=""
     blockUnlock="RemoveInnerEnd" />
   <Action
-    index="7"
+    index="8"
     description="Verwijder de afsluitdop van de urineopvangzak en bevestig deze aan de katheter. De katheter blijft in binnenverpakking zitten"
     type="combine"
     comment="With the dominant hand, grasp the tube of the urine collection bag just behind the connection point and attach it to the catheter. Continue to hold the hose."
@@ -111,7 +118,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     blockTitle="Deze handeling is nog niet mogelijk"
     blockMessage="Communiceer met de cliënt en zorg ervoor dat de cliënt klaar is voor blaaskatheterisatie" />
   <Action
-    index="8"
+    index="9"
     description="Verwijder met de niet-dominante hand de buitenverpakking van de katheter. Gooi de buitenverpakking in de afvalbak."
     type="combine"
     comment="With the non-dominant hand, remove the outer package from the catheter. Dispose of the outer packaging in the waste bin."
@@ -120,7 +127,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     right=""
     blockUnlock="removeOuterPack" />
   <Action
-    index="9"
+    index="10"
     description="Scheur met de vrije hand de binnenverpakking langs de perforatie open, zonder het in te brengen deel van de katheter aan te raken."
     type="combine"
     comment="Tear open the inner package along the perforation with your free hand, without touching the insert of the catheter."
@@ -130,7 +137,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     blockUnlock="removeInnerPack"
     blockRequired="removeOuterPack" />
   <Action
-    index="10"
+    index="11"
     description="Leg het in te brengen deel van de katheter op het steriele werkveld."
     posID="0"
     type="drop"
@@ -142,7 +149,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     right=""
     blockRequired="removeInnerPack" />
   <Action
-    index="11"
+    index="12"
     description="Open de verpakking van de spuit met 10 ml steriel water. Laat de spuit in de verpakking"
     type="combine"
     comment="3. Open package of the syringe with 10 ml of sterile water. Leave the syringe in the package "
@@ -151,7 +158,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     right=""
     blockUnlock="liqsyropened" />
   <Action
-    index="12"
+    index="13"
     description="Open de verpakking van de spuit met glijmiddel. Laat de spuit nog in de verpakking"
     type="combine"
     comment="8. Open the packaging of the syringe with lubricant, leave the syringe in the packaging."
@@ -161,7 +168,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     right=""
     blockUnlock="lubsyropened" />
   <Action
-    index="13"
+    index="14"
     description="Vraag de cliënt het onderlichaam te ontbloten en op de rug te gaan liggen met de benen gespreid en de knieën opgetrokken"
     type="talk"
     comment="5. Ask the client to uncover the lower body and lie on the back with the legs spread apart and the knees raised."
@@ -171,7 +178,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     topic="LayOnBed"
     blockUnlock="patient lay down" />
   <Action
-    index="14"
+    index="15"
     description="Leg een onderlegger onder de billen en dijen van de cliënt"
     type="useOn"
     comment="6. Place a pad under the buttocks and thighs of the cliënt."
@@ -182,7 +189,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     target=""
     blockUnlock="clothPlaced" />
   <Action
-    index="15"
+    index="16"
     description=" Klem de katheter af met de kocher, op het aansluitpunt voor de urineopvangzak. Zorg dat je het ballonvulkanaal niet afklemt met de kocher."
     type="general"
     item=""
@@ -192,7 +199,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     blockUnlock="kocherClosed"
     blockRequired="patient lay down,clothPlaced" />
   <Action
-    index="16"
+    index="17"
     description=" Verwijder het fixatie materiaal"
     type="general"
     item=""
@@ -201,14 +208,14 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     action="DisconnectBag"
     blockRequired="kocherClosed" />
   <Action
-    index="17"
+    index="18"
     description="Verwijder het fixatiemateriaal op de buik"
     type="sequenceStep"
     comment="Remove the fixation material on the abdomen"
     points="1"
     value="VerwijderHetFixatiemateriaal" />
   <Action
-    index="18"
+    index="19"
     description="Observeer de insteekplaats van de katheter op roodheid en irritatie"
     type="sequenceStep"
     comment="Observe the catheter insertion site for redness and irritation and note the location of the catheter and the angle at which it is inserted."
@@ -217,42 +224,42 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     messageContent="Let ook op de ligging van de katheter en de hoek waaronder deze is ingebracht."
     value="ObserveCatheter" />
   <Action
-    index="19"
+    index="20"
     description="Plaats de lege spuit op het ventiel van het ballonvulkanaal."
     type="sequenceStep"
     comment="Place the empty syringe on the balloon filler channel."
     points="1"
     value="PlaceSyringe" />
   <Action
-    index="20"
+    index="21"
     description="Oefen geen zuigkracht uit maar laat de spuit zichzelf vullen."
     type="sequenceStep"
     comment="Do not apply suction but allow the syringe to fill itself."
     points="1"
     value="AllowSyringe" />
   <Action
-    index="21"
+    index="22"
     description="Controleer of de hoeveelheid opgezogen vloeistof overeenkomt met de ingespoten hoeveelheid"
     type="sequenceStep"
     comment="Check whether the amount of liquid sucked in corresponds to the amount injected."
     points="1"
     value="CheckAmount" />
   <Action
-    index="22"
+    index="23"
     description="Trek voorzichtig aan de katheter om te zien of deze los zit"
     type="sequenceStep"
     comment="Pull the catheter gently to see if it is loose."
     points="1"
     value="PullGently" />
   <Action
-    index="23"
+    index="24"
     description="Verwijder de katheter en dek de insteekopening af"
     type="sequenceStep"
     comment="Remove the catheter and cover the insertion opening."
     points="1"
     value="RemoveCatheter" />
   <Action
-    index="24"
+    index="25"
     description="Verwijder de katheter tijdens de uitademing met een draaiende beweging in verticale richting"
     type="sequenceStep"
     comment="Ask the client to breathe in and out slowly and remove the catheter during the exhalation with a circular motion in the vertical direction. Leakage from the fistula is normal"
@@ -261,7 +268,7 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
     messageContent="Lekkage tijdens het verwijderen van de katheter uit de fistel is normaal"
     value="AskClient" />
   <Action
-    index="25"
+    index="26"
     description="Dek de insteekopening af met een gaasje. Enige lekkage is normaal"
     type="sequenceStep"
     comment="Cover the insertion opening with a gauze. Some leakage is normal."
@@ -271,49 +278,49 @@ Zorg voor een extra katheter, urineopvangzak en materialen voor het inbrengen, v
    De cliënt moet thuis een reservekather hebben en moet weten hoe te handelen bij het uitvallen van de katheter."
     value="CoverInsertion" />
   <Action
-    index="26"
+    index="27"
     description="Controleer de katheterpunt op aanslag/korstvorming"
     type="sequenceStep"
     comment="Check the catheter tip for deposits / crusting."
     points="1"
     value="CheckCatheter" />
   <Action
-    index="27"
+    index="28"
     description="Gooi de katheter in de afvalbak"
     type="sequenceStep"
     comment="Discard the catheter in the waste bin"
     points="1"
     value="DiscardCatheter" />
   <Action
-    index="28"
+    index="29"
     description="Reinig de insteekplaats en de omgeving met uitgeknepen gaasjes. Droog de huid met een gaasje."
     type="sequenceStep"
     comment="Clean the insertion area and the area with squeezed gauze pads. Dry the skin with gauze."
     points="1"
     value="CleanInsertation" />
   <Action
-    index="29"
+    index="30"
     description="Knijp ieder gaasje eerst uit boven het bakje"
     type="sequenceStep"
     comment="First squeeze each gauze above the tray."
     points="1"
     value="SqueezeGauze" />
   <Action
-    index="30"
+    index="31"
     description="Reinig vanaf het midden (de fistelopening) naar buiten. Maak steeds één streek per gaasje:"
     type="sequenceStep"
     comment="Clean from the center (the fistula opening) to the outside. Always make one stroke per gauze."
     points="1"
     value="CleanBody" />
   <Action
-    index="31"
+    index="32"
     description="Droog de huid met een nieuw, droog gaasje"
     type="sequenceStep"
     comment="Dry the skin with a new, dry gauze."
     points="1"
     value="DryTheSkin" />
   <Action
-    index="32"
+    index="33"
     description="Gooi de gebruikte gaasjes in de afvalbak."
     type="sequenceStep"
     comment="Throw the used gauzes in the waste bin."
