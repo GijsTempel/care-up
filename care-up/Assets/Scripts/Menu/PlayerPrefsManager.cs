@@ -240,6 +240,17 @@ public class PlayerPrefsManager : MonoBehaviour
         ScenesInfo.Add(sceleInfo);
     }
 
+
+    public string GetSceneDisplayName(string sceneName)
+    {
+        foreach(SceneInfo s in ScenesInfo)
+        {
+            if (s.nameForDatabase == sceneName)
+                return s.displayName;
+        }
+        return sceneName;
+    }
+
     public SceneInfo GetSceneInfoByName(string sceneName)
     {
         foreach (SceneInfo sceneInfo in ScenesInfo)
