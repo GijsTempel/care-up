@@ -44,7 +44,7 @@ times.append(prev_time_text + " --> " + current_time_text)
 counter = 1
 out_text = ""
 for i in range(len(titles)):
-    out_text += str(counter) + '\n' + times[i] + '\n' + titles[i] + '\n'
+    out_text += str(counter) + '\n' + times[i] + '\n' + titles[i] + '\n\n'
     counter += 1
 print(out_text)
 
