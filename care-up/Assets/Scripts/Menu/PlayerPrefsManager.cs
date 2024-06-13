@@ -568,6 +568,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60; 
         SmartlookUnity.SetupOptionsBuilder builder = new SmartlookUnity.SetupOptionsBuilder("22f3cf28278dbff71183ef8e0fa90c90048b850d");
         builder.SetFps(2);
         builder.SetStartNewSession(true);
