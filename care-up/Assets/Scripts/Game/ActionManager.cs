@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using CareUp.Actions;
 using CareUp.Localize;
 using System.Collections;
+using NSubstitute.Core;
 
 /// <summary>
 /// GameLogic script. Everything about actions is managed by this script.
@@ -390,6 +391,8 @@ public class ActionManager : MonoBehaviour
                 {
                     gameUI.paperAndPenButtonblink = true;
                 }
+                rightIncorrect = false;
+                leftIncorrect = false;
             }
             else
             {
@@ -501,7 +504,8 @@ public class ActionManager : MonoBehaviour
                             if (!string.IsNullOrEmpty(inventory.leftHandObject.description))
                                 currentLeftObject = System.Char.ToLowerInvariant(inventory.leftHandObject.description[0]) + inventory.leftHandObject.description.Substring(1);
 
-                            if (inventory.leftHandObject.name == hand)
+                            if (inventory.leftHandObject.name == hand || (a.info.objectsAllowedInHands != null &&
+                                a.info.objectsAllowedInHands.Contains(inventory.leftHandObject.name)))
                             {
                                 leftIncorrect = false;
                                 completed = true;
@@ -514,7 +518,8 @@ public class ActionManager : MonoBehaviour
                             if (!string.IsNullOrEmpty(inventory.rightHandObject.description))
                                 currentRightObject = System.Char.ToLowerInvariant(inventory.rightHandObject.description[0]) + inventory.rightHandObject.description.Substring(1);
 
-                            if (inventory.rightHandObject.name == hand)
+                            if (inventory.rightHandObject.name == hand || (a.info.objectsAllowedInHands != null &&
+                                a.info.objectsAllowedInHands.Contains(inventory.rightHandObject.name)))
                             {
                                 rightIncorrect = false;
                                 completed = true;
@@ -1076,7 +1081,11 @@ public class ActionManager : MonoBehaviour
             {
                 info.comment = action.Attributes["comment"].Value;
             }
-
+            if (action.Attributes["objectsAllowedInHands"] != null && 
+                    action.Attributes["objectsAllowedInHands"].Value != "")
+            {
+                info.objectsAllowedInHands = action.Attributes["objectsAllowedInHands"].Value.Split(',').ToList();
+            }
             info.ignorePosition = action.Attributes["ignorePosition"] != null;
 
             info.secondPlaceRequirement = "";

@@ -34,7 +34,8 @@ namespace CareUp.Actions
         public string blockTitle; 
         public string blockMessage; 
         public string comment; 
-        public string commentUA; 
+        public string commentUA;
+        public List<string> objectsAllowedInHands;
         public string leftHandRequirement;
         public string rightHandRequirement;
         public string placeRequirement; 
@@ -72,6 +73,7 @@ namespace CareUp.Actions
             this.blockUnlock = i.blockUnlock;
             this.blockLock = i.blockLock;
             this.blockTitle = i.blockTitle;
+            this.objectsAllowedInHands = i.objectsAllowedInHands;
             this.blockMessage = i.blockMessage;
             this.comment = i.comment;
             this.commentUA = i.commentUA;
