@@ -47,7 +47,7 @@
     messageContent="Controleer de naam en geboortedatum van cliënt"
     expected="good" />
   <Action
-    index="2"
+    index="3"
     description="Controleer de spuit met medicijn"
     type="examine"
     commentUA="Перевірити назначене лікування"
@@ -63,7 +63,7 @@ Controleer het medicijn op:&#xD;&#xD;
     audioHint="Injection/H3-2"
     expected="good" />
   <Action
-    index="2"
+    index="4"
     description="Controleer de toedienlijst"
     type="examine"
     commentUA="Перевірити відповідність медикаментів"
@@ -91,7 +91,7 @@ je mag niet afwijken van de de voorgeschreven dosis die vermeld staat op de toed
     audioHint="InjectionSubcutaneous/Step 5"
     expected="good" />
   <Action
-    index="3"
+    index="5"
     description="Vraag aan je collega of ze een dubbele controle wil doen"
     type="talk"
     commentUA="Запитати лікара про додадкову перевірку"
@@ -104,7 +104,7 @@ Of en hoe controle plaatsvindt van deze voorbehouden handelingen, is een afspraa
     audioHint=""
     topic="DoubleCheck" />
   <Action
-    index="4"
+    index="6"
     description="Vraag de cliënt de injectieplaats te ontbloten en zich te ontspannen"
     type="talk"
     commentUA="Попросити пацієнта розкрити місце для інєкції"
@@ -123,7 +123,7 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.&#xD;&#xD;
     topic="RollUpSleeves"
     blockUnlock="patient show spot" />
   <Action
-    index="5"
+    index="7"
     description="Start injecteren"
     type="useOn"
     commentUA="Розпочати інєкцію"
@@ -137,20 +137,20 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.&#xD;&#xD;
     blockTitle="Deze handeling is nog niet mogelijk"
     blockMessage="Treft de juiste voorbereidingen en vraag de cliënt de injectieplaats te ontbloten." />
   <Action
-    index="6"
+    index="8"
     description="Palpeer de injectieplaats en controleer of de injectieplaats schoon en droog is"
     type="sequenceStep"
     points="1"
     value="clean skin"
     audioHint="Injection/AS1-2" />
   <Action
-    index="7"
+    index="9"
     description="Neem de spuit in de injecterende hand en verwijder de naaldhuls"
     type="sequenceStep"
     points="1"
     value="take off cap" />
   <Action
-    index="8"
+    index="10"
     description="Span de huid met de duim en wijsvinger van uw vrije hand"
     type="sequenceStep"
     points="2"
@@ -158,21 +158,21 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.&#xD;&#xD;
     messageContent="Neem de spier tussen duim en wijsvinger van de ene hand en trek de huid wat strakker. De spier als een dikke plooi tussen de duim en wijs- en middelvinger opnemen, voor een intramusculaire injectie wordt afgeraden (WHO). Deze techniek vergroot het risico op per ongeluk subcutaan injecteren. "
     value="Hold skin" />
   <Action
-    index="9"
+    index="11"
     description="Steek de naald met een snelle beweging loodrecht in de spier"
     type="sequenceStep"
     points="3"
     value="Stick needle in arm"
     audioHint="Injection/AS3-2" />
   <Action
-    index="10"
+    index="12"
     description="Laat de huid los"
     type="sequenceStep"
     points="1"
     value="Release skin with left hand"
     audioHint="Injection/AS4-2" />
   <Action
-    index="11"
+    index="13"
     description="Fixeer de spuit en naald met de niet-injecterende hand om onverwachte bewegingen op te vangen"
     type="sequenceStep"
     points="1"
@@ -180,7 +180,7 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.&#xD;&#xD;
     messageContent="Bij een cliënt die onrustig is of plotselinge bewegingen maakt, is het van belang dat de injectienaald en de spuit goed gefixeerd worden tijdens de injectie. Houd de naald tussen duim en wijsvinger van de vrije hand op de plaats waar de naald op de spuit zit. Zorg dat de rest van deze hand stevig op de huid rust. Als de cliënt beweegt, beweegt de hand met daarin de naald en de spuit, mee."
     value="Secure the needle" />
   <Action
-    index="12"
+    index="14"
     description="Spuit de vloeistof langzaam en regelmatig in (ongeveer 10 sec/ml)"
     type="sequenceStep"
     points="2"
@@ -188,19 +188,19 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.&#xD;&#xD;
     messageContent="De bovenarmspier is een kleine dikke driehoekige spier. Leg twee vingers horizontaal beneden het botje (acromion) dat de punt van de schouder vormt. Je vindt de basis van de direhoek waarin je kunt injecteren."
     value="Inject medicine slow and steady" />
   <Action
-    index="13"
+    index="15"
     description="Laat de naald gedurende 10 seconden in de spier"
     type="sequenceStep"
     points="1"
     value="LeaveTheNeedle" />
   <Action
-    index="14"
+    index="16"
     description="Trek na het injecteren de naald uit de huid. Hierbij kun je een gaasje gereed houden om een eventuele bloeddruppel op te vangen"
     type="sequenceStep"
     points="1"
     value="pull needle out of skin" />
   <Action
-    index="15"
+    index="17"
     description="Verwijder de naald van de spuit"
     type="combine"
     commentUA="Зняти гоку зі шприця"
@@ -210,7 +210,7 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.&#xD;&#xD;
     left="SyringeWithInjectionNeedle"
     right="" />
   <Action
-    index="16"
+    index="18"
     description="Doe de injectienaald in de naaldencontainer"
     type="useOn"
     commentUA="Помістити голку в контейнер"
@@ -224,20 +224,20 @@ Desinfecteer de huid bij cliënten met verminderde weerstand.&#xD;&#xD;
     objectsAllowedInHands="SyringeWithInjectionNeedle"
     target="" />
   <Action
-    index="17"
+    index="19"
     description="Ruim de materialen op door met lege handen op het werkveld te klikken"
     type="use"
     points="1"
     value="WorkField" />
   <Action
-    index="18"
+    index="20"
     description="[Pas handhygiëne]"
     type="use"
     comment="1. Apply hand hygiene"
     points="3"
     value="HandCleaner" />
   <Action
-    index="19"
+    index="21"
     description="Teken de toedienlijst af of noteer het tijdstip, het soort medicijn, de concentratie, de hoeveelheid en de wijze van toediening. Noteer tot slot je bevindingen"
     type="use"
     commentUA="Зробити запис про проведену процедуру"
