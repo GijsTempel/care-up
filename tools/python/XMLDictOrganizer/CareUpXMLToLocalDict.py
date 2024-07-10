@@ -6,9 +6,9 @@ import json
 from lxml import etree as ET
 import io
 
-xml_directories = ["Xml/AnimationSequences/"]
-dump_folder = "AnimationSequences2/"
-work_dict_name = "sequence_dict"
+xml_directories = ["Xml/Quiz/"]
+dump_folder = "Quiz2/"
+work_dict_name = "quiz_dict"
 
 res_path = "../../../care-up/Assets/Resources/"
 dict_root_path =  res_path + "Dictionaries/Dutch/"
