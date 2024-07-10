@@ -171,6 +171,8 @@ public class QuizTab : MonoBehaviour
             b.onClick.RemoveAllListeners();
         randomIndexList = RandomEventTab.BuildShuffledList(current.answers.Count);
 
+
+
         for (int i = 0; i < current.answers.Count; i++)
         {
             string cheatSimbol = "";
@@ -182,6 +184,7 @@ public class QuizTab : MonoBehaviour
                         if (current.answers[randomIndexList[i]].isCorrect)
                             cheatSimbol = "@";
                 }
+            }
             buttons[i].transform.GetChild(0).GetComponent<Text>().text = cheatSimbol + 
                 LocalizationManager.GetValueIfKey(current.answers[randomIndexList[i]].text);
             if (gameUI.AllowAutoPlay(false))
