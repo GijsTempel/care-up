@@ -6,7 +6,7 @@ import json
 from lxml import etree as ET
 import io
 
-xml_directories = ["Xml/Actions1/"]
+xml_directories = ["Xml/Actions/"]
 dump_folder = "Actions2/"
 work_dict_name = "actions_dict"
 
@@ -15,15 +15,28 @@ dict_root_path =  res_path + "Dictionaries/Dutch/"
 dict_names = []
 set_of_dictionaries = []
 
+
 def load_dict(dict_path):
     with open(dict_path, 'r') as file:
         j_data = json.load(file)
     return j_data
 
 
+def get_work_dict_index():
+    index = -1
+    for i in range(len(dict_names)):
+        if work_dict_name == dict_names[i]:
+            index = i
+    if index == -1:
+        index = (len(work_dict_name) - 1)
+    return index
+
+
 def save_dict(dict_index):
     json_object = json.dumps(set_of_dictionaries[dict_index], indent = 4, ensure_ascii=False).encode('utf8')
-    file = io.open(dump_folder + dict_names[dict_index] + ".json", mode="w", encoding="utf-8")
+    dump_file_path = dump_folder + dict_names[dict_index] + ".json"
+    print(dump_file_path)
+    file = io.open(dump_file_path, mode="w", encoding="utf-8")
     file.write(json_object.decode())
     file.close()
 
@@ -98,6 +111,9 @@ for file_path in os.listdir(dict_root_path):
     if (file_path.split('.')[-1] == "json"):
         dict_names.append(file_path.split('.')[0])
         set_of_dictionaries.append(load_dict(dict_root_path + file_path))
+print("_____")
+print(dict_names)
+
 
 if not(work_dict_name in dict_names):
     dict_names.append(work_dict_name)
@@ -145,7 +161,7 @@ for xml_file in xml_files:
                             node.attrib[k] = "[" + found_key + "]"
                         else:
                             new_key = generate_new_key(_value)
-                            set_of_dictionaries[len(set_of_dictionaries) - 1][new_key] = _value
+                            set_of_dictionaries[get_work_dict_index()][new_key] = _value
                             node.attrib[k] = "[" + new_key + "]"
 
     ET.indent(tree, '  ')
@@ -168,5 +184,7 @@ for xml_file in xml_files:
     file.write(new_text)
     file.close()
 
-save_dict(len(set_of_dictionaries) - 1)
+save_dict(get_work_dict_index())
+# save_dict(len(set_of_dictionaries) - 1)
+
 
