@@ -154,10 +154,6 @@ namespace DigitalRubyShared
                     pos.y += bottomOverlap;
                 }
             }
-            else
-            {
-                // TODO: Implement perspective camera keeping oject in view
-            }
 
             transform.position = pos + (velocity * Time.deltaTime);
             velocity *= Dampening;

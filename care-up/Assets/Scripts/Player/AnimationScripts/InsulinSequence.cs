@@ -15,7 +15,7 @@ public class InsulinSequence : AnimationSequenceState
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (animator.speed != 0)
+        if (PlayerAnimationManager.baseAnimSpeed != 0)
         {
             if (PlayerAnimationManager.CompareFrames(frame, prevFrame, takePenFrame))
             {
@@ -34,12 +34,12 @@ public class InsulinSequence : AnimationSequenceState
 
             if (keyFrame < keyFrames.Count)
             {
-                if (animator.speed != 0)
+                if (PlayerAnimationManager.baseAnimSpeed != 0)
                 {
                     if (PlayerAnimationManager.CompareFrames(frame, prevFrame, keyFrames[keyFrame]))
                     {
                         PlayerAnimationManager.NextSequenceStep(true);
-                        animator.speed = 0f;
+                        PlayerAnimationManager.baseAnimSpeed = 0f;
                         ++keyFrame;
                     }
                 }

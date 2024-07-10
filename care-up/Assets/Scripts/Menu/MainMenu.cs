@@ -125,8 +125,8 @@ public class MainMenu : MonoBehaviour
                     // fetch date before formatting scene name back
                     string date = DatabaseManager.FetchField("CertificateDates", score[0]);
                     date = (date == "") ? "27052019" : date;
-
-                    string sceneName = score[0].Replace("_", " ");
+                    string sceneBaseName = prefs.GetSceneDisplayName(score[0]);
+                    string sceneName = sceneBaseName.Replace("_", " ");
 
                     float fPercent = 0.0f;
                     float.TryParse(score[1].Replace(",", "."), out fPercent);

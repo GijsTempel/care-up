@@ -39,7 +39,7 @@ public class AnimationSequenceState : StateMachineBehaviour {
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         if (keyFrame < keyFrames.Count)
         {
-            if (animator.speed != 0)
+            if (PlayerAnimationManager.baseAnimSpeed != 0)
             {
                 prevFrame = frame;
                 frame = stateInfo.normalizedTime * stateInfo.length;
@@ -47,7 +47,7 @@ public class AnimationSequenceState : StateMachineBehaviour {
                 if (PlayerAnimationManager.CompareFrames(frame, prevFrame, keyFrames[keyFrame]))
                 {
                     PlayerAnimationManager.NextSequenceStep(true);
-                    animator.speed = 0f;
+                    PlayerAnimationManager.baseAnimSpeed = 0f;
                     ++keyFrame;
                 }             
             }
@@ -55,7 +55,7 @@ public class AnimationSequenceState : StateMachineBehaviour {
         else
         {
             // let the count go after last keyframe
-            if (animator.speed != 0)
+            if (PlayerAnimationManager.baseAnimSpeed != 0)
             {
                 prevFrame = frame;
                 frame = stateInfo.normalizedTime * stateInfo.length;

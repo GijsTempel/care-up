@@ -106,7 +106,6 @@ namespace DigitalRubyShared
 
         /// <summary>
         /// Get a rect that will be fully visible centered around a center point at a scale
-        /// TODO: Add a function to zoom to a rect with animation
         /// </summary>
         /// <param name="scale">Scale</param>
         /// <param name="center">Center point</param>

@@ -206,11 +206,12 @@ public class LevelButton : MonoBehaviour
             if(inHouseSceneName == "")
                 AutoPlayToggle2.gameObject.SetActive(false);
         }
-#if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
-        AutoPlayToggle.gameObject.SetActive(false);
-        AutoPlayToggle2.gameObject.SetActive(false);
+        if (!PlayerPrefsManager.GetDevMode())
+        {
+            AutoPlayToggle.gameObject.SetActive(false);
+            AutoPlayToggle2.gameObject.SetActive(false);
+        }
 
-#endif
 
         if (GameObject.Find("Preferences") != null && loadingScreen == null)
         {
@@ -266,17 +267,15 @@ public class LevelButton : MonoBehaviour
 
     public void OnHover()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD 
-        GameObject.FindObjectOfType<LevelSelectionScene_UI>().debugSS = sceneName;
-#endif
+        if (PlayerPrefsManager.GetDevMode())
+            GameObject.FindObjectOfType<LevelSelectionScene_UI>().debugSS = sceneName;
     }
 
 
     public void OnExit()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD 
-        GameObject.FindObjectOfType<LevelSelectionScene_UI>().debugSS = "";
-#endif
+        if (PlayerPrefsManager.GetDevMode())
+            GameObject.FindObjectOfType<LevelSelectionScene_UI>().debugSS = "";
     }
 
     public void UpdateAutoPlayToggle()

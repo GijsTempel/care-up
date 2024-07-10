@@ -103,7 +103,6 @@ namespace AppStoresSupport
 		}
 
 		static UnityWebRequest generateOrUpdateUnityClient(string projectGuid, string method, UnityClientInfo unityClientInfo, XiaomiSettings xiaomi, string callbackUrl) {
-			// TODO read xiaomi info from user input
 			UnityChannel channel = new UnityChannel ();
 			channel.xiaomi = xiaomi;
 			channel.projectGuid = projectGuid;

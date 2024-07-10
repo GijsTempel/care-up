@@ -156,10 +156,7 @@ public class InteractableObject : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (itemDescription.activeSelf)
-        {
-            descriptionPanelPosition.position = Input.mousePosition + descriptionOffset;
-        }
+
     }
 
     public virtual void Reset()

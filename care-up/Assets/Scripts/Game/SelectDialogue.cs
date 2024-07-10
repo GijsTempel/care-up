@@ -130,14 +130,16 @@ public class SelectDialogue : MonoBehaviour
             {
                 sqButtons[i].gameObject.SetActive(true);
                 string cheatSimbol = "";
-#if UNITY_EDITOR
-                ObjectsIDsController objectsIDsController = GameObject.FindAnyObjectByType<ObjectsIDsController>();
-                if (objectsIDsController != null && objectsIDsController.cheat)
+
+                if (PlayerPrefsManager.GetDevMode())
                 {
-                    if (options[i].attribute != "" && options[i].attribute != "CM_Leave")
-                        cheatSimbol = "@";
+                    ObjectsIDsController objectsIDsController = GameObject.FindAnyObjectByType<ObjectsIDsController>();
+                    if (objectsIDsController != null && objectsIDsController.cheat)
+                    {
+                        if (options[i].attribute != "" && options[i].attribute != "CM_Leave")
+                            cheatSimbol = "@";
+                    }
                 }
-#endif
                 sqButtons[i].transform.Find("Text").GetComponent<Text>().text = cheatSimbol + 
                     LocalizationManager.GetValueIfKey(options[i].text);
                 if (gameUI.AllowAutoPlay(false))

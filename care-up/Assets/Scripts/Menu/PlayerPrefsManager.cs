@@ -79,6 +79,8 @@ public class PlayerPrefsManager : MonoBehaviour
     public bool VR = true;
     public bool practiceMode = true;
     public bool TextDebug = false;
+
+    static bool masterModeEnabled = false;
     static List<string> purchasedScenes = new List<string>();
     static List<SceneInfo> ScenesInfo = new List<SceneInfo>();
     // store value here after getting from server
@@ -147,12 +149,31 @@ public class PlayerPrefsManager : MonoBehaviour
         return null;
     }
 
+    public static bool GetDevMode()
+    {
+        if (GetMasterMode())
+            return true;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        return true;
+#endif
+        return false;
+    }
+
     [System.Serializable]
     public class PurchasedScetesData
     {
         public string product_name;
     }
 
+    public static void EnableMasterMode(bool toEnable)
+    {
+        masterModeEnabled = toEnable;
+    }
+
+    public static bool GetMasterMode()
+    {
+        return masterModeEnabled;
+    }
 
     public void AddFreeCertScene(string sceneName)
     {
@@ -216,6 +237,17 @@ public class PlayerPrefsManager : MonoBehaviour
     public void AddSceneInfo(SceneInfo sceleInfo)
     {
         ScenesInfo.Add(sceleInfo);
+    }
+
+
+    public string GetSceneDisplayName(string sceneName)
+    {
+        foreach(SceneInfo s in ScenesInfo)
+        {
+            if (s.nameForDatabase == sceneName)
+                return s.displayName;
+        }
+        return sceneName;
     }
 
     public SceneInfo GetSceneInfoByName(string sceneName)
@@ -516,14 +548,15 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         postProcessingEnabled = PlayerPrefs.GetInt("PostProcessing") == 1;
         int QualityLevel = 0;
-        if (postProcessingEnabled && Application.platform == RuntimePlatform.WebGLPlayer)
-        {
-            QualityLevel = 5;//Set High Quality for WebGl 
-        }
 
-        else if (postProcessingEnabled)
+
+        if (postProcessingEnabled)
         {
             QualityLevel = 7;//Set High Quality for mobile devices
+#if UNITY_WEBGL
+
+            QualityLevel = 5;//Set High Quality for WebGl 
+#endif
         }
 
 
@@ -534,6 +567,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60; 
         SmartlookUnity.SetupOptionsBuilder builder = new SmartlookUnity.SetupOptionsBuilder("22f3cf28278dbff71183ef8e0fa90c90048b850d");
         builder.SetFps(2);
         builder.SetStartNewSession(true);
@@ -974,6 +1008,25 @@ public class PlayerPrefsManager : MonoBehaviour
                 versionUpdatePanel.SetActive(false);
         }
     }
+
+    public static string MD5 (string str)
+    {
+        System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding ();
+        byte[] bytes = encoding.GetBytes (str);      
+        var sha = new System.Security.Cryptography.MD5CryptoServiceProvider();
+        return Convert.ToBase64String(sha.ComputeHash(bytes));
+    }
+
+    public static bool CheckMasterPassword(string pass)
+    {
+        string correctPassHash = "jte8s/U2EidHtKjq50lk3w==";
+        string passHash = MD5(pass);
+        Debug.Log(passHash);
+        if (passHash == correctPassHash)
+            return true;
+        return false;
+    }
+
 
     static void GetLatestVersionError(CMLData response)
     {

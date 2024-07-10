@@ -120,6 +120,14 @@ public class GameUI : MonoBehaviour
     public static bool encounterStarted = false;
     InputField AutoplayStopInput;
     public GameObject PointToObject = null;
+
+    private Transform itemDescriptionGroup;
+
+    public void SetItemDescriptionGroup(Transform itemDescriptionValue)
+    {
+        itemDescriptionGroup = itemDescriptionValue;
+    }
+    
     public void ChangeAutoStopValue(int value)
     {
         stopAutoPlayOnStep += value;
@@ -199,7 +207,6 @@ public class GameUI : MonoBehaviour
     public void TestOutput()
     {
         Debug.LogWarning("removed due to new asset bundle manager");
-        // TODO - new asset bundle
         //AssetBundleManager.PrintLoadedBundles();
     }
 
@@ -593,13 +600,14 @@ public class GameUI : MonoBehaviour
         {
             ActionManager.practiceMode = prefs.practiceMode;
         }
-#if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
-        if(GameObject.Find("ActionsPanel") != null)
-            GameObject.Find("ActionsPanel").SetActive(false);
-        if(GameObject.Find("AssetDebugPanel") != null)
-            GameObject.Find("AssetDebugPanel").SetActive(false);
-        autoplayPanel.SetActive(false);
-#endif
+        if (!PlayerPrefsManager.GetDevMode())
+        {
+            if(GameObject.Find("ActionsPanel") != null)
+                GameObject.Find("ActionsPanel").SetActive(false);
+            if(GameObject.Find("AssetDebugPanel") != null)
+                GameObject.Find("AssetDebugPanel").SetActive(false);
+            autoplayPanel.SetActive(false);
+        }
 
         WalkToGroupPanel = GameObject.Find("MovementButtons");
         Player = GameObject.Find("Player");
@@ -927,22 +935,22 @@ public class GameUI : MonoBehaviour
 
     void OnGUI()
     {
-//#if UNITY_EDITOR || DEVELOPMENT_BUILD
-//        GUIStyle style = new GUIStyle();
-//        style.normal.textColor = new Color(1f, 0f, 0f);
-//        style.fontSize = 30;
-//        // ****Show FPS 
-//        GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
-//        if (objectsIDsController != null)
-//        {
-//            if (objectsIDsController.cheat)
-//                GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
-//        }
-//        //****Show FPS end.
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+       GUIStyle style = new GUIStyle();
+       style.normal.textColor = new Color(1f, 0f, 0f);
+       style.fontSize = 30;
+       // ****Show FPS 
+       GUI.Label(new Rect(0, 0, 100, 100), ((int)(1.0f / Time.smoothDeltaTime)).ToString(), style);
+       if (objectsIDsController != null)
+       {
+           if (objectsIDsController.cheat)
+               GUI.Label(new Rect(30, 0, 100, 100), "Cheat enabled", style);
+       }
+       //****Show FPS end.
 
-//        //debugSS = PlayerAnimationManager.animTimeout.ToString();
-//        GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
-//#endif
+       //debugSS = PlayerAnimationManager.animTimeout.ToString();
+       GUI.Label(new Rect(0, 30, 1000, 100), debugSS, style);
+#endif
    }
     
     public void DropFromHand(bool leftHand = true)
@@ -1155,7 +1163,7 @@ public class GameUI : MonoBehaviour
         else if (isSequence && actionManager.ShowTheory)
         {
             StartCoroutine(MessageCoroutine(actionManager.MessageDelay));
-            actionManager.Message = null;
+            // actionManager.Message = null;
         }
         else if (isSequence && RandomQuiz.showQuestion)
         {
@@ -1214,32 +1222,38 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
+        if (itemDescriptionGroup != null)
+        {
+            itemDescriptionGroup.position = Input.mousePosition;
+        }
         if (!PlayerPrefsManager.videoRecordingWithTextMode)
             DetailedHintPanel.SetActive(true);      //to remove
-#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
-        if (PlayerPrefsManager.simulatePlayerActions)
+        
+        if (PlayerPrefsManager.GetDevMode())
         {
-            if (autoPlayer != null)
+            if (PlayerPrefsManager.simulatePlayerActions)
             {
-                if (autoPlayer.toStartAutoplaySession)
+                if (autoPlayer != null)
                 {
-                    autoExitTime -= Time.deltaTime;
-                    if (autoExitTime < 0 && autoExitTime > -15f)
+                    if (autoPlayer.toStartAutoplaySession)
                     {
-                        autoExitTime = -30;
-                        Debug.LogError("!! Exited from the scene before completion !!");
-                        CloseGame();
+                        autoExitTime -= Time.deltaTime;
+                        if (autoExitTime < 0 && autoExitTime > -15f)
+                        {
+                            autoExitTime = -30;
+                            Debug.LogError("!! Exited from the scene before completion !!");
+                            CloseGame();
+                        }
+                        float t = autoExitTime;
+                        if (autoExitTime < 0)
+                            t = 0;
+                        System.TimeSpan interval = System.TimeSpan.FromSeconds(t);
+                        autoExitLabeb.text = "Automatic exit in: " + string.Format("{0:D2}:{1:D2}", interval.Minutes, interval.Seconds);
                     }
-                    float t = autoExitTime;
-                    if (autoExitTime < 0)
-                        t = 0;
-                    System.TimeSpan interval = System.TimeSpan.FromSeconds(t);
-                    autoExitLabeb.text = "Automatic exit in: " + string.Format("{0:D2}:{1:D2}", interval.Minutes, interval.Seconds);
                 }
             }
         }
 
-#endif
         if (!timeOutEnded)
         {
             startTimeOut -= Time.deltaTime;
@@ -1276,13 +1290,13 @@ public class GameUI : MonoBehaviour
 
         //Don't show object control panel if animation is playing
         //if animation is longer than 0.2 (is not hold animation)
-        bool animationUiBlock = true;
+        bool animationUINotBlocke = true;
 
         if (allowObjectControlUI)
         {
-            animationUiBlock = !PlayerAnimationManager.IsLongAnimation();
+            animationUINotBlocke = !PlayerAnimationManager.IsLongAnimation();
             if (Camera.main == null)
-                animationUiBlock = false;
+                animationUINotBlocke = false;
         }
 
         if (donePanelYesNo.activeSelf)
@@ -1292,7 +1306,7 @@ public class GameUI : MonoBehaviour
             return;
         }
         //to show object control panel if no animation block and action block
-        bool showItemControlPanel = allowObjectControlUI && animationUiBlock;
+        bool showItemControlPanel = allowObjectControlUI && animationUINotBlocke;
 
         //if some object was added or removed to hands
         if (showItemControlPanel)
@@ -1447,11 +1461,12 @@ public class GameUI : MonoBehaviour
             patientInfo.SetActive(showItemControlPanel);
             //MovementSideButtons.SetActive(showItemControlPanel);
             WalkToGroupPanel.SetActive(showItemControlPanel);
-            animatedFinger.gameObject.SetActive(showItemControlPanel && !theoryTab.gameObject.activeSelf);
+            animatedFinger.gameObject.SetActive(showItemControlPanel && !theoryTab.gameObject.activeSelf && 
+                !quiz_tab.gameObject.activeSelf);
             ICPCurrentState = ItemControlPanel.activeSelf;
         }
 
-        currentAnimLock = animationUiBlock;
+        currentAnimLock = animationUINotBlocke;
         if (!showItemControlPanel)
             currentAnimLock = false;
     }

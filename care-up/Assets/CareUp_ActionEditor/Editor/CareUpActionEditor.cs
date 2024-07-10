@@ -87,6 +87,8 @@ namespace CareUp.ActionEditor
         [XmlAttribute]
         public string right = null;
         [XmlAttribute]
+        public string objectsAllowedInHands = null;
+        [XmlAttribute]
         public string value = null;
         [XmlAttribute]
         public string audioHint = null;
@@ -142,6 +144,7 @@ namespace CareUp.ActionEditor
             newCopy.encounter = this.encounter;
             newCopy.left = this.left;
             newCopy.right = this.right;
+            newCopy.objectsAllowedInHands = this.objectsAllowedInHands;
             newCopy.value = this.value;
             newCopy.audioHint = this.audioHint;
             newCopy.action = this.action;
@@ -202,6 +205,8 @@ namespace CareUp.ActionEditor
                     return expected;
                 case "blockRequired":
                     return blockRequired;
+                case "objectsAllowedInHands":
+                    return objectsAllowedInHands;
                 case "blockTitle":
                     return blockTitle;
                 case "blockMessage":
@@ -279,6 +284,9 @@ namespace CareUp.ActionEditor
                     break;
                 case "right":
                     right = _value;
+                    break;
+                case "objectsAllowedInHands":
+                    objectsAllowedInHands = _value;
                     break;
                 case "value":
                     value = _value;
@@ -382,6 +390,7 @@ namespace CareUp.ActionEditor
             "value",
             "expected",
             "blockRequired",
+            "objectsAllowedInHands",
             "blockTitle",
             "blockMessage",
             "blockUnlock",
@@ -580,6 +589,9 @@ namespace CareUp.ActionEditor
                             action.left = xmlAction.Attributes["left"].Value;
                         if (xmlAction.Attributes["right"] != null)
                             action.right = xmlAction.Attributes["right"].Value;
+                        if (xmlAction.Attributes["objectsAllowedInHands"] != null)
+                            action.objectsAllowedInHands = 
+                                xmlAction.Attributes["objectsAllowedInHands"].Value;
                         if (xmlAction.Attributes["value"] != null)
                             action.value = xmlAction.Attributes["value"].Value;
                         if (xmlAction.Attributes["audioHint"] != null)

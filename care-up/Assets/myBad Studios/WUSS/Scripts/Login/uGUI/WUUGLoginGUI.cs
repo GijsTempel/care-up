@@ -339,9 +339,7 @@ namespace MBS
                 string buildTime = buildTimestamp ? buildTimestamp.ToString(format, utcOffsetHours) : "";
                 GameObject.Find("VersionNumber").GetComponent<Text>().text = "v" + Application.version + " " + buildTime + " UTC" + _sing + ((int)utcOffsetHours).ToString();
             }
-#if !(UNITY_EDITOR || DEVELOPMENT_BUILD)
-            panels.debug_options.SetActive(false);
-#endif 
+            UpdateDebugOptionsPanelVis();
 
             PlayerPrefsManager.plusCoins = false;
             PlayerPrefsManager.plusDiamonds = false;
@@ -409,6 +407,11 @@ namespace MBS
             PlayerPrefsManager.TestBundleIPAddr = value;
         }
 
+
+        public void UpdateDebugOptionsPanelVis()
+        {
+            panels.debug_options.SetActive(PlayerPrefsManager.GetDevMode());
+        }
         public void UseDevBundleServerChanged()
         {
             bool value = panels.debug_options.transform.Find("Panel/DevBundleServer/Toggle").GetComponent<Toggle>().isOn;

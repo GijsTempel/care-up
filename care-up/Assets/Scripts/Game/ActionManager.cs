@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using CareUp.Actions;
 using CareUp.Localize;
 using System.Collections;
+using NSubstitute.Core;
 
 /// <summary>
 /// GameLogic script. Everything about actions is managed by this script.
@@ -416,6 +417,8 @@ public class ActionManager : MonoBehaviour
                 {
                     gameUI.paperAndPenButtonblink = true;
                 }
+                rightIncorrect = false;
+                leftIncorrect = false;
             }
             else
             {
@@ -529,7 +532,8 @@ public class ActionManager : MonoBehaviour
                             if (!string.IsNullOrEmpty(localizeDescr))
                                 currentLeftObject = localizeDescr.ToLower();
 
-                            if (inventory.leftHandObject.name == hand)
+                            if (inventory.leftHandObject.name == hand || (a.info.objectsAllowedInHands != null &&
+                                a.info.objectsAllowedInHands.Contains(inventory.leftHandObject.name)))
                             {
                                 leftIncorrect = false;
                                 completed = true;
@@ -544,7 +548,8 @@ public class ActionManager : MonoBehaviour
                             if (!string.IsNullOrEmpty(localizeDescr))
                                 currentRightObject = localizeDescr.ToLower();
 
-                            if (inventory.rightHandObject.name == hand)
+                            if (inventory.rightHandObject.name == hand || (a.info.objectsAllowedInHands != null &&
+                                a.info.objectsAllowedInHands.Contains(inventory.rightHandObject.name)))
                             {
                                 rightIncorrect = false;
                                 completed = true;
@@ -1137,7 +1142,11 @@ public class ActionManager : MonoBehaviour
             {
                 info.comment = action.Attributes["comment"].Value;
             }
-
+            if (action.Attributes["objectsAllowedInHands"] != null && 
+                    action.Attributes["objectsAllowedInHands"].Value != "")
+            {
+                info.objectsAllowedInHands = action.Attributes["objectsAllowedInHands"].Value.Split(',').ToList();
+            }
             info.ignorePosition = action.Attributes["ignorePosition"] != null;
 
             info.secondPlaceRequirement = "";
@@ -1946,12 +1955,13 @@ public class ActionManager : MonoBehaviour
         {
             PlayerAnimationManager.PlayAnimation("no");
         }
-#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
 
-        EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
-        if (endScoreManager != null)
-            endScoreManager.CalculatePercentage();
-#endif
+        if (PlayerPrefsManager.GetDevMode())
+        {
+            EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+            if (endScoreManager != null)
+                endScoreManager.CalculatePercentage();
+        }
     }
 
 
@@ -1964,12 +1974,12 @@ public class ActionManager : MonoBehaviour
         ActionManager.BuildRequirements();
         ActionManager.UpdateRequirements(1.5f);
         GameObject.FindObjectOfType<ActionManager>().randomQuiz.NextRandomQuiz();
-#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
-
-        EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
-        if (endScoreManager != null)
-            endScoreManager.CalculatePercentage();
-#endif
+        if (PlayerPrefsManager.GetDevMode())
+        {
+            EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+            if (endScoreManager != null)
+                endScoreManager.CalculatePercentage();
+        }
     }
 
     public static void BuildRequirements()
@@ -2035,11 +2045,10 @@ public class ActionManager : MonoBehaviour
                 a.info.placeRequirement = "";
         }
 
-#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
-        if (GameObject.FindObjectOfType<ActionsPanel>() != null)
+        if (PlayerPrefsManager.GetDevMode() && GameObject.FindObjectOfType<ActionsPanel>() != null)
+        {
             GameObject.FindObjectOfType<ActionsPanel>().UpdatePanel();
-#endif
-
+        }
     }
 
     public static List<GameObject> FindAnchers(string[] objectNames)

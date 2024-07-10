@@ -29,6 +29,7 @@ public class TheoryTab : MonoBehaviour
         }
 
         gameObject.SetActive(value);
+        PlayerAnimationManager.PauseAnimation(value);
 
         //autoplay action
         if (value && PlayerPrefsManager.simulatePlayerActions)

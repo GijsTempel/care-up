@@ -39,6 +39,8 @@ public class PlayerAnimationManager : MonoBehaviour
 
     private static AnimationSequence animationSequence;
     public static float animTimeout = 0;
+    public static float baseAnimSpeed = 1.0f;
+    private static float theoryAnimSpeed = 1.0f;
 
     public static Quaternion GetSavedCameraOrientation()
     {
@@ -59,9 +61,6 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         SavedCameraFOV = value;
     }
-
-    
-
 
     public static bool IsLongAnimation()
     {
@@ -141,6 +140,14 @@ public class PlayerAnimationManager : MonoBehaviour
         if (animTimeout > 0)
             animTimeout -= Time.deltaTime;
 
+        if (animationController != null)
+        {
+
+            animationController.speed = baseAnimSpeed * theoryAnimSpeed;
+            // Debug.Log(animationController.speed.ToString() + " " +
+            //     baseAnimSpeed.ToString() + " " +
+            //     theoryAnimSpeed.ToString());
+        }
         leftModifier02 = propL.localPosition.y;
         rightModifier02 = propR.localPosition.y;
 
@@ -274,19 +281,21 @@ public class PlayerAnimationManager : MonoBehaviour
         }
         else
         {
-            animationController.speed = 1f;
+            baseAnimSpeed = 1f;
+            // animationController.speed = 1f;
         }
     }
 
     public static void ToggleAnimationSpeed()
     {
-        animationController.speed = (animationController.speed == 0) ? 1f : 0f;
+        baseAnimSpeed = (baseAnimSpeed == 0) ? 1f : 0f;
     }
 
     public static void AbortSequence()
     {
         animationController.SetTrigger("AbortSequence");
-        animationController.speed = 1f;
+        baseAnimSpeed = 1f;
+        // animationController.speed = 1f;
         handsInventory.DeleteAnimationObject();
         handsInventory.sequenceAborted = true;
     }
@@ -297,6 +306,14 @@ public class PlayerAnimationManager : MonoBehaviour
         {
             animationSequence.TutorialLock(value);
         }
+    }
+
+    public static void PauseAnimation(bool toPause = true)
+    {
+        if (toPause)
+            theoryAnimSpeed = 0f;
+        else
+            theoryAnimSpeed = 1f;
     }
 
     public static bool SequenceCompleted

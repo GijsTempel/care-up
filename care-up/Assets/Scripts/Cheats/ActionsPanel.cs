@@ -14,6 +14,8 @@ public class ActionsPanel : MonoBehaviour {
     public GameObject ScoreListPanel;
     public Text ScoreDataText;
     public Toggle cheatToggle;
+    public Text toolTipText;
+    public InputField newScoreInput;
     private ObjectsIDsController objectsIDsController;
     List<ActionStepButton> ActionStepButtons = new List<ActionStepButton>();
     List<ActionStepButton> complitedActionButtons = new List<ActionStepButton>();
@@ -25,7 +27,8 @@ public class ActionsPanel : MonoBehaviour {
         CommentUA,
         Icons,
         Requirements,
-        Score
+        Score,
+        Extra
     };
     public void UpdatePanel()
     {
@@ -68,15 +71,31 @@ public class ActionsPanel : MonoBehaviour {
         }
     }
 
+    public void ForceGameScoreValue()
+    {
+        int.TryParse(newScoreInput.text, out int scoreEntered);
+        EndScoreManager endScoreManager = GameObject.FindObjectOfType<EndScoreManager>();
+        if (endScoreManager != null)
+        {
+            endScoreManager.forcedScore = scoreEntered;
+            endScoreManager.CalculatePercentage();
+        }
+
+    }
+
     public void SetMode(int _mode) 
     {
         mode = (ActionsPanel.Mode)_mode;
         lastStepId = -1;
-        print(mode.ToString());
+        toolTipText.text = mode.ToString();
         bool isScoreMode = mode == ActionsPanel.Mode.Score;
         ActionListPanel.GetComponent<CanvasGroup>().alpha = 1f - (isScoreMode ? 1f : 0f);
         ScoreListPanel.GetComponent<CanvasGroup>().alpha =(isScoreMode ? 1f : 0f);
-
+        if (mode == ActionsPanel.Mode.Extra)
+        {
+            ActionListPanel.GetComponent<CanvasGroup>().alpha = 0f;
+            ScoreListPanel.GetComponent<CanvasGroup>().alpha = 0f;
+        }
     }
 
 
