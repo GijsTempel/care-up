@@ -4,6 +4,7 @@ using UnityEngine;
 using CareUp.Localize;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.PlayerLoop;
 
 public class UILocalization : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class UILocalization : MonoBehaviour
     public string key = "";
     private Text text;
     private TextMeshProUGUI tPro;
+    private UILocalEditButton localEditButton;
+
     void Start()
     {
         if (isDebugComponent)
@@ -19,6 +22,15 @@ public class UILocalization : MonoBehaviour
         tPro = GetComponent<TextMeshProUGUI>();
         SetText("$$$$$$$$$$$$$$$$");
         UpdateText();
+        GameObject localHoverImageGO = Instantiate(
+            Resources.Load<GameObject>("NecessaryPrefabs/UI/UILocalHoverImage"), transform) as GameObject;
+
+        GameObject localEditButtonGO = Instantiate(
+            Resources.Load<GameObject>("NecessaryPrefabs/UI/UILocalEditButton"), transform) as GameObject;
+        localEditButton = localEditButtonGO.GetComponent<UILocalEditButton>();
+        localEditButton.SetHoverImage(localHoverImageGO);
+        localHoverImageGO.SetActive(false);
+        localEditButton.SetUILocalization(this);
     }
     void OnEnable()
     {
@@ -33,6 +45,15 @@ public class UILocalization : MonoBehaviour
             {
                 SetText("><><" + newText);
             }
+        }
+    }
+
+    public void InitiateLocalEdit()
+    {
+        InGameLocalEditTool localTool = GameObject.FindObjectOfType<InGameLocalEditTool>();
+        if (localEditButton != null)
+        {
+            localTool.InitiateLocalEdit(key);
         }
     }
 
@@ -54,5 +75,10 @@ public class UILocalization : MonoBehaviour
         else if (tPro != null)
             result = tPro.text;
         return result;
+    }
+
+    void Update()
+    {
+        localEditButton.SetActive(Input.GetKey(KeyCode.LeftControl) == true);
     }
 }
