@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SimpleJSON;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace CareUp.Localize
     {
         static string dictListFile = "dicts";
         static string defaultDictFolder = "Dictionaries";
-
+        static List<string> dictFileNames = new List<string>(){"Dutch", "English"};
         static List<string> dicts = new List<string>();
 
 
@@ -45,32 +46,20 @@ namespace CareUp.Localize
         }
 
 
-
-        private static string GetCurrentDictPaht()
+        public static string GetCurrentDictPaht(bool onlyLangName = false)
         {
-            string dictFolder = defaultDictFolder + "/Dutch/";
+            string dictFolder = dictFileNames[0];
             PlayerPrefsManager playerPrefsManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
             if (playerPrefsManager != null)
-            {
-                switch (PlayerPrefsManager.Lang)
-                {
-                    case 0:
-                        {
-                            dictFolder = defaultDictFolder + "/Dutch/";
-                            break;
-                        }
-                    case 1:
-                        {
-                            dictFolder = defaultDictFolder + "/English/";
-                            break;
-                        }
-                    default:
-                        {
-                            break;
-                        }
-                }
-            }
+                dictFolder = dictFileNames[PlayerPrefsManager.Lang];
+            if (!onlyLangName)
+                dictFolder = defaultDictFolder + "/" + dictFolder + "/";
             return dictFolder;
+        }
+
+        public static List<string> GetLocalNames()
+        {
+            return dictFileNames;
         }
 
 
