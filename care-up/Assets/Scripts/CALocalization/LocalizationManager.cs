@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using SimpleJSON;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace CareUp.Localize
 {
@@ -11,6 +13,8 @@ namespace CareUp.Localize
         static string defaultDictFolder = "Dictionaries";
         static List<string> dictFileNames = new List<string>(){"Dutch", "English"};
         static List<string> dicts = new List<string>();
+
+        static InGameLocalEditTool inGameLocalEditTool;
 
 
         //public static LocalizationManager instance;
@@ -131,14 +135,21 @@ namespace CareUp.Localize
         {
             if (!loadedDicts)
                 LoadAllDictionaries();
+            //TODO check if dev mode
+            if (inGameLocalEditTool == null)
+            inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();
+            if (inGameLocalEditTool != null && inGameLocalEditTool.dataLoaded)
+            {
+                string value = inGameLocalEditTool.GetLocalizedValue(key);
+                if (value != "")
+                    return value;
+            }
             if (localizedText != null)
             {
                 if (localizedText.Keys.Count > 0)
                 {
                     if (localizedText.ContainsKey(key))
-                    {
                         return localizedText[key];
-                    }
                 }
             }
             return "";

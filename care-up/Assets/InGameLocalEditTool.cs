@@ -14,8 +14,10 @@ using SimpleJSON;
 
 public class InGameLocalEditTool : MonoBehaviour
 {
+    public bool dataLoaded = false;
     public GameObject dictEditPanel;
     public Text keyTextLine;
+    string currentKey = "";
     public TMP_InputField valueText;
     static InGameLocalEditTool _instance;
 
@@ -27,47 +29,105 @@ public class InGameLocalEditTool : MonoBehaviour
     void Start()
     {
         Debug.Log(Application.persistentDataPath);
-        string dictFileName = LocalizationManager.GetCurrentDictPath(true) + "DictChanges.json";
-        string filePath = Path.Combine(Application.persistentDataPath, dictFileName);
-        Dictionary<string, string> testData = new Dictionary<string, string>();
-
-        foreach(string lName in LocalizationManager.GetLocalizationNames())
-        {
-            changesToLocalization.Add(lName, new Dictionary<string, string>());
-            changesToLocalization[lName].Add("test", "test123");
-            changesToLocalization[lName].Add("test23", "test123");
-
-        }
-        File.WriteAllText(filePath, "Hey look here is some text.");
-        SaveDictChanges();
+        LoadExistingChanges();
     }
 
-    void SaveDictChanges()
+    public void ApplyChange()
     {
-        foreach (string k in changesToLocalization.Keys)
+        string value = valueText.text;
+        AddOrChangeValue(currentKey, value, true);
+        RefrashTextElements();
+    }
+
+    public string GetLocalizedValue(string key)
+    {
+        if (!dataLoaded)
+            return "";
+        string localName = LocalizationManager.GetCurrentDictPath(true);
+        if (changesToLocalization.Keys.Contains(localName))
         {
-            string dictFileName = k + "DictChanges.json";
-            string filePath = Path.Combine(Application.persistentDataPath, dictFileName);
+            if (changesToLocalization[localName].Keys.Contains(key))
+            {
+                return changesToLocalization[localName][key];
+            }
+        }
+        return "";
+    }
+
+    void SaveDictChanges(string dictName = "")
+    {
+
+        List<string> dictsToSave = new List<string>();
+        if (dictName != "")
+        {
+            dictsToSave.Add(dictName);
+        }
+        else
+        {
+            foreach(string n in LocalizationManager.GetLocalizationNames())
+                dictsToSave.Add(n);
+        }
+        foreach (string k in dictsToSave)
+        {
+            if (!changesToLocalization.Keys.Contains(k))
+                continue;
+
+            string filePath = GetFilePathFromDictName(k);
             JSONObject dataObj = new JSONObject();
             foreach (string dataKey in changesToLocalization[k].Keys)
             {
-                dataObj.Add(dataKey, changesToLocalization[k][dataKey]);
+                dataObj.Add(dataKey, changesToLocalization[k][dataKey].Replace("\n", "<br>"));
             }
-            File.WriteAllText(filePath, dataObj.ToString());
             Debug.Log(dataObj);
+            File.WriteAllText(filePath, dataObj.ToString(4));
         }
     }
-
-    // Update is called once per frame
-    void Update()
+    string GetFilePathFromDictName(string dictName)
     {
-        
+        string dictFileName = dictName + "DictChanges.json";
+        string filePath = Path.Combine(Application.persistentDataPath, dictFileName);
+        return filePath;
+    }
+
+    void AddOrChangeValue(string key, string value, bool toSave = false)  
+    {
+        var currentDictName = LocalizationManager.GetCurrentDictPath(true);
+        if (!changesToLocalization.Keys.Contains(currentDictName))
+        {
+            changesToLocalization.Add(currentDictName, new Dictionary<string, string>());
+        }
+        changesToLocalization[currentDictName][key] = value;
+        if (toSave)
+            SaveDictChanges(currentDictName);
+    }
+
+    void RefrashTextElements()
+    {
+        foreach (UILocalization u in GameObject.FindObjectsOfType<UILocalization>(true))
+        {
+            u.UpdateText();
+        }
     }
 
     void LoadExistingChanges()
     {
-        List<string> localNames = LocalizationManager.GetLocalizationNames();
-        
+        if (dataLoaded)
+            return;
+        foreach(string localName in LocalizationManager.GetLocalizationNames())
+        {
+            string filePath = GetFilePathFromDictName(localName);
+            if (!System.IO.File.Exists(filePath))
+                continue;
+            string jsonString = File.ReadAllText(filePath);
+            JSONNode data = JSON.Parse(jsonString);
+            foreach (string key in data.Keys)
+            {
+                AddOrChangeValue(key, 
+                    data[key].ToString().Replace("<br>", "\n").Replace("\"",""));
+            }
+        }
+        dataLoaded = true;
+        RefrashTextElements();
     }
 
     public void InitiateLocalEdit(string key)
@@ -75,6 +135,7 @@ public class InGameLocalEditTool : MonoBehaviour
         string value = LocalizationManager.GetLocalizedValue(key);
         dictEditPanel.SetActive(true);
         keyTextLine.text = key;
+        currentKey = key;
         valueText.text = value;
     }
 
