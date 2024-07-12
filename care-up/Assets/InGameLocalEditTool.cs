@@ -6,9 +6,11 @@ using CareUp.Localize;
 using UnityEngine.UI;
 using TMPro;
 using System.Security.Cryptography.X509Certificates;
-using SFB;
 using System.IO;
 using System;
+using System.Linq;
+using SimpleJSON;
+
 
 public class InGameLocalEditTool : MonoBehaviour
 {
@@ -25,9 +27,35 @@ public class InGameLocalEditTool : MonoBehaviour
     void Start()
     {
         Debug.Log(Application.persistentDataPath);
-        string dictFileName = LocalizationManager.GetCurrentDictPaht(true) + "DictChanges.json";
+        string dictFileName = LocalizationManager.GetCurrentDictPath(true) + "DictChanges.json";
         string filePath = Path.Combine(Application.persistentDataPath, dictFileName);
+        Dictionary<string, string> testData = new Dictionary<string, string>();
+
+        foreach(string lName in LocalizationManager.GetLocalizationNames())
+        {
+            changesToLocalization.Add(lName, new Dictionary<string, string>());
+            changesToLocalization[lName].Add("test", "test123");
+            changesToLocalization[lName].Add("test23", "test123");
+
+        }
         File.WriteAllText(filePath, "Hey look here is some text.");
+        SaveDictChanges();
+    }
+
+    void SaveDictChanges()
+    {
+        foreach (string k in changesToLocalization.Keys)
+        {
+            string dictFileName = k + "DictChanges.json";
+            string filePath = Path.Combine(Application.persistentDataPath, dictFileName);
+            JSONObject dataObj = new JSONObject();
+            foreach (string dataKey in changesToLocalization[k].Keys)
+            {
+                dataObj.Add(dataKey, changesToLocalization[k][dataKey]);
+            }
+            File.WriteAllText(filePath, dataObj.ToString());
+            Debug.Log(dataObj);
+        }
     }
 
     // Update is called once per frame
@@ -38,7 +66,7 @@ public class InGameLocalEditTool : MonoBehaviour
 
     void LoadExistingChanges()
     {
-        List<string> localNames = LocalizationManager.GetLocalNames();
+        List<string> localNames = LocalizationManager.GetLocalizationNames();
         
     }
 
@@ -70,6 +98,6 @@ public class InGameLocalEditTool : MonoBehaviour
     
     public void OpenRuntimeDictFolder()
     {
-        var paths = StandaloneFileBrowser.OpenFilePanel("Open File", Application.persistentDataPath, "", false);
+        Application.OpenURL("file://" + Application.persistentDataPath);
     }
 }

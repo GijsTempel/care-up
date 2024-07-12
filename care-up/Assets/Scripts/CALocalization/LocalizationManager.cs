@@ -28,7 +28,7 @@ namespace CareUp.Localize
             gameLogic = GameObject.Find("GameLogic");
             if (localizedText == null)
                 localizedText = new Dictionary<string, string>();
-            TextAsset _data = (TextAsset)Resources.Load(GetCurrentDictPaht() + fileName);
+            TextAsset _data = (TextAsset)Resources.Load(GetCurrentDictPath() + fileName);
             if (_data != null)
             {
                 string jsonString = _data.text;
@@ -46,7 +46,7 @@ namespace CareUp.Localize
         }
 
 
-        public static string GetCurrentDictPaht(bool onlyLangName = false)
+        public static string GetCurrentDictPath(bool onlyLangName = false)
         {
             string dictFolder = dictFileNames[0];
             PlayerPrefsManager playerPrefsManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
@@ -57,7 +57,7 @@ namespace CareUp.Localize
             return dictFolder;
         }
 
-        public static List<string> GetLocalNames()
+        public static List<string> GetLocalizationNames()
         {
             return dictFileNames;
         }
@@ -67,7 +67,7 @@ namespace CareUp.Localize
         {
             if (dicts.Count == 0)
             {
-                TextAsset dictListData = (TextAsset)Resources.Load(GetCurrentDictPaht() + dictListFile);
+                TextAsset dictListData = (TextAsset)Resources.Load(GetCurrentDictPath() + dictListFile);
                 foreach (string dictName in dictListData.text.Split('\n'))
                 {   
                     if (!string.IsNullOrEmpty(dictName))
