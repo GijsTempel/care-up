@@ -5,6 +5,8 @@ using UnityEngine;
 using CareUp.Localize;
 using UnityEngine.UI;
 using TMPro;
+using System.Security.Cryptography.X509Certificates;
+using SFB;
 
 public class InGameLocalEditTool : MonoBehaviour
 {
@@ -16,7 +18,7 @@ public class InGameLocalEditTool : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log(Application.persistentDataPath);
     }
 
     // Update is called once per frame
@@ -49,5 +51,10 @@ public class InGameLocalEditTool : MonoBehaviour
     public void HidePanel()
     {
         dictEditPanel.SetActive(false);
+    }
+    
+    public void OpenRuntimeDictFolder()
+    {
+        var paths = StandaloneFileBrowser.OpenFilePanel("Open File", Application.persistentDataPath, "", false);
     }
 }
