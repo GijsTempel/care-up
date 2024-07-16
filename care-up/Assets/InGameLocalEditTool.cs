@@ -41,6 +41,14 @@ public class InGameLocalEditTool : MonoBehaviour
         string value = valueText.text;
         AddOrChangeValue(currentKey, value, true);
         RefrashTextElements();
+        dictEditPanel.SetActive(false);
+    }
+
+    public void DeleteSelectedEntry()
+    {
+        DeleteDictElement(currentKey);
+        RefrashTextElements();
+        dictEditPanel.SetActive(false);
     }
 
     public string GetLocalizedValue(string key)
@@ -106,6 +114,15 @@ public class InGameLocalEditTool : MonoBehaviour
             SaveDictChanges(dictKey);
     }
 
+
+    public void DeleteDictElement(string key)
+    {
+        string dictKey = LocalizationManager.GetCurrentDictPath(true);
+        changesToLocalization[dictKey].Remove(key);
+        SaveDictChanges(dictKey);
+    }
+
+
     void RefrashTextElements()
     {
         foreach (UILocalization u in GameObject.FindObjectsOfType<UILocalization>(true))
@@ -164,11 +181,13 @@ public class InGameLocalEditTool : MonoBehaviour
         RefrashTextElements();
     }
 
+
     public void InitiateLocalEdit(string key)
     {
         string value = LocalizationManager.GetLocalizedValue(key);
         dictEditPanel.SetActive(true);
-        keyTextLine.text = key;
+        string dictName = LocalizationManager.GetCurrentDictPath(true);
+        keyTextLine.text = dictName + " : " + key;
         currentKey = key;
         valueText.text = value;
     }
