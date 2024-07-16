@@ -20,12 +20,16 @@ public class InGameLocalEditTool : MonoBehaviour
     string currentKey = "";
     public TMP_InputField valueText;
     static InGameLocalEditTool _instance;
+    bool ctrlKeyDown = false;
+    bool isDictEditPopupOpen = false;
+    const float popupWaitTime = 1.0f;
+    float popupTimeOut = 0f;
 
     Dictionary<string, Dictionary<string, string>> changesToLocalization = 
         new Dictionary<string, Dictionary<string,string>>();
     List<string> activeDicts = new List<string>();
 
-    // Start is called before the first frame update
+
     void Start()
     {
         Debug.Log(Application.persistentDataPath);
@@ -107,6 +111,35 @@ public class InGameLocalEditTool : MonoBehaviour
         {
             u.UpdateText();
         }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            ctrlKeyDown = true;
+            popupTimeOut = popupWaitTime;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            ctrlKeyDown = false;
+            if (isDictEditPopupOpen)
+            {
+                transform.Find("Panel/DictEditorExtraPanel").GetComponent<Animation>().Play("dictEditClose");
+                isDictEditPopupOpen = false;
+            }
+        }
+
+        if (ctrlKeyDown && popupTimeOut > 0)
+        {
+            popupTimeOut -= Time.deltaTime;
+            if (popupTimeOut < 0)
+            {
+                transform.Find("Panel/DictEditorExtraPanel").GetComponent<Animation>().Play("dictEditOpen");
+                isDictEditPopupOpen = true;
+            }
+        }
+    
     }
 
     void LoadExistingChanges()
