@@ -93,16 +93,17 @@ public class InGameLocalEditTool : MonoBehaviour
         return filePath;
     }
 
-    void AddOrChangeValue(string key, string value, bool toSave = false)  
+    void AddOrChangeValue(string key, string value, bool toSave = false, string dictKey = "")  
     {
-        var currentDictName = LocalizationManager.GetCurrentDictPath(true);
-        if (!changesToLocalization.Keys.Contains(currentDictName))
+        if (dictKey == "")
+            dictKey = LocalizationManager.GetCurrentDictPath(true);
+        if (!changesToLocalization.Keys.Contains(dictKey))
         {
-            changesToLocalization.Add(currentDictName, new Dictionary<string, string>());
+            changesToLocalization.Add(dictKey, new Dictionary<string, string>());
         }
-        changesToLocalization[currentDictName][key] = value;
+        changesToLocalization[dictKey][key] = value;
         if (toSave)
-            SaveDictChanges(currentDictName);
+            SaveDictChanges(dictKey);
     }
 
     void RefrashTextElements()
@@ -156,7 +157,7 @@ public class InGameLocalEditTool : MonoBehaviour
             foreach (string key in data.Keys)
             {
                 AddOrChangeValue(key, 
-                    data[key].ToString().Replace("<br>", "\n").Replace("\"",""));
+                    data[key].ToString().Replace("<br>", "\n").Replace("\"",""), false, localName);
             }
         }
         dataLoaded = true;

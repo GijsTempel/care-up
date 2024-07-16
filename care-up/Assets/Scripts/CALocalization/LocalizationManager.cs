@@ -135,9 +135,11 @@ namespace CareUp.Localize
         {
             if (!loadedDicts)
                 LoadAllDictionaries();
+            if (key == "ui_log")
+                Debug.Log("");
             //TODO check if dev mode
             if (inGameLocalEditTool == null)
-            inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();
+                inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();
             if (inGameLocalEditTool != null && inGameLocalEditTool.dataLoaded)
             {
                 string value = inGameLocalEditTool.GetLocalizedValue(key);

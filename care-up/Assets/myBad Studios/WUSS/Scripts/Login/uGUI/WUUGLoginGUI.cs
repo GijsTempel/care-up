@@ -376,7 +376,7 @@ namespace MBS
 
         private void UpdateTextComponents()
         {
-            foreach(UILocalization uil in GameObject.FindObjectsOfType<UILocalization>())
+            foreach(UILocalization uil in GameObject.FindObjectsOfType<UILocalization>(true))
             {
                 uil.UpdateText();
             }
