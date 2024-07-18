@@ -479,8 +479,20 @@ public class LevelSelectionScene_UI : MonoBehaviour
                 //sceneUnit.transform.Find("LevelPreview").GetComponent<Image>().sprite = sceneUnit.image;
             }
             sceneUnit.validated = sceneInfo.validated;
-            sceneUnit.transform.Find("Validation").GetComponent<Text>().text =
-                sceneUnit.validated ? LocalizationManager.GetValueIfKey("[Geaccrediteerd]") : "";
+            sceneUnit.transform.Find("Validation").GetComponent<Text>().text = "";
+            if (sceneUnit.validated)
+            {
+                sceneUnit.transform.Find("Validation").GetComponent<Text>().text = 
+                    LocalizationManager.GetValueIfKey("[Geaccrediteerd]");
+                
+                InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+                if (inGameLocalEditTool != null)
+                {
+                    inGameLocalEditTool.AddUILocalizationComponentToGO(
+                        sceneUnit.transform.Find("Validation").gameObject, "[Geaccrediteerd]"
+                    );
+                }
+            }
 
             sceneUnit.totalPoints = sceneInfo.totalPoints;
             sceneUnit.xPoints = sceneInfo.xPoints;
