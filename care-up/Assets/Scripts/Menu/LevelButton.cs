@@ -232,8 +232,18 @@ public class LevelButton : MonoBehaviour
             }
         }
 
+
         titleText.text = LocalizationManager.GetValueIfKey(displayName);
         descriptionText.text = LocalizationManager.GetValueIfKey(sceneDescription);
+
+        InGameLocalEditTool inGameLocalEditTool = GameObject.FindAnyObjectByType<InGameLocalEditTool>();
+        if (inGameLocalEditTool != null)
+        {
+            inGameLocalEditTool.AddUILocalizationComponentToGO(titleText.gameObject, displayName);
+            inGameLocalEditTool.AddUILocalizationComponentToGO(descriptionText.gameObject, sceneDescription);
+
+        }
+
         transform.Find("Points").GetComponent<Text>().text = xPoints;
         Text pointsLabel = transform.Find("PointsLabel").GetComponent<Text>();
         if (xPoints == "1")
@@ -329,8 +339,6 @@ public class LevelButton : MonoBehaviour
         }
         else
         {
-
-
             LevelButton mainBtn = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/DialogTestPractice/Panel_UI/Buttons/Start").GetComponent<LevelButton>();
 
             if (multiple)//??????????????????????????????????
@@ -341,6 +349,15 @@ public class LevelButton : MonoBehaviour
                 // setting title i assume
                 dialogue.transform.Find("Content/Panel_UI/Top/Title").GetComponent<Text>().text = 
                     LocalizationManager.GetValueIfKey(displayName);
+                
+                
+                InGameLocalEditTool inGameLocalEditTool = GameObject.FindAnyObjectByType<InGameLocalEditTool>();
+                if (inGameLocalEditTool != null)
+                {
+                    inGameLocalEditTool.AddUILocalizationComponentToGO(
+                        dialogue.transform.Find("Content/Panel_UI/Top/Title").gameObject, displayName);
+                }
+
                 if (manager != null)
                 {
                     manager.currentSceneVisualName = displayName;
@@ -359,6 +376,12 @@ public class LevelButton : MonoBehaviour
                     option.bundleName = variations[i].bundleName;
                     option.sceneName = variations[i].sceneName;
                     option.transform.GetComponentInChildren<Text>().text = LocalizationManager.GetValueIfKey(variations[i].displayName);
+                    
+                    if (inGameLocalEditTool != null)
+                    {
+                        inGameLocalEditTool.AddUILocalizationComponentToGO(
+                            option.transform.GetComponentInChildren<Text>().gameObject, displayName);
+                    }
 
                     if (i == 0)
                     {

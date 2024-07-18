@@ -99,6 +99,31 @@ namespace CareUp.Localize
             return result;
 
         }
+
+        public static int CountKeysInText(string text)
+        {
+            bool isInsideBrackets = false;
+            int keysCounted = 0;
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (!isInsideBrackets && text[i] == '[')
+                {
+                    isInsideBrackets = true;
+                }
+                else if (isInsideBrackets && text[i] == ']')
+                { 
+                    isInsideBrackets = false;
+                    keysCounted++;
+                }
+            }
+            return keysCounted;
+        }
+
+        public static string StripBracketsFromKey(string key)
+        {
+            return key.Substring(1, key.Length - 2);
+        }
+
         public static string GetValueIfKey(string key)
         {
             if (!loadedDicts)
@@ -116,9 +141,9 @@ namespace CareUp.Localize
                     debugMode = gameLogic.GetComponent<ActionManager>().TextDebug;
             }
 
-            if (key[0] == '[')
+            if (CountKeysInText(key) > 0)
             {
-                string value = GetLocalizedValue(key.Substring(1, key.Length - 2));
+                string value = GetLocalizedValue(StripBracketsFromKey(key));
                 if (value != null)
                 {
                     result = "^^^" + value;

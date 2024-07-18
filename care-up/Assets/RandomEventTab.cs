@@ -227,7 +227,17 @@ public class RandomEventTab : MonoBehaviour
     public void CorrectAnswer(int value)
     {
         wrongAnswerPanelTitle.text = LocalizationManager.GetValueIfKey("[heel goed!]");
-        wrongAnswerPanelText.text = randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex].answers[shuffledIndexes[value]].descr;
+        wrongAnswerPanelText.text = LocalizationManager.GetValueIfKey(randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex].answers[shuffledIndexes[value]].descr);
+        
+        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+        // TODO checo if dev mode is on
+        if (inGameLocalEditTool != null)
+        {
+            inGameLocalEditTool.AddUILocalizationComponentToGO(wrongAnswerPanelTitle.gameObject, "[heel goed!]");
+            inGameLocalEditTool.AddUILocalizationComponentToGO(wrongAnswerPanelText.gameObject, 
+                randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex].answers[shuffledIndexes[value]].descr);
+        }
+
         ActionManager.CorrectAction();
         SwitchScreen(2);
         greenPop.Play();
@@ -257,7 +267,16 @@ public class RandomEventTab : MonoBehaviour
             }
         }
         wrongAnswerPanelTitle.text = LocalizationManager.GetValueIfKey("[helaas dit antwoord323]");
-        wrongAnswerPanelText.text = randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex].answers[shuffledIndexes[value]].descr;
+        wrongAnswerPanelText.text = LocalizationManager.GetValueIfKey(
+            randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex].answers[shuffledIndexes[value]].descr);
+
+        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+        if (inGameLocalEditTool != null)
+        {
+            inGameLocalEditTool.AddUILocalizationComponentToGO(wrongAnswerPanelTitle.gameObject, "[helaas dit antwoord323]");
+            inGameLocalEditTool.AddUILocalizationComponentToGO(wrongAnswerPanelText.gameObject, 
+                randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex].answers[shuffledIndexes[value]].descr);
+        }
         ActionManager.WrongAction(false);
         madeWrongAnswer = true;
         SwitchScreen(2);

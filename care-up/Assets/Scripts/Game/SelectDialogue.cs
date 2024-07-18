@@ -140,6 +140,8 @@ public class SelectDialogue : MonoBehaviour
                             cheatSimbol = "@";
                     }
                 }
+                //Localize text element for the selection dialogue button
+                
                 sqButtons[i].transform.Find("Text").GetComponent<Text>().text = cheatSimbol + 
                     LocalizationManager.GetValueIfKey(options[i].text);
                 if (gameUI.AllowAutoPlay(false))

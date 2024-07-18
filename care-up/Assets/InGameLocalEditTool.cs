@@ -32,7 +32,6 @@ public class InGameLocalEditTool : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(Application.persistentDataPath);
         LoadExistingChanges();
     }
 
@@ -49,6 +48,26 @@ public class InGameLocalEditTool : MonoBehaviour
         DeleteDictElement(currentKey);
         RefrashTextElements();
         dictEditPanel.SetActive(false);
+    }
+
+
+    public void AddUILocalizationComponentToGO(GameObject go, string key)
+    {
+        if (LocalizationManager.CountKeysInText(key) == 0)
+            return;
+        key = LocalizationManager.StripBracketsFromKey(key);
+
+        if (go.GetComponent<UILocalization>() == null)  
+        {
+            UILocalization newGoUILocalization = go.AddComponent<UILocalization>();
+            newGoUILocalization.Initialization();
+        }
+        UILocalization goUILocalization = go.GetComponent<UILocalization>();    
+        if (goUILocalization != null)
+        {
+            goUILocalization.key = key;
+            goUILocalization.UpdateText();
+        }
     }
 
     public string GetLocalizedValue(string key)
@@ -90,7 +109,6 @@ public class InGameLocalEditTool : MonoBehaviour
             {
                 dataObj.Add(dataKey, changesToLocalization[k][dataKey].Replace("\n", "<br>"));
             }
-            Debug.Log(dataObj);
             File.WriteAllText(filePath, dataObj.ToString(4));
         }
     }

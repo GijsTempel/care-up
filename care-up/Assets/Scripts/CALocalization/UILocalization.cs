@@ -8,7 +8,7 @@ using UnityEngine.PlayerLoop;
 
 public class UILocalization : MonoBehaviour
 {
-    public bool isDebugComponent = false;
+    public bool isPasive = false;
     public string key = "";
     private Text text;
     private TextMeshProUGUI tPro;
@@ -16,15 +16,24 @@ public class UILocalization : MonoBehaviour
 
     void Start()
     {
-        if (isDebugComponent)
-            Debug.Log("AAAA");
+        Initialization();
+    }
+
+    public void Initialization()
+    {
         text = GetComponent<Text>();
         tPro = GetComponent<TextMeshProUGUI>();
-        SetText("$$$$$$$$$$$$$$$$");
-        UpdateText();
+        if (!isPasive)
+            UpdateText();
+
+        if (localEditButton == null)
+            InitEditButton();
+    }
+
+    void InitEditButton()
+    {
         GameObject localHoverImageGO = Instantiate(
             Resources.Load<GameObject>("NecessaryPrefabs/UI/UILocalHoverImage"), transform) as GameObject;
-
         GameObject localEditButtonGO = Instantiate(
             Resources.Load<GameObject>("NecessaryPrefabs/UI/UILocalEditButton"), transform) as GameObject;
         localEditButton = localEditButtonGO.GetComponent<UILocalEditButton>();
@@ -32,12 +41,16 @@ public class UILocalization : MonoBehaviour
         localHoverImageGO.SetActive(false);
         localEditButton.SetUILocalization(this);
     }
+
     void OnEnable()
     {
-        UpdateText();
+        if (!isPasive)
+            UpdateText();
     }
+
     public void UpdateText()
     {
+        SetText("$$$$$$$$$$$$$$$$");
         if (key != "")
         {
             string newText = LocalizationManager.GetLocalizedValue(key);
@@ -51,7 +64,9 @@ public class UILocalization : MonoBehaviour
     public void InitiateLocalEdit()
     {
         InGameLocalEditTool localTool = GameObject.FindObjectOfType<InGameLocalEditTool>();
-        if (localEditButton != null)
+        if (localEditButton == null)
+            InitEditButton();
+        if (localTool != null && localEditButton != null)
         {
             localTool.InitiateLocalEdit(key);
         }
