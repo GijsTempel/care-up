@@ -9,8 +9,7 @@ namespace MBS
 {
     public class WUUGLoginGUI : WUUGLoginLocalisation
     {
-        public Button dutchLangButton;
-        public Button englishLangButton;
+        public UILangSwitch uILangSwitch;
         double startTime;
         public Button passVisibilityToggle;
         public GameObject LoginGUIBackButton;
@@ -356,22 +355,7 @@ namespace MBS
             ErrorText.GetComponent<Text>();
             ErrorLoginText.GetComponent<Text>();
 
-            UpdateLangButtons();
-        }
-
-        private void UpdateLangButtons()
-        {
-            englishLangButton.interactable = PlayerPrefsManager.Lang != 1;
-            dutchLangButton.interactable = PlayerPrefsManager.Lang != 0;
-        }
-
-        public void LanguageChange(int langID)
-        {
-            PlayerPrefsManager.Lang = langID;
-            LocalizationManager.ClearDicts();
-            LocalizationManager.LoadAllDictionaries();
-            UpdateLangButtons();
-            UpdateTextComponents();
+            uILangSwitch.UpdateAllLangButtons();
         }
 
         private void UpdateTextComponents()
