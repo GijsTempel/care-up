@@ -1233,13 +1233,13 @@ public class ActionManager : MonoBehaviour
             info.messageTitle = "";
             if (action.Attributes["messageTitle"] != null)
             {
-                info.messageTitle = LocalizationManager.GetValueIfKey(action.Attributes["messageTitle"].Value);
+                info.messageTitle = action.Attributes["messageTitle"].Value;
             }
 
             info.messageContent = "";
             if (action.Attributes["messageContent"] != null)
             {
-                info.messageContent = LocalizationManager.GetValueIfKey(action.Attributes["messageContent"].Value);
+                info.messageContent = action.Attributes["messageContent"].Value;
             }
 
             info.messageDelay = 0f;
