@@ -97,26 +97,38 @@ namespace CareUp.Localize
             string result = "[" + prefix + key1Clean + key2Clean + "]";
 
             return result;
-
         }
 
         public static int CountKeysInText(string text)
         {
-            bool isInsideBrackets = false;
             int keysCounted = 0;
+            List<int> keyRanges = GetKeyRangesFromText(text);
+            if (keyRanges != null)
+                keysCounted = keyRanges.Count / 2;
+            return keysCounted;
+        }
+
+        public static List<int> GetKeyRangesFromText(string text)
+        {
+            List<int> keyRanges = new List<int>();
+
+            bool isInsideBrackets = false;
             for (int i = 0; i < text.Length; i++)
             {
                 if (!isInsideBrackets && text[i] == '[')
                 {
                     isInsideBrackets = true;
+                    keyRanges.Add(i);
                 }
                 else if (isInsideBrackets && text[i] == ']')
                 { 
                     isInsideBrackets = false;
-                    keysCounted++;
+                    keyRanges.Add(i);
                 }
             }
-            return keysCounted;
+            if (keyRanges.Count > 0)
+                return keyRanges;
+            return null;
         }
 
         public static string StripBracketsFromKey(string key)
@@ -154,6 +166,21 @@ namespace CareUp.Localize
                 }
             }
             return result;
+        }
+
+        public static string GetLocalizedWithMultiKey(string text)
+        {
+            List<int> keyRanges = GetKeyRangesFromText(text);
+            if (keyRanges.Count > 0)
+            {
+                for (int i = 0; i < keyRanges.Count / 2; i++)
+                {
+                    int currentRange = keyRanges[i * 2 + 1] - keyRanges[i * 2];
+                    string currentKey = text.Substring(keyRanges[i*2], currentRange);
+                    text = text.Replace(currentKey, GetLocalizedValue(StripBracketsFromKey(currentKey)));
+                }
+            }
+            return text;
         }
 
         public static string GetLocalizedValue(string key)
