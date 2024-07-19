@@ -1135,7 +1135,10 @@ public class ActionManager : MonoBehaviour
             int.TryParse(action.Attributes["index"].Value, out info.subindex);
             string type = action.Attributes["type"].Value;
 
-            info.shortDescr = LocalizationManager.GetValueIfKey(action.Attributes["description"].Value);
+            // info.shortDescr = LocalizationManager.GetValueIfKey(action.Attributes["description"].Value);
+            //@
+            info.shortDescr = action.Attributes["description"].Value;
+
 
             info.comment = "";
             if (action.Attributes["comment"] != null)
