@@ -168,17 +168,28 @@ namespace CareUp.Localize
             return result;
         }
 
-        public static string GetLocalizedWithMultiKey(string text)
+        public static List<string> GetKeysFromMultiKey(string text)
         {
+
             List<int> keyRanges = GetKeyRangesFromText(text);
+            List<string> keys = new List<string>(); 
             if (keyRanges.Count > 0)
             {
                 for (int i = 0; i < keyRanges.Count / 2; i++)
                 {
                     int currentRange = keyRanges[i * 2 + 1] - keyRanges[i * 2];
                     string currentKey = text.Substring(keyRanges[i*2], currentRange);
-                    text = text.Replace(currentKey, GetLocalizedValue(StripBracketsFromKey(currentKey)));
+                    keys.Add(currentKey);
                 }
+            }
+            return keys;
+        }
+
+        public static string GetLocalizedWithMultiKey(string text)
+        {
+            foreach(string key in GetKeysFromMultiKey(text))
+            {
+                text = text.Replace(key, GetLocalizedValue(StripBracketsFromKey(key)));
             }
             return text;
         }

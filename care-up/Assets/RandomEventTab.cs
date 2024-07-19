@@ -226,16 +226,23 @@ public class RandomEventTab : MonoBehaviour
 
     public void CorrectAnswer(int value)
     {
+        //@
         wrongAnswerPanelTitle.text = LocalizationManager.GetValueIfKey("[heel goed!]");
-        wrongAnswerPanelText.text = LocalizationManager.GetValueIfKey(randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex].answers[shuffledIndexes[value]].descr);
+        //@
+        wrongAnswerPanelText.text = LocalizationManager.GetValueIfKey(
+            randomEventsData[currentRandomEventIndex].quastions[
+                currentQuastionIndex].answers[shuffledIndexes[value]].descr);
         
         InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
         // TODO checo if dev mode is on
         if (inGameLocalEditTool != null)
         {
+            //!
             inGameLocalEditTool.AddUILocalizationComponentToGO(wrongAnswerPanelTitle.gameObject, "[heel goed!]");
+            //!
             inGameLocalEditTool.AddUILocalizationComponentToGO(wrongAnswerPanelText.gameObject, 
-                randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex].answers[shuffledIndexes[value]].descr);
+                randomEventsData[currentRandomEventIndex].quastions[
+                    currentQuastionIndex].answers[shuffledIndexes[value]].descr);
         }
 
         ActionManager.CorrectAction();
@@ -266,14 +273,19 @@ public class RandomEventTab : MonoBehaviour
                 Debug.LogWarning("No EndScoreManager found. Start from 1st scene.");
             }
         }
+        //@
         wrongAnswerPanelTitle.text = LocalizationManager.GetValueIfKey("[helaas dit antwoord323]");
+        //@
         wrongAnswerPanelText.text = LocalizationManager.GetValueIfKey(
-            randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex].answers[shuffledIndexes[value]].descr);
+            randomEventsData[currentRandomEventIndex].quastions[
+                currentQuastionIndex].answers[shuffledIndexes[value]].descr);
 
         InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
         if (inGameLocalEditTool != null)
         {
+            //!
             inGameLocalEditTool.AddUILocalizationComponentToGO(wrongAnswerPanelTitle.gameObject, "[helaas dit antwoord323]");
+            //!
             inGameLocalEditTool.AddUILocalizationComponentToGO(wrongAnswerPanelText.gameObject, 
                 randomEventsData[currentRandomEventIndex].quastions[currentQuastionIndex].answers[shuffledIndexes[value]].descr);
         }

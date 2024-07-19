@@ -22,7 +22,7 @@ public class InGameLocalEditTool : MonoBehaviour
     static InGameLocalEditTool _instance;
     bool ctrlKeyDown = false;
     bool isDictEditPopupOpen = false;
-    const float popupWaitTime = 1.0f;
+    const float popupWaitTime = 0.2f;
     float popupTimeOut = 0f;
 
     Dictionary<string, Dictionary<string, string>> changesToLocalization = 
