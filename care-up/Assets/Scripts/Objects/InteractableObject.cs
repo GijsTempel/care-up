@@ -117,17 +117,21 @@ public class InteractableObject : MonoBehaviour
                 descriptionPanelPosition = itemDescription.transform.GetChild(0).transform;
                 descriptionText = itemDescription.GetComponentInChildren<Text>();
                 itemDescription.name = "ItemDescription";
-                itemDescription.SetActive(false);
+                if (!Input.GetKey(KeyCode.LeftControl))
+                    itemDescription.SetActive(false);
             }
         }
     }
 
     public void SetDescription()
     {
+        if (Input.GetKey(KeyCode.LeftControl))
+            return;
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
             if (!player.away && !player.robotUIopened && !cameraMode.animating)
             {
+
                 if (LocalizationManager.GetValueIfKey(description) == "Werkveld")
                 {
                     if (!actionManager.CompareUseObject("WorkField"))
@@ -148,7 +152,18 @@ public class InteractableObject : MonoBehaviour
                 if (!string.IsNullOrEmpty(description) && notSihlouette)
                 {
                     itemDescription.SetActive(true);
+                    //@
                     descriptionText.text = (description == "") ? name : LocalizationManager.GetValueIfKey(description);
+                
+                    InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+
+                    if (inGameLocalEditTool != null)
+                    {
+                        //!
+                        inGameLocalEditTool.AddUILocalizationComponentToGO(
+                            descriptionText.gameObject, description);
+
+                    }
                 }
             }
         }
@@ -165,13 +180,15 @@ public class InteractableObject : MonoBehaviour
         {
             gameUI.RemoveHighlight("hl", transform.name);
             //hasHighlight = false;
-            itemDescription.SetActive(false);
+            if (!Input.GetKey(KeyCode.LeftControl))
+                itemDescription.SetActive(false);
         }
     }
 
     public static void ResetDescription()
     {
-        itemDescription.SetActive(false);
+        if (!Input.GetKey(KeyCode.LeftControl))
+            itemDescription.SetActive(false);
     }
 
     protected bool ViewModeActive()

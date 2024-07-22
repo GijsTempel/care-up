@@ -171,7 +171,7 @@ public class QuizTab : MonoBehaviour
             b.onClick.RemoveAllListeners();
         randomIndexList = RandomEventTab.BuildShuffledList(current.answers.Count);
 
-
+        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
 
         for (int i = 0; i < current.answers.Count; i++)
         {
@@ -187,6 +187,15 @@ public class QuizTab : MonoBehaviour
             }
             buttons[i].transform.GetChild(0).GetComponent<Text>().text = cheatSimbol + 
                 LocalizationManager.GetValueIfKey(current.answers[randomIndexList[i]].text);
+
+                    
+            if (inGameLocalEditTool != null)
+            {
+                //!
+                inGameLocalEditTool.AddUILocalizationComponentToGO(
+                    buttons[i].transform.GetChild(0).gameObject, current.answers[randomIndexList[i]].text);
+            }
+
             if (gameUI.AllowAutoPlay(false))
             if (current.answers[randomIndexList[i]].isCorrect)
             {
@@ -268,6 +277,16 @@ public class QuizTab : MonoBehaviour
 
 
         quastionTitle.text = LocalizationManager.GetValueIfKey(current.text);
+
+        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+
+        if (inGameLocalEditTool != null)
+        {
+            //!
+            inGameLocalEditTool.AddUILocalizationComponentToGO(
+                quastionTitle.gameObject, current.text);
+        }
+
         OrganizeButtons();
 
         if (random)
@@ -312,10 +331,25 @@ public class QuizTab : MonoBehaviour
         }
 
         ActionManager.CorrectAction();
-
+        //@
         answeredTitleText.text = LocalizationManager.GetValueIfKey("[heel goed!]");
         w_descriptionPanel.SetActive(description != "");
+        //@
         descriptionText.text = LocalizationManager.GetValueIfKey(description);
+
+
+        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+
+        if (inGameLocalEditTool != null)
+        {
+            //!
+            inGameLocalEditTool.AddUILocalizationComponentToGO(
+                answeredTitleText.gameObject, "[heel goed!]");
+
+            inGameLocalEditTool.AddUILocalizationComponentToGO(
+                descriptionText.gameObject, description);
+        }
+
 
         if (random == false)
         {
@@ -367,9 +401,23 @@ public class QuizTab : MonoBehaviour
         {
             GameObject.Find("GameLogic").GetComponent<ActionManager>().ActivatePenalty();
         }
-
+        //@
         answeredTitleText.text = LocalizationManager.GetValueIfKey("[helaas dit antwoord323]");
+        //@
         descriptionText.text = LocalizationManager.GetValueIfKey(description);
+
+        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+        if (inGameLocalEditTool != null)
+        {
+            //!
+            inGameLocalEditTool.AddUILocalizationComponentToGO(
+                answeredTitleText.gameObject, "[helaas dit antwoord323]");
+            //!
+            inGameLocalEditTool.AddUILocalizationComponentToGO(
+                descriptionText.gameObject, description);
+        }
+
+
         w_descriptionPanel.SetActive(description != "");
         continueBtn = false;
         continueButton.gameObject.SetActive(false);
