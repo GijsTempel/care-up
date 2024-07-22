@@ -232,14 +232,17 @@ public class LevelButton : MonoBehaviour
             }
         }
 
-
+        //@
         titleText.text = LocalizationManager.GetValueIfKey(displayName);
+        //@
         descriptionText.text = LocalizationManager.GetValueIfKey(sceneDescription);
 
         InGameLocalEditTool inGameLocalEditTool = GameObject.FindAnyObjectByType<InGameLocalEditTool>();
         if (inGameLocalEditTool != null)
         {
+            //!
             inGameLocalEditTool.AddUILocalizationComponentToGO(titleText.gameObject, displayName);
+            //!
             inGameLocalEditTool.AddUILocalizationComponentToGO(descriptionText.gameObject, sceneDescription);
 
         }
@@ -347,6 +350,7 @@ public class LevelButton : MonoBehaviour
                 GameObject dialogue = GameObject.Find("UMenuProManager/MenuCanvas/Dialogs/Dialog 1");
 
                 // setting title i assume
+                //@
                 dialogue.transform.Find("Content/Panel_UI/Top/Title").GetComponent<Text>().text = 
                     LocalizationManager.GetValueIfKey(displayName);
                 
@@ -354,6 +358,7 @@ public class LevelButton : MonoBehaviour
                 InGameLocalEditTool inGameLocalEditTool = GameObject.FindAnyObjectByType<InGameLocalEditTool>();
                 if (inGameLocalEditTool != null)
                 {
+                    //!
                     inGameLocalEditTool.AddUILocalizationComponentToGO(
                         dialogue.transform.Find("Content/Panel_UI/Top/Title").gameObject, displayName);
                 }

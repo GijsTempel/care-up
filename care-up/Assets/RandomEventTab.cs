@@ -233,8 +233,7 @@ public class RandomEventTab : MonoBehaviour
             randomEventsData[currentRandomEventIndex].quastions[
                 currentQuastionIndex].answers[shuffledIndexes[value]].descr);
         
-        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
-        // TODO checo if dev mode is on
+        InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
         if (inGameLocalEditTool != null)
         {
             //!
@@ -280,7 +279,7 @@ public class RandomEventTab : MonoBehaviour
             randomEventsData[currentRandomEventIndex].quastions[
                 currentQuastionIndex].answers[shuffledIndexes[value]].descr);
 
-        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+        InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
         if (inGameLocalEditTool != null)
         {
             //!

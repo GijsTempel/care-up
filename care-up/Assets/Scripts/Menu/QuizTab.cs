@@ -171,7 +171,7 @@ public class QuizTab : MonoBehaviour
             b.onClick.RemoveAllListeners();
         randomIndexList = RandomEventTab.BuildShuffledList(current.answers.Count);
 
-        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+        InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
 
         for (int i = 0; i < current.answers.Count; i++)
         {
@@ -185,6 +185,8 @@ public class QuizTab : MonoBehaviour
                             cheatSimbol = "@";
                 }
             }
+
+            //@
             buttons[i].transform.GetChild(0).GetComponent<Text>().text = cheatSimbol + 
                 LocalizationManager.GetValueIfKey(current.answers[randomIndexList[i]].text);
 
@@ -278,7 +280,7 @@ public class QuizTab : MonoBehaviour
 
         quastionTitle.text = LocalizationManager.GetValueIfKey(current.text);
 
-        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+        InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
 
         if (inGameLocalEditTool != null)
         {
@@ -338,7 +340,7 @@ public class QuizTab : MonoBehaviour
         descriptionText.text = LocalizationManager.GetValueIfKey(description);
 
 
-        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+        InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
 
         if (inGameLocalEditTool != null)
         {
@@ -406,7 +408,7 @@ public class QuizTab : MonoBehaviour
         //@
         descriptionText.text = LocalizationManager.GetValueIfKey(description);
 
-        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+        InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
         if (inGameLocalEditTool != null)
         {
             //!

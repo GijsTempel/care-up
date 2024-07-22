@@ -482,12 +482,14 @@ public class LevelSelectionScene_UI : MonoBehaviour
             sceneUnit.transform.Find("Validation").GetComponent<Text>().text = "";
             if (sceneUnit.validated)
             {
+                //@
                 sceneUnit.transform.Find("Validation").GetComponent<Text>().text = 
                     LocalizationManager.GetValueIfKey("[Geaccrediteerd]");
                 
-                InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+                InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
                 if (inGameLocalEditTool != null)
                 {
+                    //!
                     inGameLocalEditTool.AddUILocalizationComponentToGO(
                         sceneUnit.transform.Find("Validation").gameObject, "[Geaccrediteerd]"
                     );

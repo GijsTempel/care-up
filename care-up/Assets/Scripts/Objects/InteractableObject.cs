@@ -117,7 +117,7 @@ public class InteractableObject : MonoBehaviour
                 descriptionPanelPosition = itemDescription.transform.GetChild(0).transform;
                 descriptionText = itemDescription.GetComponentInChildren<Text>();
                 itemDescription.name = "ItemDescription";
-                if (!Input.GetKey(KeyCode.LeftControl))
+                if (PlayerPrefsManager.GetDevMode() && !Input.GetKey(KeyCode.LeftControl))
                     itemDescription.SetActive(false);
             }
         }
@@ -125,7 +125,7 @@ public class InteractableObject : MonoBehaviour
 
     public void SetDescription()
     {
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (PlayerPrefsManager.GetDevMode() && Input.GetKey(KeyCode.LeftControl))
             return;
         if (cameraMode.CurrentMode == CameraMode.Mode.Free)
         {
@@ -155,7 +155,7 @@ public class InteractableObject : MonoBehaviour
                     //@
                     descriptionText.text = (description == "") ? name : LocalizationManager.GetValueIfKey(description);
                 
-                    InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+                    InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
 
                     if (inGameLocalEditTool != null)
                     {
@@ -180,14 +180,14 @@ public class InteractableObject : MonoBehaviour
         {
             gameUI.RemoveHighlight("hl", transform.name);
             //hasHighlight = false;
-            if (!Input.GetKey(KeyCode.LeftControl))
+            if (PlayerPrefsManager.GetDevMode() && !Input.GetKey(KeyCode.LeftControl))
                 itemDescription.SetActive(false);
         }
     }
 
     public static void ResetDescription()
     {
-        if (!Input.GetKey(KeyCode.LeftControl))
+        if (PlayerPrefsManager.GetDevMode() && !Input.GetKey(KeyCode.LeftControl))
             itemDescription.SetActive(false);
     }
 

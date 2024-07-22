@@ -40,6 +40,7 @@ public class UILocalization : MonoBehaviour
         localEditButton.SetHoverImage(localHoverImageGO);
         localHoverImageGO.SetActive(false);
         localEditButton.SetUILocalization(this);
+        localEditButton.SetActive(false);
     }
 
     void OnEnable()
@@ -94,6 +95,7 @@ public class UILocalization : MonoBehaviour
 
     void Update()
     {
-        localEditButton.SetActive(Input.GetKey(KeyCode.LeftControl) == true);
+        if (PlayerPrefsManager.GetDevMode())
+            localEditButton.SetActive(Input.GetKey(KeyCode.LeftControl));
     }
 }

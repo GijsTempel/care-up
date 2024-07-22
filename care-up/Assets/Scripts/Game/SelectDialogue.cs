@@ -97,7 +97,7 @@ public class SelectDialogue : MonoBehaviour
                 LocalizationManager.GetValueIfKey(prevStepInfo.text);
             prevStepInfoButton.gameObject.SetActive(true);
 
-            InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+            InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
             if (inGameLocalEditTool != null)
             {
                 //!
@@ -134,7 +134,7 @@ public class SelectDialogue : MonoBehaviour
             return;
         }
 
-        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+        InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
 
         for (int i = 0; i < 4; i++)
         {
@@ -152,8 +152,7 @@ public class SelectDialogue : MonoBehaviour
                             cheatSimbol = "@";
                     }
                 }
-                //Localize text element for the selection dialogue button
-                
+                //@
                 sqButtons[i].transform.Find("Text").GetComponent<Text>().text = cheatSimbol + 
                     LocalizationManager.GetValueIfKey(options[i].text);
 

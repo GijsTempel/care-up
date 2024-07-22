@@ -151,6 +151,8 @@ public class InGameLocalEditTool : MonoBehaviour
 
     void Update()
     {
+        if (!PlayerPrefsManager.GetDevMode())
+            return;
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             ctrlKeyDown = true;

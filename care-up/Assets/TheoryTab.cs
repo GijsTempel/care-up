@@ -45,7 +45,7 @@ public class TheoryTab : MonoBehaviour
         //@
         Descr.text = LocalizationManager.GetValueIfKey(descr_text);
 
-        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+        InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
         if (inGameLocalEditTool != null)
         {
             //!

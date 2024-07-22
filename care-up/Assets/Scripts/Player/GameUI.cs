@@ -1222,7 +1222,8 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
-        if (itemDescriptionGroup != null && !Input.GetKey(KeyCode.LeftControl))
+        if (itemDescriptionGroup != null && 
+                (PlayerPrefsManager.GetDevMode() && !Input.GetKey(KeyCode.LeftControl)))
             itemDescriptionGroup.position = Input.mousePosition;
         if (!PlayerPrefsManager.videoRecordingWithTextMode)
             DetailedHintPanel.SetActive(true);      //to remove
@@ -1605,7 +1606,7 @@ public class GameUI : MonoBehaviour
         ClearHintPanel();
         Text hintText;
         Text subTaskText;
-        InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+        InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
 
         for (int i = 0; i < actionManager.CurrentDescription.Count; i++)
         {
@@ -1622,7 +1623,6 @@ public class GameUI : MonoBehaviour
             }
             //@
             hintText.text = LocalizationManager.GetValueIfKey(actionHintText);
-
 
             if (inGameLocalEditTool != null)
             {

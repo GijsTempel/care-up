@@ -96,7 +96,7 @@ public class ActionSubjectWindow : MonoBehaviour
     {
         if (actionManager != null)
         {
-            InGameLocalEditTool inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();  
+            InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
             
             foreach (Action a in actionManager.actionList)
             {   
@@ -111,6 +111,7 @@ public class ActionSubjectWindow : MonoBehaviour
                 }
                 GameObject actionStep = GameObject.Instantiate(Resources.Load<GameObject>(
                     "NecessaryPrefabs/UI/SubjectStep"), scrollContent);
+                //@
                 actionStep.transform.Find("Panel/Text").GetComponent<TextMeshProUGUI>().text =
                     LocalizationManager.GetValueIfKey(a.info.shortDescr);
 
