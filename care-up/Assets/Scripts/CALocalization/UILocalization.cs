@@ -14,7 +14,7 @@ public class UILocalization : MonoBehaviour
     public string key = "";
     public string multikeyLine = "";
     private Text text;
-    List<Transform> editerItems = new List<Transform>();
+    List<GameObject> editerItems = new List<GameObject>();
     private TextMeshProUGUI tPro;
     // private UILocalEditButton localEditButton;
     private List<UILocalEditButton> localEditButtons = new List<UILocalEditButton>();
@@ -38,18 +38,19 @@ public class UILocalization : MonoBehaviour
 
     void InitEditButtons()
     {
-        foreach(Transform t in editerItems)
+        foreach(GameObject g in editerItems)
         {
-            Destroy(t);
+            Destroy(g);
         }
         editerItems.Clear();
+        localEditButtons.Clear();
 
         GameObject localHoverImageGO = Instantiate(
             Resources.Load<GameObject>("NecessaryPrefabs/UI/UILocalHoverImage"), transform) as GameObject;
-        editerItems.Add(localHoverImageGO.transform);
+        editerItems.Add(localHoverImageGO);
         GameObject localEditButtonPanel = Instantiate(
             Resources.Load<GameObject>("NecessaryPrefabs/UI/UILocalEditButtonPanel"), transform) as GameObject;
-        editerItems.Add(localEditButtonPanel.transform);
+        editerItems.Add(localEditButtonPanel);
         List<string> keys = new List<string>(); 
         if (multikeyLine == "")
             keys.Add(key);
@@ -63,6 +64,7 @@ public class UILocalization : MonoBehaviour
             GameObject localEditButtonGO = Instantiate(
                 Resources.Load<GameObject>("NecessaryPrefabs/UI/UILocalEditButton"), 
                 localEditButtonPanel.transform) as GameObject;
+            editerItems.Add(localEditButtonGO);
             UILocalEditButton localEditButton = localEditButtonGO.GetComponent<UILocalEditButton>();
             localEditButton.SetHoverImage(localHoverImageGO);
             localHoverImageGO.SetActive(false);
