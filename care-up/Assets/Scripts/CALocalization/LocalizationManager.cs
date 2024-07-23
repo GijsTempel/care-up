@@ -168,7 +168,7 @@ namespace CareUp.Localize
             return result;
         }
 
-        public static List<string> GetKeysFromMultiKey(string text)
+        public static List<string> GetKeysFromMultiKey(string text, bool stripped = false)
         {
 
             List<int> keyRanges = GetKeyRangesFromText(text);
@@ -177,8 +177,10 @@ namespace CareUp.Localize
             {
                 for (int i = 0; i < keyRanges.Count / 2; i++)
                 {
-                    int currentRange = keyRanges[i * 2 + 1] - keyRanges[i * 2];
+                    int currentRange = keyRanges[i * 2 + 1] - keyRanges[i * 2] + 1;
                     string currentKey = text.Substring(keyRanges[i*2], currentRange);
+                    if (stripped)
+                        currentKey = currentKey.Replace("[", "").Replace("]", "");
                     keys.Add(currentKey);
                 }
             }

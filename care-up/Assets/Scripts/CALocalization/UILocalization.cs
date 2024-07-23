@@ -5,14 +5,19 @@ using CareUp.Localize;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.PlayerLoop;
+using System.Security.Cryptography;
+using System.Linq;
 
 public class UILocalization : MonoBehaviour
 {
     public bool isPasive = false;
     public string key = "";
+    public string multikeyLine = "";
     private Text text;
     private TextMeshProUGUI tPro;
-    private UILocalEditButton localEditButton;
+    // private UILocalEditButton localEditButton;
+    private List<UILocalEditButton> localEditButtons = new List<UILocalEditButton>();
+
 
     void Start()
     {
@@ -26,21 +31,42 @@ public class UILocalization : MonoBehaviour
         if (!isPasive)
             UpdateText();
 
-        if (localEditButton == null)
-            InitEditButton();
+        if (localEditButtons.Count == 0)
+            InitEditButtons();
     }
 
-    void InitEditButton()
+    void InitEditButtons()
     {
         GameObject localHoverImageGO = Instantiate(
             Resources.Load<GameObject>("NecessaryPrefabs/UI/UILocalHoverImage"), transform) as GameObject;
-        GameObject localEditButtonGO = Instantiate(
-            Resources.Load<GameObject>("NecessaryPrefabs/UI/UILocalEditButton"), transform) as GameObject;
-        localEditButton = localEditButtonGO.GetComponent<UILocalEditButton>();
-        localEditButton.SetHoverImage(localHoverImageGO);
-        localHoverImageGO.SetActive(false);
-        localEditButton.SetUILocalization(this);
-        localEditButton.SetActive(false);
+        GameObject localEditButtonPanel = Instantiate(
+            Resources.Load<GameObject>("NecessaryPrefabs/UI/UILocalEditButtonPanel"), transform) as GameObject;
+
+        List<string> keys = new List<string>(); 
+        if (multikeyLine == "")
+            keys.Add(key);
+        else
+        {
+            keys = LocalizationManager.GetKeysFromMultiKey(multikeyLine, true);
+        }
+
+        for (int i = 0; i < keys.Count; i++)
+        {
+            GameObject localEditButtonGO = Instantiate(
+                Resources.Load<GameObject>("NecessaryPrefabs/UI/UILocalEditButton"), 
+                localEditButtonPanel.transform) as GameObject;
+            UILocalEditButton localEditButton = localEditButtonGO.GetComponent<UILocalEditButton>();
+            localEditButton.SetHoverImage(localHoverImageGO);
+            localHoverImageGO.SetActive(false);
+            localEditButton.SetUILocalization(this);
+            localEditButton.SetActive(false);
+            localEditButton.key = keys[i];
+            localEditButtons.Add(localEditButton);
+        }
+        
+
+        
+
     }
 
     void OnEnable()
@@ -52,7 +78,10 @@ public class UILocalization : MonoBehaviour
     public void UpdateText()
     {
         SetText("$$$$$$$$$$$$$$$$");
-        if (key != "")
+        if (key == "" && multikeyLine == "")
+            return;
+
+        if (multikeyLine == "")
         {
             string newText = LocalizationManager.GetLocalizedValue(key);
             if (newText != "")
@@ -60,16 +89,23 @@ public class UILocalization : MonoBehaviour
                 SetText("><><" + newText);
             }
         }
+        else
+        {
+            string newText = LocalizationManager.GetLocalizedWithMultiKey(multikeyLine);
+            SetText("%%^^" + newText);
+
+        }
     }
 
-    public void InitiateLocalEdit()
+    public void InitiateLocalEdit(string editKey = "")
     {
+
         InGameLocalEditTool localTool = GameObject.FindObjectOfType<InGameLocalEditTool>();
-        if (localEditButton == null)
-            InitEditButton();
-        if (localTool != null && localEditButton != null)
+        if (localEditButtons.Count == 0)
+            InitEditButtons();
+        if (localTool != null && localEditButtons.Count != 0)
         {
-            localTool.InitiateLocalEdit(key);
+            localTool.InitiateLocalEdit(editKey);
         }
     }
 
@@ -96,6 +132,9 @@ public class UILocalization : MonoBehaviour
     void Update()
     {
         if (PlayerPrefsManager.GetDevMode())
-            localEditButton.SetActive(Input.GetKey(KeyCode.LeftControl));
+        {
+            foreach(UILocalEditButton b in localEditButtons)
+                b.SetActive(Input.GetKey(KeyCode.LeftControl));
+        }
     }
 }

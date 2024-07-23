@@ -5,6 +5,7 @@ using UnityEngine;
 public class UILocalEditButton : MonoBehaviour
 {
     private GameObject hoverImage;
+    public string key = "";
     private UILocalization uiLocalization;
     // Start is called before the first frame update
     void Start()
@@ -44,7 +45,7 @@ public class UILocalEditButton : MonoBehaviour
     public void OnButtonClicked()
     {
         if (uiLocalization != null)
-            uiLocalization.InitiateLocalEdit();
+            uiLocalization.InitiateLocalEdit(key);
     }
     
 }

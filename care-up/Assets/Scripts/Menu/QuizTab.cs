@@ -190,7 +190,6 @@ public class QuizTab : MonoBehaviour
             buttons[i].transform.GetChild(0).GetComponent<Text>().text = cheatSimbol + 
                 LocalizationManager.GetValueIfKey(current.answers[randomIndexList[i]].text);
 
-                    
             if (inGameLocalEditTool != null)
             {
                 //!
@@ -277,7 +276,8 @@ public class QuizTab : MonoBehaviour
             current = questionList[currentStep][currentQuestionID];
         }
 
-
+    
+        //@
         quastionTitle.text = LocalizationManager.GetValueIfKey(current.text);
 
         InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
