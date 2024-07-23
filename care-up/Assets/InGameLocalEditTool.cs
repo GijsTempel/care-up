@@ -55,18 +55,25 @@ public class InGameLocalEditTool : MonoBehaviour
     {
         if (LocalizationManager.CountKeysInText(key) == 0)
             return;
-        key = LocalizationManager.StripBracketsFromKey(key);
+        bool singleKey = LocalizationManager.CountKeysInText(key) == 1;
+        if (singleKey)
+            key = LocalizationManager.StripBracketsFromKey(key);
+        else
+            Debug.Log(key);
+        
 
         if (go.GetComponent<UILocalization>() == null)  
-        {
-            UILocalization newGoUILocalization = go.AddComponent<UILocalization>();
-            newGoUILocalization.Initialization();
-        }
+            go.AddComponent<UILocalization>();
+        
         UILocalization goUILocalization = go.GetComponent<UILocalization>();    
         if (goUILocalization != null)
         {
-            goUILocalization.key = key;
+            if (singleKey)
+                goUILocalization.key = key;
+            else
+                goUILocalization.multikeyLine = key;
             goUILocalization.UpdateText();
+            goUILocalization.Initialization();
         }
     }
 

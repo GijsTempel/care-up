@@ -1643,7 +1643,14 @@ public class GameUI : MonoBehaviour
                         {
                             GameObject subtaskPanel = Instantiate<GameObject>(Resources.Load<GameObject>("NecessaryPrefabs/UI/SubtaskHints"), currentHintPanel.transform);
                             subTaskText = subtaskPanel.transform.Find("Text").GetComponent<Text>();
-                            subTaskText.text = subTasks[y].requirement;
+                            // string textText = subTasks[y].requirement;
+                            subTaskText.text = LocalizationManager.GetLocalizedWithMultiKey(subTasks[y].requirement);
+
+                            if (inGameLocalEditTool != null)
+                            {
+                                //!
+                                inGameLocalEditTool.AddUILocalizationComponentToGO(subTaskText.gameObject, subTasks[y].requirement);
+                            }
                         }
                     }
                 }
