@@ -25,6 +25,9 @@ public class InGameLocalEditTool : MonoBehaviour
     const float popupWaitTime = 0.2f;
     float popupTimeOut = 0f;
     public List<Button> langButtons;
+    public Button applyButton;
+    public Button deleteButton;
+    
     int toolLangID = 0;
 
     Dictionary<string, Dictionary<string, string>> changesToLocalization = 
@@ -68,14 +71,16 @@ public class InGameLocalEditTool : MonoBehaviour
         string value = valueText.text;
         AddOrChangeValue(currentKey, value, true);
         RefrashTextElements();
-        dictEditPanel.SetActive(false);
+        UpdateDeleteButton();
+        // dictEditPanel.SetActive(false);
     }
 
     public void DeleteSelectedEntry()
     {
         DeleteDictElement(currentKey);
         RefrashTextElements();
-        dictEditPanel.SetActive(false);
+        InitiateLocalEdit(currentKey, false);
+        // dictEditPanel.SetActive(false);
     }
 
 
@@ -171,12 +176,19 @@ public class InGameLocalEditTool : MonoBehaviour
             SaveDictChanges(dictKey);
     }
 
+    void UpdateDeleteButton()
+    {
+        string dictKey = LocalizationManager.GetDictPath(true, toolLangID);
+        deleteButton.interactable = changesToLocalization[dictKey].ContainsKey(currentKey);
+    }
+
 
     public void DeleteDictElement(string key)
     {
-        string dictKey = LocalizationManager.GetDictPath(true);
+        string dictKey = LocalizationManager.GetDictPath(true, toolLangID);
         changesToLocalization[dictKey].Remove(key);
         SaveDictChanges(dictKey);
+        UpdateDeleteButton();
     }
 
 
@@ -250,6 +262,7 @@ public class InGameLocalEditTool : MonoBehaviour
         keyTextLine.text = dictName + " : " + key;
         currentKey = key;
         valueText.text = value;
+        UpdateDeleteButton();
     }
 
     void Awake()
