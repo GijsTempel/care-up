@@ -228,7 +228,7 @@ namespace CareUp.Localize
                 inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();
             if (inGameLocalEditTool != null && inGameLocalEditTool.dataLoaded)
             {
-                string value = inGameLocalEditTool.GetLocalizedValue(key);
+                string value = inGameLocalEditTool.GetLocalizedValue(key, langID);
                 if (value != "")
                     return value;
             }

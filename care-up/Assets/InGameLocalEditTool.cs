@@ -36,6 +36,7 @@ public class InGameLocalEditTool : MonoBehaviour
     {
         toolLangID = tID;
         UpdateButtons(false);
+        InitiateLocalEdit(currentKey, false);
     }
 
     void UpdateButtons(bool globalMode = true)
@@ -104,11 +105,14 @@ public class InGameLocalEditTool : MonoBehaviour
         }
     }
 
-    public string GetLocalizedValue(string key)
+    public string GetLocalizedValue(string key, int langID = -1)
     {
+        if (langID == -1)
+            langID = PlayerPrefsManager.Lang;
+
         if (!dataLoaded)
             return "";
-        string localName = LocalizationManager.GetDictPath(true);
+        string localName = LocalizationManager.GetDictPath(true, langID);
         if (changesToLocalization.Keys.Contains(localName))
         {
             if (changesToLocalization[localName].Keys.Contains(key))
@@ -157,7 +161,7 @@ public class InGameLocalEditTool : MonoBehaviour
     void AddOrChangeValue(string key, string value, bool toSave = false, string dictKey = "")  
     {
         if (dictKey == "")
-            dictKey = LocalizationManager.GetDictPath(true);
+            dictKey = LocalizationManager.GetDictPath(true, toolLangID);
         if (!changesToLocalization.Keys.Contains(dictKey))
         {
             changesToLocalization.Add(dictKey, new Dictionary<string, string>());
@@ -236,10 +240,11 @@ public class InGameLocalEditTool : MonoBehaviour
         RefrashTextElements();
     }
 
-    public void InitiateLocalEdit(string key)
+    public void InitiateLocalEdit(string key, bool toUpdateButtons = true)
     {
-        UpdateButtons();
-        string value = LocalizationManager.GetLocalizedValue(key);
+        if (toUpdateButtons)
+            UpdateButtons();
+        string value = LocalizationManager.GetLocalizedValue(key, toolLangID);
         dictEditPanel.SetActive(true);
         string dictName = LocalizationManager.GetDictPath(true, toolLangID);
         keyTextLine.text = dictName + " : " + key;
