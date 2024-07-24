@@ -66,6 +66,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public static bool resetPurchases = false;
     public static string TestBundleIPAddr = "";
     public static bool UseDevBundleServer = false;
+    public static bool toShowLocalMarkers = false;
     public static bool editCharacterOnStart = false;
     public static bool tutorialOnStart = false;
     public static bool simulatePlayerActions = false;

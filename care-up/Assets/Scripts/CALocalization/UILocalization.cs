@@ -83,7 +83,9 @@ public class UILocalization : MonoBehaviour
 
     public void UpdateText()
     {
-        SetText("$$$$$$$$$$$$$$$$");
+        string marker = "";
+        if (PlayerPrefsManager.toShowLocalMarkers)
+            SetText("$$$$$$$$$$$$$$$$");
         if (key == "" && multikeyLine == "")
             return;
 
@@ -92,13 +94,17 @@ public class UILocalization : MonoBehaviour
             string newText = LocalizationManager.GetLocalizedValue(key);
             if (newText != "")
             {
-                SetText("><><" + newText);
+                if (PlayerPrefsManager.toShowLocalMarkers)
+                    marker = "><><";
+                SetText(marker + newText);
             }
         }
         else
         {
+            if (PlayerPrefsManager.toShowLocalMarkers)
+                marker = "%%^^";
             string newText = LocalizationManager.GetLocalizedWithMultiKey(multikeyLine);
-            SetText("%%^^" + newText);
+            SetText(marker + newText);
 
         }
     }

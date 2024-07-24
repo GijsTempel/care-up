@@ -241,8 +241,19 @@ public class GameUI : MonoBehaviour
         }
         if (Message == "")
             return;
-        BlockTitle.text = Title;
-        BlockMessage.text = Message;
+        //@
+        BlockTitle.text = LocalizationManager.GetValueIfKey(Title);
+        //@
+        BlockMessage.text = LocalizationManager.GetValueIfKey(Message);
+
+        InGameLocalEditTool inGameLocalEditTool = PlayerPrefsManager.GetDevMode() ? GameObject.FindObjectOfType<InGameLocalEditTool>() : null;  
+        if (inGameLocalEditTool != null)
+        {
+            //!
+            inGameLocalEditTool.AddUILocalizationComponentToGO(BlockTitle.gameObject, Title);
+            //!
+            inGameLocalEditTool.AddUILocalizationComponentToGO(BlockMessage.gameObject, Message);
+        }
         BlockPopUp.GetComponent<Animator>().SetTrigger("pop");
     }
 

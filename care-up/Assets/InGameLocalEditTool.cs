@@ -27,6 +27,7 @@ public class InGameLocalEditTool : MonoBehaviour
     public List<Button> langButtons;
     public Button applyButton;
     public Button deleteButton;
+    public Button markerButton;
     
     int toolLangID = 0;
 
@@ -40,6 +41,26 @@ public class InGameLocalEditTool : MonoBehaviour
         toolLangID = tID;
         UpdateButtons(false);
         InitiateLocalEdit(currentKey, false);
+    }
+
+    void UpdateMarkerButton()
+    {
+        Color color = Color.white;
+        string markerText = "Show Markers";
+        if (PlayerPrefsManager.toShowLocalMarkers)
+        {
+            markerText = "Hide Markers";
+            color = Color.green;
+        }
+        markerButton.GetComponentInChildren<Text>().text = markerText;
+        markerButton.GetComponent<Image>().color = color;
+    }
+
+    public void SwitchMarkerMode()
+    {
+        PlayerPrefsManager.toShowLocalMarkers = !PlayerPrefsManager.toShowLocalMarkers;
+        UpdateMarkerButton();
+        RefrashTextElements();
     }
 
     void UpdateButtons(bool globalMode = true)

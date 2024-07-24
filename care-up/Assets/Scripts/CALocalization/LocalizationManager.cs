@@ -164,8 +164,10 @@ namespace CareUp.Localize
                 return "";
             if (key.Length == 0)
                 return "";
-
-            string result = "**!!" + key;
+            string marker = "";
+            if (PlayerPrefsManager.toShowLocalMarkers)
+                marker = "**!!";
+            string result = marker + key;
             bool debugMode = false;
             if (gameLogic != null)
             {
@@ -178,7 +180,9 @@ namespace CareUp.Localize
                 string value = GetLocalizedValue(StripBracketsFromKey(key));
                 if (value != null)
                 {
-                    result = "^^^" + value;
+                    if (PlayerPrefsManager.toShowLocalMarkers)
+                        marker = "^^^";
+                    result = marker + value;
                     if (Application.isEditor && debugMode)
                     {
                         result = key + value;

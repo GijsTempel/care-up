@@ -1743,7 +1743,7 @@ public class ActionManager : MonoBehaviour
                     RobotUIMessageTab messageCenter = GameObject.FindObjectOfType<RobotUIMessageTab>();
 
                     if (type != ActionType.SequenceStep)
-                        GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("Verkeerde handeling!", IncompletedActions[0].info.shortDescr);
+                        GameObject.FindObjectOfType<GameUI>().ShowBlockMessage("[Verkeerde handeling]", IncompletedActions[0].info.shortDescr);
                 }
             }
 
