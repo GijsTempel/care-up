@@ -11,8 +11,8 @@ public class UILangSwitch : MonoBehaviour
     public void LanguageChange(int langID)
     {
         PlayerPrefsManager.Lang = langID;
-        LocalizationManager.ClearDicts();
-        LocalizationManager.LoadAllDictionaries();
+        // LocalizationManager.ClearDicts();
+        // LocalizationManager.LoadAllDictionaries();
         UpdateAllLangButtons();
         UpdateTextComponents();
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing.Printing;
+using System.Linq;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,7 +13,7 @@ namespace CareUp.Localize
         static string dictListFile = "dicts";
         static string defaultDictFolder = "Dictionaries";
         static List<string> dictFileNames = new List<string>(){"Dutch", "English"};
-        static List<string> dicts = new List<string>();
+        // static List<string> dicts = new List<string>();
 
         static InGameLocalEditTool inGameLocalEditTool;
 
@@ -20,27 +21,35 @@ namespace CareUp.Localize
         //public static LocalizationManager instance;
         private static bool loadedDicts = false;
         private static GameObject gameLogic;
-        private static Dictionary<string, string> localizedText;
+        private static Dictionary<string, Dictionary<string, string>> localizedText;
         // private static bool isReady = false;
         //private string missingTextString = "Text not found";
 
         // Use this for initialization
 
-        public static void LoadLocalizedText(string fileName)
+        public static void LoadLocalizedText(string fileName, int langID = -1)
         {
+            if (langID == -1)
+                langID = PlayerPrefsManager.Lang;
 
             gameLogic = GameObject.Find("GameLogic");
             if (localizedText == null)
-                localizedText = new Dictionary<string, string>();
-            TextAsset _data = (TextAsset)Resources.Load(GetCurrentDictPath() + fileName);
+            { 
+                localizedText = new Dictionary<string, Dictionary<string, string>>();
+                localizedText[dictFileNames[0]] = new Dictionary<string, string>();
+                localizedText[dictFileNames[1]] = new Dictionary<string, string>();
+            }
+            string dictName = dictFileNames[langID];
+
+            TextAsset _data = (TextAsset)Resources.Load(GetDictPath(false, langID) + fileName);
             if (_data != null)
             {
                 string jsonString = _data.text;
                 JSONNode data = JSON.Parse(jsonString);
                 foreach (string key in data.Keys)
                 {
-                    if (!localizedText.ContainsKey(key))
-                        localizedText.Add(key, data[key].ToString().Replace("<br>", "\n").Replace("\"",""));
+                    if (!localizedText[dictName].ContainsKey(key))
+                        localizedText[dictName].Add(key, data[key].ToString().Replace("<br>", "\n").Replace("\"",""));
                 }
             }
         }
@@ -50,12 +59,15 @@ namespace CareUp.Localize
         }
 
 
-        public static string GetCurrentDictPath(bool onlyLangName = false)
+        public static string GetDictPath(bool onlyLangName = false, int langID = -1)
         {
             string dictFolder = dictFileNames[0];
-            PlayerPrefsManager playerPrefsManager = GameObject.FindObjectOfType<PlayerPrefsManager>();
-            if (playerPrefsManager != null)
+            if (langID == -1)
                 dictFolder = dictFileNames[PlayerPrefsManager.Lang];
+            else
+            {
+                dictFolder = dictFileNames[langID];
+            }
             if (!onlyLangName)
                 dictFolder = defaultDictFolder + "/" + dictFolder + "/";
             return dictFolder;
@@ -69,21 +81,29 @@ namespace CareUp.Localize
 
         public static void LoadAllDictionaries()
         {
-            if (dicts.Count == 0)
+
+            // if (dicts.Count == 0)
+            // {
+            //     TextAsset dictListData = (TextAsset)Resources.Load(GetDictPath() + dictListFile);
+
+            // }
+            for (int d = 0; d < dictFileNames.Count; d++)
             {
-                TextAsset dictListData = (TextAsset)Resources.Load(GetCurrentDictPath() + dictListFile);
-                foreach (string dictName in dictListData.text.Split('\n'))
+                List<string> dicts = new List<string>();
+                TextAsset dictListData = (TextAsset)Resources.Load(GetDictPath(false, d) + dictListFile);
+
+                foreach (string dn in dictListData.text.Split('\n'))
                 {   
-                    if (!string.IsNullOrEmpty(dictName))
+                    if (!string.IsNullOrEmpty(dn))
                     {
-                        dicts.Add(dictName);
+                        dicts.Add(dn);
                     }
                 }
-            }
-            //Resources.Load("Dictionaries/");
-            foreach (string fileName in dicts)
-            {
-                LoadLocalizedText(fileName.Replace("\r",""));
+                for (int i = 0; i < dicts.Count; i++) 
+                {
+                    string fileName = dicts[i];
+                    LoadLocalizedText(fileName.Replace("\r",""), d);
+                }
             }
             loadedDicts = true;
         }
@@ -196,10 +216,14 @@ namespace CareUp.Localize
             return text;
         }
 
-        public static string GetLocalizedValue(string key)
+        public static string GetLocalizedValue(string key, int langID = -1)
         {
             if (!loadedDicts)
                 LoadAllDictionaries();
+            if (langID == -1)
+            {
+                langID = PlayerPrefsManager.Lang;
+            }
             if (inGameLocalEditTool == null)
                 inGameLocalEditTool = GameObject.FindObjectOfType<InGameLocalEditTool>();
             if (inGameLocalEditTool != null && inGameLocalEditTool.dataLoaded)
@@ -208,12 +232,12 @@ namespace CareUp.Localize
                 if (value != "")
                     return value;
             }
-            if (localizedText != null)
+            if (localizedText != null && localizedText.Keys.Contains(dictFileNames[langID]))
             {
-                if (localizedText.Keys.Count > 0)
+                if (localizedText[dictFileNames[langID]].Keys.Count > 0 && 
+                    localizedText[dictFileNames[langID]].ContainsKey(key))
                 {
-                    if (localizedText.ContainsKey(key))
-                        return localizedText[key];
+                    return localizedText[dictFileNames[langID]][key];
                 }
             }
             return "";
